@@ -22,7 +22,7 @@ pod 'iOSChatSDK'
 
 ## Author
 
-Ashwani Sharma, s.ashwani@dynasas.com
+Dynasas, s.ashwani@dynasas.com
 
 ## License
 

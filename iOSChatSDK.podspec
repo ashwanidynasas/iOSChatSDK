@@ -21,11 +21,11 @@ Pod::Spec.new do |s|
 :iOSChatSDK >> Custom Chat Integration with Sqrcle with multiple features..
                        DESC
 
-  s.homepage         = 'https://github.com/ashwanidynasas'
+  s.homepage         = 'https://github.com/ashwanidynasas/iOSChatSDK'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Ashwani Sharma' => 's.ashwani@dynasas.com' }
-  s.source           = { :git => 'https://github.com/ashwanidynasas/DynasasIOSChat.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/ashwanidynasas/iOSChatSDK.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '10.0'

@@ -9,9 +9,7 @@
 /* Begin PBXBuildFile section */
 		138BF5F1882863984B94BB5F13A71837 /* Pods-iOSChatSDK_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 084DE49818863C44075C933CDF9A7327 /* Pods-iOSChatSDK_Tests-dummy.m */; };
 		4BA9394E09AA06C75FB6F3AFF7EF367D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73010CC983E3809BECEE5348DA1BB8C6 /* Foundation.framework */; };
-		4DCEAA5F2C298D0E000A42D0 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4DCEAA5C2C298D0E000A42D0 /* .gitkeep */; };
 		4DCEAA622C298D2B000A42D0 /* iOSChatSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DCEAA612C298D2B000A42D0 /* iOSChatSDK.swift */; };
-		4DCEAA652C298D42000A42D0 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 4DCEAA632C298D42000A42D0 /* .gitkeep */; };
 		86547D03297C85394B41B7DBBF28C7DC /* iOSChatSDK-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 09182E8FE0A132424AA8E93239742D9A /* iOSChatSDK-dummy.m */; };
 		8C48E1632F055558B83DA0F307AD4B52 /* Pods-iOSChatSDK_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E793F75EA337A8D6A9BDC375F6649FF9 /* Pods-iOSChatSDK_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		95459D53BF41CF046D491F8AAE5DE4A3 /* iOSChatSDK-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 11169849776508B7C450DF9D1C96DFFF /* iOSChatSDK-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -48,9 +46,7 @@
 		227A1370BF1655EF787D84DED55044C9 /* Pods-iOSChatSDK_Tests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-iOSChatSDK_Tests"; path = Pods_iOSChatSDK_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EE633F0737CB1C193D635CE5540E869 /* Pods-iOSChatSDK_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-iOSChatSDK_Tests.modulemap"; sourceTree = "<group>"; };
 		4B8F15B35B7100E1BDBA9A3A46F33301 /* Pods-iOSChatSDK_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-iOSChatSDK_Example-frameworks.sh"; sourceTree = "<group>"; };
-		4DCEAA5C2C298D0E000A42D0 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		4DCEAA612C298D2B000A42D0 /* iOSChatSDK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSChatSDK.swift; sourceTree = "<group>"; };
-		4DCEAA632C298D42000A42D0 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		5000840169686C09601CFA618118A7A1 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		552632ABBE055DCB0C8EC44AEE960265 /* iOSChatSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iOSChatSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AA2E1032EE8A01F71819B88A4F5307C /* Pods-iOSChatSDK_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-iOSChatSDK_Example.modulemap"; sourceTree = "<group>"; };
@@ -169,7 +165,6 @@
 		4DCEAA5E2C298D0E000A42D0 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				4DCEAA5C2C298D0E000A42D0 /* .gitkeep */,
 				4DCEAA612C298D2B000A42D0 /* iOSChatSDK.swift */,
 			);
 			name = Classes;
@@ -179,7 +174,6 @@
 		4DCEAA642C298D42000A42D0 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				4DCEAA632C298D42000A42D0 /* .gitkeep */,
 			);
 			name = Assets;
 			path = iOSChatSDK/Assets;
@@ -386,8 +380,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4DCEAA5F2C298D0E000A42D0 /* .gitkeep in Resources */,
-				4DCEAA652C298D42000A42D0 /* .gitkeep in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

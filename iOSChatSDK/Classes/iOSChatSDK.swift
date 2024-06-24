@@ -7,3 +7,12 @@
 
 import Foundation
 import UIKit
+
+public struct iOSChatSDKInitiated {
+    
+    public static func getChatSDK(){
+        print("---->>>>>>>>   chat sdk initiated")
+    }
+    
+}
+

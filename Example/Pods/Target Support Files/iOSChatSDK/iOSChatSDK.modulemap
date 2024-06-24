@@ -1,0 +1,6 @@
+framework module iOSChatSDK {
+  umbrella header "iOSChatSDK-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "iOSChatSDK",
+  "version": "0.1.0",
+  "summary": "A short description of iOSChatSDK.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/Ashwani Sharma/iOSChatSDK",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Ashwani Sharma": "s.ashwani@dynasas.com"
+  },
+  "source": {
+    "git": "https://github.com/Ashwani Sharma/iOSChatSDK.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "10.0"
+  },
+  "source_files": "iOSChatSDK/Classes/**/*"
+}

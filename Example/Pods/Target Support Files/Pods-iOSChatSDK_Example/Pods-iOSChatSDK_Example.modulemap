@@ -1,0 +1,6 @@
+framework module Pods_iOSChatSDK_Example {
+  umbrella header "Pods-iOSChatSDK_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

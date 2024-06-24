@@ -32,9 +32,9 @@ Pod::Spec.new do |s|
   s.swift_version = '5.0'
   s.source_files = 'iOSChatSDK/Classes/**/*'
   
-   s.resource_bundles = {
-     'iOSChatSDK' => ['iOSChatSDK/Assets/*.png']
-   }
+#   s.resource_bundles = {
+#     'iOSChatSDK' => ['iOSChatSDK/Assets/*.png']
+#   }
 
 #   s.public_header_files = 'Pod/Classes/**/*.h'
    s.frameworks = 'UIKit', 'Foundation'

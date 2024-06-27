@@ -176,9 +176,17 @@ code_sign_if_enabled() {
 }
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/GZIP/GZIP.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/MatrixSDK/MatrixSDK.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/OLMKit/OLMKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/iOSChatSDK/iOSChatSDK.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/GZIP/GZIP.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/MatrixSDK/MatrixSDK.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/OLMKit/OLMKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/iOSChatSDK/iOSChatSDK.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then

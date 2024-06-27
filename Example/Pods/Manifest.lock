@@ -1,16 +1,53 @@
 PODS:
-  - iOSChatSDK (0.1.0)
+  - AFNetworking (3.1.0):
+    - AFNetworking/NSURLSession (= 3.1.0)
+    - AFNetworking/Reachability (= 3.1.0)
+    - AFNetworking/Security (= 3.1.0)
+    - AFNetworking/Serialization (= 3.1.0)
+    - AFNetworking/UIKit (= 3.1.0)
+  - AFNetworking/NSURLSession (3.1.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.1.0)
+  - AFNetworking/Security (3.1.0)
+  - AFNetworking/Serialization (3.1.0)
+  - AFNetworking/UIKit (3.1.0):
+    - AFNetworking/NSURLSession
+  - GZIP (1.2.3)
+  - iOSChatSDK (0.0.3):
+    - MatrixSDK
+    - OLMKit
+  - MatrixSDK (0.10.4):
+    - AFNetworking (~> 3.1.0)
+    - GZIP (~> 1.2.1)
+  - OLMKit (3.2.12):
+    - OLMKit/olmc (= 3.2.12)
+    - OLMKit/olmcpp (= 3.2.12)
+  - OLMKit/olmc (3.2.12)
+  - OLMKit/olmcpp (3.2.12)
 
 DEPENDENCIES:
   - iOSChatSDK (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - AFNetworking
+    - GZIP
+    - MatrixSDK
+    - OLMKit
 
 EXTERNAL SOURCES:
   iOSChatSDK:
     :path: "../"
 
 SPEC CHECKSUMS:
-  iOSChatSDK: 7d723720463fda11dc8429171362cc4d89dc439c
+  AFNetworking: 19827bce8c8d25b16bea185837cb66976c23f8fe
+  GZIP: af5c90ef903776a7e9afe6ebebd794a84a2929d4
+  iOSChatSDK: 9691b503ec40f7f2afe9f1dc2fee979214e0d3ca
+  MatrixSDK: c3e4def89bac6f289005ff1ea0a4a067ed7adb17
+  OLMKit: da115f16582e47626616874e20f7bb92222c7a51
 
-PODFILE CHECKSUM: 8823fbde3f1bdf62e38df35c23725ec97970d576
+PODFILE CHECKSUM: 3c13985646326b82767ac7178666fb082d4505da
 
 COCOAPODS: 1.15.2

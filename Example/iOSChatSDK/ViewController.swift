@@ -10,11 +10,13 @@ import UIKit
 import iOSChatSDK
 
 class ViewController: UIViewController {
-
+    
+    @IBOutlet weak var btnOutlet:UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        iOSChatSDKInitiated.getChatSDK()
+           self.view.backgroundColor = .white
+           self.title = "Sqrcle"
     }
 
     override func didReceiveMemoryWarning() {
@@ -22,5 +24,19 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    @IBAction func chatSDKAction(_ sender: UIButton) {
+        print("goto detail page just now")
+//        iOSChatSDKInitiated.getChatSDK()
+        
+        let frameworkVC = MainChatVC.instantiate()
+        self.navigationController?.pushViewController(frameworkVC, animated: true)
+
+
+
+        /*
+         //        let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController
+         //        self.navigationController?.pushViewController(vc!, animated: true)
+         */
+    }
 }
 

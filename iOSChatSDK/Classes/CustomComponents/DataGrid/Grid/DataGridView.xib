@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" id="Um9-G9-L9v" customClass="DataGridView" customModule="SQRCLE" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="633" height="399"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="633" height="399"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="QOe-Wq-LEB">
+                        <rect key="frame" x="34.666666666666686" y="0.0" width="563.66666666666652" height="399"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="KFn-Qz-ebG">
+                                <rect key="frame" x="0.0" y="0.0" width="563.66666666666663" height="133"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6ai-LK-Gbl">
+                                        <rect key="frame" x="0.0" y="0.0" width="161.33333333333334" height="133"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iec-jL-Meu" customClass="DataComponentView" customModule="SQRCLE" customModuleProvider="target">
+                                                <rect key="frame" x="-1" y="45.333333333333336" width="163.33333333333334" height="87.666666666666657"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="Iec-jL-Meu" firstAttribute="centerX" secondItem="6ai-LK-Gbl" secondAttribute="centerX" id="0qE-W3-itP"/>
+                                            <constraint firstItem="Iec-jL-Meu" firstAttribute="leading" secondItem="6ai-LK-Gbl" secondAttribute="leading" constant="-1" id="Vfu-BF-iMM"/>
+                                            <constraint firstItem="Iec-jL-Meu" firstAttribute="height" secondItem="6ai-LK-Gbl" secondAttribute="height" multiplier="0.66" id="tGq-Un-pz2"/>
+                                            <constraint firstAttribute="bottom" secondItem="Iec-jL-Meu" secondAttribute="bottom" id="xat-EH-Va4"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Drw-7K-4Id">
+                                        <rect key="frame" x="201.33333333333337" y="0.0" width="161" height="133"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8iZ-af-Xkg" customClass="DataComponentView" customModule="SQRCLE" customModuleProvider="target">
+                                                <rect key="frame" x="-1" y="0.0" width="163" height="87.666666666666671"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="8iZ-af-Xkg" firstAttribute="top" secondItem="Drw-7K-4Id" secondAttribute="top" id="7iO-va-85R"/>
+                                            <constraint firstItem="8iZ-af-Xkg" firstAttribute="leading" secondItem="Drw-7K-4Id" secondAttribute="leading" constant="-1" id="Ddy-fJ-VrP"/>
+                                            <constraint firstItem="8iZ-af-Xkg" firstAttribute="centerX" secondItem="Drw-7K-4Id" secondAttribute="centerX" id="eF1-fa-Ikf"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UbZ-wc-TT3">
+                                        <rect key="frame" x="402.33333333333331" y="0.0" width="161.33333333333331" height="133"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4uE-ib-Rcr" customClass="DataComponentView" customModule="SQRCLE" customModuleProvider="target">
+                                                <rect key="frame" x="-1" y="45.333333333333336" width="163.33333333333334" height="87.666666666666657"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="4uE-ib-Rcr" secondAttribute="bottom" id="DtR-VN-0Kb"/>
+                                            <constraint firstItem="4uE-ib-Rcr" firstAttribute="centerX" secondItem="UbZ-wc-TT3" secondAttribute="centerX" id="NB0-JG-PF4"/>
+                                            <constraint firstItem="4uE-ib-Rcr" firstAttribute="leading" secondItem="UbZ-wc-TT3" secondAttribute="leading" constant="-1" id="du3-33-a8L"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="8iZ-af-Xkg" firstAttribute="height" secondItem="Iec-jL-Meu" secondAttribute="height" id="ENX-oT-B2N"/>
+                                    <constraint firstItem="4uE-ib-Rcr" firstAttribute="height" secondItem="Iec-jL-Meu" secondAttribute="height" id="daN-bJ-O8Z"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="kub-j7-Y6Z">
+                                <rect key="frame" x="0.0" y="133" width="563.66666666666663" height="133"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mqc-4U-1wy">
+                                        <rect key="frame" x="0.0" y="0.0" width="161.33333333333334" height="133"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cAz-VE-o6F" customClass="DataComponentView" customModule="SQRCLE" customModuleProvider="target">
+                                                <rect key="frame" x="-1" y="45.33333333333335" width="163.33333333333334" height="87.666666666666686"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="cAz-VE-o6F" firstAttribute="leading" secondItem="Mqc-4U-1wy" secondAttribute="leading" constant="-1" id="SjC-8T-sm5"/>
+                                            <constraint firstAttribute="bottom" secondItem="cAz-VE-o6F" secondAttribute="bottom" id="b51-b1-XVi"/>
+                                            <constraint firstItem="cAz-VE-o6F" firstAttribute="centerX" secondItem="Mqc-4U-1wy" secondAttribute="centerX" id="bCs-fZ-a4d"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mVi-Wh-cdr">
+                                        <rect key="frame" x="201.33333333333337" y="0.0" width="161" height="133"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3if-VD-Pha" customClass="DataComponentView" customModule="SQRCLE" customModuleProvider="target">
+                                                <rect key="frame" x="-1" y="0.0" width="163" height="87.666666666666671"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="3if-VD-Pha" firstAttribute="top" secondItem="mVi-Wh-cdr" secondAttribute="top" id="2YU-fY-zjS"/>
+                                            <constraint firstItem="3if-VD-Pha" firstAttribute="leading" secondItem="mVi-Wh-cdr" secondAttribute="leading" constant="-1" id="6fP-Ik-u0i"/>
+                                            <constraint firstItem="3if-VD-Pha" firstAttribute="centerX" secondItem="mVi-Wh-cdr" secondAttribute="centerX" id="YqA-uV-frb"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yrt-qz-weK">
+                                        <rect key="frame" x="402.33333333333331" y="0.0" width="161.33333333333331" height="133"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yq4-8p-PUS" customClass="DataComponentView" customModule="SQRCLE" customModuleProvider="target">
+                                                <rect key="frame" x="-1" y="45.33333333333335" width="163.33333333333334" height="87.666666666666686"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="Yq4-8p-PUS" secondAttribute="bottom" id="LhR-VC-P66"/>
+                                            <constraint firstItem="Yq4-8p-PUS" firstAttribute="leading" secondItem="yrt-qz-weK" secondAttribute="leading" constant="-1" id="TVY-9c-mWA"/>
+                                            <constraint firstItem="Yq4-8p-PUS" firstAttribute="centerX" secondItem="yrt-qz-weK" secondAttribute="centerX" id="tQg-r7-vyD"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="Y1q-ro-Gbk">
+                                <rect key="frame" x="0.0" y="266" width="563.66666666666663" height="133"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X2n-7b-wmN">
+                                        <rect key="frame" x="0.0" y="0.0" width="161.33333333333334" height="133"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2d6-du-Rva" customClass="DataComponentView" customModule="SQRCLE" customModuleProvider="target">
+                                                <rect key="frame" x="-1" y="45.333333333333321" width="163.33333333333334" height="87.666666666666686"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="2d6-du-Rva" firstAttribute="leading" secondItem="X2n-7b-wmN" secondAttribute="leading" constant="-1" id="0JQ-Uy-UKN"/>
+                                            <constraint firstItem="2d6-du-Rva" firstAttribute="centerX" secondItem="X2n-7b-wmN" secondAttribute="centerX" id="WVo-85-g8u"/>
+                                            <constraint firstAttribute="bottom" secondItem="2d6-du-Rva" secondAttribute="bottom" id="yXp-Tx-RiM"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tuw-W7-aur">
+                                        <rect key="frame" x="201.33333333333337" y="0.0" width="161" height="133"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FfF-iu-g0v" customClass="DataComponentView" customModule="SQRCLE" customModuleProvider="target">
+                                                <rect key="frame" x="-1" y="0.0" width="163" height="87.666666666666671"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="FfF-iu-g0v" firstAttribute="leading" secondItem="Tuw-W7-aur" secondAttribute="leading" constant="-1" id="XkX-8U-JGJ"/>
+                                            <constraint firstItem="FfF-iu-g0v" firstAttribute="top" secondItem="Tuw-W7-aur" secondAttribute="top" id="aXF-Ua-OJM"/>
+                                            <constraint firstItem="FfF-iu-g0v" firstAttribute="centerX" secondItem="Tuw-W7-aur" secondAttribute="centerX" id="hXS-NJ-WF7"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="btP-db-V7t">
+                                        <rect key="frame" x="402.33333333333331" y="0.0" width="161.33333333333331" height="133"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bRF-mg-DXR" customClass="DataComponentView" customModule="SQRCLE" customModuleProvider="target">
+                                                <rect key="frame" x="-1" y="45.333333333333321" width="163.33333333333334" height="87.666666666666686"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="bRF-mg-DXR" secondAttribute="bottom" id="ReG-Hi-DuX"/>
+                                            <constraint firstItem="bRF-mg-DXR" firstAttribute="centerX" secondItem="btP-db-V7t" secondAttribute="centerX" id="bS3-b7-PL3"/>
+                                            <constraint firstItem="bRF-mg-DXR" firstAttribute="leading" secondItem="btP-db-V7t" secondAttribute="leading" constant="-1" id="lAu-HJ-DEF"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </stackView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="cAz-VE-o6F" firstAttribute="height" secondItem="Iec-jL-Meu" secondAttribute="height" id="1pu-8I-eDT"/>
+                            <constraint firstItem="3if-VD-Pha" firstAttribute="height" secondItem="Iec-jL-Meu" secondAttribute="height" id="5N2-ka-7MC"/>
+                            <constraint firstItem="2d6-du-Rva" firstAttribute="height" secondItem="Iec-jL-Meu" secondAttribute="height" id="IOF-rm-Kdo"/>
+                            <constraint firstItem="Yq4-8p-PUS" firstAttribute="height" secondItem="Iec-jL-Meu" secondAttribute="height" id="IP2-lf-9eo"/>
+                            <constraint firstItem="bRF-mg-DXR" firstAttribute="height" secondItem="Iec-jL-Meu" secondAttribute="height" id="M5R-Jh-jGE"/>
+                            <constraint firstItem="FfF-iu-g0v" firstAttribute="height" secondItem="Iec-jL-Meu" secondAttribute="height" id="Nk0-ZA-zcc"/>
+                        </constraints>
+                    </stackView>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="rSc-2G-pfe"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="QOe-Wq-LEB" firstAttribute="top" secondItem="Um9-G9-L9v" secondAttribute="top" id="CZw-Wk-0ra"/>
+                <constraint firstAttribute="bottom" secondItem="QOe-Wq-LEB" secondAttribute="bottom" id="Lvo-hH-Uuj"/>
+                <constraint firstItem="QOe-Wq-LEB" firstAttribute="centerX" secondItem="Um9-G9-L9v" secondAttribute="centerX" id="Q2I-Ot-oqS"/>
+                <constraint firstItem="QOe-Wq-LEB" firstAttribute="width" secondItem="Um9-G9-L9v" secondAttribute="width" multiplier="0.89" id="yAP-gA-pra"/>
+            </constraints>
+            <size key="customSize" width="578" height="541"/>
+            <connections>
+                <outlet property="constraintGridTop" destination="CZw-Wk-0ra" id="Clk-jg-A8c"/>
+                <outlet property="targetView" destination="QOe-Wq-LEB" id="Aa5-Rc-ihz"/>
+                <outlet property="viewThirdRow" destination="Y1q-ro-Gbk" id="PEU-0T-Ecf"/>
+                <outletCollection property="viewDataComponent" destination="Iec-jL-Meu" collectionClass="NSMutableArray" id="wEj-4A-ihD"/>
+                <outletCollection property="viewDataComponent" destination="8iZ-af-Xkg" collectionClass="NSMutableArray" id="Hdb-vw-bgy"/>
+                <outletCollection property="viewDataComponent" destination="4uE-ib-Rcr" collectionClass="NSMutableArray" id="jeX-Cu-iHN"/>
+                <outletCollection property="viewDataComponent" destination="cAz-VE-o6F" collectionClass="NSMutableArray" id="dK0-4y-HKi"/>
+                <outletCollection property="viewDataComponent" destination="3if-VD-Pha" collectionClass="NSMutableArray" id="zQK-dY-Hu9"/>
+                <outletCollection property="viewDataComponent" destination="Yq4-8p-PUS" collectionClass="NSMutableArray" id="UZf-1v-Sj4"/>
+                <outletCollection property="viewDataComponent" destination="2d6-du-Rva" collectionClass="NSMutableArray" id="lbS-D5-Hpg"/>
+                <outletCollection property="viewDataComponent" destination="FfF-iu-g0v" collectionClass="NSMutableArray" id="jWE-Ec-aSh"/>
+                <outletCollection property="viewDataComponent" destination="bRF-mg-DXR" collectionClass="NSMutableArray" id="Qk3-n4-kgc"/>
+            </connections>
+            <point key="canvasLocation" x="275.57251908396944" y="208.09859154929578"/>
+        </collectionViewCell>
+    </objects>
+</document>

@@ -1,12 +1,12 @@
 CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking" "${PODS_CONFIGURATION_BUILD_DIR}/GZIP" "${PODS_CONFIGURATION_BUILD_DIR}/MatrixSDK" "${PODS_CONFIGURATION_BUILD_DIR}/OLMKit" "${PODS_CONFIGURATION_BUILD_DIR}/iOSChatSDK"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/CircleMenu" "${PODS_CONFIGURATION_BUILD_DIR}/CollectionViewPagingLayout" "${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardManager" "${PODS_CONFIGURATION_BUILD_DIR}/JGProgressHUD" "${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage" "${PODS_CONFIGURATION_BUILD_DIR}/SDWebImageSVGCoder" "${PODS_CONFIGURATION_BUILD_DIR}/SnapKit" "${PODS_CONFIGURATION_BUILD_DIR}/iOSChatSDK"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking/AFNetworking.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/GZIP/GZIP.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/MatrixSDK/MatrixSDK.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/OLMKit/OLMKit.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/iOSChatSDK/iOSChatSDK.framework/Headers"
-OTHER_LDFLAGS = $(inherited) -l"c++" -l"z" -framework "AFNetworking" -framework "CoreGraphics" -framework "Foundation" -framework "GZIP" -framework "MatrixSDK" -framework "MobileCoreServices" -framework "OLMKit" -framework "Security" -framework "SystemConfiguration" -framework "UIKit" -framework "iOSChatSDK"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/CircleMenu/CircleMenu.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/CollectionViewPagingLayout/CollectionViewPagingLayout.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardManager/IQKeyboardManager.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/JGProgressHUD/JGProgressHUD.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage/SDWebImage.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SDWebImageSVGCoder/SDWebImageSVGCoder.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SnapKit/SnapKit.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/iOSChatSDK/iOSChatSDK.framework/Headers"
+LIBRARY_SEARCH_PATHS = $(inherited) $(SDKROOT)/usr/lib/swift
+OTHER_LDFLAGS = $(inherited) -l"swiftCoreGraphics" -framework "CircleMenu" -framework "CollectionViewPagingLayout" -framework "CoreGraphics" -framework "Foundation" -framework "IQKeyboardManager" -framework "ImageIO" -framework "JGProgressHUD" -framework "QuartzCore" -framework "SDWebImage" -framework "SDWebImageSVGCoder" -framework "SnapKit" -framework "UIKit" -framework "iOSChatSDK" -weak_framework "Combine" -weak_framework "SwiftUI"
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
 PODS_ROOT = ${SRCROOT}/Pods
 PODS_XCFRAMEWORKS_BUILD_DIR = $(PODS_CONFIGURATION_BUILD_DIR)/XCFrameworkIntermediates
-USER_HEADER_SEARCH_PATHS = ${PODS_ROOT}/OLMKit/include ${PODS_ROOT}/OLMKit/lib /Users/stefanceriu/Developer/olm/include /Users/stefanceriu/Developer/olm/lib
 USE_RECURSIVE_SCRIPT_INPUTS_IN_SCRIPT_PHASES = YES

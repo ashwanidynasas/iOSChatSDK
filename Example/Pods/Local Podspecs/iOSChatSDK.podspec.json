@@ -16,24 +16,41 @@
     "tag": "0.0.3"
   },
   "platforms": {
-    "ios": "10.0"
+    "ios": "13.0"
   },
   "swift_versions": "5.0",
   "source_files": "iOSChatSDK/Classes/**/*",
+  "resource_bundles": {
+    "iOSChatSDK": [
+      "iOSChatSDK/Resources/**/*.{storyboard,xib,xcassets}"
+    ]
+  },
   "frameworks": [
     "UIKit",
     "Foundation"
   ],
   "dependencies": {
-    "MatrixSDK": [
+    "CollectionViewPagingLayout": [
 
     ],
-    "OLMKit": [
+    "JGProgressHUD": [
+
+    ],
+    "SDWebImage": [
+
+    ],
+    "SDWebImageSVGCoder": [
+
+    ],
+    "SnapKit": [
+
+    ],
+    "CircleMenu": [
+
+    ],
+    "IQKeyboardManager": [
 
     ]
-  },
-  "pod_target_xcconfig": {
-    "OTHER_CFLAGS": "-w"
   },
   "swift_version": "5.0"
 }

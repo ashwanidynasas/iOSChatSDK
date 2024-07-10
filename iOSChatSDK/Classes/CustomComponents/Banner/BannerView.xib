@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iN0-l3-epB" customClass="BannerView" customModule="SQRCLE" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="490" height="441"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="banner" translatesAutoresizingMaskIntoConstraints="NO" id="OKb-pB-vKa">
+                    <rect key="frame" x="0.0" y="0.0" width="490" height="441"/>
+                    <color key="backgroundColor" name="CACE00"/>
+                </imageView>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oLg-yv-kfd">
+                    <rect key="frame" x="0.0" y="0.0" width="490" height="441"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="oLg-yv-kfd" firstAttribute="top" secondItem="OKb-pB-vKa" secondAttribute="top" id="GJB-ii-rz0"/>
+                <constraint firstItem="OKb-pB-vKa" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="JUs-PX-cnd"/>
+                <constraint firstItem="OKb-pB-vKa" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Nvk-wp-Zar"/>
+                <constraint firstItem="oLg-yv-kfd" firstAttribute="bottom" secondItem="OKb-pB-vKa" secondAttribute="bottom" id="TRh-WC-5xY"/>
+                <constraint firstItem="OKb-pB-vKa" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="bmZ-LG-xrf"/>
+                <constraint firstItem="oLg-yv-kfd" firstAttribute="trailing" secondItem="OKb-pB-vKa" secondAttribute="trailing" id="ie0-lk-p7r"/>
+                <constraint firstItem="OKb-pB-vKa" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="kVv-e7-J8q"/>
+                <constraint firstItem="oLg-yv-kfd" firstAttribute="leading" secondItem="OKb-pB-vKa" secondAttribute="leading" id="lAV-JH-5rV"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="imageView" destination="OKb-pB-vKa" id="m5j-T0-cw9"/>
+                <outlet property="viewGrad" destination="oLg-yv-kfd" id="hnC-Km-pIS"/>
+            </connections>
+            <point key="canvasLocation" x="184.73282442748092" y="-146.12676056338029"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="banner" width="826" height="684"/>
+        <namedColor name="CACE00">
+            <color red="0.792156862745098" green="0.80784313725490198" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

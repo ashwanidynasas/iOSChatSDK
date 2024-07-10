@@ -1,0 +1,131 @@
+//
+//  MediaContentCell.swift
+//  iOSChatSDK
+//
+//  Created by Ashwani on 09/07/24.
+//
+
+import UIKit
+
+class MediaContentCell: UITableViewCell {
+    private let bubbleBackgroundView = UIView()
+    private let timestampLabel = UILabel()
+    private let messageImageView = UIImageView()
+    private let readIndicatorImageView = UIImageView() // Added read indicator
+
+    private var leadingConstraint: NSLayoutConstraint!
+    private var trailingConstraint: NSLayoutConstraint!
+    private var maxWidthConstraint: NSLayoutConstraint!
+
+    private var bubbleHeightConstraint: NSLayoutConstraint!
+    private var bubbleWidthConstraint: NSLayoutConstraint!
+    private var messageImageViewHeightConstraint: NSLayoutConstraint!
+    private var messageImageViewWidthConstraint: NSLayoutConstraint!
+
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupViews()
+        setupConstraints()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setupViews() {
+        backgroundColor = .clear
+
+        bubbleBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        bubbleBackgroundView.layer.cornerRadius = Constants.bubbleDiameter / 2
+        bubbleBackgroundView.clipsToBounds = true
+        bubbleBackgroundView.layer.borderWidth = 3.0
+        bubbleBackgroundView.layer.borderColor = UIColor.white.cgColor
+        addSubview(bubbleBackgroundView)
+
+        messageImageView.contentMode = .scaleAspectFill
+        messageImageView.translatesAutoresizingMaskIntoConstraints = false
+        messageImageView.layer.cornerRadius = Constants.bubbleDiameter / 2
+        messageImageView.clipsToBounds = true
+        bubbleBackgroundView.addSubview(messageImageView)
+        
+        timestampLabel.font = Constants.timestampFont
+        timestampLabel.textColor = Constants.timestampColor
+        timestampLabel.textAlignment = .center
+        timestampLabel.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(timestampLabel)
+        
+        readIndicatorImageView.image = UIImage(named: "read_indicator", in: Bundle(for: MediaContentCell.self), compatibleWith: nil)
+        readIndicatorImageView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(readIndicatorImageView)
+
+    }
+    
+    private struct Constants {
+        static let bubbleDiameter: CGFloat = 170
+        static let timestampFont: UIFont = .systemFont(ofSize: 8)
+        static let timestampColor: UIColor = .lightGray
+        static let readIndicatorSize: CGFloat = 7
+        static let padding: CGFloat = 12
+        static let timestampPadding: CGFloat = 4
+        static let dateFormat: String = "hh:mm a"
+
+    }
+    private func setupConstraints() {
+        
+        leadingConstraint = bubbleBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32)
+        trailingConstraint = bubbleBackgroundView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32)
+        bubbleHeightConstraint = bubbleBackgroundView.heightAnchor.constraint(equalToConstant: Constants.bubbleDiameter)
+        bubbleWidthConstraint = bubbleBackgroundView.widthAnchor.constraint(equalToConstant: Constants.bubbleDiameter)
+        
+        messageImageViewHeightConstraint = messageImageView.heightAnchor.constraint(equalTo: bubbleBackgroundView.heightAnchor)
+        messageImageViewWidthConstraint = messageImageView.widthAnchor.constraint(equalTo: bubbleBackgroundView.widthAnchor)
+        
+        NSLayoutConstraint.activate([
+            bubbleBackgroundView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            bubbleBackgroundView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
+            bubbleHeightConstraint,
+            bubbleWidthConstraint,
+
+            messageImageView.topAnchor.constraint(equalTo: bubbleBackgroundView.topAnchor),
+            messageImageView.leadingAnchor.constraint(equalTo: bubbleBackgroundView.leadingAnchor),
+            messageImageView.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor),
+            messageImageView.bottomAnchor.constraint(equalTo: bubbleBackgroundView.bottomAnchor),
+            
+            timestampLabel.topAnchor.constraint(equalTo: messageImageView.bottomAnchor, constant: -20),
+            timestampLabel.centerXAnchor.constraint(equalTo: messageImageView.centerXAnchor),
+            
+            readIndicatorImageView.trailingAnchor.constraint(equalTo: timestampLabel.trailingAnchor, constant: (timestampLabel.frame.width/2+10)),
+            readIndicatorImageView.centerYAnchor.constraint(equalTo: timestampLabel.centerYAnchor),
+            readIndicatorImageView.widthAnchor.constraint(equalToConstant: Constants.readIndicatorSize),
+            readIndicatorImageView.heightAnchor.constraint(equalToConstant: Constants.readIndicatorSize),
+        ])
+    
+    }
+
+    func mediaConfigure(with message: Messages, currentUser: String) {
+        
+        let isCurrentUser = message.sender == currentUser
+        bubbleBackgroundView.backgroundColor = isCurrentUser ? UIColor.black.withAlphaComponent(0.5) : Colors.Circles.violet
+        timestampLabel.textColor = .white
+        
+        let timestamp = Date(timeIntervalSince1970: Double(message.originServerTs ?? 0) / 1000)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = Constants.dateFormat
+        timestampLabel.text = dateFormatter.string(from: timestamp)
+        
+        if isCurrentUser {
+            leadingConstraint.isActive = false
+            trailingConstraint.isActive = true
+        } else {
+            leadingConstraint.isActive = true
+            trailingConstraint.isActive = false
+        }
+        
+        if let imageUrlString = message.content?.url, let imageUrl = imageUrlString.modifiedString.mediaURL {
+            // Load the image from the URL
+            print("imageUrl ---->>>>>>>>    \(imageUrl)")
+            self.messageImageView.sd_setImage(with: imageUrl, placeholderImage:  UIImage(named: "read_indicator"), options: .transformAnimatedImage, progress: nil, completed: nil)
+        }
+    }
+}

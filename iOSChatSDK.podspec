@@ -28,9 +28,13 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/ashwanidynasas/iOSChatSDK.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '10.0'
+  s.ios.deployment_target = '13.0'
   s.swift_version = '5.0'
   s.source_files = 'iOSChatSDK/Classes/**/*'
+  
+  s.resource_bundles = {
+      'iOSChatSDK' => ['iOSChatSDK/Resources/**/*.{storyboard,xib,xcassets}']
+  }
   
 #   s.resource_bundles = {
 #     'iOSChatSDK' => ['iOSChatSDK/Assets/*.png']
@@ -39,10 +43,18 @@ Pod::Spec.new do |s|
 #   s.public_header_files = 'Pod/Classes/**/*.h'
    s.frameworks = 'UIKit', 'Foundation'
    # Add dependencies here
-     s.dependency 'MatrixSDK'
-    s.dependency 'OLMKit'
- s.pod_target_xcconfig = {
-    'OTHER_CFLAGS' => '-w'
-  }
+   s.dependency 'CollectionViewPagingLayout'
+   s.dependency 'JGProgressHUD'
+   s.dependency 'SDWebImage'
+   s.dependency 'SDWebImageSVGCoder'
+   s.dependency 'SnapKit'
+   s.dependency 'CircleMenu'
+   s.dependency 'IQKeyboardManager'
+
+#     s.dependency 'MatrixSDK'
+#    s.dependency 'OLMKit'
+# s.pod_target_xcconfig = {
+#    'OTHER_CFLAGS' => '-w'
+#  }
      
 end

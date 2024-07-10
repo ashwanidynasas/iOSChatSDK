@@ -7,6 +7,7 @@
 
 import UIKit
 //import MatrixSDK
+import IQKeyboardManager
 
 public class MainChatVC: UIViewController {
 
@@ -17,6 +18,8 @@ public class MainChatVC: UIViewController {
     public var tableView: UITableView!
     var jwt_Token:String!
     var access_token:String!
+    var userName:String!
+    
     
     private var loginViewModel: LoginViewModel!
 
@@ -29,7 +32,8 @@ public class MainChatVC: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.title = "Chat SDK"
-        
+        IQKeyboardManager.shared().isEnabled = true
+
         //Custom Cell register.
         let nib = UINib(nibName: tableCell, bundle: Bundle(for: CustomTableViewCell.self))
         userChatTV.register(nib, forCellReuseIdentifier: "customTableViewCell")
@@ -70,9 +74,21 @@ public class MainChatVC: UIViewController {
                 print("Access Token: \(accessToken)")
                 self.access_token = accessToken
                 
-                let alert = UIAlertController(title: "Stored Token", message: self.access_token, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Access Token", message: self.access_token, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                        //Navigate to next screen.
+                        let bundle = Bundle(for: MainChatVC.self)
+                        let storyboard = UIStoryboard(name: "MainChat", bundle: bundle)
+                        guard let viewController = storyboard.instantiateViewController(withIdentifier: "ConnectionListVC") as? ConnectionListVC else {
+                            fatalError("ViewController Not Found")
+                        }
+                        viewController.chatUserID = self.userName
+                        self.navigationController?.pushViewController(viewController, animated: true)
+                        
+                    }))
+                    self.present(alert, animated: true, completion: nil)
+                }
                 
             } else {
                 print("Failed to retrieve access token")
@@ -92,18 +108,23 @@ extension MainChatVC: UITableViewDelegate,UITableViewDataSource{
         let cell = userChatTV.dequeueReusableCell(withIdentifier: "customTableViewCell", for: indexPath) as! CustomTableViewCell
         let user = viewModel.users[indexPath.row]
         cell.senderTextLabel?.text = user.username
-
+        cell.selectionStyle = .none
         return cell
+    }
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 44.0
     }
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("JWT_Token ---> ")
         print(viewModel.users[indexPath.row].loginJWTtoken)
         jwt_Token = viewModel.users[indexPath.row].loginJWTtoken
-        self.getJWT_Token(jwt_Token, username: viewModel.users[indexPath.row].username)
-        
-        let alert = UIAlertController(title: viewModel.users[indexPath.row].username, message: jwt_Token, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-
+        userName = viewModel.users[indexPath.row].username
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: self.viewModel.users[indexPath.row].username, message: self.jwt_Token, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                self.getJWT_Token(self.jwt_Token, username: self.userName)
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }

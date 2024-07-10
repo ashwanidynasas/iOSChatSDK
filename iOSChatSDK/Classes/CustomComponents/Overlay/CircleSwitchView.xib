@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CircleSwitchView" customModule="SQRCLE" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="7Zm-9j-yMS">
+            <rect key="frame" x="0.0" y="0.0" width="303" height="456"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rwg-7Y-aAg">
+                    <rect key="frame" x="0.0" y="0.0" width="303" height="456"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="wIH-nd-is3">
+                        <rect key="frame" x="0.0" y="0.0" width="303" height="456"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="woM-kT-I6A">
+                                <rect key="frame" x="25" y="178" width="110" height="200"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </stackView>
+                        </subviews>
+                    </view>
+                    <blurEffect style="dark"/>
+                </visualEffectView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="tOM-XO-tKB"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="Rwg-7Y-aAg" firstAttribute="top" secondItem="7Zm-9j-yMS" secondAttribute="top" id="7SF-o4-AE6"/>
+                <constraint firstItem="Rwg-7Y-aAg" firstAttribute="leading" secondItem="7Zm-9j-yMS" secondAttribute="leading" id="Dgk-28-xf7"/>
+                <constraint firstItem="Rwg-7Y-aAg" firstAttribute="centerX" secondItem="7Zm-9j-yMS" secondAttribute="centerX" id="lP9-29-n0k"/>
+                <constraint firstItem="Rwg-7Y-aAg" firstAttribute="centerY" secondItem="7Zm-9j-yMS" secondAttribute="centerY" id="x1S-o5-YQc"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="6.8702290076335872" y="-24.647887323943664"/>
+        </view>
+    </objects>
+</document>

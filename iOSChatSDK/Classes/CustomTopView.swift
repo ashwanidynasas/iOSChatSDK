@@ -7,16 +7,18 @@
 
 import UIKit
 
-protocol CustomTopViewDelegate: AnyObject {
+protocol TopViewDelegate: AnyObject {
     func backButtonTapped()
 }
+
 class CustomTopView: UIView {
 
     @IBOutlet weak var backButton: UIButton!
      @IBOutlet weak var imageView: UIImageView!
      @IBOutlet weak var titleLabel: UILabel!
      @IBOutlet weak var searchButton: UIButton!
-    weak var delegate: CustomTopViewDelegate?
+    
+    weak var delegate: TopViewDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)

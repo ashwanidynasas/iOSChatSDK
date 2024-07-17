@@ -17,8 +17,8 @@ class ChatMediaViewModel {
         print("msgType \(msgType)")
         print("mimetype \(mimetype)")
         print("fileName \(fileName)")
-        print("imageFilePath \(imageFilePath)")
-        print("videoFilePath \(videoFilePath)")
+        print("imageFilePath \(String(describing: imageFilePath))")
+        print("videoFilePath \(String(describing: videoFilePath))")
         print("mediaType \(mediaType)")
 
         var request = URLRequest(url: url)

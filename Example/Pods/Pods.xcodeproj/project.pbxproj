@@ -146,6 +146,7 @@
 		4DB8B2C62C3D1C420033401D /* MediaContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB8B2C42C3D1C420033401D /* MediaContentCell.swift */; };
 		4DB8B2C92C3D484D0033401D /* MediaFullVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB8B2C82C3D484D0033401D /* MediaFullVC.swift */; };
 		4DB8B2CB2C3E57A40033401D /* MenuBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB8B2CA2C3E57A40033401D /* MenuBottomView.swift */; };
+		4DB8B30C2C3FD4760033401D /* PublishMediaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB8B30B2C3FD4750033401D /* PublishMediaVC.swift */; };
 		4DFCB3D9623FCA43D3E1BFDA528EB587 /* UIView+WebCacheOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 967B4C16C56F6F1921A6CAF1F1130CCA /* UIView+WebCacheOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EC633971567BFD6384859B76E1276F1 /* SDWebImageCacheKeyFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FF9F8F605E2CC5BC6525104DFE2F6E3 /* SDWebImageCacheKeyFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4F331E57B7608235D4EFBECD6D2DEE54 /* CircleMenu-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CB1E1D95E24206C462D6073C87266A6E /* CircleMenu-dummy.m */; };
@@ -730,6 +731,7 @@
 		4DB8B2C42C3D1C420033401D /* MediaContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MediaContentCell.swift; path = iOSChatSDK/Classes/MediaContentCell.swift; sourceTree = "<group>"; };
 		4DB8B2C82C3D484D0033401D /* MediaFullVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MediaFullVC.swift; path = iOSChatSDK/Classes/MediaFullVC.swift; sourceTree = "<group>"; };
 		4DB8B2CA2C3E57A40033401D /* MenuBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MenuBottomView.swift; path = iOSChatSDK/Classes/MenuBottomView.swift; sourceTree = "<group>"; };
+		4DB8B30B2C3FD4750033401D /* PublishMediaVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PublishMediaVC.swift; path = iOSChatSDK/Classes/PublishMediaVC.swift; sourceTree = "<group>"; };
 		4DE8822DB555D6A4906B84FA1A665D5C /* SDWebImageCacheSerializer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageCacheSerializer.h; path = SDWebImage/Core/SDWebImageCacheSerializer.h; sourceTree = "<group>"; };
 		4E03CC31D99346359CEAABA4FFB0BC5D /* IQKeyboardManagerConstantsInternal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQKeyboardManagerConstantsInternal.h; path = IQKeyboardManager/Constants/IQKeyboardManagerConstantsInternal.h; sourceTree = "<group>"; };
 		4EFAF1604A8CBAED2F2406D198592995 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -1575,9 +1577,10 @@
 				4DB8B2BA2C37D0F40033401D /* CustomTopView.xib */,
 				4DB8B2BE2C380CAA0033401D /* MoreOptionView.swift */,
 				4DB8B2BC2C37E6BF0033401D /* ChatMediaViewModel.swift */,
-				9BBB1941F4B6A862E07F1CA075970CD2 /* ChatRoomVC.swift */,
+				4DB8B30B2C3FD4750033401D /* PublishMediaVC.swift */,
 				4DB8B2C82C3D484D0033401D /* MediaFullVC.swift */,
 				4DB8B2CA2C3E57A40033401D /* MenuBottomView.swift */,
+				9BBB1941F4B6A862E07F1CA075970CD2 /* ChatRoomVC.swift */,
 				4DB8B2AA2C3551CB0033401D /* ChatMessageCell.swift */,
 				4DB8B2C42C3D1C420033401D /* MediaContentCell.swift */,
 				C1B6A55005EAD758D0B012A4FBA2A769 /* Base */,
@@ -2993,6 +2996,7 @@
 				FC757FAE37878A55759CE8CCC49C968E /* SQRBaseViewC.swift in Sources */,
 				35883E0412A70E28239FD174759CBAD6 /* SQRCLEImageDownload.swift in Sources */,
 				4D72D1982C3406B9000DCC66 /* CircleObject.swift in Sources */,
+				4DB8B30C2C3FD4760033401D /* PublishMediaVC.swift in Sources */,
 				0A4EE18CC00F3BFF90FAF6B1A4331278 /* SQRCLEImagePicker.swift in Sources */,
 				CA0559B6CAE694555D5B9CFFE728BB8E /* SQRCLEImageUpload.swift in Sources */,
 				12BC79BE5E30393DF0EB91DBC39DD90B /* SQRCLELoader.swift in Sources */,

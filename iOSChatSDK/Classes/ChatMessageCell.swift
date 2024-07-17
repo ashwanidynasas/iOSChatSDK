@@ -180,44 +180,10 @@ class ChatMessageCell: UITableViewCell {
     private func configureVideoMessage(_ text: String) {
         messageLabel.isHidden = true
         messageImageView.isHidden = false
-
         if let videoURL = text.modifiedString.mediaURL {
-              print("videoURL ---> \(videoURL)")
-            generateThumbnail(from: videoURL) { image in
-                if let thumbnail = image {
-                    // Use the thumbnail (e.g., set it to an UIImageView)
-                    print("Thumbnail generated successfully")
-                } else {
-                    print("Failed to generate thumbnail")
-                }
-            }
             self.messageImageViewHeightConstraint.constant = 150
         } else {
             messageImageViewHeightConstraint.constant = 0
-        }
-    }
-    func generateThumbnail(from url: URL, completion: @escaping (UIImage?) -> Void) {
-        let asset = AVAsset(url: url)
-        let assetImageGenerator = AVAssetImageGenerator(asset: asset)
-        assetImageGenerator.appliesPreferredTrackTransform = true
-
-        // Choose the time for the thumbnail. Here, we use the first frame.
-        let time = CMTimeMake(value: 1, timescale: 60)
-
-        // Generate the thumbnail
-        DispatchQueue.global().async {
-            do {
-                let cgImage = try assetImageGenerator.copyCGImage(at: time, actualTime: nil)
-                let image = UIImage(cgImage: cgImage)
-                DispatchQueue.main.async {
-                    completion(image)
-                }
-            } catch {
-                print("Error generating thumbnail: \(error.localizedDescription)")
-                DispatchQueue.main.async {
-                    completion(nil)
-                }
-            }
         }
     }
     
@@ -227,13 +193,11 @@ class ChatMessageCell: UITableViewCell {
         messageLabel.isHidden = false
         messageImageView.isHidden = false
 
-
         if let url = mediaUrl.modifiedString.mediaURL {
 
-              self.messageImageView.sd_setImage(with: url, placeholderImage:  UIImage(named: "read_indicator"), options: .transformAnimatedImage, progress: nil, completed: nil)
+            self.messageImageView.sd_setImage(with: url, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: ChatMessageCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
               
-//              messageImageView.image = UIImage(data: data)
-              messageImageViewHeightConstraint.constant = 150 // Set desired height for the image view
+            messageImageViewHeightConstraint.constant = 150 // Set desired height for the image view
           } else {
               messageImageViewHeightConstraint.constant = 0
           }

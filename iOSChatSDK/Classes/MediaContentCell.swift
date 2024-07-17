@@ -12,6 +12,7 @@ class MediaContentCell: UITableViewCell {
     private let timestampLabel = UILabel()
     private let messageImageView = UIImageView()
     private let readIndicatorImageView = UIImageView() // Added read indicator
+    let playButton = UIButton() // Added play button
 
     private var leadingConstraint: NSLayoutConstraint!
     private var trailingConstraint: NSLayoutConstraint!
@@ -32,7 +33,6 @@ class MediaContentCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
     private func setupViews() {
         backgroundColor = .clear
 
@@ -41,7 +41,7 @@ class MediaContentCell: UITableViewCell {
         bubbleBackgroundView.clipsToBounds = true
         bubbleBackgroundView.layer.borderWidth = 3.0
         bubbleBackgroundView.layer.borderColor = UIColor.white.cgColor
-        addSubview(bubbleBackgroundView)
+        contentView.addSubview(bubbleBackgroundView)
 
         messageImageView.contentMode = .scaleAspectFill
         messageImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -53,11 +53,15 @@ class MediaContentCell: UITableViewCell {
         timestampLabel.textColor = Constants.timestampColor
         timestampLabel.textAlignment = .center
         timestampLabel.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(timestampLabel)
+        contentView.addSubview(timestampLabel)
         
         readIndicatorImageView.image = UIImage(named: "read_indicator", in: Bundle(for: MediaContentCell.self), compatibleWith: nil)
         readIndicatorImageView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(readIndicatorImageView)
+        contentView.addSubview(readIndicatorImageView)
+
+        playButton.setImage(UIImage(named: "PlayIcon", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
+        playButton.translatesAutoresizingMaskIntoConstraints = false
+        bubbleBackgroundView.addSubview(playButton)
 
     }
     
@@ -69,6 +73,7 @@ class MediaContentCell: UITableViewCell {
         static let padding: CGFloat = 12
         static let timestampPadding: CGFloat = 4
         static let dateFormat: String = "hh:mm a"
+        static let playButtonSize: CGFloat = 30
 
     }
     private func setupConstraints() {
@@ -92,6 +97,11 @@ class MediaContentCell: UITableViewCell {
             messageImageView.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor),
             messageImageView.bottomAnchor.constraint(equalTo: bubbleBackgroundView.bottomAnchor),
             
+            playButton.centerXAnchor.constraint(equalTo: messageImageView.centerXAnchor),
+            playButton.centerYAnchor.constraint(equalTo: messageImageView.centerYAnchor),
+            playButton.widthAnchor.constraint(equalToConstant: Constants.playButtonSize),
+            playButton.heightAnchor.constraint(equalToConstant: Constants.playButtonSize),
+
             timestampLabel.topAnchor.constraint(equalTo: messageImageView.bottomAnchor, constant: -20),
             timestampLabel.centerXAnchor.constraint(equalTo: messageImageView.centerXAnchor),
             
@@ -102,7 +112,7 @@ class MediaContentCell: UITableViewCell {
         ])
     
     }
-
+    
     func mediaConfigure(with message: Messages, currentUser: String) {
         
         let isCurrentUser = message.sender == currentUser
@@ -121,11 +131,28 @@ class MediaContentCell: UITableViewCell {
             leadingConstraint.isActive = true
             trailingConstraint.isActive = false
         }
-        
-        if let imageUrlString = message.content?.url, let imageUrl = imageUrlString.modifiedString.mediaURL {
-            // Load the image from the URL
-            print("imageUrl ---->>>>>>>>    \(imageUrl)")
-            self.messageImageView.sd_setImage(with: imageUrl, placeholderImage:  UIImage(named: "read_indicator"), options: .transformAnimatedImage, progress: nil, completed: nil)
+        if let videoURL = message.content?.awsUrl {
+            fetchThumbnail(videoURL)
+        }else{
+            playButton.setImage(nil, for: .normal)
+            if let imageUrlString = message.content?.url, let imageUrl = imageUrlString.modifiedString.mediaURL {
+                // Load the image from the URL
+                self.messageImageView.sd_setImage(with: imageUrl, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                
+            }
+        }
+    }
+    
+    func fetchThumbnail(_ awsUrl:String) {
+        guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(awsUrl)") else {
+            print("Error: Invalid video URL")
+            return
+        }
+        videoURL.generateThumbnail { [weak self] (thumbnail) in
+            DispatchQueue.main.async {
+                self?.messageImageView.image = thumbnail
+                self?.playButton.setImage(UIImage(named: "PlayIcon", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
+            }
         }
     }
 }

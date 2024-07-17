@@ -41,6 +41,7 @@ struct MessageContent: Codable {
     let msgtype: String?
     let body: String?
     let url: String?
+    let awsUrl: String?
     let format: String?
     let formattedBody: String?
     let relatesTo: RelatesTo?
@@ -50,6 +51,7 @@ struct MessageContent: Codable {
         case msgtype
         case body
         case url
+        case awsUrl
         case format
         case formattedBody = "formatted_body"
         case relatesTo = "m.relates_to"

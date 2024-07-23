@@ -24,6 +24,7 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate,TopViewDelegate {
     @IBOutlet weak var videoPlayerBackView: UIView!
 
     weak var publishDelegate: PublishMediaDelegate?
+    
     var currentUser: String!
     var imageFetched:UIImage!
     var videoFetched:URL!
@@ -48,12 +49,12 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate,TopViewDelegate {
         print("videoFetched \(String(describing: videoFetched))")
         self.fullImgView.image = imageFetched
         self.sendMsgTF.inputAccessoryView = UIView()
-        IQKeyboardManager.shared().isEnabled = false
+//        IQKeyboardManager.shared().isEnabled = false
         
         // Register for keyboard notifications
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        sendMsgTF.autocorrectionType = .no
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+//        sendMsgTF.autocorrectionType = .no
         videoPlayerBackView.isHidden = true
 
         if imageFetched == nil {
@@ -88,35 +89,35 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate,TopViewDelegate {
            }
        }
     
-    deinit {
-        // Remove observer
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-    }
+//    deinit {
+//        // Remove observer
+//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+//        
+//    }
     
-    @objc func keyboardWillShow(notification: NSNotification) {
-         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-             if self.backTFView.frame.origin.y == 0 {
-                 self.backTFView.frame.origin.y -= keyboardSize.height
-             }
-         }
-     }
-     
-     @objc func keyboardWillHide(notification: NSNotification) {
-         if self.backTFView.frame.origin.y != 0 {
-             self.backTFView.frame.origin.y = 0
-         }
-     }
+//    @objc func keyboardWillShow(notification: NSNotification) {
+//         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+//             if self.backTFView.frame.origin.y == 0 {
+//                 self.backTFView.frame.origin.y -= keyboardSize.height
+//             }
+//         }
+//     }
+//     
+//     @objc func keyboardWillHide(notification: NSNotification) {
+//         if self.backTFView.frame.origin.y != 0 {
+//             self.backTFView.frame.origin.y = 0
+//         }
+//     }
      
      func textFieldShouldReturn(_ textField: UITextField) -> Bool {
          textField.resignFirstResponder()
          return true
      }
      
-     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-         self.view.endEditing(true)
-     }
+//     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//         self.view.endEditing(true)
+//     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -140,11 +141,40 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate,TopViewDelegate {
     
     @IBAction func sendAction(_ sender: UIButton) {
         if imageFetched == nil {
-            publishDelegate?.didReceiveData(data: "video")
+            APIManager.shared.sendImageFromGalleryAPICall(video: videoFetched, msgType: "m.video", body:self.sendMsgTF.text) { result in
+                switch result {
+                case .success(let message):
+                    print("Success: \(message)")
+                    // Update UI or perform other actions on success
+                    DispatchQueue.global().async {
+                        DispatchQueue.main.async {
+                            self.publishDelegate?.didReceiveData(data: "update")
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                    }
+                case .failure(let error):
+                    print("Error: \(error.localizedDescription)")
+                    // Handle error or show an alert
+                }
+            }
         }else{
-            publishDelegate?.didReceiveData(data: "image")
+            APIManager.shared.sendImageFromGalleryAPICall(image: imageFetched, msgType: "m.image", body:self.sendMsgTF.text) { result in
+                switch result {
+                case .success(let message):
+                    print("Success: \(message)")
+                    // Update UI or perform other actions on success
+                    DispatchQueue.global().async {
+                        DispatchQueue.main.async {
+                            self.publishDelegate?.didReceiveData(data: "update")
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                    }
+                case .failure(let error):
+                    print("Error: \(error.localizedDescription)")
+                    // Handle error or show an alert
+                }
+            }
         }
-        navigationController?.popViewController(animated: true)
     }
     
 }

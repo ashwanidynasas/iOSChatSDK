@@ -26,17 +26,9 @@ class ViewController: UIViewController {
 
     @IBAction func chatSDKAction(_ sender: UIButton) {
         print("goto detail page just now")
-//        iOSChatSDKInitiated.getChatSDK()
-        
         let frameworkVC = MainChatVC.instantiate()
         self.navigationController?.pushViewController(frameworkVC, animated: true)
 
-
-
-        /*
-         //        let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController
-         //        self.navigationController?.pushViewController(vc!, animated: true)
-         */
     }
 }
 

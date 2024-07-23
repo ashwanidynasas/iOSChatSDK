@@ -11,17 +11,24 @@ import UIKit
 class CustomTabBarButton: UIButton {
     var tapAction: (() -> Void)?
     
+    private let overlapButton:UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.tintColor = .blue
+        button.backgroundColor = .clear
+        return button
+    }()
+    
     private let buttonImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
-
         return imageView
     }()
     
     private let imageBackView:UIView = {
         let backview = UIView()
-        backview.backgroundColor = Colors.Circles.violet
+        backview.backgroundColor = .white
         backview.layer.cornerRadius = 20
         backview.clipsToBounds = true
         backview.translatesAutoresizingMaskIntoConstraints = false
@@ -40,7 +47,7 @@ class CustomTabBarButton: UIButton {
     init(image: UIImage?) {
         super.init(frame: .zero)
 
-        self.buttonImageView.image = image
+        overlapButton.setImage(image, for: .normal)
         addSubview(imageBackView)
 
         NSLayoutConstraint.activate([
@@ -67,13 +74,23 @@ class CustomTabBarButton: UIButton {
                 buttonTitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant:-4),
                 buttonTitleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant:-4)
             ])
+        
+        addSubview(overlapButton)
+        NSLayoutConstraint.activate([
+            overlapButton.topAnchor.constraint(equalTo: self.topAnchor),
+            overlapButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            overlapButton.widthAnchor.constraint(equalToConstant: 40),
+            overlapButton.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        overlapButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
             
-            // Add tap action
-            self.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         }
 
     func setTitle(_ title: String) {
         buttonTitleLabel.text = title
+    }
+    func setButtonTint(_ tintColor:UIColor){
+        imageBackView.backgroundColor = tintColor
     }
     
     @objc private func buttonTapped() {
@@ -90,12 +107,15 @@ class CustomTabBar: UIView {
 
     private var buttonTitles: [String]
     private var buttonImages: [UIImage]
+    private var buttonTintColor: UIColor
+
     private var buttons: [CustomTabBarButton] = []
     var didSelectTab: ((Int) -> Void)?
 
-    init(buttonTitles: [String], buttonImages: [UIImage]) {
+    init(buttonTitles: [String], buttonImages: [UIImage],buttonColors: UIColor) {
         self.buttonTitles = buttonTitles
         self.buttonImages = buttonImages
+        self.buttonTintColor = buttonColors
         super.init(frame: .zero)
         setupView()
     }
@@ -114,11 +134,12 @@ class CustomTabBar: UIView {
         for (index, image) in buttonImages.enumerated() {
             let button = CustomTabBarButton(image: image)
             button.setTitle(buttonTitles[index])
+            button.setButtonTint(buttonTintColor)
             button.tag = index
             button.tapAction = { [weak self] in
                 self?.handleButtonTap(index: index)
             }
-            button.tintColor = .blue
+//            button.tintColor = .green
             buttons.append(button)
             stackView.addArrangedSubview(button)
         }

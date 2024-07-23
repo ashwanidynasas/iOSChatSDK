@@ -45,7 +45,12 @@ class ChatMessageCell: UITableViewCell {
         setupViews()
         setupConstraints()
     }
-
+    override func prepareForReuse() {
+            super.prepareForReuse()
+            // Reset the content of the cell
+            messageLabel.text = nil
+            // Reset other UI elements if necessary
+        }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

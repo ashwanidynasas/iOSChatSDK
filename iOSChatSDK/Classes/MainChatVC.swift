@@ -20,7 +20,6 @@ public class MainChatVC: UIViewController {
     var access_token:String!
     var userName:String!
     
-    
     private var loginViewModel: LoginViewModel!
 
     // Required initializer for Storyboard support
@@ -33,6 +32,7 @@ public class MainChatVC: UIViewController {
         self.view.backgroundColor = .white
         self.title = "Chat SDK"
         IQKeyboardManager.shared().isEnabled = true
+        CacheManager.shared.shrinkCache(limit: 10 * 1024 * 1024)
 
         //Custom Cell register.
         let nib = UINib(nibName: tableCell, bundle: Bundle(for: CustomTableViewCell.self))

@@ -10,7 +10,7 @@ import UIKit
 class MediaContentCell: UITableViewCell {
     private let bubbleBackgroundView = UIView()
     private let timestampLabel = UILabel()
-    private let messageImageView = UIImageView()
+    private var messageImageView = UIImageView()
     private let readIndicatorImageView = UIImageView() // Added read indicator
     let playButton = UIButton() // Added play button
 
@@ -112,7 +112,13 @@ class MediaContentCell: UITableViewCell {
         ])
     
     }
-    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        // Reset the content of the cell
+        messageImageView.image = nil
+        playButton.tag = 0
+        // Reset other UI elements if necessary
+    }
     func mediaConfigure(with message: Messages, currentUser: String) {
         
         let isCurrentUser = message.sender == currentUser
@@ -131,28 +137,42 @@ class MediaContentCell: UITableViewCell {
             leadingConstraint.isActive = true
             trailingConstraint.isActive = false
         }
-        if let videoURL = message.content?.awsUrl {
-            fetchThumbnail(videoURL)
-        }else{
+        if message.content?.msgtype == "m.image" {
             playButton.setImage(nil, for: .normal)
             if let imageUrlString = message.content?.url, let imageUrl = imageUrlString.modifiedString.mediaURL {
                 // Load the image from the URL
                 self.messageImageView.sd_setImage(with: imageUrl, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
                 
             }
+        }else if message.content?.msgtype == "m.video" {
+            if let videoURL = message.content?.S3thumbnailUrl {
+                fetchThumbnail(videoURL)
+            }else{
+                let imageView = UIImageView(image: UIImage(named: "audioholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil)) // Replace with your image names
+
+                self.messageImageView = imageView
+            }
+            self.playButton.setImage(UIImage(named: "PlayIcon", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
+
+        }else if message.content?.msgtype == "m.audio" {
+            let imageView = UIImageView(image: UIImage(named: "audioholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil)) // Replace with your image names
+            self.messageImageView = imageView
+            self.playButton.setImage(UIImage(named: "PlayIcon", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
+            
         }
+        
+        
     }
     
-    func fetchThumbnail(_ awsUrl:String) {
-        guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(awsUrl)") else {
+    func fetchThumbnail(_ s3MediaUrl:String) {
+        guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(s3MediaUrl)") else {
             print("Error: Invalid video URL")
             return
         }
-        videoURL.generateThumbnail { [weak self] (thumbnail) in
-            DispatchQueue.main.async {
-                self?.messageImageView.image = thumbnail
-                self?.playButton.setImage(UIImage(named: "PlayIcon", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
-            }
+        DispatchQueue.main.async {
+            self.messageImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "audioholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+
         }
+
     }
 }

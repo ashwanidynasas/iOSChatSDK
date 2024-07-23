@@ -8,7 +8,13 @@
 import UIKit
 import AVFAudio
 
-class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,PublishMediaDelegate,AVAudioRecorderDelegate, AVAudioPlayerDelegate {
+class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,PublishMediaDelegate,AVAudioRecorderDelegate, AVAudioPlayerDelegate, MediaFullVCDelegate {
+    func itemDeleteFromChat(_ didSendData: String) {
+        if didSendData == "deleteItem"{
+            fetchMessages()
+        }
+    }
+    
     
 
     @IBOutlet weak var sendBtn: UIButton!
@@ -61,6 +67,7 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         case audio = "m.audio"
         case video = "m.video"
         case image = "m.image"
+        case text = "m.text"
 
     }
 
@@ -95,12 +102,15 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         setupUI()
         registerNib()
         createRoomCall()
-        fetchMessages()
         setupCustomBottomView()
-        
+        fetchMessages()
         chatRoomTableView.separatorStyle = .none
         chatRoomTableView.register(ChatMessageCell.self, forCellReuseIdentifier: "ChatMessageCell")
         chatRoomTableView.register(MediaContentCell.self, forCellReuseIdentifier: "MediaContentCell")
+
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
 
     }
     
@@ -117,6 +127,7 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         sendMsgTF.inputAccessoryView = UIView()
         sendMsgTF.delegate = self
         sendMsgTF.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        sendMsgTF.addTarget(self, action: #selector(textFieldTapped(_:)), for: .touchDown)
 
         backTFView.layer.cornerRadius = 18
         backTFView.clipsToBounds = true
@@ -141,6 +152,9 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         chatRoomTableView.rowHeight = UITableView.automaticDimension
         chatRoomTableView.estimatedRowHeight = 100
 
+    }
+    @objc func textFieldTapped(_ textField:UITextField) {
+        moreViewHide()
     }
     @objc func textFieldDidChange(_ textField: UITextField) {
         self.bottomAudioView.isHidden  = true
@@ -229,7 +243,7 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         if success {
             print("Recording succeeded")
 //            sendImageFromGalleryAPICall(audio:audioFilename, msgType: "m.audio")
-            playRecording()
+            sendAudioMedia()
         } else {
             print("Recording failed")
         }
@@ -239,10 +253,30 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
 
     }
     
+    func sendAudioMedia(){
+        APIManager.shared.sendImageFromGalleryAPICall(audio: audioFilename, msgType: "m.audio", body:"") { result in
+            switch result {
+            case .success(let message):
+                print("Success: \(message)")
+                // Update UI or perform other actions on success
+                DispatchQueue.global().async {
+                    DispatchQueue.main.async {
+                        self.fetchMessages()
+                    }
+                }
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
+                // Handle error or show an alert
+            }
+        }
+
+    }
+    
     func playRecording() {
         do {
             print("audioFilename ---->>> \(String(describing: audioFilename))")
-            audioPlayer = try AVAudioPlayer(contentsOf: audioFilename)
+            print(audioFilename!)
+            audioPlayer = try AVAudioPlayer(contentsOf: audioFilename!)
             audioPlayer?.delegate = self
             audioPlayer?.play()
         } catch {
@@ -292,7 +326,7 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         sendMsgModel.sendMessage(roomID: /room_id, body: /body, msgType: msgType, accessToken: /accessToken) { [weak self] response in
             DispatchQueue.main.async {
                 if let response = response {
-                    print("Response: \(response.details.response)\nEvent ID: \(response.details.chat_event_id)")
+//                    print("Response: \(response.details.response)\nEvent ID: \(response.details.chat_event_id)")
                     self?.fetchMessages()
                 } else {
                     print("No response received")
@@ -321,7 +355,7 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
             UIImage(named: "ZC", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!
         ]
         let buttonTitles = ["Media", "Camera", "Location","Document","Send ZC"]
-        let customTabBar = CustomTabBar(buttonTitles: buttonTitles, buttonImages: buttonImages)
+        let customTabBar = CustomTabBar(buttonTitles: buttonTitles, buttonImages: buttonImages, buttonColors: UIColor.white)
         customTabBar.translatesAutoresizingMaskIntoConstraints = false
         morebottomView.addSubview(customTabBar)
         customTabBar.didSelectTab = { tabIndex in
@@ -334,12 +368,16 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         switch tapIndex {
         case 0:
             print("Media")
-            self.openGallery()
-            self.moreViewHide()
+            DispatchQueue.main.async {
+                self.openGallery()
+                self.moreViewHide()
+            }
         case 1:
             print("Camera")
-            self.openCamera()
-            self.moreViewHide()
+            DispatchQueue.main.async {
+                self.openCamera()
+                self.moreViewHide()
+            }
         case 2:
             print("Location")
         case 3:
@@ -364,7 +402,7 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
 
         }
         let token = UserDefaults.standard.string(forKey: "access_token")
-        print("token \(/token)")
+        print("access_token \(/token)")
 
         viewModel.fetchMessages(accessToken: "\(token ?? "")")
     }
@@ -413,12 +451,15 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
     }
     
     func moreViewShow(){
+        self.view.endEditing(true)
+        isToggled = true
         morebottomView.isHidden = false
         moreViewHeight.constant = 56.0
         backBottomViewHeight.constant = 114.0
         scrollToBottom()
     }
     func moreViewHide(){
+        isToggled = false
         morebottomView.isHidden = true
         moreViewHeight.constant = 0.0
         backBottomViewHeight.constant = 56.0
@@ -473,13 +514,13 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         if let mediaType = info[UIImagePickerController.InfoKey.mediaType] as? String {
             if mediaType == "public.image" {
                 if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-                    print("Selected image: \(selectedImage)")
+//                    print("Selected image: \(selectedImage)")
                     imageFetched = selectedImage
                     gotoPublishView()
                 }
             } else if mediaType == "public.movie" {
                 if let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? URL {
-                    print("Selected video URL: \(videoURL)")
+//                    print("Selected video URL: \(videoURL)")
                     videoFetched = videoURL
                     gotoPublishView()
                 }
@@ -491,10 +532,8 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
     }
     
     func didReceiveData(data: String) {
-        if data == "video"{
-            sendImageFromGalleryAPICall(video:videoFetched, msgType: "m.video")
-        }else if data == "image"{
-            sendImageFromGalleryAPICall(image:imageFetched, msgType: "m.image")
+        if data == "update"{
+            fetchMessages()
         }else{
             print("return from detail screen")
         }
@@ -587,9 +626,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.messages.count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let message = viewModel.messages[indexPath.row]
         // Media Only
         if let msgType = MessageType(rawValue: message.content?.msgtype ?? "") {
@@ -600,40 +637,48 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
                 cell.playButton.tag = indexPath.row
                 cell.playButton.addTarget(self, action: #selector(tapButtonTapped(_:)), for: .touchUpInside)
                 cell.selectionStyle = .none // Disable cell selection
-                
+                return cell
+            } else if (msgType == .text) {
+                // Text Only
+                let cell = tableView.dequeueReusableCell(withIdentifier: "ChatMessageCell", for: indexPath) as! ChatMessageCell
+                cell.configure(with: message, currentUser: currentUser)
+                cell.selectionStyle = .none
                 return cell
             }
         }
-        // Text Only
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ChatMessageCell", for: indexPath) as! ChatMessageCell
-        cell.configure(with: message, currentUser: currentUser)
-        cell.selectionStyle = .none
-        return cell
-
+        return UITableViewCell()
     }
 
     @objc func tapButtonTapped(_ sender: UIButton) {
         let rowIndex = sender.tag
-        print("Tap button was tapped on row \(rowIndex)!")
-        
-        let storyboard = UIStoryboard(name: "MainChat", bundle: Bundle(for: ChatRoomVC.self))
-        guard let viewController = storyboard.instantiateViewController(withIdentifier: "MediaFullVC") as? MediaFullVC else {
-            fatalError("ViewController Not Found")
-        }
-
         let message = viewModel.messages[rowIndex]
 
-        if message.content?.url == nil  {
-            print("media nil...")
-            return
-        }
-        viewController.currentUser = currentUser
-        viewController.videoFetched = videoFetched
-        viewController.imageFetched = imageFetched
-        viewController.imageSelectURL = message.content?.url
-        viewController.s3MediaURL = message.content?.awsUrl
-        self.navigationController?.pushViewController(viewController, animated: true)
+        print("Tap button was tapped on row \(rowIndex)!")
+        if let msgType = viewModel.messages[rowIndex].content?.msgtype {
+//            if msgType == "m.audio" {
+////                audioFilename = audioURL
+////                playRecording()
+//            }else{
+                if message.content?.url == nil  {
+                    print("media nil...")
+                    return
+                }
+                let storyboard = UIStoryboard(name: "MainChat", bundle: Bundle(for: ChatRoomVC.self))
+                guard let viewController = storyboard.instantiateViewController(withIdentifier: "MediaFullVC") as? MediaFullVC else {
+                    fatalError("ViewController Not Found")
+                }
+                viewController.currentUser = currentUser
+                viewController.videoFetched = videoFetched
+                viewController.imageFetched = imageFetched
+                viewController.imageSelectURL = message.content?.url
+                viewController.s3MediaURL = message.content?.S3MediaUrl
+                viewController.mediaType =  message.content?.msgtype
+                viewController.eventID = message.eventId
+                viewController.delegate = self
 
+                self.navigationController?.pushViewController(viewController, animated: true)
+//            }
+        }
     }
     
      func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

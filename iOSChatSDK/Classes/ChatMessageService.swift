@@ -41,7 +41,8 @@ struct MessageContent: Codable {
     let msgtype: String?
     let body: String?
     let url: String?
-    let awsUrl: String?
+    let S3MediaUrl: String?
+    let S3thumbnailUrl: String?
     let format: String?
     let formattedBody: String?
     let relatesTo: RelatesTo?
@@ -51,7 +52,8 @@ struct MessageContent: Codable {
         case msgtype
         case body
         case url
-        case awsUrl
+        case S3MediaUrl
+        case S3thumbnailUrl
         case format
         case formattedBody = "formatted_body"
         case relatesTo = "m.relates_to"
@@ -106,7 +108,10 @@ class MessageViewModel {
                 let messageResponse = try decoder.decode(MessageResponse.self, from: data)
 
                 if let messages = messageResponse.chunk {
-                    self?.messages = messages.sorted { $0.originServerTs ?? 0 < $1.originServerTs ?? 0 }
+                    let filteredMessages = messages.filter { message in
+                            message.type == "m.room.message" && message.content != nil && message.content?.msgtype != nil
+                        }
+                    self?.messages = filteredMessages.sorted { $0.originServerTs ?? 0 < $1.originServerTs ?? 0 }
                 } else {
                     print("No messages found in response")
                 }

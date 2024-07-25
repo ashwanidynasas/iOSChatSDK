@@ -7,12 +7,18 @@
 
 import UIKit
 
+protocol MediaContentCellDelegate: AnyObject {
+    func didTapPlayButton(in cell: MediaContentCell)
+    func didLongPressPlayButton(in cell: MediaContentCell)
+}
+
 class MediaContentCell: UITableViewCell {
     private let bubbleBackgroundView = UIView()
     private let timestampLabel = UILabel()
     private var messageImageView = UIImageView()
     private let readIndicatorImageView = UIImageView() // Added read indicator
     let playButton = UIButton() // Added play button
+    weak var delegate: MediaContentCellDelegate?
 
     private var leadingConstraint: NSLayoutConstraint!
     private var trailingConstraint: NSLayoutConstraint!
@@ -62,9 +68,34 @@ class MediaContentCell: UITableViewCell {
         playButton.setImage(UIImage(named: "PlayIcon", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
         playButton.translatesAutoresizingMaskIntoConstraints = false
         bubbleBackgroundView.addSubview(playButton)
+        
+        // Add target for button tap
+        playButton.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
+        
+        // Setup tap gesture recognizer
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
+        playButton.addGestureRecognizer(tapGestureRecognizer)
+        
+        // Setup long press gesture recognizer
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture(_:)))
+        playButton.addGestureRecognizer(longPressGestureRecognizer)
 
     }
-    
+    @objc private func buttonTapped(_ sender: UIButton) {
+        delegate?.didTapPlayButton(in: self)
+        
+    }
+
+    @objc private func handleTapGesture(_ gesture: UITapGestureRecognizer) {
+        delegate?.didTapPlayButton(in: self)
+        
+    }
+
+    @objc private func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            delegate?.didLongPressPlayButton(in: self)
+        }
+    }
     private struct Constants {
         static let bubbleDiameter: CGFloat = 170
         static let timestampFont: UIFont = .systemFont(ofSize: 8)

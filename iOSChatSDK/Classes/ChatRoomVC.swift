@@ -53,7 +53,9 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
     var timer: Timer?
     var recordingDuration: TimeInterval = 0
 
-
+    private var customTabBar: CustomTabBar?
+    private var deleteViewModel = DeleteMessageViewModel()
+    var eventID: String! = ""
 
     private let sendMsgModel = SenderViewModel()
     private let viewModel = MessageViewModel()
@@ -355,14 +357,22 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
             UIImage(named: "ZC", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!
         ]
         let buttonTitles = ["Media", "Camera", "Location","Document","Send ZC"]
-        let customTabBar = CustomTabBar(buttonTitles: buttonTitles, buttonImages: buttonImages, buttonColors: UIColor.white)
-        customTabBar.translatesAutoresizingMaskIntoConstraints = false
-        morebottomView.addSubview(customTabBar)
-        customTabBar.didSelectTab = { tabIndex in
-            self.bottomMediaActionPerform(tabIndex)
+        customTabBar = CustomTabBar(buttonTitles: buttonTitles, buttonImages: buttonImages, buttonColors: UIColor.white)
+        
+        if let customTabBar = customTabBar {
+            customTabBar.translatesAutoresizingMaskIntoConstraints = false
+            morebottomView.addSubview(customTabBar)
+            customTabBar.didSelectTab = { tabIndex in
+                self.bottomMediaActionPerform(tabIndex)
+            }
         }
+        
     }
-    
+    func removeCustomTabBar() {
+        customTabBar?.removeFromSuperview()
+        customTabBar = nil
+        
+    }
     func bottomMediaActionPerform(_ tapIndex:Int){
         
         switch tapIndex {
@@ -543,86 +553,12 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         // Dismiss the picker
         picker.dismiss(animated: true, completion: nil)
     }
-    
-    func sendImageFromGalleryAPICall(image: UIImage? = nil, video: URL? = nil, audio: URL? = nil, document: String? = nil, msgType:String) {
-        let roomID = UserDefaults.standard.string(forKey: "room_id")
-        let accessToken = UserDefaults.standard.string(forKey: "access_token")
-        let body = self.sendMsgTF.text
-        print("msg type ---> \(msgType)")
-        
-        var mimetype:String!
-        var mediaType:String!
-        var fileName:String!
-        
-        switch msgType {
-        case "m.image":
-            mimetype = "image/jpeg"
-            mediaType = "image"
-            fileName = "a1.jpg"
-        case "m.video":
-            mimetype = "video/mp4"
-            mediaType = "video"
-            fileName = "upload.mp4"
-        case "m.file" :
-            mimetype = "application/x-python-code"
-            mediaType = "file"
-        case "m.audio":
-            mimetype = "audio/mp3"
-            mediaType = "audio"
-            fileName = "Audio File"
-        default:
-            print(msgType)
-        }
-        
-        if mediaType == "image"{
-            mediaViewModel.uploadFile(accessToken: /accessToken, roomID: /roomID, body: /body, msgType: msgType, mimetype: mimetype, fileName: /fileName, imageFilePath: image,  mediaType: mediaType) { result in
-                switch result {
-                case .success(let response):
-                    DispatchQueue.main.async {
-                        print("Success: \(response.message)")
-                        self.fetchMessages()
-                    }
-                case .failure(let error):
-                    DispatchQueue.main.async {
-                        print("Error: \(error.localizedDescription)")
-                    }
-                }
-            }
-        }
-        else if (mediaType == "audio"){
-            mediaViewModel.uploadFile(accessToken: /accessToken, roomID: /roomID, body: /body, msgType: msgType, mimetype: mimetype, fileName: /fileName, videoFilePath: audio,  mediaType: mediaType) { result in
-                switch result {
-                case .success(let response):
-                    DispatchQueue.main.async {
-                        print("Success: \(response.message)")
-                        self.fetchMessages()
-                    }
-                case .failure(let error):
-                    DispatchQueue.main.async {
-                        print("Error: \(error.localizedDescription)")
-                    }
-                }
-            }
-        }else{
-            mediaViewModel.uploadFile(accessToken: /accessToken, roomID: /roomID, body: /body, msgType: msgType, mimetype: mimetype, fileName: /fileName, videoFilePath: video,  mediaType: mediaType) { result in
-                switch result {
-                case .success(let response):
-                    DispatchQueue.main.async {
-                        print("Success: \(response.message)")
-                        self.fetchMessages()
-                    }
-                case .failure(let error):
-                    DispatchQueue.main.async {
-                        print("Error: \(error.localizedDescription)")
-                    }
-                }
-            }
-        }
-    }
 
     
 }
-extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
+extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaContentCellDelegate {
+   
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.messages.count
     }
@@ -635,7 +571,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
                 // Configure the cell
                 cell.mediaConfigure(with: message, currentUser: currentUser)
                 cell.playButton.tag = indexPath.row
-                cell.playButton.addTarget(self, action: #selector(tapButtonTapped(_:)), for: .touchUpInside)
+                cell.delegate = self  // Set the delegate
                 cell.selectionStyle = .none // Disable cell selection
                 return cell
             } else if (msgType == .text) {
@@ -648,64 +584,139 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
         }
         return UITableViewCell()
     }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        let message = viewModel.messages[indexPath.row]
+        // Media Only
+        if let msgType = MessageType(rawValue: message.content?.msgtype ?? "") {
+            if (msgType == .image) || (msgType == .audio) || (msgType == .video) {
+                return 200
+            }
+        }
+            
+       return UITableView.automaticDimension
+   }
+    // MARK: - MediaContentCellDelegate Methods
+    func didTapPlayButton(in cell: MediaContentCell) {
+        if let indexPath = chatRoomTableView.indexPath(for: cell) {
+//            let message = viewModel.messages[indexPath.row]
+            // Handle button tap here
+            print("Play button tapped for message:")
+            let rowIndex = indexPath.row
+            let message = viewModel.messages[rowIndex]
 
-    @objc func tapButtonTapped(_ sender: UIButton) {
-        let rowIndex = sender.tag
-        let message = viewModel.messages[rowIndex]
+            print("Tap button was tapped on row \(rowIndex)!")
+            if let msgType = viewModel.messages[rowIndex].content?.msgtype {
+    //            if msgType == "m.audio" {
+    ////                audioFilename = audioURL
+    ////                playRecording()
+    //            }else{
+                    if message.content?.url == nil  {
+                        print("media nil...")
+                        return
+                    }
+                    let storyboard = UIStoryboard(name: "MainChat", bundle: Bundle(for: ChatRoomVC.self))
+                    guard let viewController = storyboard.instantiateViewController(withIdentifier: "MediaFullVC") as? MediaFullVC else {
+                        fatalError("ViewController Not Found")
+                    }
+                    viewController.currentUser = currentUser
+                    viewController.videoFetched = videoFetched
+                    viewController.imageFetched = imageFetched
+                    viewController.imageSelectURL = message.content?.url
+                    viewController.s3MediaURL = message.content?.S3MediaUrl
+                    viewController.mediaType =  message.content?.msgtype
+                    viewController.eventID = message.eventId
+                    viewController.delegate = self
 
-        print("Tap button was tapped on row \(rowIndex)!")
-        if let msgType = viewModel.messages[rowIndex].content?.msgtype {
-//            if msgType == "m.audio" {
-////                audioFilename = audioURL
-////                playRecording()
-//            }else{
-                if message.content?.url == nil  {
-                    print("media nil...")
-                    return
+                    self.navigationController?.pushViewController(viewController, animated: true)
+    //            }
+            }
+        }
+    }
+
+    func didLongPressPlayButton(in cell: MediaContentCell) {
+        if let indexPath = chatRoomTableView.indexPath(for: cell) {
+            let message = viewModel.messages[indexPath.row]
+            // Handle long press here
+            print("Play button long pressed for message: ")
+            self.eventID = ""
+            self.eventID = message.eventId
+            removeCustomTabBar()
+            
+            moreViewShow()
+            
+            let buttonImages = [
+                UIImage(named: "copy", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
+                UIImage(named: "Delete", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
+                UIImage(named: "Forward", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
+                UIImage(named: "reply", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
+                UIImage(named: "cancel", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!
+            ]
+            let buttonTitles = ["Copy", "Delete", "Forward","Reply","Cancel"]
+            customTabBar = CustomTabBar(buttonTitles: buttonTitles, buttonImages: buttonImages, buttonColors: UIColor.white)
+            if let customTabBar = customTabBar {
+                customTabBar.translatesAutoresizingMaskIntoConstraints = false
+                morebottomView.addSubview(customTabBar)
+                customTabBar.didSelectTab = { tabIndex in
+                    self.bottomSelectMediaActionPerform(tabIndex)
+                    
                 }
-                let storyboard = UIStoryboard(name: "MainChat", bundle: Bundle(for: ChatRoomVC.self))
-                guard let viewController = storyboard.instantiateViewController(withIdentifier: "MediaFullVC") as? MediaFullVC else {
-                    fatalError("ViewController Not Found")
-                }
-                viewController.currentUser = currentUser
-                viewController.videoFetched = videoFetched
-                viewController.imageFetched = imageFetched
-                viewController.imageSelectURL = message.content?.url
-                viewController.s3MediaURL = message.content?.S3MediaUrl
-                viewController.mediaType =  message.content?.msgtype
-                viewController.eventID = message.eventId
-                viewController.delegate = self
+            }
+        }
+    }
 
-                self.navigationController?.pushViewController(viewController, animated: true)
-//            }
+    func bottomSelectMediaActionPerform(_ tapIndex:Int){
+        
+        switch tapIndex {
+        case 0:
+            print("copy")
+        case 1:
+            print("delete")
+            DispatchQueue.main.async {
+                self.redactMessage()
+                self.moreViewHide()
+                self.removeCustomTabBar()
+                self.setupCustomBottomView()
+            }
+        case 2:
+            print("forward")
+        case 3:
+            print("reply")
+        case 4:
+            print("cancel")
+            DispatchQueue.main.async {
+                self.moreViewHide()
+                self.removeCustomTabBar()
+                self.setupCustomBottomView()
+            }
+        default:
+            print("perform action")
         }
     }
     
-     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-         
-         let message = viewModel.messages[indexPath.row]
-         // Media Only
-         if let msgType = MessageType(rawValue: message.content?.msgtype ?? "") {
-             if (msgType == .image) || (msgType == .audio) || (msgType == .video) {
-                 return 200
-             }
-         }
-             
-        return UITableView.automaticDimension
+    private func redactMessage() {
+        let roomID = UserDefaults.standard.string(forKey: "room_id")
+        let accessToken = UserDefaults.standard.string(forKey: "access_token")
+        let request = MessageRedactRequest(
+                    accessToken: /accessToken,
+                    roomID: /roomID,
+                    eventID: /eventID,
+                    body: "spam"
+                )
+                
+        deleteViewModel.redactMessage(request: request) { result in
+            switch result {
+            case .success(let message):
+                print("delete response message ----->>>> \(message)")
+                DispatchQueue.main.async {
+                    self.fetchMessages()
+                }
+            case .failure(let error):
+                print("Failed to redact message: \(error.localizedDescription)")
+            }
+        }
     }
      
-}
-
-extension UIView {
-    func setGradientBackground(startColor: UIColor, endColor: UIColor) {
-      let gradientLayer = CAGradientLayer()
-      gradientLayer.frame = self.bounds
-      gradientLayer.colors = [startColor.cgColor, endColor.cgColor]
-      gradientLayer.locations = [0.0, 1.0] // Start color at top, end color at bottom
-      gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0) // Centered at top
-      gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0) // Centered at bottom
-      self.layer.insertSublayer(gradientLayer, at: 0)
-    }
 }
 extension ChatRoomVC: TopViewDelegate {
     func backButtonTapped() {

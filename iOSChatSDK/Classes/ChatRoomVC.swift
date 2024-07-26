@@ -8,7 +8,7 @@
 import UIKit
 import AVFAudio
 
-class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,PublishMediaDelegate,AVAudioRecorderDelegate, AVAudioPlayerDelegate, MediaFullVCDelegate {
+class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,PublishMediaDelegate,AVAudioRecorderDelegate, AVAudioPlayerDelegate, MediaFullVCDelegate, MediaContentCellDelegate {
     func itemDeleteFromChat(_ didSendData: String) {
         if didSendData == "deleteItem"{
             fetchMessages()
@@ -38,7 +38,8 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
     @IBOutlet weak var audioTimeLbl: UILabel!
     
     let tableCell = "CustomTableViewCell"
-    
+    let mediaTableCell = "MediaTextTVCell"
+
     let apiClient = RoomAPIClient()
     var chatUserID: String!
     var currentUser: String!
@@ -153,6 +154,8 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         chatRoomTableView.register(nib, forCellReuseIdentifier: "customTableViewCell")
         chatRoomTableView.rowHeight = UITableView.automaticDimension
         chatRoomTableView.estimatedRowHeight = 100
+        let medianib = UINib(nibName: mediaTableCell, bundle: Bundle(for: MediaTextTVCell.self))
+        chatRoomTableView.register(medianib, forCellReuseIdentifier: "mediaTextTVCell")
 
     }
     @objc func textFieldTapped(_ textField:UITextField) {
@@ -556,7 +559,78 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
 
     
 }
-extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaContentCellDelegate {
+extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDelegate {
+    func didTapPlayButton(in cell: MediaTextTVCell) {
+        
+            if let indexPath = chatRoomTableView.indexPath(for: cell) {
+    //            let message = viewModel.messages[indexPath.row]
+                // Handle button tap here
+                print("Play button tapped for message:")
+                let rowIndex = indexPath.row
+                let message = viewModel.messages[rowIndex]
+
+                print("Tap button was tapped on row \(rowIndex)!")
+                if let msgType = viewModel.messages[rowIndex].content?.msgtype {
+        //            if msgType == "m.audio" {
+        ////                audioFilename = audioURL
+        ////                playRecording()
+        //            }else{
+                        if message.content?.url == nil  {
+                            print("media nil...")
+                            return
+                        }
+                        let storyboard = UIStoryboard(name: "MainChat", bundle: Bundle(for: ChatRoomVC.self))
+                        guard let viewController = storyboard.instantiateViewController(withIdentifier: "MediaFullVC") as? MediaFullVC else {
+                            fatalError("ViewController Not Found")
+                        }
+                        viewController.currentUser = currentUser
+                        viewController.videoFetched = videoFetched
+                        viewController.imageFetched = imageFetched
+                        viewController.imageSelectURL = message.content?.url
+                        viewController.s3MediaURL = message.content?.S3MediaUrl
+                        viewController.mediaType =  message.content?.msgtype
+                        viewController.eventID = message.eventId
+                        viewController.delegate = self
+
+                        self.navigationController?.pushViewController(viewController, animated: true)
+        //            }
+                }
+            }
+    }
+    
+    func didLongPressPlayButton(in cell: MediaTextTVCell) {
+        
+            if let indexPath = chatRoomTableView.indexPath(for: cell) {
+                let message = viewModel.messages[indexPath.row]
+                // Handle long press here
+                print("Play button long pressed for message: ")
+                self.eventID = ""
+                self.eventID = message.eventId
+                removeCustomTabBar()
+                
+                moreViewShow()
+                
+                let buttonImages = [
+                    UIImage(named: "copy", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
+                    UIImage(named: "Delete", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
+                    UIImage(named: "Forward", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
+                    UIImage(named: "reply", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
+                    UIImage(named: "cancel", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!
+                ]
+                let buttonTitles = ["Copy", "Delete", "Forward","Reply","Cancel"]
+                customTabBar = CustomTabBar(buttonTitles: buttonTitles, buttonImages: buttonImages, buttonColors: UIColor.white)
+                if let customTabBar = customTabBar {
+                    customTabBar.translatesAutoresizingMaskIntoConstraints = false
+                    morebottomView.addSubview(customTabBar)
+                    customTabBar.didSelectTab = { tabIndex in
+                        self.bottomSelectMediaActionPerform(tabIndex)
+                        
+                    }
+                }
+            }
+    }
+    
+    
    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -567,18 +641,31 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaContentCel
         // Media Only
         if let msgType = MessageType(rawValue: message.content?.msgtype ?? "") {
             if (msgType == .image) || (msgType == .audio) || (msgType == .video) {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "MediaContentCell", for: indexPath) as! MediaContentCell
-                // Configure the cell
-                cell.mediaConfigure(with: message, currentUser: currentUser)
-                cell.playButton.tag = indexPath.row
-                cell.delegate = self  // Set the delegate
-                cell.selectionStyle = .none // Disable cell selection
-                return cell
+                if message.content?.body == "" {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "MediaContentCell", for: indexPath) as! MediaContentCell
+                    // Configure the cell
+                    cell.mediaConfigure(with: message, currentUser: currentUser)
+                    cell.playButton.tag = indexPath.row
+                    cell.delegate = self  // Set the delegate
+                    cell.selectionStyle = .none // Disable cell selection
+                    return cell
+                }else{
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "mediaTextTVCell", for: indexPath) as! MediaTextTVCell
+                    // Configure the cell
+                    cell.mediaConfigure(with: message, currentUser: currentUser)
+                    cell.playButton.tag = indexPath.row
+                    cell.delegate = self  // Set the delegate
+                    cell.selectionStyle = .none // Disable cell selection
+                    return cell
+                }
+                
+
             } else if (msgType == .text) {
-                // Text Only
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ChatMessageCell", for: indexPath) as! ChatMessageCell
                 cell.configure(with: message, currentUser: currentUser)
-                cell.selectionStyle = .none
+//                cell.playButton.tag = indexPath.row
+//                cell.delegate = self  // Set the delegate
+                cell.selectionStyle = .none // Disable cell selection
                 return cell
             }
         }
@@ -587,15 +674,16 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaContentCel
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         let message = viewModel.messages[indexPath.row]
-        // Media Only
         if let msgType = MessageType(rawValue: message.content?.msgtype ?? "") {
             if (msgType == .image) || (msgType == .audio) || (msgType == .video) {
-                return 200
+                if message.content?.body == "" {
+                    return 200
+                }
+                return UITableView.automaticDimension
             }
         }
-            
-       return UITableView.automaticDimension
-   }
+        return UITableView.automaticDimension
+    }
     // MARK: - MediaContentCellDelegate Methods
     func didTapPlayButton(in cell: MediaContentCell) {
         if let indexPath = chatRoomTableView.indexPath(for: cell) {
@@ -633,7 +721,37 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaContentCel
             }
         }
     }
-
+//    func didLongPressPlayButton(in cell: ChatMessageCell) {
+//        
+//        if let indexPath = chatRoomTableView.indexPath(for: cell) {
+//            let message = viewModel.messages[indexPath.row]
+//            // Handle long press here
+//            print("Play button long pressed for message: ")
+//            self.eventID = ""
+//            self.eventID = message.eventId
+//            removeCustomTabBar()
+//            
+//            moreViewShow()
+//            
+//            let buttonImages = [
+//                UIImage(named: "copy", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
+//                UIImage(named: "Delete", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
+//                UIImage(named: "Forward", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
+//                UIImage(named: "reply", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
+//                UIImage(named: "cancel", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!
+//            ]
+//            let buttonTitles = ["Copy", "Delete", "Forward","Reply","Cancel"]
+//            customTabBar = CustomTabBar(buttonTitles: buttonTitles, buttonImages: buttonImages, buttonColors: UIColor.white)
+//            if let customTabBar = customTabBar {
+//                customTabBar.translatesAutoresizingMaskIntoConstraints = false
+//                morebottomView.addSubview(customTabBar)
+//                customTabBar.didSelectTab = { tabIndex in
+//                    self.bottomSelectMediaActionPerform(tabIndex)
+//                    
+//                }
+//            }
+//        }
+//    }
     func didLongPressPlayButton(in cell: MediaContentCell) {
         if let indexPath = chatRoomTableView.indexPath(for: cell) {
             let message = viewModel.messages[indexPath.row]

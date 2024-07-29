@@ -170,7 +170,7 @@
                                                 </connections>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Id-Ed-j3y">
-                                                <rect key="frame" x="237.33333333333337" y="4" width="35" height="42"/>
+                                                <rect key="frame" x="237.33333333333331" y="4" width="35" height="42"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="35" id="9Jr-ys-I6w"/>
@@ -182,7 +182,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69G-nY-lcG">
-                                                <rect key="frame" x="273.33333333333326" y="4" width="35" height="42"/>
+                                                <rect key="frame" x="273.33333333333331" y="4" width="35" height="42"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="35" id="5rT-TB-d5n"/>
@@ -239,6 +239,7 @@
                                             <constraint firstAttribute="bottom" secondItem="2Id-Ed-j3y" secondAttribute="bottom" constant="4" id="0Q5-H2-aCN"/>
                                             <constraint firstAttribute="bottom" secondItem="69G-nY-lcG" secondAttribute="bottom" constant="4" id="0oD-gG-FBk"/>
                                             <constraint firstItem="MbN-od-Duz" firstAttribute="leading" secondItem="qTc-4C-rvO" secondAttribute="trailing" constant="8" symbolic="YES" id="6as-xL-LN8"/>
+                                            <constraint firstAttribute="height" constant="50" id="7AX-Lh-nSN"/>
                                             <constraint firstItem="3k9-Z2-Eu2" firstAttribute="leading" secondItem="hhP-it-uJ4" secondAttribute="trailing" constant="8" symbolic="YES" id="Afe-dE-1pe"/>
                                             <constraint firstItem="2Id-Ed-j3y" firstAttribute="top" secondItem="oDt-nn-zsq" secondAttribute="top" constant="4" id="Ayh-Bo-JHN"/>
                                             <constraint firstItem="3k9-Z2-Eu2" firstAttribute="top" secondItem="oDt-nn-zsq" secondAttribute="top" constant="4" id="EzX-K7-lWh"/>
@@ -312,6 +313,7 @@
                         <outlet property="plusBtn" destination="69G-nY-lcG" id="DRN-E9-xCM"/>
                         <outlet property="sendBtn" destination="3k9-Z2-Eu2" id="xmM-bb-cjJ"/>
                         <outlet property="sendMsgTF" destination="MbN-od-Duz" id="jFI-Uv-ZOR"/>
+                        <outlet property="textFieldViewHeight" destination="7AX-Lh-nSN" id="e3p-05-efk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tJt-nM-hSr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

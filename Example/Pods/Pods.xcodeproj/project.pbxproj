@@ -137,8 +137,6 @@
 		4D4527F3ABE718FA6341B0B4CACCA938 /* JGProgressHUDShadow.m in Sources */ = {isa = PBXBuildFile; fileRef = 179D037409478509A3BA93E099773573 /* JGProgressHUDShadow.m */; };
 		4D72D1962C34030B000DCC66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D72D1952C34030B000DCC66 /* Assets.xcassets */; };
 		4D72D1982C3406B9000DCC66 /* CircleObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D72D1972C3406B9000DCC66 /* CircleObject.swift */; };
-		4D8CC1292C4E3B0D00C2E803 /* DeleteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8CC1282C4E3B0D00C2E803 /* DeleteViewModel.swift */; };
-		4D8CC12E2C4F93DF00C2E803 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8CC12D2C4F93DF00C2E803 /* CacheManager.swift */; };
 		4D8CC1302C4FAC7C00C2E803 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8CC12F2C4FAC7C00C2E803 /* APIManager.swift */; };
 		4D8CC1372C5269F100C2E803 /* MediaTextTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8CC1352C5269F100C2E803 /* MediaTextTVCell.swift */; };
 		4D8CC1382C5269F100C2E803 /* MediaTextTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D8CC1362C5269F100C2E803 /* MediaTextTVCell.xib */; };
@@ -152,6 +150,9 @@
 		4DB8B2C92C3D484D0033401D /* MediaFullVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB8B2C82C3D484D0033401D /* MediaFullVC.swift */; };
 		4DB8B2CB2C3E57A40033401D /* MenuBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB8B2CA2C3E57A40033401D /* MenuBottomView.swift */; };
 		4DB8B30C2C3FD4760033401D /* PublishMediaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB8B30B2C3FD4750033401D /* PublishMediaVC.swift */; };
+		4DBB08E02C575F2D0042D66A /* DeleteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBB08DF2C575F2D0042D66A /* DeleteViewModel.swift */; };
+		4DBB08E32C575F810042D66A /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBB08E22C575F810042D66A /* CacheManager.swift */; };
+		4DBB08E52C5790850042D66A /* ChatReplyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBB08E42C5790850042D66A /* ChatReplyViewModel.swift */; };
 		4DFCB3D9623FCA43D3E1BFDA528EB587 /* UIView+WebCacheOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 967B4C16C56F6F1921A6CAF1F1130CCA /* UIView+WebCacheOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EC633971567BFD6384859B76E1276F1 /* SDWebImageCacheKeyFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FF9F8F605E2CC5BC6525104DFE2F6E3 /* SDWebImageCacheKeyFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4F331E57B7608235D4EFBECD6D2DEE54 /* CircleMenu-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CB1E1D95E24206C462D6073C87266A6E /* CircleMenu-dummy.m */; };
@@ -726,8 +727,6 @@
 		4D72D1952C34030B000DCC66 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4D72D1972C3406B9000DCC66 /* CircleObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleObject.swift; sourceTree = "<group>"; };
 		4D741577B49088731A1B0D14F7A62A59 /* SDWebImageError.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageError.m; path = SDWebImage/Core/SDWebImageError.m; sourceTree = "<group>"; };
-		4D8CC1282C4E3B0D00C2E803 /* DeleteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DeleteViewModel.swift; path = ../iOSChatSDK/Classes/DeleteService/DeleteViewModel.swift; sourceTree = "<group>"; };
-		4D8CC12D2C4F93DF00C2E803 /* CacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CacheManager.swift; path = ../iOSChatSDK/Classes/CacheManager/CacheManager.swift; sourceTree = "<group>"; };
 		4D8CC12F2C4FAC7C00C2E803 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APIManager.swift; path = iOSChatSDK/Classes/APIManager.swift; sourceTree = "<group>"; };
 		4D8CC1352C5269F100C2E803 /* MediaTextTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MediaTextTVCell.swift; path = iOSChatSDK/Classes/MediaTextTVCell.swift; sourceTree = "<group>"; };
 		4D8CC1362C5269F100C2E803 /* MediaTextTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MediaTextTVCell.xib; path = iOSChatSDK/Classes/MediaTextTVCell.xib; sourceTree = "<group>"; };
@@ -741,6 +740,9 @@
 		4DB8B2C82C3D484D0033401D /* MediaFullVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MediaFullVC.swift; path = iOSChatSDK/Classes/MediaFullVC.swift; sourceTree = "<group>"; };
 		4DB8B2CA2C3E57A40033401D /* MenuBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MenuBottomView.swift; path = iOSChatSDK/Classes/MenuBottomView.swift; sourceTree = "<group>"; };
 		4DB8B30B2C3FD4750033401D /* PublishMediaVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PublishMediaVC.swift; path = iOSChatSDK/Classes/PublishMediaVC.swift; sourceTree = "<group>"; };
+		4DBB08DF2C575F2D0042D66A /* DeleteViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeleteViewModel.swift; path = iOSChatSDK/Classes/DeleteService/DeleteViewModel.swift; sourceTree = "<group>"; };
+		4DBB08E22C575F810042D66A /* CacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CacheManager.swift; path = ../iOSChatSDK/Classes/CacheManager/CacheManager.swift; sourceTree = "<group>"; };
+		4DBB08E42C5790850042D66A /* ChatReplyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatReplyViewModel.swift; path = iOSChatSDK/Classes/ChatReplyViewModel.swift; sourceTree = "<group>"; };
 		4DE8822DB555D6A4906B84FA1A665D5C /* SDWebImageCacheSerializer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageCacheSerializer.h; path = SDWebImage/Core/SDWebImageCacheSerializer.h; sourceTree = "<group>"; };
 		4E03CC31D99346359CEAABA4FFB0BC5D /* IQKeyboardManagerConstantsInternal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQKeyboardManagerConstantsInternal.h; path = IQKeyboardManager/Constants/IQKeyboardManagerConstantsInternal.h; sourceTree = "<group>"; };
 		4EFAF1604A8CBAED2F2406D198592995 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -1570,8 +1572,9 @@
 		393E3492754E9CCA6B1D5432F133B4EC /* iOSChatSDK */ = {
 			isa = PBXGroup;
 			children = (
+				4DBB08E12C575F470042D66A /* CacheManager */,
+				4DBB08DE2C575EF50042D66A /* DeleteService */,
 				AD3BD2D111BA09DE1B3F9801B7AC3207 /* ChatConnectListVC.swift */,
-				4D8CC12A2C4F93AF00C2E803 /* CacheManager */,
 				7CE2EE1D2C113EFF2F60531E251C006A /* ChatMessageService.swift */,
 				DAD1C3E7C361CAED2CAC0911AED12445 /* ConnectionListService.swift */,
 				F41970925C84448C9E0596104A8C78C7 /* ConnectionListVC.swift */,
@@ -1585,8 +1588,8 @@
 				4DB8B2BA2C37D0F40033401D /* CustomTopView.xib */,
 				4DB8B2BE2C380CAA0033401D /* MoreOptionView.swift */,
 				4DB8B2BC2C37E6BF0033401D /* ChatMediaViewModel.swift */,
+				4DBB08E42C5790850042D66A /* ChatReplyViewModel.swift */,
 				4DB8B30B2C3FD4750033401D /* PublishMediaVC.swift */,
-				4D8CC1232C4E3A4B00C2E803 /* DeleteService */,
 				4DB8B2C82C3D484D0033401D /* MediaFullVC.swift */,
 				4DB8B2CA2C3E57A40033401D /* MenuBottomView.swift */,
 				4D8CC12F2C4FAC7C00C2E803 /* APIManager.swift */,
@@ -1658,18 +1661,18 @@
 			path = Assets;
 			sourceTree = "<group>";
 		};
-		4D8CC1232C4E3A4B00C2E803 /* DeleteService */ = {
+		4DBB08DE2C575EF50042D66A /* DeleteService */ = {
 			isa = PBXGroup;
 			children = (
-				4D8CC1282C4E3B0D00C2E803 /* DeleteViewModel.swift */,
+				4DBB08DF2C575F2D0042D66A /* DeleteViewModel.swift */,
 			);
-			path = DeleteService;
+			name = DeleteService;
 			sourceTree = "<group>";
 		};
-		4D8CC12A2C4F93AF00C2E803 /* CacheManager */ = {
+		4DBB08E12C575F470042D66A /* CacheManager */ = {
 			isa = PBXGroup;
 			children = (
-				4D8CC12D2C4F93DF00C2E803 /* CacheManager.swift */,
+				4DBB08E22C575F810042D66A /* CacheManager.swift */,
 			);
 			path = CacheManager;
 			sourceTree = "<group>";
@@ -2973,6 +2976,7 @@
 				DF5CDB208D5C5405B253A0BE24341C45 /* CircleSwitchView.xib in Sources */,
 				65EDDBE4A970BF9FE6BD2DD0D893BFEA /* ConnectionListService.swift in Sources */,
 				85F94E47070C7B226BC03D10D44C5CE3 /* ConnectionListVC.swift in Sources */,
+				4DBB08E52C5790850042D66A /* ChatReplyViewModel.swift in Sources */,
 				5586734020B2402CE7DF6F2E724B824D /* ConstantTexts.swift in Sources */,
 				254046CA3258D64AD42F91BB0F0E21D5 /* ConstraintHandler.swift in Sources */,
 				F270902D826C50E94FCC2C0F5E6D9874 /* CustomTableViewCell.swift in Sources */,
@@ -2986,7 +2990,6 @@
 				991791F6DF17C195124B267D4A4E6EAA /* DataComponentView+Delegates.swift in Sources */,
 				55F606C08E3203232929C2BCA66B067F /* DataGridCompactView.swift in Sources */,
 				2041408D196449E2CA71D8047B0589E3 /* DataGridCompactView.xib in Sources */,
-				4D8CC12E2C4F93DF00C2E803 /* CacheManager.swift in Sources */,
 				6E1473B2A3798FEAF030F2A5CF4F39AE /* DataGridView.swift in Sources */,
 				135DE1B69BEEBB39C02ACDFBD3ADE1DC /* DataGridView.xib in Sources */,
 				1BB7C8A8338AF711973C571D6E1FC295 /* DataGridViewController.swift in Sources */,
@@ -2995,6 +2998,7 @@
 				70AB83BFEEA9C36DE61318C70E3FF599 /* GradientView.swift in Sources */,
 				55BBAB92F2EAF6219758AD9606F60748 /* Hero.swift in Sources */,
 				A0E329161A73F1B8ECC0E6E64053234C /* HeroGridView.swift in Sources */,
+				4DBB08E32C575F810042D66A /* CacheManager.swift in Sources */,
 				19DB7D8CC0FA7E5E9C330A7F7D81AD4A /* HeroGridView.xib in Sources */,
 				E551CE6F9269B3F32116FB423A076C36 /* HeroRoundView.swift in Sources */,
 				9DAEC850A867B7FE63EB14E23D7A2D87 /* HeroRoundView.xib in Sources */,
@@ -3035,7 +3039,7 @@
 				4DB8B2BD2C37E6BF0033401D /* ChatMediaViewModel.swift in Sources */,
 				85D00ADB959957F85B66331A4C42ADDF /* SQRMacros.swift in Sources */,
 				4DB8B2C62C3D1C420033401D /* MediaContentCell.swift in Sources */,
-				4D8CC1292C4E3B0D00C2E803 /* DeleteViewModel.swift in Sources */,
+				4DBB08E02C575F2D0042D66A /* DeleteViewModel.swift in Sources */,
 				87FDE7C1C2E06BD4D995FC0A720F128C /* SQRNavigation.swift in Sources */,
 				7DF278B6788FC864B69D337CBEC5FB2D /* SQRStoryboardHelper.swift in Sources */,
 				4DB8B2B92C37D0D80033401D /* CustomTopView.swift in Sources */,

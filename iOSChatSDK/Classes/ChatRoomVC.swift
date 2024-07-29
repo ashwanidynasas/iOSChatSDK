@@ -33,6 +33,7 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
 
     @IBOutlet weak var moreViewHeight: NSLayoutConstraint!
     @IBOutlet weak var backBottomViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var textFieldViewHeight: NSLayoutConstraint!
 
     @IBOutlet weak var morebottomView: UIView!
     @IBOutlet weak var audioTimeLbl: UILabel!
@@ -44,6 +45,7 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
     var chatUserID: String!
     var currentUser: String!
     var isToggled = false
+    var isReply = false
     var imageFetched:UIImage! = nil
     var videoFetched:URL!
     
@@ -478,6 +480,27 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         backBottomViewHeight.constant = 56.0
         scrollToBottom()
     }
+    func moreViewHideWithoutTF(_ reply:Bool){
+        isReply = reply
+        isToggled = false
+        morebottomView.isHidden = true
+        backTFView.isHidden = false
+        moreViewHeight.constant = 0.0
+        backBottomViewHeight.constant = 56.0
+        textFieldViewHeight.constant = 50.0
+    }
+
+    func moreViewShowWithoutTF(_ reply:Bool){
+        self.view.endEditing(true)
+        isToggled = true
+        isReply = reply
+        morebottomView.isHidden = false
+        backBottomViewHeight.constant = 56.0
+        backTFView.isHidden = true
+        textFieldViewHeight.constant = 0.0
+        
+    }
+    
     
     // MARK: - Open Camera Function
     private func openCamera() {
@@ -600,10 +623,12 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
     
     func didLongPressPlayButton(in cell: MediaTextTVCell) {
         
+        moreViewShowWithoutTF(true)
+        
             if let indexPath = chatRoomTableView.indexPath(for: cell) {
                 let message = viewModel.messages[indexPath.row]
                 // Handle long press here
-                print("Play button long pressed for message: ")
+                print("Play button long pressed for message: MediaTextTVCell")
                 self.eventID = ""
                 self.eventID = message.eventId
                 removeCustomTabBar()
@@ -612,8 +637,8 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
                 
                 let buttonImages = [
                     UIImage(named: "copy", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
-                    UIImage(named: "Delete", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
-                    UIImage(named: "Forward", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
+                    UIImage(named: "deleteB", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
+                    UIImage(named: "forwardB", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
                     UIImage(named: "reply", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
                     UIImage(named: "cancel", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!
                 ]
@@ -726,7 +751,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
 //        if let indexPath = chatRoomTableView.indexPath(for: cell) {
 //            let message = viewModel.messages[indexPath.row]
 //            // Handle long press here
-//            print("Play button long pressed for message: ")
+//            print("Play button long pressed for message: ChatMessageCell")
 //            self.eventID = ""
 //            self.eventID = message.eventId
 //            removeCustomTabBar()
@@ -756,7 +781,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
         if let indexPath = chatRoomTableView.indexPath(for: cell) {
             let message = viewModel.messages[indexPath.row]
             // Handle long press here
-            print("Play button long pressed for message: ")
+            print("Play button long pressed for message: MediaContentCell")
             self.eventID = ""
             self.eventID = message.eventId
             removeCustomTabBar()
@@ -800,12 +825,25 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
             print("forward")
         case 3:
             print("reply")
+            print(eventID!)
+            moreViewHideWithoutTF(false)
+            backBottomViewHeight.constant = 114.0
+
         case 4:
             print("cancel")
-            DispatchQueue.main.async {
-                self.moreViewHide()
-                self.removeCustomTabBar()
-                self.setupCustomBottomView()
+            if isReply {
+                DispatchQueue.main.async {
+                    self.moreViewHideWithoutTF(false)
+                    self.removeCustomTabBar()
+                    self.setupCustomBottomView()
+                }
+            }else{
+                DispatchQueue.main.async {
+                    self.moreViewHide()
+                    self.removeCustomTabBar()
+                    self.setupCustomBottomView()
+                }
+
             }
         default:
             print("perform action")

@@ -14,7 +14,7 @@ class APIManager {
     private init() {}
 
     // Function to send image, video, audio, or document with completion handler
-    func sendImageFromGalleryAPICall(image: UIImage? = nil, video: URL? = nil, audio: URL? = nil, document: String? = nil, msgType: String,body:String? = nil, completion: @escaping (Result<String, Error>) -> Void) {
+    func sendImageFromGalleryAPICall(image: UIImage? = nil, video: URL? = nil, audio: URL? = nil, document: String? = nil, msgType: String,body:String? = nil,eventID:String? = nil, completion: @escaping (Result<String, Error>) -> Void) {
         // Simulate an API call with a delay
         let roomID = UserDefaults.standard.string(forKey: "room_id")
         let accessToken = UserDefaults.standard.string(forKey: "access_token")

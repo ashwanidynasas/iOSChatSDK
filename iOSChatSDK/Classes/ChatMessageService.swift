@@ -70,12 +70,27 @@ struct RelatesTo: Codable {
 }
 
 struct InReplyTo: Codable {
-    let eventId: String?
-
+    let eventId: String
+    let sender: String
+    let content: ReplyContent?
+    
     enum CodingKeys: String, CodingKey {
-        case eventId = "event_id"
+        case eventId = "event_id", sender, content
     }
 }
+struct ReplyContent: Codable {
+    let msgtype: String?
+    let body: String?
+    let url: String?
+    let S3MediaUrl: String?
+    let S3thumbnailUrl: String?
+    let info: Info
+    
+    enum CodingKeys: String, CodingKey {
+        case msgtype, body, url, S3MediaUrl, S3thumbnailUrl, info = "info"
+    }
+}
+
 struct Info: Codable {
     let mimetype: String?
 }

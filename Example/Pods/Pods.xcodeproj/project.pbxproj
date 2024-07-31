@@ -153,6 +153,10 @@
 		4DBB08E02C575F2D0042D66A /* DeleteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBB08DF2C575F2D0042D66A /* DeleteViewModel.swift */; };
 		4DBB08E32C575F810042D66A /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBB08E22C575F810042D66A /* CacheManager.swift */; };
 		4DBB08E52C5790850042D66A /* ChatReplyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBB08E42C5790850042D66A /* ChatReplyViewModel.swift */; };
+		4DD744F82C57EDAB00B3303F /* BottomViewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD744F72C57EDAB00B3303F /* BottomViewHandler.swift */; };
+		4DD744FB2C58F63900B3303F /* ReplyTextTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD744F92C58F63900B3303F /* ReplyTextTVCell.swift */; };
+		4DD744FC2C58F63900B3303F /* ReplyTextTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DD744FA2C58F63900B3303F /* ReplyTextTVCell.xib */; };
+		4DD744FE2C58F6D800B3303F /* ReplyTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD744FD2C58F6D800B3303F /* ReplyTextCell.swift */; };
 		4DFCB3D9623FCA43D3E1BFDA528EB587 /* UIView+WebCacheOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 967B4C16C56F6F1921A6CAF1F1130CCA /* UIView+WebCacheOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EC633971567BFD6384859B76E1276F1 /* SDWebImageCacheKeyFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 3FF9F8F605E2CC5BC6525104DFE2F6E3 /* SDWebImageCacheKeyFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4F331E57B7608235D4EFBECD6D2DEE54 /* CircleMenu-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CB1E1D95E24206C462D6073C87266A6E /* CircleMenu-dummy.m */; };
@@ -743,6 +747,10 @@
 		4DBB08DF2C575F2D0042D66A /* DeleteViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeleteViewModel.swift; path = iOSChatSDK/Classes/DeleteService/DeleteViewModel.swift; sourceTree = "<group>"; };
 		4DBB08E22C575F810042D66A /* CacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CacheManager.swift; path = ../iOSChatSDK/Classes/CacheManager/CacheManager.swift; sourceTree = "<group>"; };
 		4DBB08E42C5790850042D66A /* ChatReplyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatReplyViewModel.swift; path = iOSChatSDK/Classes/ChatReplyViewModel.swift; sourceTree = "<group>"; };
+		4DD744F72C57EDAB00B3303F /* BottomViewHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomViewHandler.swift; sourceTree = "<group>"; };
+		4DD744F92C58F63900B3303F /* ReplyTextTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReplyTextTVCell.swift; path = iOSChatSDK/Classes/ReplyTextTVCell.swift; sourceTree = "<group>"; };
+		4DD744FA2C58F63900B3303F /* ReplyTextTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ReplyTextTVCell.xib; path = iOSChatSDK/Classes/ReplyTextTVCell.xib; sourceTree = "<group>"; };
+		4DD744FD2C58F6D800B3303F /* ReplyTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReplyTextCell.swift; path = iOSChatSDK/Classes/ReplyTextCell.swift; sourceTree = "<group>"; };
 		4DE8822DB555D6A4906B84FA1A665D5C /* SDWebImageCacheSerializer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageCacheSerializer.h; path = SDWebImage/Core/SDWebImageCacheSerializer.h; sourceTree = "<group>"; };
 		4E03CC31D99346359CEAABA4FFB0BC5D /* IQKeyboardManagerConstantsInternal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IQKeyboardManagerConstantsInternal.h; path = IQKeyboardManager/Constants/IQKeyboardManagerConstantsInternal.h; sourceTree = "<group>"; };
 		4EFAF1604A8CBAED2F2406D198592995 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -1594,8 +1602,12 @@
 				4DB8B2CA2C3E57A40033401D /* MenuBottomView.swift */,
 				4D8CC12F2C4FAC7C00C2E803 /* APIManager.swift */,
 				9BBB1941F4B6A862E07F1CA075970CD2 /* ChatRoomVC.swift */,
-				4DB8B2AA2C3551CB0033401D /* ChatMessageCell.swift */,
+				4DD744F72C57EDAB00B3303F /* BottomViewHandler.swift */,
 				4DB8B2C42C3D1C420033401D /* MediaContentCell.swift */,
+				4DD744FD2C58F6D800B3303F /* ReplyTextCell.swift */,
+				4DB8B2AA2C3551CB0033401D /* ChatMessageCell.swift */,
+				4DD744F92C58F63900B3303F /* ReplyTextTVCell.swift */,
+				4DD744FA2C58F63900B3303F /* ReplyTextTVCell.xib */,
 				4D8CC1352C5269F100C2E803 /* MediaTextTVCell.swift */,
 				4D8CC1362C5269F100C2E803 /* MediaTextTVCell.xib */,
 				C1B6A55005EAD758D0B012A4FBA2A769 /* Base */,
@@ -2717,6 +2729,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D72D1962C34030B000DCC66 /* Assets.xcassets in Resources */,
+				4DD744FC2C58F63900B3303F /* ReplyTextTVCell.xib in Resources */,
 				C18516C3889D29C84FD37B001F333035 /* iOSChatSDK-iOSChatSDK in Resources */,
 				4DB8B2BB2C37D0F40033401D /* CustomTopView.xib in Resources */,
 				4D8CC1382C5269F100C2E803 /* MediaTextTVCell.xib in Resources */,
@@ -2966,7 +2979,9 @@
 				87A845E6D5D855369D14AD03C744EB34 /* ActionSheetView.swift in Sources */,
 				22377232DB19F0F1E787AFF95B1F6BF7 /* ActionSheetView.xib in Sources */,
 				892BF851F488747C6063FDEAA9A49060 /* AppColors.swift in Sources */,
+				4DD744FB2C58F63900B3303F /* ReplyTextTVCell.swift in Sources */,
 				E8A1D8272B7DB4766F97CA23C8D24224 /* BannerView.swift in Sources */,
+				4DD744F82C57EDAB00B3303F /* BottomViewHandler.swift in Sources */,
 				EAC1B59D917EB03580941F9D7DEA9390 /* BannerView.xib in Sources */,
 				1DDDED15ADA86C180C4B54C7672BFE07 /* ChatConnectListVC.swift in Sources */,
 				7FEF4F9E9B12CE9AA725A9ED71A6F042 /* ChatMessageService.swift in Sources */,
@@ -3038,6 +3053,7 @@
 				0824C64E26434403983A1D2129ED0897 /* SQRCLELocation.swift in Sources */,
 				4DB8B2BD2C37E6BF0033401D /* ChatMediaViewModel.swift in Sources */,
 				85D00ADB959957F85B66331A4C42ADDF /* SQRMacros.swift in Sources */,
+				4DD744FE2C58F6D800B3303F /* ReplyTextCell.swift in Sources */,
 				4DB8B2C62C3D1C420033401D /* MediaContentCell.swift in Sources */,
 				4DBB08E02C575F2D0042D66A /* DeleteViewModel.swift in Sources */,
 				87FDE7C1C2E06BD4D995FC0A720F128C /* SQRNavigation.swift in Sources */,

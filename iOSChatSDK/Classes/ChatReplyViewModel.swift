@@ -13,13 +13,14 @@ class ChatReplyViewModel {
     func uploadFileChatReply(accessToken: String, roomID: String, eventID: String, body: String, msgType: String, mimetype: String? = nil , fileName: String? = nil, imageFilePath: UIImage? = nil, videoFilePath: URL? = nil, completion: @escaping (Result<UploadResponse, Error>) -> Void) {
         
         let url = URL(string: "http://157.241.58.41/chat_api/message/reply")!
-//        print("url \(url)")
-//        print("msgType \(msgType)")
-//        print("mimetype \(mimetype)")
-//        print("fileName \(fileName)")
-//        print("imageFilePath \(String(describing: imageFilePath))")
-//        print("videoFilePath \(String(describing: videoFilePath))")
-//        print("mediaType \(mediaType)")
+        print("url \(url)")
+        print("msgType \(msgType)")
+        print("accessToken \(accessToken)")
+        print("roomID \(roomID)")
+        print("eventID \(eventID)")
+        print("body \(body)")
+        print("imageFilePath \(String(describing: imageFilePath))")
+        print("videoFilePath \(String(describing: videoFilePath))")
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -67,19 +68,22 @@ class ChatReplyViewModel {
         bodyData.append("Content-Disposition: form-data; name=\"file\"; filename=\"\(fileName ?? "")\"\r\n".data(using: .utf8)!)
         bodyData.append("Content-Type: \(mimetype ?? "")\r\n\r\n".data(using: .utf8)!)
         
-        if(imageFilePath==nil)  {
-            var movieData: Data?
-            do {
-                movieData = try Data(contentsOf: videoFilePath!, options: Data.ReadingOptions.alwaysMapped)
-            } catch _ {
-                movieData = nil
-                return
-            }
-            bodyData.append(movieData!)
-        }else{
-            let imageData = imageFilePath?.jpegData(compressionQuality: 1)
-            bodyData.append(imageData!)
-        }
+//        if(imageFilePath==nil) && (videoFilePath == nil)  {
+//
+//        }
+//        else if (imageFilePath==nil) {
+//            var movieData: Data?
+//            do {
+//                movieData = try Data(contentsOf: videoFilePath!, options: Data.ReadingOptions.alwaysMapped)
+//            } catch _ {
+//                movieData = nil
+//                return
+//            }
+//            bodyData.append(movieData!)
+//        }else{
+//            let imageData = imageFilePath?.jpegData(compressionQuality: 1)
+//            bodyData.append(imageData!)
+//        }
         
         bodyData.append("\r\n".data(using: .utf8)!)
         bodyData.append("--\(boundary)--\r\n".data(using: .utf8)!)

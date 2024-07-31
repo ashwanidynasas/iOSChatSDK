@@ -38,8 +38,20 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
     @IBOutlet weak var morebottomView: UIView!
     @IBOutlet weak var audioTimeLbl: UILabel!
     
+    @IBOutlet weak var replyBottomView:UIView!
+    @IBOutlet weak var replyBottomViewHeight: NSLayoutConstraint!
+
+    var bottomViewHandler: BottomViewHandler?
+    
+    //Reply View Outlet
+    @IBOutlet weak var replyUserName:UILabel!
+    @IBOutlet weak var replyUserDesc:UILabel!
+    @IBOutlet weak var replyUserImgView:UIImageView!
+
+    
     let tableCell = "CustomTableViewCell"
     let mediaTableCell = "MediaTextTVCell"
+    let replyTextTVCell = "ReplyTextTVCell"
 
     let apiClient = RoomAPIClient()
     var chatUserID: String!
@@ -63,6 +75,7 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
     private let sendMsgModel = SenderViewModel()
     private let viewModel = MessageViewModel()
     private let mediaViewModel = ChatMediaViewModel()
+    private let replyViewModel = ChatReplyViewModel()
 
     func setButtonTintColor(button: UIButton, color: UIColor) {
         button.tintColor = color
@@ -100,6 +113,15 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
     override func viewDidLoad() {
         super.viewDidLoad()
         print("currentUser   <<<----\(currentUser ?? "")")
+        bottomViewHandler = BottomViewHandler(
+                    replyBottomView: replyBottomView,
+                    backTFView: backTFView,
+                    morebottomView: morebottomView,
+                    replyBottomViewHeight: replyBottomViewHeight,
+                    textFieldViewHeight: textFieldViewHeight,
+                    moreViewHeight: moreViewHeight,
+                    backBottomViewHeight: backBottomViewHeight
+                )
         moreViewHide()
         customTopView.titleLabel.text = currentUser
         customTopView.delegate = self
@@ -112,6 +134,7 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         chatRoomTableView.separatorStyle = .none
         chatRoomTableView.register(ChatMessageCell.self, forCellReuseIdentifier: "ChatMessageCell")
         chatRoomTableView.register(MediaContentCell.self, forCellReuseIdentifier: "MediaContentCell")
+        chatRoomTableView.register(ReplyTextCell.self, forCellReuseIdentifier: "ReplyTextCell")
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -134,10 +157,13 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         sendMsgTF.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         sendMsgTF.addTarget(self, action: #selector(textFieldTapped(_:)), for: .touchDown)
 
-        backTFView.layer.cornerRadius = 18
+        backTFView.layer.cornerRadius = 24
         backTFView.clipsToBounds = true
         sendBtn.makeCircular()
         chatRoomTableView.backgroundColor = .clear
+        
+        replyUserImgView.layer.cornerRadius = replyUserImgView.frame.size.width/2
+        replyUserImgView.clipsToBounds = true
         
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         longPressRecognizer.minimumPressDuration = 1.0
@@ -158,10 +184,13 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         chatRoomTableView.estimatedRowHeight = 100
         let medianib = UINib(nibName: mediaTableCell, bundle: Bundle(for: MediaTextTVCell.self))
         chatRoomTableView.register(medianib, forCellReuseIdentifier: "mediaTextTVCell")
+        
+        let replynib = UINib(nibName: replyTextTVCell, bundle: Bundle(for: ReplyTextTVCell.self))
+        chatRoomTableView.register(replynib, forCellReuseIdentifier: "replyTextTVCell")
 
     }
     @objc func textFieldTapped(_ textField:UITextField) {
-        moreViewHide()
+//        moreViewHide()
     }
     @objc func textFieldDidChange(_ textField: UITextField) {
         self.bottomAudioView.isHidden  = true
@@ -313,10 +342,10 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
             sendButtonTapped()
         }else {}
     }
-    
+    //MARK: Send Chat Button
     @objc func sendButtonTapped() {
         print("Send button tapped")
-        moreViewHide()
+//        moreViewHide()
         let room_id = UserDefaults.standard.string(forKey: "room_id")
         let accessToken = UserDefaults.standard.string(forKey: "access_token")
         if self.sendMsgTF.text == "" {
@@ -328,18 +357,42 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
             }
             return
         }
-        let body = self.sendMsgTF.text
-        let msgType = "m.text"
-        sendMsgModel.sendMessage(roomID: /room_id, body: /body, msgType: msgType, accessToken: /accessToken) { [weak self] response in
-            DispatchQueue.main.async {
-                if let response = response {
-//                    print("Response: \(response.details.response)\nEvent ID: \(response.details.chat_event_id)")
-                    self?.fetchMessages()
-                } else {
-                    print("No response received")
+        if isReply {
+            
+            let body = self.sendMsgTF.text
+            let msgType = "m.text"
+
+            replyViewModel.uploadFileChatReply(accessToken: /accessToken, roomID: /room_id, eventID: eventID, body: /body, msgType: msgType){ result in
+                switch result {
+                case .success(let response):
+                    DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) {
+                        print("Success: \(response.message)")
+                        self.bottomViewHandler?.BV_TF_Appear()
+                        self.isReply = false
+                        self.fetchMessages()
+
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        print("Error: \(error.localizedDescription)")
+                    }
+                }
+            }
+        }else{
+            let body = self.sendMsgTF.text
+            let msgType = "m.text"
+            sendMsgModel.sendMessage(roomID: /room_id, body: /body, msgType: msgType, accessToken: /accessToken) { [weak self] response in
+                DispatchQueue.main.async {
+                    if let response = response {
+    //                    print("Response: \(response.details.response)\nEvent ID: \(response.details.chat_event_id)")
+                        self?.fetchMessages()
+                    } else {
+                        print("No response received")
+                    }
                 }
             }
         }
+        
     }
     
     private func scrollToBottom() {
@@ -353,6 +406,10 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
     }
     private func setupCustomBottomView() {
         morebottomView.isHidden = true
+        replyBottomView.isHidden = true
+        replyBottomViewHeight.constant = 0.0
+        moreViewHeight.constant = 0.0
+        backBottomViewHeight.constant = 74.0
         morebottomView.backgroundColor = .clear
         let buttonImages = [
             UIImage(named: "Media", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
@@ -385,13 +442,13 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
             print("Media")
             DispatchQueue.main.async {
                 self.openGallery()
-                self.moreViewHide()
+                self.bottomViewHandler?.BV_TF_Appear_More_Disappear()
             }
         case 1:
             print("Camera")
             DispatchQueue.main.async {
                 self.openCamera()
-                self.moreViewHide()
+                self.bottomViewHandler?.BV_TF_Appear_More_Disappear()
             }
         case 2:
             print("Location")
@@ -456,12 +513,30 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
 
     }
     
+   
+    @IBAction func replyCancelView(_ sender: UIButton) {
+        isReply = false
+        bottomViewHandler?.BV_Reply_Disappear_More_Disappear()
+    }
+
+    
+    //MARK: Plus Icon Action
     @IBAction func moreActoinBtn(_ sender: Any) {
+        removeCustomTabBar()
+        setupCustomBottomView()
         isToggled = !isToggled
         if isToggled {
-           moreViewShow()
+            if isReply {
+                bottomViewHandler?.BV_Reply_TF_More_Appear()
+            }else{
+                bottomViewHandler?.BV_TF_More_Appear()
+            }
         } else {
-           moreViewHide()
+            if isReply{
+                bottomViewHandler?.BV_Reply_TF_Appear()
+            }else{
+                bottomViewHandler?.BV_TF_Appear_More_Disappear()
+            }
         }
     }
     
@@ -480,26 +555,8 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         backBottomViewHeight.constant = 56.0
         scrollToBottom()
     }
-    func moreViewHideWithoutTF(_ reply:Bool){
-        isReply = reply
-        isToggled = false
-        morebottomView.isHidden = true
-        backTFView.isHidden = false
-        moreViewHeight.constant = 0.0
-        backBottomViewHeight.constant = 56.0
-        textFieldViewHeight.constant = 50.0
-    }
 
-    func moreViewShowWithoutTF(_ reply:Bool){
-        self.view.endEditing(true)
-        isToggled = true
-        isReply = reply
-        morebottomView.isHidden = false
-        backBottomViewHeight.constant = 56.0
-        backTFView.isHidden = true
-        textFieldViewHeight.constant = 0.0
-        
-    }
+
     
     
     // MARK: - Open Camera Function
@@ -583,6 +640,8 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
     
 }
 extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDelegate {
+    
+    //MARK: MediaTextTVCell
     func didTapPlayButton(in cell: MediaTextTVCell) {
         
             if let indexPath = chatRoomTableView.indexPath(for: cell) {
@@ -623,8 +682,6 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
     
     func didLongPressPlayButton(in cell: MediaTextTVCell) {
         
-        moreViewShowWithoutTF(true)
-        
             if let indexPath = chatRoomTableView.indexPath(for: cell) {
                 let message = viewModel.messages[indexPath.row]
                 // Handle long press here
@@ -633,7 +690,19 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
                 self.eventID = message.eventId
                 removeCustomTabBar()
                 
-                moreViewShow()
+                bottomViewHandler?.BV_More_Appear()
+                
+                guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(message.content?.S3thumbnailUrl ?? "")") else {
+                    print("Error: Invalid video URL")
+                    return
+                }
+                DispatchQueue.main.async {
+                    self.replyUserImgView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "audioholder", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                    self.replyUserDesc.text = message.content?.body
+                    self.replyUserName.text = message.sender
+                }
+
+
                 
                 let buttonImages = [
                     UIImage(named: "copy", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
@@ -663,6 +732,30 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let message = viewModel.messages[indexPath.row]
+        //Reply Template
+        if let inReplyTo = message.content?.relatesTo?.inReplyTo {
+//            if let msgType = MessageType(rawValue: inReplyTo.content?.msgtype ?? "") {
+//                if (msgType == .image) || (msgType == .audio) || (msgType == .video) {
+//                    
+//                }else{
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyTextCell", for: indexPath) as! ReplyTextCell
+                    cell.configure(with: message, currentUser: currentUser)
+                    cell.selectionStyle = .none // Disable cell selection
+                    return cell
+            
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "replyTextTVCell", for: indexPath) as! ReplyTextTVCell
+//            // Configure the cell
+//            cell.mediaConfigure(with: message, currentUser: currentUser)
+////            cell.playButton.tag = indexPath.row
+////            cell.delegate = self  // Set the delegate
+//            cell.selectionStyle = .none // Disable cell selection
+//            return cell
+
+//                }
+//            }
+        }
+
+        
         // Media Only
         if let msgType = MessageType(rawValue: message.content?.msgtype ?? "") {
             if (msgType == .image) || (msgType == .audio) || (msgType == .video) {
@@ -824,26 +917,17 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
         case 2:
             print("forward")
         case 3:
-            print("reply")
+            print("click on reply")
             print(eventID!)
-            moreViewHideWithoutTF(false)
-            backBottomViewHeight.constant = 114.0
+            isToggled = false
+            isReply = true
+            bottomViewHandler?.BV_Reply_TF_Appear()
 
         case 4:
             print("cancel")
-            if isReply {
-                DispatchQueue.main.async {
-                    self.moreViewHideWithoutTF(false)
-                    self.removeCustomTabBar()
-                    self.setupCustomBottomView()
-                }
-            }else{
-                DispatchQueue.main.async {
-                    self.moreViewHide()
-                    self.removeCustomTabBar()
-                    self.setupCustomBottomView()
-                }
-
+            DispatchQueue.main.async {
+                self.isReply = false
+                self.bottomViewHandler?.BV_TF_Appear()
             }
         default:
             print("perform action")

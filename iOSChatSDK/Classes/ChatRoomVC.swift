@@ -340,7 +340,7 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
             sendButtonTapped()
         }else {}
     }
-    //MARK: Send Chat Button
+    //MARK: Send_Chat_Button Action
     @objc func sendButtonTapped() {
         print("Send button tapped")
 //        moreViewHide()
@@ -866,37 +866,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
             }
         }
     }
-//    func didLongPressPlayButton(in cell: ChatMessageCell) {
-//        
-//        if let indexPath = chatRoomTableView.indexPath(for: cell) {
-//            let message = viewModel.messages[indexPath.row]
-//            // Handle long press here
-//            print("Play button long pressed for message: ChatMessageCell")
-//            self.eventID = ""
-//            self.eventID = message.eventId
-//            removeCustomTabBar()
-//            
-//            moreViewShow()
-//            
-//            let buttonImages = [
-//                UIImage(named: "copy", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
-//                UIImage(named: "Delete", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
-//                UIImage(named: "Forward", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
-//                UIImage(named: "reply", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
-//                UIImage(named: "cancel", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!
-//            ]
-//            let buttonTitles = ["Copy", "Delete", "Forward","Reply","Cancel"]
-//            customTabBar = CustomTabBar(buttonTitles: buttonTitles, buttonImages: buttonImages, buttonColors: UIColor.white)
-//            if let customTabBar = customTabBar {
-//                customTabBar.translatesAutoresizingMaskIntoConstraints = false
-//                morebottomView.addSubview(customTabBar)
-//                customTabBar.didSelectTab = { tabIndex in
-//                    self.bottomSelectMediaActionPerform(tabIndex)
-//                    
-//                }
-//            }
-//        }
-//    }
+
     func didLongPressPlayButton(in cell: MediaContentCell) {
         if let indexPath = chatRoomTableView.indexPath(for: cell) {
             let message = viewModel.messages[indexPath.row]
@@ -906,8 +876,17 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
             self.eventID = message.eventId
             removeCustomTabBar()
             
-            moreViewShow()
-            
+            bottomViewHandler?.BV_More_Appear()
+            guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(message.content?.S3thumbnailUrl ?? "")") else {
+                print("Error: Invalid video URL")
+                return
+            }
+            DispatchQueue.main.async {
+                self.replyUserImgView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "audioholder", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                self.replyViewWidthConstraint.constant = 24.0
+                self.replyUserDesc.text = message.content?.body
+                self.replyUserName.text = message.sender
+            }
             let buttonImages = [
                 UIImage(named: "copy", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
                 UIImage(named: "Delete", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,

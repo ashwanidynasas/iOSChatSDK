@@ -26,6 +26,8 @@ class ReplyTextCell: UITableViewCell {
     private enum MessageType: String {
         case text = "m.text"
         case video = "m.video"
+        case image = "m.image"
+        case audio = "m.audio"
     }
 
     private struct Constants {
@@ -204,11 +206,26 @@ class ReplyTextCell: UITableViewCell {
             switch msgType {
             case .video:
                 self.replyImageView.isHidden = false
-                self.replyImageView.widthAnchor.constraint(equalToConstant: Constants.imageViewSize.width).isActive = true
+                upperbubbleBackgroundViewHeightConstraint.constant = 60
+
+//                self.replyImageView.widthAnchor.constraint(equalToConstant: Constants.imageViewSize.width).isActive = true
             case .text:
                 self.replyImageView.isHidden = true
-                self.replyImageView.widthAnchor.constraint(equalToConstant: Constants.imageViewSizeZero.width).isActive = true
+                upperbubbleBackgroundViewHeightConstraint.constant = 40
+
+//                self.replyImageView.widthAnchor.constraint(equalToConstant: Constants.imageViewSizeZero.width).isActive = true
                     self.layoutIfNeeded() // Ensure layout updates
+
+            case .image:
+                self.replyImageView.isHidden = false
+                upperbubbleBackgroundViewHeightConstraint.constant = 60
+
+//                self.replyImageView.widthAnchor.constraint(equalToConstant: Constants.imageViewSize.width).isActive = true
+            case .audio:
+                self.replyImageView.isHidden = false
+                upperbubbleBackgroundViewHeightConstraint.constant = 60
+
+//                self.replyImageView.widthAnchor.constraint(equalToConstant: Constants.imageViewSize.width).isActive = true
 
             }
         }

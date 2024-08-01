@@ -1,13 +1,17 @@
 import UIKit
 import SDWebImage
 import AVFoundation
-
+protocol ChatMessageCellDelegate: AnyObject {
+    func didLongPressPlayButton(in cell: ChatMessageCell)
+}
 class ChatMessageCell: UITableViewCell {
     private let bubbleBackgroundView = UIView()
     private let messageLabel = UILabel()
     private let timestampLabel = UILabel()
     private let readIndicatorImageView = UIImageView()
     private let messageImageView = UIImageView()
+    let overlayButton = UIButton()
+    weak var delegate: ChatMessageCellDelegate?
 
     private var leadingConstraint: NSLayoutConstraint!
     private var trailingConstraint: NSLayoutConstraint!
@@ -64,7 +68,7 @@ class ChatMessageCell: UITableViewCell {
         bubbleBackgroundView.layer.shadowOffset = Constants.bubbleShadowOffset
         bubbleBackgroundView.layer.shadowOpacity = Constants.bubbleShadowOpacity
         bubbleBackgroundView.layer.shadowRadius = Constants.bubbleShadowRadius
-        addSubview(bubbleBackgroundView)
+        contentView.addSubview(bubbleBackgroundView)
 
         messageImageView.contentMode = .scaleAspectFit
         messageImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -83,8 +87,20 @@ class ChatMessageCell: UITableViewCell {
         readIndicatorImageView.contentMode = .scaleAspectFit
         readIndicatorImageView.translatesAutoresizingMaskIntoConstraints = false
         bubbleBackgroundView.addSubview(readIndicatorImageView)
-    }
+        
+        overlayButton.translatesAutoresizingMaskIntoConstraints = false
+        bubbleBackgroundView.addSubview(overlayButton)
+        
+        // Setup long press gesture recognizer
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture(_:)))
+        overlayButton.addGestureRecognizer(longPressGestureRecognizer)
 
+    }
+    @objc private func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            delegate?.didLongPressPlayButton(in: self)
+        }
+    }
     private func setupConstraints() {
         leadingConstraint = bubbleBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32)
         trailingConstraint = bubbleBackgroundView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32)
@@ -94,8 +110,8 @@ class ChatMessageCell: UITableViewCell {
         messageImageViewHeightConstraint = messageImageView.heightAnchor.constraint(equalToConstant: 0)
 
         NSLayoutConstraint.activate([
-            bubbleBackgroundView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            bubbleBackgroundView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
+            bubbleBackgroundView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            bubbleBackgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             minWidthConstraint,
             maxWidthConstraint,
 
@@ -115,8 +131,13 @@ class ChatMessageCell: UITableViewCell {
             readIndicatorImageView.widthAnchor.constraint(equalToConstant: Constants.readIndicatorSize),
             readIndicatorImageView.heightAnchor.constraint(equalToConstant: Constants.readIndicatorSize),
             readIndicatorImageView.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor, constant: -2),
-            readIndicatorImageView.bottomAnchor.constraint(equalTo: bubbleBackgroundView.bottomAnchor, constant: -10)
-            
+            readIndicatorImageView.bottomAnchor.constraint(equalTo: bubbleBackgroundView.bottomAnchor, constant: -10),
+
+            overlayButton.topAnchor.constraint(equalTo: bubbleBackgroundView.topAnchor),
+            overlayButton.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor),
+            overlayButton.leadingAnchor.constraint(equalTo: bubbleBackgroundView.leadingAnchor),
+            overlayButton.bottomAnchor.constraint(equalTo: bubbleBackgroundView.bottomAnchor),
+
         ])
     }
 

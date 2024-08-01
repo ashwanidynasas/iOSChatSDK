@@ -336,6 +336,7 @@
                         <outlet property="replyUserDesc" destination="e8f-kS-5mu" id="7yP-Yh-zYR"/>
                         <outlet property="replyUserImgView" destination="yVv-08-T5f" id="9G2-iF-6nq"/>
                         <outlet property="replyUserName" destination="gE3-Rq-yaS" id="h6z-mg-Pxq"/>
+                        <outlet property="replyViewWidthConstraint" destination="ZKj-Ae-Bd4" id="Z2W-It-clS"/>
                         <outlet property="sendBtn" destination="3k9-Z2-Eu2" id="xmM-bb-cjJ"/>
                         <outlet property="sendMsgTF" destination="MbN-od-Duz" id="jFI-Uv-ZOR"/>
                         <outlet property="textFieldViewHeight" destination="N4T-NZ-bdb" id="SFv-Pp-YIa"/>

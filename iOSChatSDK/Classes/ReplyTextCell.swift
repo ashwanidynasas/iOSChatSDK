@@ -25,6 +25,7 @@ class ReplyTextCell: UITableViewCell {
 
     private enum MessageType: String {
         case text = "m.text"
+        case video = "m.video"
     }
 
     private struct Constants {
@@ -43,6 +44,8 @@ class ReplyTextCell: UITableViewCell {
         static let maxBubbleWidthRatio: CGFloat = 0.75
         static let dateFormat: String = "hh:mm a"
         static let imageViewSize: CGSize = CGSize(width: 30, height: 30)
+        static let imageViewSizeZero: CGSize = CGSize(width: 0, height: 0)
+
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -197,12 +200,18 @@ class ReplyTextCell: UITableViewCell {
         configureTextMessage(message.content?.body ?? "", replyText: message.content?.relatesTo?.inReplyTo?.sender ?? "", replyImage: message.content?.relatesTo?.inReplyTo?.content?.S3thumbnailUrl ?? "", replyDesc: message.content?.relatesTo?.inReplyTo?.content?.body ?? "")
 
         // Handle different message types
-//        if let msgType = MessageType(rawValue: message.content?.msgtype ?? "") {
-//            switch msgType {
-//            case .text:
-//                configureTextMessage(message.content?.body ?? "")
-//            }
-//        }
+        if let msgType = MessageType(rawValue: message.content?.relatesTo?.inReplyTo?.content?.msgtype ?? "") {
+            switch msgType {
+            case .video:
+                self.replyImageView.isHidden = false
+                self.replyImageView.widthAnchor.constraint(equalToConstant: Constants.imageViewSize.width).isActive = true
+            case .text:
+                self.replyImageView.isHidden = true
+                self.replyImageView.widthAnchor.constraint(equalToConstant: Constants.imageViewSizeZero.width).isActive = true
+                    self.layoutIfNeeded() // Ensure layout updates
+
+            }
+        }
     }
 
     private func configureTextMessage(_ text: String, replyText:String,replyImage:String, replyDesc:String) {
@@ -218,17 +227,7 @@ class ReplyTextCell: UITableViewCell {
         }
         DispatchQueue.main.async {
             self.replyImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "audioholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
-
         }
-//MARK: need to handle
-//        replyImageView.isHidden = true
-//        descriptionLabel.leadingAnchor.constraint(equalTo: upperbubbleBackgroundView.leadingAnchor, constant: 8).isActive = true
-//        
-//        replyImageView.isHidden = false
-//        descriptionLabel.leadingAnchor.constraint(equalTo: self?.replyImageView.trailingAnchor ?? self?.upperbubbleBackgroundView.leadingAnchor ?? NSLayoutXAxisAnchor(), constant: 8).isActive = true
-//        self?.upperbubbleBackgroundViewHeightConstraint.constant = 50 // Adjust as needed
-//        self?.layoutIfNeeded() // Ensure layout updates
-
     }
                                                   
     private func applyBubbleShape(isCurrentUser: Bool) {

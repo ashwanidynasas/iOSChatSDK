@@ -84,7 +84,7 @@ struct ReplyContent: Codable {
     let url: String?
     let S3MediaUrl: String?
     let S3thumbnailUrl: String?
-    let info: Info
+    let info: Info?
     
     enum CodingKeys: String, CodingKey {
         case msgtype, body, url, S3MediaUrl, S3thumbnailUrl, info = "info"

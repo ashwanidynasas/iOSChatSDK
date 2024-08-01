@@ -185,9 +185,6 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         let medianib = UINib(nibName: mediaTableCell, bundle: Bundle(for: MediaTextTVCell.self))
         chatRoomTableView.register(medianib, forCellReuseIdentifier: "mediaTextTVCell")
         
-        let replynib = UINib(nibName: replyTextTVCell, bundle: Bundle(for: ReplyTextTVCell.self))
-        chatRoomTableView.register(replynib, forCellReuseIdentifier: "replyTextTVCell")
-
     }
     @objc func textFieldTapped(_ textField:UITextField) {
 //        moreViewHide()

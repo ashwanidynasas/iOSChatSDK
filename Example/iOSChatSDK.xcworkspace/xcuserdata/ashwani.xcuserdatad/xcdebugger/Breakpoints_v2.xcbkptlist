@@ -14,8 +14,8 @@
             filePath = "../iOSChatSDK/Classes/ChatRoomVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "362"
-            endingLineNumber = "362"
+            startingLineNumber = "359"
+            endingLineNumber = "359"
             landmarkName = "sendButtonTapped()"
             landmarkType = "7">
          </BreakpointContent>
@@ -30,8 +30,8 @@
             filePath = "../iOSChatSDK/Classes/ChatRoomVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "384"
-            endingLineNumber = "384"
+            startingLineNumber = "381"
+            endingLineNumber = "381"
             landmarkName = "sendButtonTapped()"
             landmarkType = "7">
          </BreakpointContent>
@@ -62,8 +62,8 @@
             filePath = "../iOSChatSDK/Classes/ChatRoomVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "369"
-            endingLineNumber = "369"
+            startingLineNumber = "366"
+            endingLineNumber = "366"
             landmarkName = "sendButtonTapped()"
             landmarkType = "7">
          </BreakpointContent>
@@ -78,8 +78,8 @@
             filePath = "../iOSChatSDK/Classes/ChatRoomVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "377"
-            endingLineNumber = "377"
+            startingLineNumber = "374"
+            endingLineNumber = "374"
             landmarkName = "sendButtonTapped()"
             landmarkType = "7">
          </BreakpointContent>

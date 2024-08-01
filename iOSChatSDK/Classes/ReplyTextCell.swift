@@ -71,7 +71,6 @@ class ReplyTextCell: UITableViewCell {
         bubbleBackgroundView.layer.shadowRadius = Constants.bubbleShadowRadius
 
         bubbleBackgroundView.addSubview(upperbubbleBackgroundView)
-        upperbubbleBackgroundView.backgroundColor = .yellow
         upperbubbleBackgroundView.translatesAutoresizingMaskIntoConstraints = false
 
         bubbleBackgroundView.addSubview(messageLabel)
@@ -130,7 +129,7 @@ class ReplyTextCell: UITableViewCell {
             upperbubbleBackgroundViewHeightConstraint,
             
             // Constraints for titleLabel
-            titleLabel.topAnchor.constraint(equalTo: upperbubbleBackgroundView.topAnchor),
+            titleLabel.topAnchor.constraint(equalTo: upperbubbleBackgroundView.topAnchor,constant: 4),
             titleLabel.leadingAnchor.constraint(equalTo: upperbubbleBackgroundView.leadingAnchor, constant: 8),
             titleLabel.widthAnchor.constraint(equalToConstant: 70), // Fixed width
             titleLabel.heightAnchor.constraint(equalToConstant: 15), // Fixed height
@@ -138,17 +137,10 @@ class ReplyTextCell: UITableViewCell {
             // Constraints for imageView
             replyImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
             replyImageView.leadingAnchor.constraint(equalTo: upperbubbleBackgroundView.leadingAnchor, constant: 8),
-
-            // Constraints for descriptionLabel
-//            descriptionLabel.centerYAnchor.constraint(equalTo: replyImageView.centerYAnchor),
-//            descriptionLabel.leadingAnchor.constraint(equalTo: replyImageView.trailingAnchor, constant: 8),
-//            descriptionLabel.trailingAnchor.constraint(equalTo: upperbubbleBackgroundView.trailingAnchor, constant: -8),
             
             descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,constant: 4),
             descriptionLabel.leadingAnchor.constraint(equalTo: replyImageView.trailingAnchor, constant: 8),
             descriptionLabel.trailingAnchor.constraint(equalTo: upperbubbleBackgroundView.trailingAnchor, constant: -Constants.padding),
-
-
             
             messageLabel.topAnchor.constraint(equalTo: upperbubbleBackgroundView.bottomAnchor, constant: 8),
             messageLabel.leadingAnchor.constraint(equalTo: bubbleBackgroundView.leadingAnchor, constant: Constants.padding),
@@ -170,6 +162,10 @@ class ReplyTextCell: UITableViewCell {
         
         let isCurrentUser = message.sender == currentUser
         bubbleBackgroundView.backgroundColor = isCurrentUser ? UIColor.black.withAlphaComponent(0.5) : Colors.Circles.violet
+        upperbubbleBackgroundView.backgroundColor = isCurrentUser ? Colors.Circles.violet :UIColor.black.withAlphaComponent(0.5)
+
+        titleLabel.textColor = .white
+        descriptionLabel.textColor = .white
         messageLabel.textColor = .white
         timestampLabel.textColor = .white
         applyBubbleShape(isCurrentUser: isCurrentUser)
@@ -214,7 +210,7 @@ class ReplyTextCell: UITableViewCell {
         messageLabel.text = text
         titleLabel.text = replyText
         descriptionLabel.text = replyDesc
-        upperbubbleBackgroundViewHeightConstraint.constant = 50
+        upperbubbleBackgroundViewHeightConstraint.constant = 60
         
         guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(replyImage)") else {
             print("Error: Invalid video URL")
@@ -224,7 +220,7 @@ class ReplyTextCell: UITableViewCell {
             self.replyImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "audioholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
 
         }
-
+//MARK: need to handle
 //        replyImageView.isHidden = true
 //        descriptionLabel.leadingAnchor.constraint(equalTo: upperbubbleBackgroundView.leadingAnchor, constant: 8).isActive = true
 //        

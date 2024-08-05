@@ -33,10 +33,8 @@ Pod::Spec.new do |s|
   s.source_files = 'iOSChatSDK/Classes/**/*'
   
   s.resource_bundles = {
-      'iOSChatSDK' => ['iOSChatSDK/Classes/Resources/**/*.{storyboard,xib,xcassets}','iOSChatSDK/Assets/**/*']
+      'iOSChatSDK' => ['iOSChatSDK/Classes/Resources/**/*.{storyboard,xib,xcassets}','iOSChatSDK/Assets/Classes/**/*','iOSChatSDK/Classes/Resources/Assets/*']
   }
-#  s.resources = ['iOSChatSDK/Classes/Resources/Assets/Assets.xcassets']
-
   
 #   s.resource_bundles = {
 #     'iOSChatSDK' => ['iOSChatSDK/Assets/**/*']

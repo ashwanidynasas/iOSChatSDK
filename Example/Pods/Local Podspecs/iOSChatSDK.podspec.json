@@ -1,6 +1,6 @@
 {
   "name": "iOSChatSDK",
-  "version": "0.0.3",
+  "version": "0.0.8",
   "summary": "iOSChatSDK >> Custom Chat Integration with Sqrcle with multiple features.",
   "description": ":iOSChatSDK >> Custom Chat Integration with Sqrcle with multiple features..",
   "homepage": "https://github.com/ashwanidynasas/iOSChatSDK",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/ashwanidynasas/iOSChatSDK.git",
-    "tag": "0.0.3"
+    "tag": "0.0.8"
   },
   "platforms": {
     "ios": "13.0"
@@ -22,8 +22,9 @@
   "source_files": "iOSChatSDK/Classes/**/*",
   "resource_bundles": {
     "iOSChatSDK": [
-      "iOSChatSDK/Resources/**/*.{storyboard,xib,xcassets}",
-      "iOSChatSDK/Assets/**/*"
+      "iOSChatSDK/Classes/Resources/**/*.{storyboard,xib,xcassets}",
+      "iOSChatSDK/Assets/Classes/**/*",
+      "iOSChatSDK/Classes/Resources/Assets/*"
     ]
   },
   "frameworks": [
@@ -32,6 +33,9 @@
   ],
   "dependencies": {
     "SDWebImage": [
+
+    ],
+    "IQKeyboardManager": [
 
     ]
   },

@@ -1,6 +1,8 @@
 PODS:
-  - iOSChatSDK (0.0.3):
+  - iOSChatSDK (0.0.8):
+    - IQKeyboardManager
     - SDWebImage
+  - IQKeyboardManager (6.5.19)
   - SDWebImage (5.19.4):
     - SDWebImage/Core (= 5.19.4)
   - SDWebImage/Core (5.19.4)
@@ -10,6 +12,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - IQKeyboardManager
     - SDWebImage
 
 EXTERNAL SOURCES:
@@ -17,7 +20,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  iOSChatSDK: 9dd330ebd0630a83a1c98aa79f76676214fbf45b
+  iOSChatSDK: 78a8f18ab2439656278562378f999be4719c0f66
+  IQKeyboardManager: c8665b3396bd0b79402b4c573eac345a31c7d485
   SDWebImage: 066c47b573f408f18caa467d71deace7c0f8280d
 
 PODFILE CHECKSUM: ebfc03dc2dea98abaef6b8a39424c911b291d2c6

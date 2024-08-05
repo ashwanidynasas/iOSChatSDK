@@ -97,7 +97,7 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         do {
             try recordingSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
             try recordingSession.setActive(true)
-            recordingSession.requestRecordPermission() { [unowned self] allowed in
+            recordingSession.requestRecordPermission() { allowed in
                 DispatchQueue.main.async {
                     if allowed {
                         print("Microphone access granted")
@@ -383,7 +383,7 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
             sendMsgModel.sendMessage(roomID: /room_id, body: /body, msgType: msgType, accessToken: /accessToken) { [weak self] response in
                 DispatchQueue.main.async {
                     if let response = response {
-    //                    print("Response: \(response.details.response)\nEvent ID: \(response.details.chat_event_id)")
+                        print("Response: \(response.details.response)\nEvent ID: \(response.details.chat_event_id)")
                         self?.fetchMessages()
                     } else {
                         print("No response received")
@@ -650,6 +650,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
         let message = viewModel.messages[indexPath.row]
         //Reply Template
         if let inReplyTo = message.content?.relatesTo?.inReplyTo {
+            print("inReplyTo ---> \(inReplyTo)")
             //            if let msgType = MessageType(rawValue: inReplyTo.content?.msgtype ?? "") {
             //                if (msgType == .image) || (msgType == .audio) || (msgType == .video) {
             //
@@ -726,6 +727,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
                     print("Error: Invalid video URL")
                     return
                 }
+                print("videoURL --->> \(videoURL)")
                 DispatchQueue.main.async {
                     self.replyViewWidthConstraint.constant = 0.0
                     self.replyUserDesc.text = message.content?.body
@@ -765,6 +767,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
 
                 print("Tap button was tapped on row \(rowIndex)!")
                 if let msgType = viewModel.messages[rowIndex].content?.msgtype {
+                    print("msgType --->>> \(msgType)")
         //            if msgType == "m.audio" {
         ////                audioFilename = audioURL
         ////                playRecording()
@@ -845,6 +848,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
 
             print("Tap button was tapped on row \(rowIndex)!")
             if let msgType = viewModel.messages[rowIndex].content?.msgtype {
+                print("msgType --->\(msgType)")
     //            if msgType == "m.audio" {
     ////                audioFilename = audioURL
     ////                playRecording()

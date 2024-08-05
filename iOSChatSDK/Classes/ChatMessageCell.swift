@@ -206,7 +206,7 @@ class ChatMessageCell: UITableViewCell {
     private func configureVideoMessage(_ text: String) {
         messageLabel.isHidden = true
         messageImageView.isHidden = false
-        if let videoURL = text.modifiedString.mediaURL {
+        if text.modifiedString.mediaURL != nil {
             self.messageImageViewHeightConstraint.constant = 150
         } else {
             messageImageViewHeightConstraint.constant = 0

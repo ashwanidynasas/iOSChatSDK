@@ -142,7 +142,7 @@ class CircularLabel: UILabel {
         // But we need to fit the size of the font on the circle so make the circle a little
         // smaller so the text does not get drawn outside the bounds of the circle.
         let smallestWidthOrHeight = min(bounds.size.height, bounds.size.width)
-        let heightOfFont = text?.size(withAttributes: [NSAttributedString.Key.font: self.font]).height ?? 0
+        let heightOfFont = text?.size(withAttributes: [NSAttributedString.Key.font: self.font ?? 12.0]).height ?? 0
 
         // Dividing the smallestWidthOrHeight by 2 gives us the radius for the circle.
         return (smallestWidthOrHeight/2) - heightOfFont + 5

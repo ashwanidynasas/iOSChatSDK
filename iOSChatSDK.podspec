@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'iOSChatSDK'
-  s.version          = '0.0.5'
+  s.version          = '0.0.6'
   s.summary          = 'iOSChatSDK >> Custom Chat Integration with Sqrcle with multiple features.'
 
 # This description is used to generate tags and improve search results.
@@ -51,7 +51,7 @@ Pod::Spec.new do |s|
    #s.dependency 'SDWebImageSVGCoder'
    #s.dependency 'SnapKit'
    #s.dependency 'CircleMenu'
-   #s.dependency 'IQKeyboardManager'
+   s.dependency 'IQKeyboardManager'
 
 #     s.dependency 'MatrixSDK'
 #    s.dependency 'OLMKit'

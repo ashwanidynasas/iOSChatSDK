@@ -809,7 +809,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
                     return
                 }
                 DispatchQueue.main.async {
-                    self.replyUserImgView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "audioholder", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                    self.replyUserImgView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
                     self.replyViewWidthConstraint.constant = 24.0
                     self.replyUserDesc.text = message.content?.body
                     self.replyUserName.text = message.sender
@@ -887,7 +887,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
                 return
             }
             DispatchQueue.main.async {
-                self.replyUserImgView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "audioholder", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                self.replyUserImgView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
                 self.replyViewWidthConstraint.constant = 24.0
                 self.replyUserDesc.text = message.content?.body
                 self.replyUserName.text = message.sender

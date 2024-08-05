@@ -1,49 +1,24 @@
 PODS:
-  - CircleMenu (4.1.0)
-  - CollectionViewPagingLayout (1.1.0)
   - iOSChatSDK (0.0.3):
-    - CircleMenu
-    - CollectionViewPagingLayout
-    - IQKeyboardManager
-    - JGProgressHUD
     - SDWebImage
-    - SDWebImageSVGCoder
-    - SnapKit
-  - IQKeyboardManager (6.5.19)
-  - JGProgressHUD (2.2)
-  - SDWebImage (5.19.2):
-    - SDWebImage/Core (= 5.19.2)
-  - SDWebImage/Core (5.19.2)
-  - SDWebImageSVGCoder (1.7.0):
-    - SDWebImage/Core (~> 5.6)
-  - SnapKit (5.7.1)
+  - SDWebImage (5.19.4):
+    - SDWebImage/Core (= 5.19.4)
+  - SDWebImage/Core (5.19.4)
 
 DEPENDENCIES:
   - iOSChatSDK (from `../`)
 
 SPEC REPOS:
   trunk:
-    - CircleMenu
-    - CollectionViewPagingLayout
-    - IQKeyboardManager
-    - JGProgressHUD
     - SDWebImage
-    - SDWebImageSVGCoder
-    - SnapKit
 
 EXTERNAL SOURCES:
   iOSChatSDK:
     :path: "../"
 
 SPEC CHECKSUMS:
-  CircleMenu: a66095199a5e26f19acbb212f077010257767fe5
-  CollectionViewPagingLayout: 2f8d50683bae57ca88f47fa4ab0195c9079582cf
-  iOSChatSDK: 4c458c585451f8b083b7328d110f0e1f14114b73
-  IQKeyboardManager: c8665b3396bd0b79402b4c573eac345a31c7d485
-  JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
-  SDWebImage: dfe95b2466a9823cf9f0c6d01217c06550d7b29a
-  SDWebImageSVGCoder: 15a300a97ec1c8ac958f009c02220ac0402e936c
-  SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
+  iOSChatSDK: 9dd330ebd0630a83a1c98aa79f76676214fbf45b
+  SDWebImage: 066c47b573f408f18caa467d71deace7c0f8280d
 
 PODFILE CHECKSUM: ebfc03dc2dea98abaef6b8a39424c911b291d2c6
 

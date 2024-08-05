@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'iOSChatSDK'
-  s.version          = '0.0.3'
+  s.version          = '0.0.4'
   s.summary          = 'iOSChatSDK >> Custom Chat Integration with Sqrcle with multiple features.'
 
 # This description is used to generate tags and improve search results.
@@ -33,23 +33,25 @@ Pod::Spec.new do |s|
   s.source_files = 'iOSChatSDK/Classes/**/*'
   
   s.resource_bundles = {
-      'iOSChatSDK' => ['iOSChatSDK/Resources/**/*.{storyboard,xib,xcassets}']
+      'iOSChatSDK' => ['iOSChatSDK/Classes/Resources/**/*.{storyboard,xib,xcassets}','iOSChatSDK/Assets/**/*']
   }
+#  s.resources = ['iOSChatSDK/Classes/Resources/Assets/Assets.xcassets']
+
   
 #   s.resource_bundles = {
-#     'iOSChatSDK' => ['iOSChatSDK/Assets/*.png']
+#     'iOSChatSDK' => ['iOSChatSDK/Assets/**/*']
 #   }
 
 #   s.public_header_files = 'Pod/Classes/**/*.h'
    s.frameworks = 'UIKit', 'Foundation'
    # Add dependencies here
-   s.dependency 'CollectionViewPagingLayout'
-   s.dependency 'JGProgressHUD'
+   #s.dependency 'CollectionViewPagingLayout'
+   #s.dependency 'JGProgressHUD'
    s.dependency 'SDWebImage'
-   s.dependency 'SDWebImageSVGCoder'
-   s.dependency 'SnapKit'
-   s.dependency 'CircleMenu'
-   s.dependency 'IQKeyboardManager'
+   #s.dependency 'SDWebImageSVGCoder'
+   #s.dependency 'SnapKit'
+   #s.dependency 'CircleMenu'
+   #s.dependency 'IQKeyboardManager'
 
 #     s.dependency 'MatrixSDK'
 #    s.dependency 'OLMKit'

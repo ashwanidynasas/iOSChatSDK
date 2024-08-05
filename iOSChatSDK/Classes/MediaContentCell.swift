@@ -179,14 +179,14 @@ class MediaContentCell: UITableViewCell {
             if let videoURL = message.content?.S3thumbnailUrl {
                 fetchThumbnail(videoURL)
             }else{
-                let imageView = UIImageView(image: UIImage(named: "audioholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil)) // Replace with your image names
+                let imageView = UIImageView(image: UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil)) // Replace with your image names
 
                 self.messageImageView = imageView
             }
             self.playButton.setImage(UIImage(named: "PlayIcon", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
 
         }else if message.content?.msgtype == "m.audio" {
-            let imageView = UIImageView(image: UIImage(named: "audioholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil)) // Replace with your image names
+            let imageView = UIImageView(image: UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil)) // Replace with your image names
             self.messageImageView = imageView
             self.playButton.setImage(UIImage(named: "PlayIcon", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
             
@@ -201,7 +201,7 @@ class MediaContentCell: UITableViewCell {
             return
         }
         DispatchQueue.main.async {
-            self.messageImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "audioholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+            self.messageImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
 
         }
 

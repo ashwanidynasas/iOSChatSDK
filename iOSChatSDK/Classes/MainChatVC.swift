@@ -7,7 +7,7 @@
 
 import UIKit
 //import MatrixSDK
-import IQKeyboardManager
+//import IQKeyboardManager
 
 public class MainChatVC: UIViewController {
 
@@ -31,7 +31,7 @@ public class MainChatVC: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.title = "Chat SDK"
-        IQKeyboardManager.shared().isEnabled = true
+//        IQKeyboardManager.shared().isEnabled = true
         CacheManager.shared.shrinkCache(limit: 10 * 1024 * 1024)
 
         //Custom Cell register.

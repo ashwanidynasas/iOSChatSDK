@@ -22,7 +22,8 @@
   "source_files": "iOSChatSDK/Classes/**/*",
   "resource_bundles": {
     "iOSChatSDK": [
-      "iOSChatSDK/Resources/**/*.{storyboard,xib,xcassets}"
+      "iOSChatSDK/Resources/**/*.{storyboard,xib,xcassets}",
+      "iOSChatSDK/Assets/**/*"
     ]
   },
   "frameworks": [
@@ -30,25 +31,7 @@
     "Foundation"
   ],
   "dependencies": {
-    "CollectionViewPagingLayout": [
-
-    ],
-    "JGProgressHUD": [
-
-    ],
     "SDWebImage": [
-
-    ],
-    "SDWebImageSVGCoder": [
-
-    ],
-    "SnapKit": [
-
-    ],
-    "CircleMenu": [
-
-    ],
-    "IQKeyboardManager": [
 
     ]
   },

@@ -32,7 +32,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kh5-ry-FTP">
                                         <rect key="frame" x="22" y="4" width="100" height="100"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="audioholder" translatesAutoresizingMaskIntoConstraints="NO" id="syl-J2-Bip">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="syl-J2-Bip">
                                                 <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                             </imageView>
                                         </subviews>
@@ -117,7 +117,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="audioholder" width="560" height="586"/>
         <image name="read_indicator" width="6.3333334922790527" height="6.3333334922790527"/>
+        <image name="userPlaceholder" width="40.333332061767578" height="40"/>
     </resources>
 </document>

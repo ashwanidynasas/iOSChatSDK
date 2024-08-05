@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import IQKeyboardManager
+//import IQKeyboardManager
 import AVKit
 import AVFoundation
 

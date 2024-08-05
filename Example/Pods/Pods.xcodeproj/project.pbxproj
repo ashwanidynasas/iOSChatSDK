@@ -141,6 +141,7 @@
 		4D8CC1372C5269F100C2E803 /* MediaTextTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8CC1352C5269F100C2E803 /* MediaTextTVCell.swift */; };
 		4D8CC1382C5269F100C2E803 /* MediaTextTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D8CC1362C5269F100C2E803 /* MediaTextTVCell.xib */; };
 		4D8E19C7E06E7951EEEB2DF67FD453E0 /* ScaleTransformViewOptions.Translation3dOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2101CF44B92953609D35AA47BA8F6EDA /* ScaleTransformViewOptions.Translation3dOptions.swift */; };
+		4DAB6C812C5CF746007F09BD /* ReplyMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAB6C802C5CF746007F09BD /* ReplyMediaCell.swift */; };
 		4DB8B2AB2C3551CB0033401D /* ChatMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB8B2AA2C3551CB0033401D /* ChatMessageCell.swift */; };
 		4DB8B2B92C37D0D80033401D /* CustomTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB8B2B82C37D0D80033401D /* CustomTopView.swift */; };
 		4DB8B2BB2C37D0F40033401D /* CustomTopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DB8B2BA2C37D0F40033401D /* CustomTopView.xib */; };
@@ -733,6 +734,7 @@
 		4D8CC1352C5269F100C2E803 /* MediaTextTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MediaTextTVCell.swift; path = iOSChatSDK/Classes/MediaTextTVCell.swift; sourceTree = "<group>"; };
 		4D8CC1362C5269F100C2E803 /* MediaTextTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MediaTextTVCell.xib; path = iOSChatSDK/Classes/MediaTextTVCell.xib; sourceTree = "<group>"; };
 		4D8F964FEA10FF4ED7C669359A356BC9 /* CollectionViewPagingLayout */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CollectionViewPagingLayout; path = CollectionViewPagingLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4DAB6C802C5CF746007F09BD /* ReplyMediaCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReplyMediaCell.swift; path = iOSChatSDK/Classes/ReplyMediaCell.swift; sourceTree = "<group>"; };
 		4DB8B2AA2C3551CB0033401D /* ChatMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatMessageCell.swift; path = iOSChatSDK/Classes/ChatMessageCell.swift; sourceTree = "<group>"; };
 		4DB8B2B82C37D0D80033401D /* CustomTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CustomTopView.swift; path = iOSChatSDK/Classes/CustomTopView.swift; sourceTree = "<group>"; };
 		4DB8B2BA2C37D0F40033401D /* CustomTopView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CustomTopView.xib; path = iOSChatSDK/Classes/Helpers/CustomTopView.xib; sourceTree = "<group>"; };
@@ -1597,10 +1599,11 @@
 				4DB8B2C82C3D484D0033401D /* MediaFullVC.swift */,
 				4DB8B2CA2C3E57A40033401D /* MenuBottomView.swift */,
 				4D8CC12F2C4FAC7C00C2E803 /* APIManager.swift */,
-				9BBB1941F4B6A862E07F1CA075970CD2 /* ChatRoomVC.swift */,
 				4DD744F72C57EDAB00B3303F /* BottomViewHandler.swift */,
-				4DB8B2C42C3D1C420033401D /* MediaContentCell.swift */,
+				9BBB1941F4B6A862E07F1CA075970CD2 /* ChatRoomVC.swift */,
 				4DD744FD2C58F6D800B3303F /* ReplyTextCell.swift */,
+				4DB8B2C42C3D1C420033401D /* MediaContentCell.swift */,
+				4DAB6C802C5CF746007F09BD /* ReplyMediaCell.swift */,
 				4DB8B2AA2C3551CB0033401D /* ChatMessageCell.swift */,
 				4D8CC1352C5269F100C2E803 /* MediaTextTVCell.swift */,
 				4D8CC1362C5269F100C2E803 /* MediaTextTVCell.xib */,
@@ -3002,6 +3005,7 @@
 				1BB7C8A8338AF711973C571D6E1FC295 /* DataGridViewController.swift in Sources */,
 				0BB17462E864B652FF6E522D8753A0E8 /* DataGridViewController+UICollectionView.swift in Sources */,
 				89F1A7F1982AC362A179529074C6FF79 /* File.swift in Sources */,
+				4DAB6C812C5CF746007F09BD /* ReplyMediaCell.swift in Sources */,
 				70AB83BFEEA9C36DE61318C70E3FF599 /* GradientView.swift in Sources */,
 				55BBAB92F2EAF6219758AD9606F60748 /* Hero.swift in Sources */,
 				A0E329161A73F1B8ECC0E6E64053234C /* HeroGridView.swift in Sources */,

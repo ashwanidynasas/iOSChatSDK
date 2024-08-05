@@ -22,13 +22,27 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate,TopViewDelegate {
     @IBOutlet weak var backTFView: UIView!
     @IBOutlet weak var sendBtn: UIButton!
     @IBOutlet weak var videoPlayerBackView: UIView!
+    
+    //Reply View Outlet
+    @IBOutlet weak var replyUserName:UILabel!
+    @IBOutlet weak var replyUserDesc:UILabel!
+    @IBOutlet weak var replyUserImgView:UIImageView!
+    @IBOutlet weak var replyUserImgViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var replyBottomView:UIView!
+    @IBOutlet weak var replyBottomViewHeight: NSLayoutConstraint!
 
     weak var publishDelegate: PublishMediaDelegate?
     
     var currentUser: String!
     var imageFetched:UIImage!
     var videoFetched:URL!
-    
+    var isReply:Bool!
+    var username:String!
+    var userDesc:String!
+    var userImage:UIImage!
+    private let replyViewModel = ChatReplyViewModel()
+    var eventID: String!
+
 //    var videoPlayerView: VideoPlayerCustomView!
     var videoPlayerContainerView: VideoPlayerContainerView!
     var player: AVPlayer?
@@ -40,6 +54,18 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate,TopViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("isReply \(String(describing: isReply))")
+        if isReply {
+            self.replyBottomView.isHidden = false
+        }else{
+            self.replyBottomView.isHidden = true
+        }
+        self.replyUserName.text = username
+        self.replyUserDesc.text = userDesc
+        self.replyUserImgView.image = userImage
+        print("username \(String(describing: username))")
+        print("userDesc \(String(describing: userDesc))")
+
         setupUI()
         setupVideoPlayerContainerView()
         topView.searchButton.isHidden = true
@@ -62,6 +88,13 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate,TopViewDelegate {
             playVideo()
         }
     }
+    
+    @IBAction func replyCancelView(_ sender: UIButton) {
+        isReply = false
+        self.replyBottomView.isHidden = true
+//        bottomViewHandler?.BV_Reply_Disappear_More_Disappear()
+    }
+
     func setupVideoPlayerContainerView() {
         videoPlayerContainerView = VideoPlayerContainerView(frame: self.videoPlayerBackView.bounds)
         videoPlayerContainerView.translatesAutoresizingMaskIntoConstraints = false
@@ -140,6 +173,9 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate,TopViewDelegate {
     }
     
     @IBAction func sendAction(_ sender: UIButton) {
+        let room_id = UserDefaults.standard.string(forKey: "room_id")
+        let accessToken = UserDefaults.standard.string(forKey: "access_token")
+
         if imageFetched == nil {
             APIManager.shared.sendImageFromGalleryAPICall(video: videoFetched, msgType: "m.video", body:self.sendMsgTF.text) { result in
                 switch result {
@@ -154,24 +190,47 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate,TopViewDelegate {
                     }
                 case .failure(let error):
                     print("Error: \(error.localizedDescription)")
-                    // Handle error or show an alert
                 }
             }
         }else{
-            APIManager.shared.sendImageFromGalleryAPICall(image: imageFetched, msgType: "m.image", body:self.sendMsgTF.text) { result in
-                switch result {
-                case .success(let message):
-                    print("Success: \(message)")
-                    // Update UI or perform other actions on success
-                    DispatchQueue.global().async {
+            if isReply {
+                let body = self.sendMsgTF.text
+                let msgType = "m.image"
+                let mimeType = "image/jpeg"
+                let fileName = "a1.jpg"
+
+                replyViewModel.uploadFileChatReplyImageWithText(accessToken: /accessToken, roomID: /room_id, eventID: eventID, body: /body, msgType: msgType,mimetype: mimeType,fileName: fileName,imageFilePath: imageFetched){ result in
+                    switch result {
+                    case .success(let response):
+                        print("Success: \(response.message)")
+
+                        DispatchQueue.global().async {
+                            DispatchQueue.main.async {
+                                self.publishDelegate?.didReceiveData(data: "update")
+                                self.navigationController?.popViewController(animated: true)
+                            }
+                        }
+                    case .failure(let error):
                         DispatchQueue.main.async {
-                            self.publishDelegate?.didReceiveData(data: "update")
-                            self.navigationController?.popViewController(animated: true)
+                            print("Error: \(error.localizedDescription)")
                         }
                     }
-                case .failure(let error):
-                    print("Error: \(error.localizedDescription)")
-                    // Handle error or show an alert
+                }
+            }else{
+                APIManager.shared.sendImageFromGalleryAPICall(image: imageFetched, msgType: "m.image", body:self.sendMsgTF.text) { result in
+                    switch result {
+                    case .success(let message):
+                        print("Success: \(message)")
+                        // Update UI or perform other actions on success
+                        DispatchQueue.global().async {
+                            DispatchQueue.main.async {
+                                self.publishDelegate?.didReceiveData(data: "update")
+                                self.navigationController?.popViewController(animated: true)
+                            }
+                        }
+                    case .failure(let error):
+                        print("Error: \(error.localizedDescription)")
+                    }
                 }
             }
         }

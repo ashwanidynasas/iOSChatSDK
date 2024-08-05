@@ -47,7 +47,7 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
     @IBOutlet weak var replyUserName:UILabel!
     @IBOutlet weak var replyUserDesc:UILabel!
     @IBOutlet weak var replyUserImgView:UIImageView!
-    @IBOutlet weak var replyViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var replyViewWidthConstraint: NSLayoutConstraint!//replyUserImgView width
 
     
     let tableCell = "CustomTableViewCell"
@@ -140,7 +140,8 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-
+        isToggled = false
+        isReply = false
     }
     
     func setupUI() {
@@ -564,9 +565,13 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         viewController.videoFetched = videoFetched
         viewController.imageFetched = imageFetched
         viewController.publishDelegate = self
+        viewController.isReply = isReply
+        viewController.username = self.replyUserName.text
+        viewController.userDesc = self.replyUserDesc.text
+        viewController.userImage = self.replyUserImgView.image
+        viewController.eventID = self.eventID
         self.navigationController?.pushViewController(viewController, animated: true)
     }
-    
     // MARK: - Open Camera Function
     private func openCamera() {
       guard UIImagePickerController.isSourceTypeAvailable(.camera) else {

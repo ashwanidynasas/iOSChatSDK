@@ -81,7 +81,7 @@
 		4CB60A383A8C275351D43CFDB0AC9AE3 /* RoomCreateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D975895AB2DDC9B7CC33CE9330E89BB0 /* RoomCreateService.swift */; };
 		4D9C4A9C2C60D457007F9B0F /* Unwrapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C4A9B2C60D457007F9B0F /* Unwrapping.swift */; };
 		4D9C4AA22C60D9D7007F9B0F /* BottomViewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C4AA12C60D9D7007F9B0F /* BottomViewHandler.swift */; };
-		4D9C4ACF2C60FC83007F9B0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D9C4ACE2C60FC83007F9B0F /* Assets.xcassets */; };
+		4D9C4AD82C60FF56007F9B0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D9C4AD72C60FF56007F9B0F /* Assets.xcassets */; };
 		4DFCB3D9623FCA43D3E1BFDA528EB587 /* UIView+WebCacheOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = ED125922FB25702F3C26C4BD2DED8061 /* UIView+WebCacheOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4E90FB52FAF6CDC2A6FD4FD9242B23E4 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 4BC73F20A69D9EB94BA491B17C736234 /* PrivacyInfo.xcprivacy */; };
 		4EC633971567BFD6384859B76E1276F1 /* SDWebImageCacheKeyFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5250EA4D49A59FFB24E0F6459FDE328D /* SDWebImageCacheKeyFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -334,7 +334,7 @@
 		4BC73F20A69D9EB94BA491B17C736234 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = WebImage/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		4D9C4A9B2C60D457007F9B0F /* Unwrapping.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Unwrapping.swift; path = iOSChatSDK/Classes/Unwrapping.swift; sourceTree = "<group>"; };
 		4D9C4AA12C60D9D7007F9B0F /* BottomViewHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BottomViewHandler.swift; path = iOSChatSDK/Classes/BottomViewHandler.swift; sourceTree = "<group>"; };
-		4D9C4ACE2C60FC83007F9B0F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4D9C4AD72C60FF56007F9B0F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4E9A608DCF04FD972479EBF6958081EB /* SDImageTransformer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDImageTransformer.h; path = SDWebImage/Core/SDImageTransformer.h; sourceTree = "<group>"; };
 		50B9DEDCDE9D822E527E54051ABB68DC /* DeleteViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DeleteViewModel.swift; sourceTree = "<group>"; };
 		521156B72D596A47AE26E69970200316 /* NSImage+Compatibility.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSImage+Compatibility.h"; path = "SDWebImage/Core/NSImage+Compatibility.h"; sourceTree = "<group>"; };
@@ -622,8 +622,8 @@
 				11271EB5C8360DE8C482E7B43732D5F5 /* ReplyMediaCell.swift */,
 				0514F49DBFE716DCEEB9CF3F4E87342A /* ReplyTextCell.swift */,
 				D975895AB2DDC9B7CC33CE9330E89BB0 /* RoomCreateService.swift */,
+				4D9C4AD62C60FF32007F9B0F /* Classes */,
 				E4E83B03F080E6260CB470A0034853D1 /* UserService.swift */,
-				4D9C4ACE2C60FC83007F9B0F /* Assets.xcassets */,
 				9C2CFE782CA199E911BBB25AC7F690D5 /* CacheManager */,
 				14F59FABCDB06BC6D171AD76779E23D8 /* DeleteService */,
 				8AF959523125FBBF9A238259249C66EC /* Helpers */,
@@ -651,6 +651,14 @@
 			);
 			name = "Pods-iOSChatSDK_Tests";
 			path = "Target Support Files/Pods-iOSChatSDK_Tests";
+			sourceTree = "<group>";
+		};
+		4D9C4AD62C60FF32007F9B0F /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4D9C4AD72C60FF56007F9B0F /* Assets.xcassets */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		6038B4D821BF68512366DEEC6133369E /* UIExtension */ = {
@@ -1261,7 +1269,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D9C4ACF2C60FC83007F9B0F /* Assets.xcassets in Resources */,
+				4D9C4AD82C60FF56007F9B0F /* Assets.xcassets in Resources */,
 				4F635C8F5AF666B4117F0273E480AEF9 /* iOSChatSDK-iOSChatSDK in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

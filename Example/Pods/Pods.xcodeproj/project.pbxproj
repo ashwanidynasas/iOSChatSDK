@@ -94,7 +94,7 @@
 		4C483C5239C4009470F0051857619895 /* Unwrapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82B14A91DD9636D4B8C268262C0379AB /* Unwrapping.swift */; };
 		4CAA295F8BB967445E2273FB5A53769E /* SDImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = EF3DBB5A9892E9BE94404B162A680B57 /* SDImageLoader.m */; };
 		4D4ACA9464EC992CE642B34B0E4A187D /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C5567437FDDEF4936FF080B85B6C98 /* APIManager.swift */; };
-		4D9C4AF12C614E24007F9B0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A894310774DDCD9C8ABEBDAC9EDDB143 /* Assets.xcassets */; };
+		4D9C4AF32C61E2AA007F9B0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A894310774DDCD9C8ABEBDAC9EDDB143 /* Assets.xcassets */; };
 		4DFCB3D9623FCA43D3E1BFDA528EB587 /* UIView+WebCacheOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F528EB5A7D0488152AA4122D9B82F9D /* UIView+WebCacheOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EC633971567BFD6384859B76E1276F1 /* SDWebImageCacheKeyFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 466CAE58794D50C2645A1F763AF2FC9A /* SDWebImageCacheKeyFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		50856AC35DAB64C96C34BC588BB0F7FE /* SDAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 59DD42EA6E2722B2560F3F662EACBA74 /* SDAnimatedImage.m */; };
@@ -1550,7 +1550,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D9C4AF12C614E24007F9B0F /* Assets.xcassets in Resources */,
+				4D9C4AF32C61E2AA007F9B0F /* Assets.xcassets in Resources */,
 				5B508F06E131E3F153FCADF61230B2C4 /* iOSChatSDK-iOSChatSDK in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

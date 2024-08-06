@@ -1,5 +1,5 @@
 PODS:
-  - iOSChatSDK (0.0.8):
+  - iOSChatSDK (0.0.9):
     - IQKeyboardManager
     - SDWebImage
   - IQKeyboardManager (6.5.19)
@@ -20,10 +20,10 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  iOSChatSDK: 78a8f18ab2439656278562378f999be4719c0f66
+  iOSChatSDK: ec9a6978654e776b136c0b3da5b5ef8badcb4a3e
   IQKeyboardManager: c8665b3396bd0b79402b4c573eac345a31c7d485
   SDWebImage: 066c47b573f408f18caa467d71deace7c0f8280d
 
-PODFILE CHECKSUM: ebfc03dc2dea98abaef6b8a39424c911b291d2c6
+PODFILE CHECKSUM: 0ebc71c0378f52f4b5ea31669038655a7dc67d65
 
 COCOAPODS: 1.15.2

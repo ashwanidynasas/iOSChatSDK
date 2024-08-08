@@ -5,7 +5,7 @@ platform :ios, '13.0'
 target 'iOSChatSDK_Example' do
 
 	pod 'iOSChatSDK', :path => '../'
- #pod 'iOSChatSDK', :git => "https://github.com/ashwanidynasas/iOSChatSDK.git", :tag => '0.0.9'
+ #pod 'iOSChatSDK', :git => "https://github.com/ashwanidynasas/iOSChatSDK.git", :tag => '0.0.10'
 
   target 'iOSChatSDK_Tests' do
     inherit! :search_paths

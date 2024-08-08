@@ -77,7 +77,9 @@ class ReplyTextCell: UITableViewCell {
 
         bubbleBackgroundView.addSubview(upperbubbleBackgroundView)
         upperbubbleBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-
+        upperbubbleBackgroundView.layer.cornerRadius = 5
+        upperbubbleBackgroundView.clipsToBounds = true
+        
         bubbleBackgroundView.addSubview(messageLabel)
         messageLabel.numberOfLines = 0
         messageLabel.font = Constants.messageFont
@@ -121,6 +123,13 @@ class ReplyTextCell: UITableViewCell {
         maxWidthConstraint = bubbleBackgroundView.widthAnchor.constraint(lessThanOrEqualToConstant: UIScreen.main.bounds.width * Constants.maxBubbleWidthRatio)
 
         upperbubbleBackgroundViewHeightConstraint = upperbubbleBackgroundView.heightAnchor.constraint(equalToConstant: 0)
+        
+        // Constraints for replyImageView
+        let replyImageViewWidthConstraint = replyImageView.widthAnchor.constraint(equalToConstant: Constants.imageViewSize.width)
+        replyImageViewWidthConstraint.priority = .defaultHigh
+
+        let replyImageViewHeightConstraint = replyImageView.heightAnchor.constraint(equalToConstant: Constants.imageViewSize.height)
+        replyImageViewHeightConstraint.priority = .defaultHigh
 
         NSLayoutConstraint.activate([
             bubbleBackgroundView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
@@ -139,11 +148,17 @@ class ReplyTextCell: UITableViewCell {
             titleLabel.widthAnchor.constraint(equalToConstant: 70), // Fixed width
             titleLabel.heightAnchor.constraint(equalToConstant: 15), // Fixed height
 
-            // Constraints for imageView
+            replyImageViewWidthConstraint,
+            replyImageViewHeightConstraint,
             replyImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
             replyImageView.leadingAnchor.constraint(equalTo: upperbubbleBackgroundView.leadingAnchor, constant: 8),
+
+//            replyImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+//            replyImageView.leadingAnchor.constraint(equalTo: upperbubbleBackgroundView.leadingAnchor, constant: 8),
+//            replyImageView.widthAnchor.constraint(equalToConstant: Constants.imageViewSize.width),
+//            replyImageView.heightAnchor.constraint(equalToConstant: Constants.imageViewSize.height),
             
-            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,constant: 4),
+            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
             descriptionLabel.leadingAnchor.constraint(equalTo: replyImageView.trailingAnchor, constant: 8),
             descriptionLabel.trailingAnchor.constraint(equalTo: upperbubbleBackgroundView.trailingAnchor, constant: -Constants.padding),
             
@@ -199,36 +214,27 @@ class ReplyTextCell: UITableViewCell {
         // Configure read indicator
         readIndicatorImageView.image = UIImage(named: "read_indicator", in: Bundle(for: ChatMessageCell.self), compatibleWith: nil)
 
-        configureTextMessage(message.content?.body ?? "", replyText: message.content?.relatesTo?.inReplyTo?.sender ?? "", replyImage: message.content?.relatesTo?.inReplyTo?.content?.S3thumbnailUrl ?? "", replyDesc: message.content?.relatesTo?.inReplyTo?.content?.body ?? "")
+        configureTextMessage(message.content?.body ?? "", replyText: message.content?.relatesTo?.inReplyTo?.sender ?? "", replyImage: message.content?.relatesTo?.inReplyTo?.content?.S3MediaUrl ?? "", replyDesc: message.content?.relatesTo?.inReplyTo?.content?.body ?? "")
 
         // Handle different message types
         if let msgType = MessageType(rawValue: message.content?.relatesTo?.inReplyTo?.content?.msgtype ?? "") {
             switch msgType {
             case .video:
                 self.replyImageView.isHidden = false
-                upperbubbleBackgroundViewHeightConstraint.constant = 60
-
-//                self.replyImageView.widthAnchor.constraint(equalToConstant: Constants.imageViewSize.width).isActive = true
+//                descriptionLabel.leadingAnchor.constraint(equalTo: replyImageView.trailingAnchor, constant: 8).isActive = true
             case .text:
                 self.replyImageView.isHidden = true
-                upperbubbleBackgroundViewHeightConstraint.constant = 40
-
-//                self.replyImageView.widthAnchor.constraint(equalToConstant: Constants.imageViewSizeZero.width).isActive = true
-                    self.layoutIfNeeded() // Ensure layout updates
-
+//                descriptionLabel.leadingAnchor.constraint(equalTo: upperbubbleBackgroundView.leadingAnchor, constant: 8).isActive = true
             case .image:
                 self.replyImageView.isHidden = false
-                upperbubbleBackgroundViewHeightConstraint.constant = 60
-
-//                self.replyImageView.widthAnchor.constraint(equalToConstant: Constants.imageViewSize.width).isActive = true
+//                descriptionLabel.leadingAnchor.constraint(equalTo: replyImageView.trailingAnchor, constant: 8).isActive = true
             case .audio:
                 self.replyImageView.isHidden = false
-                upperbubbleBackgroundViewHeightConstraint.constant = 60
-
-//                self.replyImageView.widthAnchor.constraint(equalToConstant: Constants.imageViewSize.width).isActive = true
-
+//                descriptionLabel.leadingAnchor.constraint(equalTo: replyImageView.trailingAnchor, constant: 8).isActive = true
             }
         }
+        setNeedsLayout()
+        layoutIfNeeded()
     }
 
     private func configureTextMessage(_ text: String, replyText:String,replyImage:String, replyDesc:String) {

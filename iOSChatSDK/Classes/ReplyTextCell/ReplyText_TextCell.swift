@@ -1,43 +1,28 @@
 //
-//  ReplyMediaCell.swift
+//  ReplyText_TextCell.swift
 //  iOSChatSDK
 //
-//  Created by Ashwani on 02/08/24.
+//  Created by Ashwani on 08/08/24.
 //
 
 import Foundation
 import SDWebImage
 
-class ReplyMediaCell: UITableViewCell {
+class ReplyText_TextCell: UITableViewCell {
     private let bubbleBackgroundView = UIView()
-//    private let messageLabel = UILabel()
-    private var messageImageView = UIImageView()
-    private var messageImageViewHeightConstraint: NSLayoutConstraint!
-    private var messageImageViewWidthConstraint: NSLayoutConstraint!
-
+    private let upperbubbleBackgroundView = UIView()
+    private let messageLabel = UILabel()
     private let timestampLabel = UILabel()
     private let readIndicatorImageView = UIImageView()
     private var leadingConstraint: NSLayoutConstraint!
     private var trailingConstraint: NSLayoutConstraint!
     private var minWidthConstraint: NSLayoutConstraint!
     private var maxWidthConstraint: NSLayoutConstraint!
-    // Reply outlet
     private var upperbubbleBackgroundViewHeightConstraint: NSLayoutConstraint!
-    private let upperbubbleBackgroundView = UIView()//reply
-    private let titleLabel = UILabel()//reply
-    private let replyImageView = UIImageView()//reply
-    private let descriptionLabel = UILabel()//reply
-
-    private enum MessageType: String {
-        case text = "m.text"
-        case video = "m.video"
-        case image = "m.image"
-        case audio = "m.audio"
-    }
+    private let titleLabel = UILabel()
+    private let descriptionLabel = UILabel()
 
     private struct Constants {
-        static let bubbleDiameter: CGFloat = 170
-
         static let bubbleCornerRadius: CGFloat = 20
         static let bubbleShadowColor: CGColor = UIColor.black.cgColor
         static let bubbleShadowOffset = CGSize(width: 0, height: 2)
@@ -52,9 +37,6 @@ class ReplyMediaCell: UITableViewCell {
         static let minBubbleWidth: CGFloat = 100
         static let maxBubbleWidthRatio: CGFloat = 0.75
         static let dateFormat: String = "hh:mm a"
-        static let imageViewSize: CGSize = CGSize(width: 30, height: 30)
-        static let imageViewSizeZero: CGSize = CGSize(width: 0, height: 0)
-
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -63,11 +45,12 @@ class ReplyMediaCell: UITableViewCell {
         setupConstraints()
     }
     override func prepareForReuse() {
-            super.prepareForReuse()
-            // Reset the content of the cell
-//            messageLabel.text = nil
-            // Reset other UI elements if necessary
-        }
+        super.prepareForReuse()
+        messageLabel.text = nil
+        descriptionLabel.text = nil
+        titleLabel.text = nil
+        timestampLabel.text = nil
+    }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -87,17 +70,10 @@ class ReplyMediaCell: UITableViewCell {
         upperbubbleBackgroundView.layer.cornerRadius = 5
         upperbubbleBackgroundView.clipsToBounds = true
         
-        messageImageView.contentMode = .scaleAspectFill
-        messageImageView.translatesAutoresizingMaskIntoConstraints = false
-        messageImageView.layer.cornerRadius = Constants.bubbleDiameter / 2
-        messageImageView.clipsToBounds = true
-        bubbleBackgroundView.addSubview(messageImageView)
-
-
-//        bubbleBackgroundView.addSubview(messageLabel)
-//        messageLabel.numberOfLines = 0
-//        messageLabel.font = Constants.messageFont
-//        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        bubbleBackgroundView.addSubview(messageLabel)
+        messageLabel.numberOfLines = 0
+        messageLabel.font = Constants.messageFont
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
 
         bubbleBackgroundView.addSubview(timestampLabel)
         timestampLabel.font = Constants.timestampFont
@@ -114,15 +90,6 @@ class ReplyMediaCell: UITableViewCell {
         titleLabel.numberOfLines = 1
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        upperbubbleBackgroundView.addSubview(replyImageView)
-        replyImageView.layer.cornerRadius = 15 // Half of width/height
-        replyImageView.layer.masksToBounds = true // Ensures image is clipped to the bounds
-
-        replyImageView.backgroundColor = .gray // Replace with actual image
-        replyImageView.translatesAutoresizingMaskIntoConstraints = false
-        replyImageView.widthAnchor.constraint(equalToConstant: Constants.imageViewSize.width).isActive = true
-        replyImageView.heightAnchor.constraint(equalToConstant: Constants.imageViewSize.height).isActive = true
-
         upperbubbleBackgroundView.addSubview(descriptionLabel)
         descriptionLabel.font = .systemFont(ofSize: 10)
         descriptionLabel.numberOfLines = 2
@@ -137,10 +104,7 @@ class ReplyMediaCell: UITableViewCell {
         maxWidthConstraint = bubbleBackgroundView.widthAnchor.constraint(lessThanOrEqualToConstant: UIScreen.main.bounds.width * Constants.maxBubbleWidthRatio)
 
         upperbubbleBackgroundViewHeightConstraint = upperbubbleBackgroundView.heightAnchor.constraint(equalToConstant: 0)
-
-        messageImageViewHeightConstraint = messageImageView.heightAnchor.constraint(equalTo: bubbleBackgroundView.heightAnchor)
-        messageImageViewWidthConstraint = messageImageView.widthAnchor.constraint(equalTo: bubbleBackgroundView.widthAnchor)
-
+        
         NSLayoutConstraint.activate([
             bubbleBackgroundView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             bubbleBackgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
@@ -158,24 +122,16 @@ class ReplyMediaCell: UITableViewCell {
             titleLabel.widthAnchor.constraint(equalToConstant: 70), // Fixed width
             titleLabel.heightAnchor.constraint(equalToConstant: 15), // Fixed height
 
-            // Constraints for imageView
-            replyImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
-            replyImageView.leadingAnchor.constraint(equalTo: upperbubbleBackgroundView.leadingAnchor, constant: 8),
             
-            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,constant: 4),
-            descriptionLabel.leadingAnchor.constraint(equalTo: replyImageView.trailingAnchor, constant: 8),
+            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
+            descriptionLabel.leadingAnchor.constraint(equalTo: upperbubbleBackgroundView.leadingAnchor, constant: 8),
             descriptionLabel.trailingAnchor.constraint(equalTo: upperbubbleBackgroundView.trailingAnchor, constant: -Constants.padding),
             
-            messageImageView.topAnchor.constraint(equalTo: bubbleBackgroundView.topAnchor),
-            messageImageView.leadingAnchor.constraint(equalTo: bubbleBackgroundView.leadingAnchor),
-            messageImageView.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor),
-            messageImageView.bottomAnchor.constraint(equalTo: bubbleBackgroundView.bottomAnchor),
+            messageLabel.topAnchor.constraint(equalTo: upperbubbleBackgroundView.bottomAnchor, constant: 8),
+            messageLabel.leadingAnchor.constraint(equalTo: bubbleBackgroundView.leadingAnchor, constant: Constants.padding),
+            messageLabel.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor, constant: -Constants.padding),
 
-//            messageLabel.topAnchor.constraint(equalTo: upperbubbleBackgroundView.bottomAnchor, constant: 8),
-//            messageLabel.leadingAnchor.constraint(equalTo: bubbleBackgroundView.leadingAnchor, constant: Constants.padding),
-//            messageLabel.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor, constant: -Constants.padding),
-
-            timestampLabel.topAnchor.constraint(equalTo: messageImageView.bottomAnchor, constant: Constants.timestampPadding),
+            timestampLabel.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: Constants.timestampPadding),
             timestampLabel.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor, constant: -Constants.padding),
             timestampLabel.bottomAnchor.constraint(equalTo: bubbleBackgroundView.bottomAnchor, constant: -8),
 
@@ -195,7 +151,7 @@ class ReplyMediaCell: UITableViewCell {
 
         titleLabel.textColor = .white
         descriptionLabel.textColor = .white
-//        messageLabel.textColor = .white
+        messageLabel.textColor = .white
         timestampLabel.textColor = .white
         applyBubbleShape(isCurrentUser: isCurrentUser)
 
@@ -223,59 +179,15 @@ class ReplyMediaCell: UITableViewCell {
         // Configure read indicator
         readIndicatorImageView.image = UIImage(named: "read_indicator", in: Bundle(for: ChatMessageCell.self), compatibleWith: nil)
 
-        if message.content?.msgtype == "m.image" {
-            if let imageUrlString = message.content?.url, let imageUrl = imageUrlString.modifiedString.mediaURL {
-                // Load the image from the URL
-                self.messageImageView.sd_setImage(with: imageUrl, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
-                
-            }
-        }
-        configureTextMessage(message.content?.body ?? "", replyText: message.content?.relatesTo?.inReplyTo?.sender ?? "", replyImage: message.content?.relatesTo?.inReplyTo?.content?.S3thumbnailUrl ?? "", replyDesc: message.content?.relatesTo?.inReplyTo?.content?.body ?? "")
+        configureTextMessage(message.content?.body ?? "", replyText: message.content?.relatesTo?.inReplyTo?.sender ?? "", replyImage: message.content?.relatesTo?.inReplyTo?.content?.S3MediaUrl ?? "", replyDesc: message.content?.relatesTo?.inReplyTo?.content?.body ?? "")
 
-        // Handle different Reply Msg Types
-        if let msgType = MessageType(rawValue: message.content?.relatesTo?.inReplyTo?.content?.msgtype ?? "") {
-            switch msgType {
-            case .video:
-                self.replyImageView.isHidden = false
-                upperbubbleBackgroundViewHeightConstraint.constant = 60
-
-//                self.replyImageView.widthAnchor.constraint(equalToConstant: Constants.imageViewSize.width).isActive = true
-            case .text:
-                self.replyImageView.isHidden = true
-                upperbubbleBackgroundViewHeightConstraint.constant = 40
-
-//                self.replyImageView.widthAnchor.constraint(equalToConstant: Constants.imageViewSizeZero.width).isActive = true
-                    self.layoutIfNeeded() // Ensure layout updates
-
-            case .image:
-                self.replyImageView.isHidden = false
-                upperbubbleBackgroundViewHeightConstraint.constant = 60
-
-//                self.replyImageView.widthAnchor.constraint(equalToConstant: Constants.imageViewSize.width).isActive = true
-            case .audio:
-                self.replyImageView.isHidden = false
-                upperbubbleBackgroundViewHeightConstraint.constant = 60
-
-//                self.replyImageView.widthAnchor.constraint(equalToConstant: Constants.imageViewSize.width).isActive = true
-
-            }
-        }
     }
 
     private func configureTextMessage(_ text: String, replyText:String,replyImage:String, replyDesc:String) {
-        
-//        messageLabel.text = text
+        messageLabel.text = text
         titleLabel.text = replyText
         descriptionLabel.text = replyDesc
         upperbubbleBackgroundViewHeightConstraint.constant = 60
-        
-        guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(replyImage)") else {
-            print("Error: Invalid video URL")
-            return
-        }
-        DispatchQueue.main.async {
-            self.replyImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
-        }
     }
                                                   
     private func applyBubbleShape(isCurrentUser: Bool) {

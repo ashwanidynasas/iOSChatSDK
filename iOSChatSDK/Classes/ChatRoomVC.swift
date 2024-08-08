@@ -136,6 +136,19 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         chatRoomTableView.register(ChatMessageCell.self, forCellReuseIdentifier: "ChatMessageCell")
         chatRoomTableView.register(MediaContentCell.self, forCellReuseIdentifier: "MediaContentCell")
         chatRoomTableView.register(ReplyTextCell.self, forCellReuseIdentifier: "ReplyTextCell")
+        chatRoomTableView.register(ReplyMediaTextCell.self, forCellReuseIdentifier: "ReplyMediaTextCell")
+        
+        
+        chatRoomTableView.register(ReplyText_TextCell.self, forCellReuseIdentifier: String(describing: ReplyText_TextCell.self))
+        chatRoomTableView.register(ReplyText_MediaCell.self, forCellReuseIdentifier: String(describing: ReplyText_MediaCell.self))
+        chatRoomTableView.register(ReplyText_MediaTextCell.self, forCellReuseIdentifier: String(describing: ReplyText_MediaTextCell.self))
+        chatRoomTableView.register(ReplyMedia_TextCell.self, forCellReuseIdentifier: String(describing: ReplyMedia_TextCell.self))
+        chatRoomTableView.register(ReplyMedia_MediaCell.self, forCellReuseIdentifier: String(describing: ReplyMedia_MediaCell.self))
+        chatRoomTableView.register(ReplyMedia_MediaTextCell.self, forCellReuseIdentifier: String(describing: ReplyMedia_MediaTextCell.self))
+        chatRoomTableView.register(ReplyMediaText_TextCell.self, forCellReuseIdentifier: String(describing: ReplyMediaText_TextCell.self))
+        chatRoomTableView.register(ReplyMediaText_MediaCell.self, forCellReuseIdentifier: String(describing: ReplyMediaText_MediaCell.self))
+        chatRoomTableView.register(ReplyMediaText_MediaTextCell.self, forCellReuseIdentifier: String(describing: ReplyMediaText_MediaTextCell.self))
+
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -648,56 +661,139 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let message = viewModel.messages[indexPath.row]
-        //Reply Template
-        if let inReplyTo = message.content?.relatesTo?.inReplyTo {
-            print("inReplyTo ---> \(inReplyTo)")
-            //            if let msgType = MessageType(rawValue: inReplyTo.content?.msgtype ?? "") {
-            //                if (msgType == .image) || (msgType == .audio) || (msgType == .video) {
-            //
-            //                }else{
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyTextCell", for: indexPath) as! ReplyTextCell
-            cell.configure(with: message, currentUser: currentUser)
-            cell.selectionStyle = .none // Disable cell selection
-            return cell
-        }
-
         
-        // Media Only
-        if let msgType = MessageType(rawValue: message.content?.msgtype ?? "") {
-            if (msgType == .image) || (msgType == .audio) || (msgType == .video) {
-                if message.content?.body == "" {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "MediaContentCell", for: indexPath) as! MediaContentCell
-                    // Configure the cell
-                    cell.mediaConfigure(with: message, currentUser: currentUser)
-                    cell.playButton.tag = indexPath.row
-                    cell.delegate = self  // Set the delegate
-                    cell.selectionStyle = .none // Disable cell selection
-                    return cell
-                }else{
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "mediaTextTVCell", for: indexPath) as! MediaTextTVCell
-                    // Configure the cell
-                    cell.mediaConfigure(with: message, currentUser: currentUser)
-                    cell.playButton.tag = indexPath.row
-                    cell.delegate = self  // Set the delegate
-                    cell.selectionStyle = .none // Disable cell selection
-                    return cell
-                }
-                
-
-            } else if (msgType == .text) {
+        let mainContent = message.content
+        let relatesTo = mainContent?.relatesTo
+        let inReplyTo = relatesTo?.inReplyTo
+        let replyContent = inReplyTo?.content
+        let mainMsgType = mainContent?.msgtype
+        let mainBody = mainContent?.body
+        let replyMsgType = replyContent?.msgtype
+        let replyBody = replyContent?.body
+        
+        
+        // Check for absence of m.relates_to and m.in_reply_to
+        if relatesTo == nil && inReplyTo == nil {
+            if mainMsgType == "m.text" {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "ChatMessageCell", for: indexPath) as! ChatMessageCell
                 cell.configure(with: message, currentUser: currentUser)
                 cell.overlayButton.tag = indexPath.row
-                cell.delegate = self  // Set the delegate
-                cell.selectionStyle = .none // Disable cell selection
+                cell.delegate = self
+                cell.selectionStyle = .none
+                return cell
+            } else if (mainMsgType == "m.image" || mainMsgType == "m.video" || mainMsgType == "m.audio") && ((mainBody?.isEmpty) == false) {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "mediaTextTVCell", for: indexPath) as! MediaTextTVCell
+                // Configure the cell
+                cell.mediaConfigure(with: message, currentUser: currentUser)
+                cell.playButton.tag = indexPath.row
+                cell.delegate = self
+                cell.selectionStyle = .none
+                return cell
+            } else if (mainMsgType == "m.image" || mainMsgType == "m.video" || mainMsgType == "m.audio") && ((mainBody?.isEmpty) == true) {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "MediaContentCell", for: indexPath) as! MediaContentCell
+                // Configure the cell
+                cell.mediaConfigure(with: message, currentUser: currentUser)
+                cell.playButton.tag = indexPath.row
+                cell.delegate = self
+                cell.selectionStyle = .none
                 return cell
             }
         }
+        
+        // Determine the cell type
+        if replyMsgType == "m.text" && mainMsgType == "m.text" {
+            // ReplyText_TextCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyText_TextCell", for: indexPath) as! ReplyText_TextCell
+            cell.configure(with: message, currentUser: currentUser)
+            cell.selectionStyle = .none
+            return cell
+        }
+        else if replyMsgType == "m.text" && mainMsgType == "m.image" && (mainBody?.isEmpty ?? false) {
+            // ReplyText_MediaCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyText_MediaCell", for: indexPath) as! ReplyText_MediaCell
+            cell.configure(with: message, currentUser: currentUser)
+            cell.selectionStyle = .none
+            return cell
+        }
+        else if replyMsgType == "m.text" && mainMsgType == "m.image" && ((mainBody?.isEmpty) == false) {
+            // ReplyText_MediaTextCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyText_MediaTextCell", for: indexPath) as! ReplyText_MediaTextCell
+            cell.configure(with: message, currentUser: currentUser)
+            cell.selectionStyle = .none
+            return cell
+        }
+        else if replyMsgType == "m.image" && (replyBody?.isEmpty ?? false) && mainMsgType == "m.text" && (mainBody?.isEmpty ?? false) {
+            // ReplyMedia_TextCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyMedia_TextCell", for: indexPath) as! ReplyMedia_TextCell
+            // Configure the cell
+            return cell
+        } else if replyMsgType == "m.image" && (replyBody?.isEmpty ?? false) && mainMsgType == "m.image" && (mainBody?.isEmpty ?? false) {
+            // ReplyMedia_MediaCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyMedia_MediaCell", for: indexPath) as! ReplyMedia_MediaCell
+            // Configure the cell
+            return cell
+        } else if replyMsgType == "m.image" && (replyBody?.isEmpty ?? false) && mainMsgType == "m.image" && ((mainBody?.isEmpty) == false) {
+            // ReplyMedia_MediaTextCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyMedia_MediaTextCell", for: indexPath) as! ReplyMedia_MediaTextCell
+            // Configure the cell
+            return cell
+        } 
+        else if replyMsgType == "m.image" && ((replyBody?.isEmpty) == false) && mainMsgType == "m.text" && (mainBody?.isEmpty ?? false) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyMediaText_TextCell", for: indexPath) as! ReplyMediaText_TextCell
+            cell.configure(with: message, currentUser: currentUser)
+            cell.selectionStyle = .none
+            return cell
+        }
+        else if replyMsgType == "m.image" && ((replyBody?.isEmpty) == false) && mainMsgType == "m.text" && ((mainBody?.isEmpty) == false) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyMediaText_TextCell", for: indexPath) as! ReplyMediaText_TextCell
+            cell.configure(with: message, currentUser: currentUser)
+            cell.selectionStyle = .none
+            return cell
+        }
+         else if replyMsgType == "m.image" && ((replyBody?.isEmpty) == false) && mainMsgType == "m.image" && (mainBody?.isEmpty ?? false) {
+            // ReplyMediaText_MediaCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyMediaText_MediaCell", for: indexPath) as! ReplyMediaText_MediaCell
+             cell.configure(with: message, currentUser: currentUser)
+             cell.selectionStyle = .none
+            return cell
+        } else if replyMsgType == "m.image" && ((replyBody?.isEmpty) == false) && mainMsgType == "m.image" && ((mainBody?.isEmpty) == false) {
+            // ReplyMediaText_MediaTextCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyMediaText_MediaTextCell", for: indexPath) as! ReplyMediaText_MediaTextCell
+            cell.configure(with: message, currentUser: currentUser)
+            cell.selectionStyle = .none
+            return cell
+        }
+        
+        //Reply Template
+        //        if let inReplyTo = message.content?.relatesTo?.inReplyTo {
+        ////            print("inReplyTo eventId ---> \(inReplyTo.eventId)")
+        //            if let msgType = MessageType(rawValue: message.content?.msgtype ?? "") {
+        //                if (msgType == .image) || (msgType == .audio) || (msgType == .video) {
+        //
+        //                    let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyMediaTextCell", for: indexPath) as! ReplyMediaTextCell
+        //                    cell.configure(with: message, currentUser: currentUser)
+        //                    cell.selectionStyle = .none // Disable cell selection
+        //                    return cell
+        //
+        //                }else{
+        //                    let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyTextCell", for: indexPath) as! ReplyTextCell
+        //                    cell.configure(with: message, currentUser: currentUser)
+        //                    cell.selectionStyle = .none // Disable cell selection
+        //                    return cell
+        //                }
+        //            }
+        //            return UITableViewCell()
+        //        }else{
+        
         return UITableViewCell()
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         let message = viewModel.messages[indexPath.row]
+        
+        if let inReplyTo = message.content?.relatesTo?.inReplyTo {
+            return UITableView.automaticDimension
+        }
         if let msgType = MessageType(rawValue: message.content?.msgtype ?? "") {
             if (msgType == .image) || (msgType == .audio) || (msgType == .video) {
                 if message.content?.body == "" {
@@ -807,16 +903,33 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
                 
                 bottomViewHandler?.BV_More_Appear()
                 
-                guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(message.content?.S3thumbnailUrl ?? "")") else {
-                    print("Error: Invalid video URL")
-                    return
+                if let msgType = MessageType(rawValue: message.content?.msgtype ?? "") {
+                    if (msgType == .image) {
+                        guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(message.content?.S3MediaUrl ?? "")") else {
+                            print("Error: Invalid video URL")
+                            return
+                        }
+                        DispatchQueue.main.async {
+                            self.replyUserImgView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                            self.replyViewWidthConstraint.constant = 24.0
+                            self.replyUserDesc.text = message.content?.body
+                            self.replyUserName.text = message.sender
+                        }
+                    }else if (msgType == .audio) || (msgType == .video) {
+                        guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(message.content?.S3thumbnailUrl ?? "")") else {
+                            print("Error: Invalid video URL")
+                            return
+                        }
+                        DispatchQueue.main.async {
+                            self.replyUserImgView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                            self.replyViewWidthConstraint.constant = 24.0
+                            self.replyUserDesc.text = message.content?.body
+                            self.replyUserName.text = message.sender
+                        }
+                    }
+
                 }
-                DispatchQueue.main.async {
-                    self.replyUserImgView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
-                    self.replyViewWidthConstraint.constant = 24.0
-                    self.replyUserDesc.text = message.content?.body
-                    self.replyUserName.text = message.sender
-                }
+                
                 let buttonImages = [
                     UIImage(named: "copy", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
                     UIImage(named: "deleteB", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
@@ -838,6 +951,64 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
     }
        
     // MARK: - MediaContentCellDelegate Methods
+    
+    func didLongPressPlayButton(in cell: MediaContentCell) {
+        if let indexPath = chatRoomTableView.indexPath(for: cell) {
+            let message = viewModel.messages[indexPath.row]
+            // Handle long press here
+            print("Play button long pressed for message: MediaContentCell")
+            self.eventID = ""
+            self.eventID = message.eventId
+            removeCustomTabBar()
+            
+            bottomViewHandler?.BV_More_Appear()
+            
+            if let msgType = MessageType(rawValue: message.content?.msgtype ?? "") {
+                if (msgType == .image) {
+                    guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(message.content?.S3MediaUrl ?? "")") else {
+                        print("Error: Invalid video URL")
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        self.replyUserImgView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                        self.replyViewWidthConstraint.constant = 24.0
+                        self.replyUserDesc.text = message.content?.body
+                        self.replyUserName.text = message.sender
+                    }
+                }else if (msgType == .audio) || (msgType == .video) {
+                    guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(message.content?.S3thumbnailUrl ?? "")") else {
+                        print("Error: Invalid video URL")
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        self.replyUserImgView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                        self.replyViewWidthConstraint.constant = 24.0
+                        self.replyUserDesc.text = message.content?.body
+                        self.replyUserName.text = message.sender
+                    }
+                }
+            }
+
+           
+            let buttonImages = [
+                UIImage(named: "copy", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
+                UIImage(named: "Delete", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
+                UIImage(named: "Forward", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
+                UIImage(named: "reply", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
+                UIImage(named: "cancel", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!
+            ]
+            let buttonTitles = ["Copy", "Delete", "Forward","Reply","Cancel"]
+            customTabBar = CustomTabBar(buttonTitles: buttonTitles, buttonImages: buttonImages, buttonColors: UIColor.white)
+            if let customTabBar = customTabBar {
+                customTabBar.translatesAutoresizingMaskIntoConstraints = false
+                morebottomView.addSubview(customTabBar)
+                customTabBar.didSelectTab = { tabIndex in
+                    self.bottomSelectMediaActionPerform(tabIndex)
+                    
+                }
+            }
+        }
+    }
     func didTapPlayButton(in cell: MediaContentCell) {
         if let indexPath = chatRoomTableView.indexPath(for: cell) {
 //            let message = viewModel.messages[indexPath.row]
@@ -872,46 +1043,6 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
 
                     self.navigationController?.pushViewController(viewController, animated: true)
     //            }
-            }
-        }
-    }
-
-    func didLongPressPlayButton(in cell: MediaContentCell) {
-        if let indexPath = chatRoomTableView.indexPath(for: cell) {
-            let message = viewModel.messages[indexPath.row]
-            // Handle long press here
-            print("Play button long pressed for message: MediaContentCell")
-            self.eventID = ""
-            self.eventID = message.eventId
-            removeCustomTabBar()
-            
-            bottomViewHandler?.BV_More_Appear()
-            guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(message.content?.S3thumbnailUrl ?? "")") else {
-                print("Error: Invalid video URL")
-                return
-            }
-            DispatchQueue.main.async {
-                self.replyUserImgView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
-                self.replyViewWidthConstraint.constant = 24.0
-                self.replyUserDesc.text = message.content?.body
-                self.replyUserName.text = message.sender
-            }
-            let buttonImages = [
-                UIImage(named: "copy", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
-                UIImage(named: "Delete", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
-                UIImage(named: "Forward", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
-                UIImage(named: "reply", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
-                UIImage(named: "cancel", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!
-            ]
-            let buttonTitles = ["Copy", "Delete", "Forward","Reply","Cancel"]
-            customTabBar = CustomTabBar(buttonTitles: buttonTitles, buttonImages: buttonImages, buttonColors: UIColor.white)
-            if let customTabBar = customTabBar {
-                customTabBar.translatesAutoresizingMaskIntoConstraints = false
-                morebottomView.addSubview(customTabBar)
-                customTabBar.didSelectTab = { tabIndex in
-                    self.bottomSelectMediaActionPerform(tabIndex)
-                    
-                }
             }
         }
     }

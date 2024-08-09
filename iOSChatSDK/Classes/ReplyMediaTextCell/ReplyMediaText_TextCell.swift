@@ -42,7 +42,12 @@ class ReplyMediaText_TextCell: UITableViewCell {
         static let imageViewSizeZero: CGSize = CGSize(width: 0, height: 0)
 
     }
-
+    private enum MessageType: String {
+        case text = "m.text"
+        case video = "m.video"
+        case image = "m.image"
+        case audio = "m.audio"
+    }
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
@@ -203,23 +208,35 @@ class ReplyMediaText_TextCell: UITableViewCell {
         readIndicatorImageView.image = UIImage(named: "read_indicator", in: Bundle(for: ChatMessageCell.self), compatibleWith: nil)
 
         configureTextMessage(message.content?.body ?? "", replyText: message.content?.relatesTo?.inReplyTo?.sender ?? "", replyImage: message.content?.relatesTo?.inReplyTo?.content?.S3MediaUrl ?? "", replyDesc: message.content?.relatesTo?.inReplyTo?.content?.body ?? "")
-
+        
+        // Handle different message types
+        if let msgType = MessageType(rawValue: message.content?.relatesTo?.inReplyTo?.content?.msgtype ?? "") {
+            
+            if (msgType == .image) {
+                guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(message.content?.relatesTo?.inReplyTo?.content?.S3MediaUrl ?? "")") else {
+                    print("Error: Invalid video URL")
+                    return
+                }
+                DispatchQueue.main.async {
+                    self.replyImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: ReplyMediaText_TextCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                }
+            }else if (msgType == .audio) || (msgType == .video) {
+                guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(message.content?.relatesTo?.inReplyTo?.content?.S3thumbnailUrl ?? "")") else {
+                    print("Error: Invalid video URL")
+                    return
+                }
+                DispatchQueue.main.async {
+                    self.replyImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: ReplyMediaText_TextCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                }
+            }
+        }
     }
 
     private func configureTextMessage(_ text: String, replyText:String,replyImage:String, replyDesc:String) {
-        
         messageLabel.text = text
         titleLabel.text = replyText
         descriptionLabel.text = replyDesc
         upperbubbleBackgroundViewHeightConstraint.constant = 60
-        
-        guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(replyImage)") else {
-            print("Error: Invalid video URL")
-            return
-        }
-        DispatchQueue.main.async {
-            self.replyImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
-        }
     }
                                                   
     private func applyBubbleShape(isCurrentUser: Bool) {

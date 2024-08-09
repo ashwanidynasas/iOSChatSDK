@@ -35,7 +35,7 @@ class ReplyText_MediaTextCell: UITableViewCell {
         static let readIndicatorSize: CGFloat = 7
         static let padding: CGFloat = 12
         static let timestampPadding: CGFloat = 4
-        static let minBubbleWidth: CGFloat = 100
+        static let minBubbleWidth: CGFloat = 180
         static let maxBubbleWidthRatio: CGFloat = 0.75
         static let dateFormat: String = "hh:mm a"
         static let imageViewSize: CGSize = CGSize(width: 30, height: 30)

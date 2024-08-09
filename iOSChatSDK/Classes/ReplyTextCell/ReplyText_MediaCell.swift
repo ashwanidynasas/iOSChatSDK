@@ -42,7 +42,7 @@ class ReplyText_MediaCell: UITableViewCell {
         static let readIndicatorSize: CGFloat = 7
         static let padding: CGFloat = 12
         static let timestampPadding: CGFloat = 4
-        static let minBubbleWidth: CGFloat = 100
+        static let minBubbleWidth: CGFloat = 180
         static let maxBubbleWidthRatio: CGFloat = 0.75
         static let dateFormat: String = "hh:mm a"
         static let imageViewSize: CGSize = CGSize(width: 30, height: 30)
@@ -83,7 +83,7 @@ class ReplyText_MediaCell: UITableViewCell {
         messageMediaImage.contentMode = .scaleAspectFit
         messageMediaImage.contentMode = .scaleAspectFill
         messageMediaImage.translatesAutoresizingMaskIntoConstraints = false
-        messageMediaImage.layer.cornerRadius = 40
+        messageMediaImage.layer.cornerRadius = 60
         messageMediaImage.clipsToBounds = true
 
         bubbleBackgroundView.addSubview(timestampLabel)
@@ -142,8 +142,8 @@ class ReplyText_MediaCell: UITableViewCell {
             // Constraints for messageMediaImage
             messageMediaImage.topAnchor.constraint(equalTo: upperbubbleBackgroundView.bottomAnchor, constant: 8),
             messageMediaImage.centerXAnchor.constraint(equalTo: bubbleBackgroundView.centerXAnchor),
-            messageMediaImage.widthAnchor.constraint(equalToConstant: 80),
-            messageMediaImage.heightAnchor.constraint(equalToConstant: 80),
+            messageMediaImage.widthAnchor.constraint(equalToConstant: 120),
+            messageMediaImage.heightAnchor.constraint(equalToConstant: 120),
 
             timestampLabel.topAnchor.constraint(equalTo: messageMediaImage.bottomAnchor, constant: Constants.timestampPadding),
             timestampLabel.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor, constant: -Constants.padding),

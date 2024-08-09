@@ -702,61 +702,59 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
         
         // Determine the cell type
         if replyMsgType == "m.text" && mainMsgType == "m.text" {
-            // ReplyText_TextCell
             let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyText_TextCell", for: indexPath) as! ReplyText_TextCell
             cell.configure(with: message, currentUser: currentUser)
             cell.selectionStyle = .none
             return cell
         }
         else if replyMsgType == "m.text" && mainMsgType == "m.image" && (mainBody?.isEmpty ?? false) {
-            // ReplyText_MediaCell
             let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyText_MediaCell", for: indexPath) as! ReplyText_MediaCell
             cell.configure(with: message, currentUser: currentUser)
             cell.selectionStyle = .none
             return cell
         }
         else if replyMsgType == "m.text" && mainMsgType == "m.image" && ((mainBody?.isEmpty) == false) {
-            // ReplyText_MediaTextCell
             let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyText_MediaTextCell", for: indexPath) as! ReplyText_MediaTextCell
             cell.configure(with: message, currentUser: currentUser)
             cell.selectionStyle = .none
             return cell
         }
-        else if replyMsgType == "m.image" && (replyBody?.isEmpty ?? false) && mainMsgType == "m.text" && (mainBody?.isEmpty ?? false) {
-            // ReplyMedia_TextCell
+        else if (replyMsgType == "m.image" || replyMsgType == "m.video" || replyMsgType == "m.audio") && (replyBody?.isEmpty ?? false) && mainMsgType == "m.text" && ((mainBody?.isEmpty) == false) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyMedia_TextCell", for: indexPath) as! ReplyMedia_TextCell
-            // Configure the cell
+            cell.configure(with: message, currentUser: currentUser)
+            cell.selectionStyle = .none
             return cell
-        } else if replyMsgType == "m.image" && (replyBody?.isEmpty ?? false) && mainMsgType == "m.image" && (mainBody?.isEmpty ?? false) {
-            // ReplyMedia_MediaCell
+        } else if (replyMsgType == "m.image" || replyMsgType == "m.video" || replyMsgType == "m.audio") && (replyBody?.isEmpty ?? false) && mainMsgType == "m.image" && (mainBody?.isEmpty ?? false) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyMedia_MediaCell", for: indexPath) as! ReplyMedia_MediaCell
-            // Configure the cell
+            cell.configure(with: message, currentUser: currentUser)
+            cell.selectionStyle = .none
             return cell
-        } else if replyMsgType == "m.image" && (replyBody?.isEmpty ?? false) && mainMsgType == "m.image" && ((mainBody?.isEmpty) == false) {
-            // ReplyMedia_MediaTextCell
+        } else if (replyMsgType == "m.image" || replyMsgType == "m.video" || replyMsgType == "m.audio") && (replyBody?.isEmpty ?? false) && mainMsgType == "m.image" && ((mainBody?.isEmpty) == false) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyMedia_MediaTextCell", for: indexPath) as! ReplyMedia_MediaTextCell
-            // Configure the cell
+            cell.configure(with: message, currentUser: currentUser)
+            cell.selectionStyle = .none
             return cell
         } 
-        else if replyMsgType == "m.image" && ((replyBody?.isEmpty) == false) && mainMsgType == "m.text" && (mainBody?.isEmpty ?? false) {
+//        else if replyMsgType == "m.image" && ((replyBody?.isEmpty) == false) && mainMsgType == "m.text" && (mainBody?.isEmpty ?? false) {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyMediaText_TextCell", for: indexPath) as! ReplyMediaText_TextCell
+//            cell.configure(with: message, currentUser: currentUser)
+//            cell.selectionStyle = .none
+//            return cell
+//        }
+        
+        else if (replyMsgType == "m.image" || replyMsgType == "m.video" || replyMsgType == "m.audio") && ((replyBody?.isEmpty) == false) && mainMsgType == "m.text" && ((mainBody?.isEmpty) == false) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyMediaText_TextCell", for: indexPath) as! ReplyMediaText_TextCell
             cell.configure(with: message, currentUser: currentUser)
             cell.selectionStyle = .none
             return cell
         }
-        else if replyMsgType == "m.image" && ((replyBody?.isEmpty) == false) && mainMsgType == "m.text" && ((mainBody?.isEmpty) == false) {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyMediaText_TextCell", for: indexPath) as! ReplyMediaText_TextCell
-            cell.configure(with: message, currentUser: currentUser)
-            cell.selectionStyle = .none
-            return cell
-        }
-         else if replyMsgType == "m.image" && ((replyBody?.isEmpty) == false) && mainMsgType == "m.image" && (mainBody?.isEmpty ?? false) {
+         else if (replyMsgType == "m.image" || replyMsgType == "m.video" || replyMsgType == "m.audio") && ((replyBody?.isEmpty) == false) && mainMsgType == "m.image" && (mainBody?.isEmpty ?? false) {
             // ReplyMediaText_MediaCell
             let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyMediaText_MediaCell", for: indexPath) as! ReplyMediaText_MediaCell
              cell.configure(with: message, currentUser: currentUser)
              cell.selectionStyle = .none
             return cell
-        } else if replyMsgType == "m.image" && ((replyBody?.isEmpty) == false) && mainMsgType == "m.image" && ((mainBody?.isEmpty) == false) {
+        } else if (replyMsgType == "m.image" || replyMsgType == "m.video" || replyMsgType == "m.audio") && ((replyBody?.isEmpty) == false) && mainMsgType == "m.image" && ((mainBody?.isEmpty) == false) {
             // ReplyMediaText_MediaTextCell
             let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyMediaText_MediaTextCell", for: indexPath) as! ReplyMediaText_MediaTextCell
             cell.configure(with: message, currentUser: currentUser)

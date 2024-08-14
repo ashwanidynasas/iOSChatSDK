@@ -8,8 +8,15 @@
 import Foundation
 import SDWebImage
 
+protocol ReplyMediaText_MediaCellDelegate: AnyObject {
+    func didTapPlayButton(in cell: ReplyMediaText_MediaCell)
+    func didLongPressPlayButton(in cell: ReplyMediaText_MediaCell)
+}
+
 class ReplyMediaText_MediaCell: UITableViewCell {
     private let bubbleBackgroundView = UIView()
+    let playButton = UIButton() // Added play button
+    weak var delegate: ReplyMediaText_MediaCellDelegate?
     private let upperbubbleBackgroundView = UIView()
     private let messageMediaImage = UIImageView()
     private let timestampLabel = UILabel()
@@ -75,6 +82,13 @@ class ReplyMediaText_MediaCell: UITableViewCell {
         bubbleBackgroundView.layer.shadowOpacity = Constants.bubbleShadowOpacity
         bubbleBackgroundView.layer.shadowRadius = Constants.bubbleShadowRadius
 
+        playButton.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(playButton)
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
+        playButton.addGestureRecognizer(tapGestureRecognizer)
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture(_:)))
+        playButton.addGestureRecognizer(longPressGestureRecognizer)
+
         bubbleBackgroundView.addSubview(upperbubbleBackgroundView)
         upperbubbleBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         upperbubbleBackgroundView.layer.cornerRadius = 5
@@ -131,6 +145,11 @@ class ReplyMediaText_MediaCell: UITableViewCell {
             bubbleBackgroundView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             minWidthConstraint,
             maxWidthConstraint,
+            // Constraints for playButton to fill the bubbleBackgroundView
+            playButton.leadingAnchor.constraint(equalTo: bubbleBackgroundView.leadingAnchor),
+            playButton.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor),
+            playButton.topAnchor.constraint(equalTo: bubbleBackgroundView.topAnchor),
+            playButton.bottomAnchor.constraint(equalTo: bubbleBackgroundView.bottomAnchor),
 
             upperbubbleBackgroundView.topAnchor.constraint(equalTo: bubbleBackgroundView.topAnchor, constant: 8),
             upperbubbleBackgroundView.leadingAnchor.constraint(equalTo: bubbleBackgroundView.leadingAnchor, constant: Constants.padding),
@@ -243,6 +262,17 @@ class ReplyMediaText_MediaCell: UITableViewCell {
         titleLabel.text = replyText
         descriptionLabel.text = replyDesc
         upperbubbleBackgroundViewHeightConstraint.constant = 60
+    }
+    @objc private func handleTapGesture(_ gesture: UITapGestureRecognizer) {
+        delegate?.didTapPlayButton(in: self)
+        print("touch only")
+    }
+
+    @objc private func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            print("long pressed")
+            delegate?.didLongPressPlayButton(in: self)
+        }
     }
     private func applyBubbleShape(isCurrentUser: Bool) {
         bubbleBackgroundView.layer.cornerRadius = 12

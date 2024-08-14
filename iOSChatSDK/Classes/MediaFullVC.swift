@@ -12,15 +12,15 @@ protocol MediaFullVCDelegate: AnyObject {
     func itemDeleteFromChat(_ didSendData: String)
 }
 class MediaFullVC: UIViewController, TopViewDelegate {
-
+    
     @IBOutlet weak var topView: CustomTopView!
     @IBOutlet weak var fullImgView:UIImageView!
     @IBOutlet weak var bottomView:UIView!
     @IBOutlet weak var videoPlayerBackView: UIView!
     private var deleteViewModel = DeleteMessageViewModel()
-
+    
     var currentUser: String! = ""
-    var imageFetched:UIImage!
+    var imageFetched:UIImage! = nil
     var videoFetched:URL!
     var imageSelectURL:String! = ""
     var s3MediaURL:String! = ""
@@ -29,7 +29,7 @@ class MediaFullVC: UIViewController, TopViewDelegate {
     var player: AVPlayer?
     var eventID: String! = ""
     weak var delegate: MediaFullVCDelegate?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCustomBottomView()
@@ -47,24 +47,11 @@ class MediaFullVC: UIViewController, TopViewDelegate {
         }
     }
     
-    func playVideo() {
-        guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(s3MediaURL ?? "")") else {
-            print("Error: Invalid video URL")
-            return
-        }
-        let player = AVPlayer(url: videoURL)
-        let avPlayerController = AVPlayerViewController()
-        avPlayerController.player = player;
-        avPlayerController.view.frame = self.videoPlayerBackView.bounds;
-        self.addChild(avPlayerController)
-        self.videoPlayerBackView.addSubview(avPlayerController.view);
-    }
-    
     func setupVideoPlayerContainerView() {
         videoPlayerContainerView = CustomVideoPlayerContainerView(frame: .zero)
-                videoPlayerContainerView.translatesAutoresizingMaskIntoConstraints = false
-                self.videoPlayerBackView.addSubview(videoPlayerContainerView)
-
+        videoPlayerContainerView.translatesAutoresizingMaskIntoConstraints = false
+        self.videoPlayerBackView.addSubview(videoPlayerContainerView)
+        
         NSLayoutConstraint.activate([
             videoPlayerContainerView.topAnchor.constraint(equalTo: self.view.topAnchor),
             videoPlayerContainerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
@@ -105,17 +92,22 @@ class MediaFullVC: UIViewController, TopViewDelegate {
             }
         }
     }
-
+    
     private func redactMessage() {
         let roomID = UserDefaults.standard.string(forKey: "room_id")
         let accessToken = UserDefaults.standard.string(forKey: "access_token")
+        
+        print("roomID id ----> \(roomID ?? "")")
+        print("accessToken id ----> \(accessToken ?? "")")
+        print("event id ----> \(eventID ?? "")")
+
         let request = MessageRedactRequest(
-                    accessToken: /accessToken,
-                    roomID: /roomID,
-                    eventID: /eventID,
-                    body: "spam"
-                )
-                
+            accessToken: /accessToken,
+            roomID: /roomID,
+            eventID: /eventID,
+            body: "spam"
+        )
+        
         deleteViewModel.redactMessage(request: request) { result in
             switch result {
             case .success(let message):
@@ -130,6 +122,18 @@ class MediaFullVC: UIViewController, TopViewDelegate {
         }
     }
     
+    func playVideo() {
+        guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(s3MediaURL ?? "")") else {
+            print("Error: Invalid video URL")
+            return
+        }
+        let player = AVPlayer(url: videoURL)
+        let avPlayerController = AVPlayerViewController()
+        avPlayerController.player = player;
+        avPlayerController.view.frame = self.videoPlayerBackView.bounds;
+        self.addChild(avPlayerController)
+        self.videoPlayerBackView.addSubview(avPlayerController.view);
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
@@ -162,39 +166,38 @@ class MediaFullVC: UIViewController, TopViewDelegate {
             
         }
     }
-
 }
 
 class CustomVideoPlayerContainerView: UIView {
     var playerViewController: AVPlayerViewController?
-
-        override init(frame: CGRect) {
-            super.init(frame: frame)
-            setupPlayerViewController()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupPlayerViewController()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupPlayerViewController()
+    }
+    
+    private func setupPlayerViewController() {
+        playerViewController = AVPlayerViewController()
+        guard let playerVC = playerViewController else {
+            print("Error: PlayerViewController could not be initialized")
+            return
         }
-
-        required init?(coder: NSCoder) {
-            super.init(coder: coder)
-            setupPlayerViewController()
+        playerVC.view.frame = self.bounds
+        playerVC.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.addSubview(playerVC.view)
+    }
+    
+    var player: AVPlayer? {
+        get {
+            return playerViewController?.player
         }
-
-        private func setupPlayerViewController() {
-            playerViewController = AVPlayerViewController()
-            guard let playerVC = playerViewController else {
-                print("Error: PlayerViewController could not be initialized")
-                return
-            }
-            playerVC.view.frame = self.bounds
-            playerVC.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            self.addSubview(playerVC.view)
+        set {
+            playerViewController?.player = newValue
         }
-
-        var player: AVPlayer? {
-            get {
-                return playerViewController?.player
-            }
-            set {
-                playerViewController?.player = newValue
-            }
-        }
+    }
 }

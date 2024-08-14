@@ -34,16 +34,16 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate,TopViewDelegate {
     weak var publishDelegate: PublishMediaDelegate?
     
     var currentUser: String!
-    var imageFetched:UIImage!
-    var videoFetched:URL!
+    var imageFetched:UIImage! = nil
+    var videoFetched:URL! =  nil
     var isReply:Bool!
-    var username:String!
-    var userDesc:String!
-    var userImage:UIImage!
+    var username:String! = ""
+    var userDesc:String! = ""
+    var userImage:UIImage! = nil
+    var eventID: String! = ""
     private let replyViewModel = ChatReplyViewModel()
-    var eventID: String!
 
-//    var videoPlayerView: VideoPlayerCustomView!
+    //    var videoPlayerView: VideoPlayerCustomView!
     var videoPlayerContainerView: VideoPlayerContainerView!
     var player: AVPlayer?
 

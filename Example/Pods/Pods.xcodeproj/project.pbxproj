@@ -138,6 +138,7 @@
 		8D739A0E851C00DBE71DB9A2667D4588 /* SDImageFramePool.h in Headers */ = {isa = PBXBuildFile; fileRef = 3496DDBF543BEDF2D00B2F041A89F873 /* SDImageFramePool.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		9035F0522B779EC49A5635C8F75F387E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4B8062A824BCE7CB28FCE3129AC673B /* Foundation.framework */; };
 		91218968238F58BBB3E84DC5C8A25854 /* SDImageLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 81E0A688A74C081D3148DA05F2C4CFCC /* SDImageLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		91AAE5E82C748DDE00982359 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91AAE5E72C748DDE00982359 /* UIView.swift */; };
 		937D6966FD44A9A799ED6574EC78CC4F /* UIImage+Transform.h in Headers */ = {isa = PBXBuildFile; fileRef = 77D302E8294799802C8D1E8F199E4738 /* UIImage+Transform.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		99B86297693E8F33F58D899CF36E5788 /* ChatReplyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1BDD9FB01901442DCFC88157BF762D /* ChatReplyViewModel.swift */; };
 		9AF09A8AF1301B3B97DA1E5B76A19645 /* SDImageTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E9A608DCF04FD972479EBF6958081EB /* SDImageTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -404,6 +405,7 @@
 		9027578F072E34B550325FA707B882AE /* SDmetamacros.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDmetamacros.h; path = SDWebImage/Private/SDmetamacros.h; sourceTree = "<group>"; };
 		9037E7DB2EED8D516D92293132423E06 /* DataComponent.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; path = DataComponent.storyboard; sourceTree = "<group>"; };
 		9132B19DDC3AE5771888CADC80141E87 /* iOSChatSDK-iOSChatSDK */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "iOSChatSDK-iOSChatSDK"; path = iOSChatSDK.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		91AAE5E72C748DDE00982359 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		9205E8EDC209367A98C743C2D4ECAF19 /* SDWebImageDownloader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageDownloader.h; path = SDWebImage/Core/SDWebImageDownloader.h; sourceTree = "<group>"; };
 		92733644440AF5671140EF6182FC6899 /* SDImageAPNGCoder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDImageAPNGCoder.m; path = SDWebImage/Core/SDImageAPNGCoder.m; sourceTree = "<group>"; };
 		9279638FB531D93EBEA05BBF370853EC /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -684,6 +686,7 @@
 			isa = PBXGroup;
 			children = (
 				C20E33B6612DC1833FD2FADF641E54FA /* String.swift */,
+				91AAE5E72C748DDE00982359 /* UIView.swift */,
 			);
 			name = UIExtension;
 			path = iOSChatSDK/Classes/UIExtension;
@@ -725,6 +728,88 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
+		91AAE5E52C748D0400982359 /* Singleton */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Singleton;
+			sourceTree = "<group>";
+		};
+		91AAE5E62C748D4600982359 /* Macros */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Macros;
+			sourceTree = "<group>";
+		};
+		91AAE5E92C748E2D00982359 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				91AAE5EA2C748E3900982359 /* Media */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		91AAE5EA2C748E3900982359 /* Media */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Media;
+			sourceTree = "<group>";
+		};
+		91AAE5EB2C748E4500982359 /* MVVM */ = {
+			isa = PBXGroup;
+			children = (
+				91AAE5EF2C748E7600982359 /* Controller */,
+				91AAE5EE2C748E5E00982359 /* Model */,
+				91AAE5ED2C748E5800982359 /* View */,
+				91AAE5EC2C748E4A00982359 /* ViewModel */,
+			);
+			path = MVVM;
+			sourceTree = "<group>";
+		};
+		91AAE5EC2C748E4A00982359 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		91AAE5ED2C748E5800982359 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		91AAE5EE2C748E5E00982359 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		91AAE5EF2C748E7600982359 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		91AAE5F02C748EB000982359 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		91AAE5F12C748ED000982359 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		9296C80945140B0477FDDF3AE7284703 /* SenderChatRoom */ = {
 			isa = PBXGroup;
 			children = (
@@ -737,6 +822,12 @@
 		9B35E6EA28B835DF63F4EA4844EE4868 /* iOSChatSDK */ = {
 			isa = PBXGroup;
 			children = (
+				91AAE5F12C748ED000982359 /* Services */,
+				91AAE5F02C748EB000982359 /* Helpers */,
+				91AAE5EB2C748E4500982359 /* MVVM */,
+				91AAE5E92C748E2D00982359 /* Cells */,
+				91AAE5E62C748D4600982359 /* Macros */,
+				91AAE5E52C748D0400982359 /* Singleton */,
 				94C5567437FDDEF4936FF080B85B6C98 /* APIManager.swift */,
 				2FD33E6807563632C8D87C136DA2A403 /* BottomViewHandler.swift */,
 				4A1D7322829A06FDE6EF73738DAAE550 /* ChatConnectListVC.swift */,
@@ -1458,6 +1549,7 @@
 				FCB3F06D8F9E771E9CE62884D009020B /* CircleObject.swift in Sources */,
 				BC13CE3592475E6E7343105866F5A127 /* ConnectionListService.swift in Sources */,
 				4D9C4B132C65388F007F9B0F /* ReplyText_MediaTextCell.swift in Sources */,
+				91AAE5E82C748DDE00982359 /* UIView.swift in Sources */,
 				0941B17320E401452FF24B7BF46A6143 /* ConnectionListVC.swift in Sources */,
 				D7C88D073D65F3CBBD10BA4028183B62 /* CustomTableViewCell.swift in Sources */,
 				DFFEFC853C33F7E1B0215024BDA22CAA /* CustomTableViewCell.xib in Sources */,

@@ -6,15 +6,25 @@
 //
 
 import Foundation
+
+//MARK: - CLASS
 class APIManager {
 
-    // Shared instance for singleton pattern
+    // Shared instance
     static let shared = APIManager()
     private let mediaViewModel = ChatMediaViewModel()
     private init() {}
 
     // Function to send image, video, audio, or document with completion handler
-    func sendImageFromGalleryAPICall(image: UIImage? = nil, video: URL? = nil, audio: URL? = nil, document: String? = nil, msgType: String,body:String? = nil,eventID:String? = nil, completion: @escaping (Result<String, Error>) -> Void) {
+    func sendImageFromGalleryAPICall(image: UIImage? = nil, 
+                                     video: URL? = nil,
+                                     audio: URL? = nil,
+                                     document: String? = nil,
+                                     msgType: String,
+                                     body:String? = nil,
+                                     eventID:String? = nil, 
+                                     completion: @escaping (Result<String, Error>) -> Void) {
+        
         // Simulate an API call with a delay
         let roomID = UserDefaults.standard.string(forKey: "room_id")
         let accessToken = UserDefaults.standard.string(forKey: "access_token")
@@ -44,8 +54,17 @@ class APIManager {
         default:
             print(msgType)
         }
+        
+        
         if mediaType == "image"{
-            mediaViewModel.uploadFile(accessToken: /accessToken, roomID: /roomID, body: /body, msgType: msgType, mimetype: mimetype, fileName: /fileName, imageFilePath: image,  mediaType: mediaType) { result in
+            mediaViewModel.uploadFile(accessToken: /accessToken, 
+                                      roomID: /roomID, 
+                                      body: /body,
+                                      msgType: msgType, 
+                                      mimetype: mimetype,
+                                      fileName: /fileName,
+                                      imageFilePath: image,
+                                      mediaType: mediaType) { result in
                 switch result {
                 case .success(let response):
                     DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) {
@@ -60,7 +79,14 @@ class APIManager {
             }
         }
         else if (mediaType == "audio"){
-            mediaViewModel.uploadFile(accessToken: /accessToken, roomID: /roomID, body: /body, msgType: msgType, mimetype: mimetype, fileName: /fileName, videoFilePath: audio,  mediaType: mediaType) { result in
+            mediaViewModel.uploadFile(accessToken: /accessToken, 
+                                      roomID: /roomID,
+                                      body: /body, 
+                                      msgType: msgType,
+                                      mimetype: mimetype,
+                                      fileName: /fileName, 
+                                      videoFilePath: audio,
+                                      mediaType: mediaType) { result in
                 switch result {
                 case .success(let response):
                     DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) {
@@ -74,7 +100,14 @@ class APIManager {
                 }
             }
         }else{
-            mediaViewModel.uploadFile(accessToken: /accessToken, roomID: /roomID, body: /body, msgType: msgType, mimetype: mimetype, fileName: /fileName, videoFilePath: video,  mediaType: mediaType) { result in
+            mediaViewModel.uploadFile(accessToken: /accessToken, 
+                                      roomID: /roomID, 
+                                      body: /body,
+                                      msgType: msgType, 
+                                      mimetype: mimetype,
+                                      fileName: /fileName,
+                                      videoFilePath: video,
+                                      mediaType: mediaType) { result in
                 switch result {
                 case .success(let response):
                     DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) {

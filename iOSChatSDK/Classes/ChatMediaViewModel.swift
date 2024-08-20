@@ -13,19 +13,19 @@ class ChatMediaViewModel {
     func uploadFile(accessToken: String, roomID: String, body: String, msgType: String, mimetype: String, fileName: String, imageFilePath: UIImage? = nil,videoFilePath: URL? = nil,mediaType:String, completion: @escaping (Result<UploadResponse, Error>) -> Void) {
         
         let url = URL(string: "http://157.241.58.41/chat_api/message/send/\(mediaType)")!
-//        print("url \(url)")
-//        print("msgType \(msgType)")
-//        print("mimetype \(mimetype)")
-//        print("fileName \(fileName)")
-//        print("imageFilePath \(String(describing: imageFilePath))")
-//        print("videoFilePath \(String(describing: videoFilePath))")
-//        print("mediaType \(mediaType)")
-
+        //        print("url \(url)")
+        //        print("msgType \(msgType)")
+        //        print("mimetype \(mimetype)")
+        //        print("fileName \(fileName)")
+        //        print("imageFilePath \(String(describing: imageFilePath))")
+        //        print("videoFilePath \(String(describing: videoFilePath))")
+        //        print("mediaType \(mediaType)")
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         let boundary = UUID().uuidString
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-
+        
         var bodyData = Data()
         
         // Access Token
@@ -72,37 +72,37 @@ class ChatMediaViewModel {
             }
             bodyData.append(movieData!)
         }else{
-            let imageData = imageFilePath?.jpegData(compressionQuality: 1)
+            let imageData = imageFilePath?.jpegData(compressionQuality: 0.5)
             bodyData.append(imageData!)
         }
         
         bodyData.append("\r\n".data(using: .utf8)!)
         bodyData.append("--\(boundary)--\r\n".data(using: .utf8)!)
         request.httpBody = bodyData
-        
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
+        DispatchQueue.global(qos: .background).async {
             
-            guard let data = data else {
-                let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "No data"])
-                completion(.failure(error))
-                return
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                
+                guard let data = data else {
+                    let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "No data"])
+                    completion(.failure(error))
+                    return
+                }
+                
+                do {
+                    let uploadResponse = try JSONDecoder().decode(UploadResponse.self, from: data)
+                    completion(.success(uploadResponse))
+                } catch {
+                    completion(.failure(error))
+                }
             }
-            
-            do {
-                let uploadResponse = try JSONDecoder().decode(UploadResponse.self, from: data)
-                completion(.success(uploadResponse))
-            } catch {
-                completion(.failure(error))
-            }
+            task.resume()
         }
-        task.resume()
     }
-    
-    
 }
 
 struct UploadResponse: Codable {

@@ -76,11 +76,6 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate,TopViewDelegate {
         self.fullImgView.image = imageFetched
         self.sendMsgTF.inputAccessoryView = UIView()
 //        IQKeyboardManager.shared().isEnabled = false
-        
-        // Register for keyboard notifications
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-//        sendMsgTF.autocorrectionType = .no
         videoPlayerBackView.isHidden = true
 
         if imageFetched == nil {

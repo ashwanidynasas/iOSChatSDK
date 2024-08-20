@@ -78,6 +78,9 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
     private let mediaViewModel = ChatMediaViewModel()
     private let replyViewModel = ChatReplyViewModel()
 
+    private var fetchTimer: Timer?
+    private var isUserScrolling = false
+
     func setButtonTintColor(button: UIButton, color: UIColor) {
         button.tintColor = color
     }
@@ -131,7 +134,7 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         registerNib()
         createRoomCall()
         setupCustomBottomView()
-        fetchMessages()
+//        fetchMessages()
         chatRoomTableView.separatorStyle = .none
         chatRoomTableView.register(ChatMessageCell.self, forCellReuseIdentifier: "ChatMessageCell")
         chatRoomTableView.register(MediaContentCell.self, forCellReuseIdentifier: "MediaContentCell")
@@ -151,12 +154,38 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
 
 
     }
+    
+    private func startFetchingMessages() {
+        fetchTimer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(fetchMessages), userInfo: nil, repeats: true)
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        isUserScrolling = true
+    }
+
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            isUserScrolling = false
+        }
+    }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        isUserScrolling = false
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         isToggled = false
         isReply = false
+        startFetchingMessages()
+
     }
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        fetchTimer?.invalidate()
+        fetchTimer = nil
+    }
+
     func setupUI() {
         let startColor = UIColor.init(hex: "000000")
         let endColor = UIColor.init(hex: "520093")
@@ -380,8 +409,15 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
                         print("Success: \(response.message)")
                         self.bottomViewHandler?.BV_TF_Appear()
                         self.isReply = false
+                        DispatchQueue.main.async {
+                            self.sendMsgTF.text = ""
+                            self.sendBtn.setImage(UIImage(named: "mic", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), for: .normal)
+                            
+                            self.sendBtn.removeTarget(self, action: #selector(self.sendButtonTapped), for: .touchUpInside)
+                            self.sendBtn.addTarget(self, action: #selector(self.micButtonTapped), for: .touchUpInside)
+                        }
                         self.fetchMessages()
-
+                        self.scrollToBottom()
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {
@@ -396,7 +432,16 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
                 DispatchQueue.main.async {
                     if let response = response {
                         print("Response: \(response.details.response)\nEvent ID: \(response.details.chat_event_id)")
+                        DispatchQueue.main.async {
+                            self?.sendMsgTF.text = ""
+                            self?.sendBtn.setImage(UIImage(named: "mic", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), for: .normal)
+                            
+                            self?.sendBtn.removeTarget(self, action: #selector(self?.sendButtonTapped), for: .touchUpInside)
+                            self?.sendBtn.addTarget(self, action: #selector(self?.micButtonTapped), for: .touchUpInside)
+                        }
+
                         self?.fetchMessages()
+                        self?.scrollToBottom()
                     } else {
                         print("No response received")
                     }
@@ -406,6 +451,7 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
     }
     
     private func scrollToBottom() {
+        guard !isUserScrolling else { return }
         DispatchQueue.main.async {
             if self.viewModel.messages.isEmpty {
                 return
@@ -471,22 +517,22 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
             print("perform action")
         }
     }
-    private func fetchMessages() {
-        
-        viewModel.onUpdate = { [weak self] in
-            self?.chatRoomTableView.reloadData()
-            self?.scrollToBottom()
-            self?.sendMsgTF.text = ""
-            DispatchQueue.main.async {
-                self?.sendBtn.setImage(UIImage(named: "mic", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), for: .normal)
-            }
-            self?.sendBtn.removeTarget(self, action: #selector(self?.sendButtonTapped), for: .touchUpInside)
-            self?.sendBtn.addTarget(self, action: #selector(self?.micButtonTapped), for: .touchUpInside)
+    @objc private func fetchMessages() {
+//        DispatchQueue.main.async {
+//            self.sendMsgTF.text = ""
+//            self.sendBtn.setImage(UIImage(named: "mic", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), for: .normal)
+//            
+//            self.sendBtn.removeTarget(self, action: #selector(self.sendButtonTapped), for: .touchUpInside)
+//            self.sendBtn.addTarget(self, action: #selector(self.micButtonTapped), for: .touchUpInside)
+//        }
 
+        viewModel.onUpdate = { [weak self] in
+            DispatchQueue.main.async {
+                self?.chatRoomTableView.reloadData()
+//                self?.scrollToBottom()
+            }
         }
         let token = UserDefaults.standard.string(forKey: "access_token")
-        print("access_token \(/token)")
-
         viewModel.fetchMessages(accessToken: "\(token ?? "")")
     }
     
@@ -603,12 +649,16 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
            imagePickerController.sourceType = .photoLibrary
            imagePickerController.allowsEditing = false
            imagePickerController.mediaTypes = ["public.image", "public.movie"] // Support both images and videos
-           self.present(imagePickerController, animated: true, completion: nil)
+           DispatchQueue.main.async {
+               self.present(imagePickerController, animated: true, completion: nil)
+           }
        } else {
            // Handle the case where the photo library is not available
            let alert = UIAlertController(title: "Error", message: "Photo Library not available.", preferredStyle: .alert)
            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-           self.present(alert, animated: true, completion: nil)
+           DispatchQueue.main.async {
+               self.present(alert, animated: true, completion: nil)
+           }
        }
     }
 

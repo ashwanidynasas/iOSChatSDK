@@ -169,7 +169,7 @@ class ChatReplyViewModel {
         bodyData.append("Content-Disposition: form-data; name=\"file\"; filename=\"\(fileName ?? "")\"\r\n".data(using: .utf8)!)
         bodyData.append("Content-Type: \(mimetype ?? "")\r\n\r\n".data(using: .utf8)!)
         
-        let imageData = imageFilePath?.jpegData(compressionQuality: 1)
+        let imageData = imageFilePath?.jpegData(compressionQuality: 0.5)
         bodyData.append(imageData!)
         
         bodyData.append("\r\n".data(using: .utf8)!)

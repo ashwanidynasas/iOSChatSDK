@@ -172,24 +172,31 @@ class MediaContentCell: UITableViewCell {
             playButton.setImage(nil, for: .normal)
             if let imageUrlString = message.content?.url, let imageUrl = imageUrlString.modifiedString.mediaURL {
                 // Load the image from the URL
-                self.messageImageView.sd_setImage(with: imageUrl, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
-                
+//                self.messageImageView.sd_setImage(with: imageUrl, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                self.messageImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "userPlaceholder"), options: [], completed: nil)
+
+            }else{
+                let imageView = UIImageView(image: UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil))
+                self.messageImageView = imageView
             }
         }else if message.content?.msgtype == "m.video" {
             if let videoURL = message.content?.S3thumbnailUrl {
                 fetchThumbnail(videoURL)
             }else{
-                let imageView = UIImageView(image: UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil)) // Replace with your image names
-
+                let imageView = UIImageView(image: UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil))
                 self.messageImageView = imageView
             }
             self.playButton.setImage(UIImage(named: "PlayIcon", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
 
         }else if message.content?.msgtype == "m.audio" {
-            let imageView = UIImageView(image: UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil)) // Replace with your image names
-            self.messageImageView = imageView
+            self.messageImageView.image = UIImage(named: "placeholder")
+
+//            let imageView = UIImageView(image: UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil))
+//            self.messageImageView = imageView
             self.playButton.setImage(UIImage(named: "PlayIcon", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
             
+        }else{
+            self.messageImageView.image = UIImage(named: "placeholder")
         }
         
         

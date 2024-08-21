@@ -11,7 +11,6 @@
 		00B3ACBEBC532AF1D9EA96A0AE168B89 /* Pods-iOSChatSDK_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E930BBA4557C59BA6C424CF5F80C66B9 /* Pods-iOSChatSDK_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		012B6C75AB4C104AA62B3E3527EBEF8B /* iOSChatSDK-iOSChatSDK in Resources */ = {isa = PBXBuildFile; fileRef = 9132B19DDC3AE5771888CADC80141E87 /* iOSChatSDK-iOSChatSDK */; };
 		0170EE86BA8B1D7872B62745E0C01BBE /* SDImageGraphics.h in Headers */ = {isa = PBXBuildFile; fileRef = F1C64CDB559030A7AB4FA305D865C37C /* SDImageGraphics.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		01B05B5927883BAB6DE4B1F8EFB3C832 /* ReplyMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C06E24732B4B0656C98F301EA62887 /* ReplyMediaCell.swift */; };
 		023934AA4CE4DC87CF03A03C73ECA714 /* SDDisplayLink.m in Sources */ = {isa = PBXBuildFile; fileRef = BDF46210308B9DBB4B6DFADC6E4123BD /* SDDisplayLink.m */; };
 		03FE09B9F7504CA3AE5116F1AA698DD7 /* SDWebImageError.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FCF4D578E581CEE147D53180E62DC5C /* SDWebImageError.m */; };
 		0529F5E309FEF38A1C578FBC56EE042E /* SDImageIOCoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 080EF8B7475FDC22D26849A0239285D6 /* SDImageIOCoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -49,7 +48,6 @@
 		2BAFE0E1ED8EEC6F0D7375383C0C2608 /* DataComponent.storyboard in Sources */ = {isa = PBXBuildFile; fileRef = 9037E7DB2EED8D516D92293132423E06 /* DataComponent.storyboard */; };
 		2D521703994D252F0E6D24F7D5D53F2E /* SDWebImage-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 739DF1D52AC24F6B17638560995C0160 /* SDWebImage-dummy.m */; };
 		2F0830F8256C8DC58F0919A5D5C07C06 /* SDAsyncBlockOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E40EE9EF95B7ABCE8A9F458E0287C208 /* SDAsyncBlockOperation.m */; };
-		2F55A80ED5E95FE791012113A64A2B99 /* ReplyTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF48A7128635253B4DCA2BEDB496C27A /* ReplyTextCell.swift */; };
 		2FA9B480039C913FD3352BFF4DDCAEFC /* SDWebImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BD51459D1238BB1274A16A94960AE59 /* SDWebImageDownloader.m */; };
 		2FEEEC1878E66862D755725AD6EE30D8 /* RoomCreateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A9E658FC5CB806AA1D38FC35AD3C64C /* RoomCreateService.swift */; };
 		30764CD28EB542B96332E02304303523 /* SenderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FB2AB4A4BBA9A67D9ACAF76D49CF28 /* SenderViewModel.swift */; };
@@ -97,7 +95,6 @@
 		4D10B6682C75E68F0006563B /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D10B6672C75E68F0006563B /* MessageViewModel.swift */; };
 		4D10B66A2C75E6D30006563B /* ChatMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D10B6692C75E6D30006563B /* ChatMessageModel.swift */; };
 		4D9C4AF52C61EF86007F9B0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A894310774DDCD9C8ABEBDAC9EDDB143 /* Assets.xcassets */; };
-		4D9C4AF72C62174F007F9B0F /* ReplyMediaTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C4AF62C62174F007F9B0F /* ReplyMediaTextCell.swift */; };
 		4DFCB3D9623FCA43D3E1BFDA528EB587 /* UIView+WebCacheOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = ED125922FB25702F3C26C4BD2DED8061 /* UIView+WebCacheOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EB89C761657851CDA570168AFCAC0A0 /* MediaTextTVCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = CF7C0A11B8DA20DA4082806EE577F873 /* MediaTextTVCell.xib */; };
 		4EC633971567BFD6384859B76E1276F1 /* SDWebImageCacheKeyFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5250EA4D49A59FFB24E0F6459FDE328D /* SDWebImageCacheKeyFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -342,7 +339,7 @@
 		486FA72E5F8357B3B68011847D9FEC6D /* MoreOptionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MoreOptionView.swift; sourceTree = "<group>"; };
 		48A7EF24D96B3D1EBC2FE51F87C3C56E /* SDWebImage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImage.h; path = WebImage/SDWebImage.h; sourceTree = "<group>"; };
 		4A2D37F6145284B0CC2CB79DA37B9072 /* SDWebImageDownloaderOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageDownloaderOperation.m; path = SDWebImage/Core/SDWebImageDownloaderOperation.m; sourceTree = "<group>"; };
-		4A933341EA72649004684539885B239E /* MediaFullVC.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MediaFullVC.swift; path = iOSChatSDK/Classes/MediaFullVC.swift; sourceTree = "<group>"; };
+		4A933341EA72649004684539885B239E /* MediaFullVC.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MediaFullVC.swift; sourceTree = "<group>"; };
 		4ACB3D944EDF38E25E2FE2B8A262A9B9 /* SDImageIOAnimatedCoder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDImageIOAnimatedCoder.m; path = SDWebImage/Core/SDImageIOAnimatedCoder.m; sourceTree = "<group>"; };
 		4B8F15B35B7100E1BDBA9A3A46F33301 /* Pods-iOSChatSDK_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-iOSChatSDK_Example-frameworks.sh"; sourceTree = "<group>"; };
 		4BC73F20A69D9EB94BA491B17C736234 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = WebImage/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
@@ -362,7 +359,6 @@
 		4D10B65F2C75DF430006563B /* ConnectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionModel.swift; sourceTree = "<group>"; };
 		4D10B6672C75E68F0006563B /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
 		4D10B6692C75E6D30006563B /* ChatMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageModel.swift; sourceTree = "<group>"; };
-		4D9C4AF62C62174F007F9B0F /* ReplyMediaTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReplyMediaTextCell.swift; path = iOSChatSDK/Classes/ReplyMediaTextCell.swift; sourceTree = "<group>"; };
 		4E65FB86AFFAEE9F18E2C40FD540DD13 /* CustomTopView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CustomTopView.swift; sourceTree = "<group>"; };
 		4E9A608DCF04FD972479EBF6958081EB /* SDImageTransformer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDImageTransformer.h; path = SDWebImage/Core/SDImageTransformer.h; sourceTree = "<group>"; };
 		51F0A992BAA9CE4D404CC90275012A8A /* CustomTopView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = CustomTopView.xib; sourceTree = "<group>"; };
@@ -405,10 +401,10 @@
 		7EF6A1EA36EF9F455CDFEFA6D9D7D288 /* SDWebImagePrefetcher.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImagePrefetcher.m; path = SDWebImage/Core/SDWebImagePrefetcher.m; sourceTree = "<group>"; };
 		81E0A688A74C081D3148DA05F2C4CFCC /* SDImageLoader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDImageLoader.h; path = SDWebImage/Core/SDImageLoader.h; sourceTree = "<group>"; };
 		823F4E47728D10A751AAE58BF929D240 /* CircleObject.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CircleObject.swift; sourceTree = "<group>"; };
-		82B14A91DD9636D4B8C268262C0379AB /* Unwrapping.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Unwrapping.swift; path = iOSChatSDK/Classes/Unwrapping.swift; sourceTree = "<group>"; };
+		82B14A91DD9636D4B8C268262C0379AB /* Unwrapping.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Unwrapping.swift; sourceTree = "<group>"; };
 		867C8A8347D77F6EFE9A191E719198F7 /* SDWeakProxy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWeakProxy.h; path = SDWebImage/Private/SDWeakProxy.h; sourceTree = "<group>"; };
 		8A1097F9A84C146B5E3EFE2C1AD0C285 /* SDImageCachesManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDImageCachesManager.m; path = SDWebImage/Core/SDImageCachesManager.m; sourceTree = "<group>"; };
-		8A571D84DE342E4150E60F8AAAE5D838 /* PublishMediaVC.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PublishMediaVC.swift; path = iOSChatSDK/Classes/PublishMediaVC.swift; sourceTree = "<group>"; };
+		8A571D84DE342E4150E60F8AAAE5D838 /* PublishMediaVC.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PublishMediaVC.swift; sourceTree = "<group>"; };
 		8D2606F72782B52B1FBC54890B1E71F7 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSData+ImageContentType.h"; path = "SDWebImage/Core/NSData+ImageContentType.h"; sourceTree = "<group>"; };
 		8FCF4D578E581CEE147D53180E62DC5C /* SDWebImageError.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageError.m; path = SDWebImage/Core/SDWebImageError.m; sourceTree = "<group>"; };
 		9027578F072E34B550325FA707B882AE /* SDmetamacros.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDmetamacros.h; path = SDWebImage/Private/SDmetamacros.h; sourceTree = "<group>"; };
@@ -436,7 +432,6 @@
 		A1E6BB1AC5831E65ABCD0D2262D2A80C /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		A3494ECB2DAA76A1254514C8E05812BB /* SDImageCachesManagerOperation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDImageCachesManagerOperation.m; path = SDWebImage/Private/SDImageCachesManagerOperation.m; sourceTree = "<group>"; };
 		A481568FA2BABBC0319A6A2A11E29C0D /* UIImage+MemoryCacheCost.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+MemoryCacheCost.h"; path = "SDWebImage/Core/UIImage+MemoryCacheCost.h"; sourceTree = "<group>"; };
-		A4C06E24732B4B0656C98F301EA62887 /* ReplyMediaCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReplyMediaCell.swift; path = iOSChatSDK/Classes/ReplyMediaCell.swift; sourceTree = "<group>"; };
 		A622D60101B5D96E47EF2E09B0B188D7 /* SDImageFramePool.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDImageFramePool.m; path = SDWebImage/Private/SDImageFramePool.m; sourceTree = "<group>"; };
 		A894310774DDCD9C8ABEBDAC9EDDB143 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB1716DD44EE5FB1CC62BB03D5A667C6 /* SDWebImageDownloaderDecryptor.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageDownloaderDecryptor.m; path = SDWebImage/Core/SDWebImageDownloaderDecryptor.m; sourceTree = "<group>"; };
@@ -461,7 +456,6 @@
 		BDF46210308B9DBB4B6DFADC6E4123BD /* SDDisplayLink.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDDisplayLink.m; path = SDWebImage/Private/SDDisplayLink.m; sourceTree = "<group>"; };
 		BE059DF9FBEA15C85B96F939C523E3EB /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/ImageIO.framework; sourceTree = DEVELOPER_DIR; };
 		BE68409582226DCDE47C8FD564160585 /* iOSChatSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = iOSChatSDK.debug.xcconfig; sourceTree = "<group>"; };
-		BF48A7128635253B4DCA2BEDB496C27A /* ReplyTextCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReplyTextCell.swift; path = iOSChatSDK/Classes/ReplyTextCell.swift; sourceTree = "<group>"; };
 		BF5B0347F1230337A948AC4455CDAB05 /* UIColor+SDHexString.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIColor+SDHexString.m"; path = "SDWebImage/Private/UIColor+SDHexString.m"; sourceTree = "<group>"; };
 		C1F6BA40CCFFD05621A2DD855DCA4C0D /* iOSChatSDK-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "iOSChatSDK-umbrella.h"; sourceTree = "<group>"; };
 		C20E33B6612DC1833FD2FADF641E54FA /* String.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -637,6 +631,8 @@
 		3A3205BEABBE392C482506003A8B1106 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				551B874D8C9B7FCC40602E83FDB94B84 /* UIExtension */,
+				82B14A91DD9636D4B8C268262C0379AB /* Unwrapping.swift */,
 				823F4E47728D10A751AAE58BF929D240 /* CircleObject.swift */,
 				51F0A992BAA9CE4D404CC90275012A8A /* CustomTopView.xib */,
 			);
@@ -663,6 +659,7 @@
 		4D10B6162C75CA9E0006563B /* Macros */ = {
 			isa = PBXGroup;
 			children = (
+				F81705AB4514A9CE4983918DCDB5D3A7 /* Colors */,
 				4D10B6142C75C8470006563B /* ChatConstant.swift */,
 			);
 			name = Macros;
@@ -672,6 +669,8 @@
 		4D10B6182C75CB140006563B /* Singleton */ = {
 			isa = PBXGroup;
 			children = (
+				94C5567437FDDEF4936FF080B85B6C98 /* APIManager.swift */,
+				65C04BBD4E03B1B0AD4BF3F3643C9A45 /* CacheManager */,
 			);
 			name = Singleton;
 			path = iOSChatSDK/Classes/Singleton;
@@ -703,9 +702,10 @@
 				044F85263BCD7F187F7D01482332CE27 /* LoginService.swift */,
 				2A9E658FC5CB806AA1D38FC35AD3C64C /* RoomCreateService.swift */,
 				20D8306F7DA764B1361967485C9B8E12 /* UserService.swift */,
-				94C5567437FDDEF4936FF080B85B6C98 /* APIManager.swift */,
 				D84601CD1AA41EAABD82C424AA83533D /* ChatMediaViewModel.swift */,
 				7D1BDD9FB01901442DCFC88157BF762D /* ChatReplyViewModel.swift */,
+				3913FE93E6B181AC53F377840A05BF55 /* DeleteViewModel.swift */,
+				F7FB2AB4A4BBA9A67D9ACAF76D49CF28 /* SenderViewModel.swift */,
 			);
 			name = Services;
 			path = iOSChatSDK/Classes/Services;
@@ -718,8 +718,7 @@
 				4D10B6222C75CC640006563B /* ReplyText_MediaTextCell.swift */,
 				4D10B6232C75CC640006563B /* ReplyText_TextCell.swift */,
 			);
-			name = ReplyTextCell;
-			path = iOSChatSDK/Classes/ReplyTextCell;
+			path = ReplyTextCell;
 			sourceTree = "<group>";
 		};
 		4D10B62B2C75CC7A0006563B /* ReplyMediaTextCell */ = {
@@ -729,8 +728,7 @@
 				4D10B6292C75CC7A0006563B /* ReplyMediaText_MediaTextCell.swift */,
 				4D10B62A2C75CC7A0006563B /* ReplyMediaText_TextCell.swift */,
 			);
-			name = ReplyMediaTextCell;
-			path = iOSChatSDK/Classes/ReplyMediaTextCell;
+			path = ReplyMediaTextCell;
 			sourceTree = "<group>";
 		};
 		4D10B62F2C75CC7A0006563B /* ReplyMediaCell */ = {
@@ -740,8 +738,7 @@
 				4D10B62D2C75CC7A0006563B /* ReplyMedia_MediaTextCell.swift */,
 				4D10B62E2C75CC7A0006563B /* ReplyMedia_TextCell.swift */,
 			);
-			name = ReplyMediaCell;
-			path = iOSChatSDK/Classes/ReplyMediaCell;
+			path = ReplyMediaCell;
 			sourceTree = "<group>";
 		};
 		4D10B6362C75CE620006563B /* Controller */ = {
@@ -894,6 +891,7 @@
 		4D10B6652C75E3430006563B /* MVVM */ = {
 			isa = PBXGroup;
 			children = (
+				4D10B66C2C75F1F00006563B /* Coordinator */,
 				4D10B6612C75E3430006563B /* Controller */,
 				4D10B6622C75E3430006563B /* Model */,
 				4D10B6632C75E3430006563B /* View */,
@@ -915,8 +913,20 @@
 			isa = PBXGroup;
 			children = (
 				6AE43A401C992B5940F85A91C37D1F20 /* MediaContentCell.swift */,
+				4D10B62B2C75CC7A0006563B /* ReplyMediaTextCell */,
+				4D10B62F2C75CC7A0006563B /* ReplyMediaCell */,
+				4D10B6242C75CC640006563B /* ReplyTextCell */,
 			);
 			path = CustomCell;
+			sourceTree = "<group>";
+		};
+		4D10B66C2C75F1F00006563B /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				8A571D84DE342E4150E60F8AAAE5D838 /* PublishMediaVC.swift */,
+				4A933341EA72649004684539885B239E /* MediaFullVC.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		551B874D8C9B7FCC40602E83FDB94B84 /* UIExtension */ = {
@@ -925,8 +935,7 @@
 				C20E33B6612DC1833FD2FADF641E54FA /* String.swift */,
 				91AAE5E72C748DDE00982359 /* UIView.swift */,
 			);
-			name = UIExtension;
-			path = iOSChatSDK/Classes/UIExtension;
+			path = UIExtension;
 			sourceTree = "<group>";
 		};
 		62B72C34195D25016CCD778E716479FF /* Pods */ = {
@@ -942,17 +951,7 @@
 			children = (
 				556B78DE89DDF5F32587760BC1E60448 /* CacheManager.swift */,
 			);
-			name = CacheManager;
-			path = iOSChatSDK/Classes/CacheManager;
-			sourceTree = "<group>";
-		};
-		6AB5B1D3682798A71A5080A5CAF035CE /* DeleteService */ = {
-			isa = PBXGroup;
-			children = (
-				3913FE93E6B181AC53F377840A05BF55 /* DeleteViewModel.swift */,
-			);
-			name = DeleteService;
-			path = iOSChatSDK/Classes/DeleteService;
+			path = CacheManager;
 			sourceTree = "<group>";
 		};
 		8687B96E46DD4C98799E1FAF0EBF149E /* iOS */ = {
@@ -965,43 +964,21 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		9296C80945140B0477FDDF3AE7284703 /* SenderChatRoom */ = {
-			isa = PBXGroup;
-			children = (
-				F7FB2AB4A4BBA9A67D9ACAF76D49CF28 /* SenderViewModel.swift */,
-			);
-			name = SenderChatRoom;
-			path = iOSChatSDK/Classes/SenderChatRoom;
-			sourceTree = "<group>";
-		};
 		9B35E6EA28B835DF63F4EA4844EE4868 /* iOSChatSDK */ = {
 			isa = PBXGroup;
 			children = (
+				4D10B63B2C75CE620006563B /* User */,
+				4D10B65C2C75DD250006563B /* UserConnection */,
+				4D10B6662C75E3430006563B /* ChatRoom */,
 				4D10B6162C75CA9E0006563B /* Macros */,
 				4D10B6182C75CB140006563B /* Singleton */,
 				4D10B61A2C75CB620006563B /* Cells */,
 				4D10B61B2C75CB800006563B /* Services */,
-				4D10B63B2C75CE620006563B /* User */,
-				4D10B65C2C75DD250006563B /* UserConnection */,
-				4D10B6662C75E3430006563B /* ChatRoom */,
-				8A571D84DE342E4150E60F8AAAE5D838 /* PublishMediaVC.swift */,
-				4A933341EA72649004684539885B239E /* MediaFullVC.swift */,
-				4D9C4AF62C62174F007F9B0F /* ReplyMediaTextCell.swift */,
-				A4C06E24732B4B0656C98F301EA62887 /* ReplyMediaCell.swift */,
-				BF48A7128635253B4DCA2BEDB496C27A /* ReplyTextCell.swift */,
-				82B14A91DD9636D4B8C268262C0379AB /* Unwrapping.swift */,
-				4D10B6242C75CC640006563B /* ReplyTextCell */,
-				4D10B62F2C75CC7A0006563B /* ReplyMediaCell */,
-				4D10B62B2C75CC7A0006563B /* ReplyMediaTextCell */,
 				EBDD6E3BE38ADC854685A9D0CC061873 /* Assets */,
-				65C04BBD4E03B1B0AD4BF3F3643C9A45 /* CacheManager */,
-				6AB5B1D3682798A71A5080A5CAF035CE /* DeleteService */,
 				3A3205BEABBE392C482506003A8B1106 /* Helpers */,
 				10B20353BC06E3BFDDF6F9FCB77CCA09 /* Pod */,
 				BB9AE72DCDBB14FCD18FC6AD2E2C6FA2 /* Resources */,
-				9296C80945140B0477FDDF3AE7284703 /* SenderChatRoom */,
 				2A852640890FB256DE23D59C4F600EA8 /* Support Files */,
-				551B874D8C9B7FCC40602E83FDB94B84 /* UIExtension */,
 			);
 			name = iOSChatSDK;
 			path = ../..;
@@ -1012,7 +989,6 @@
 			children = (
 				9037E7DB2EED8D516D92293132423E06 /* DataComponent.storyboard */,
 				E7A7A3EC5F6EFC619D20784596266EC5 /* MainChat.storyboard */,
-				F81705AB4514A9CE4983918DCDB5D3A7 /* Colors */,
 			);
 			name = Resources;
 			path = iOSChatSDK/Classes/Resources;
@@ -1687,7 +1663,6 @@
 				D7C88D073D65F3CBBD10BA4028183B62 /* CustomTableViewCell.swift in Sources */,
 				DFFEFC853C33F7E1B0215024BDA22CAA /* CustomTableViewCell.xib in Sources */,
 				D1B79F0B1A4B1A125020EEE1740737A8 /* CustomTopView.swift in Sources */,
-				4D9C4AF72C62174F007F9B0F /* ReplyMediaTextCell.swift in Sources */,
 				52AE5BAD235C2655823C18087A78833E /* CustomTopView.xib in Sources */,
 				4D10B6342C75CC7A0006563B /* ReplyMedia_MediaTextCell.swift in Sources */,
 				2BAFE0E1ED8EEC6F0D7375383C0C2608 /* DataComponent.storyboard in Sources */,
@@ -1708,11 +1683,9 @@
 				4D10B6352C75CC7A0006563B /* ReplyMedia_TextCell.swift in Sources */,
 				C0EAA5758F183080C61E56D5F1E05699 /* MoreOptionView.swift in Sources */,
 				816F3DA30BB3AB9C1A0C37B16CF8BAF2 /* PublishMediaVC.swift in Sources */,
-				01B05B5927883BAB6DE4B1F8EFB3C832 /* ReplyMediaCell.swift in Sources */,
 				4D10B66A2C75E6D30006563B /* ChatMessageModel.swift in Sources */,
 				4D10B6312C75CC7A0006563B /* ReplyMediaText_MediaTextCell.swift in Sources */,
 				4D10B6152C75C8470006563B /* ChatConstant.swift in Sources */,
-				2F55A80ED5E95FE791012113A64A2B99 /* ReplyTextCell.swift in Sources */,
 				2FEEEC1878E66862D755725AD6EE30D8 /* RoomCreateService.swift in Sources */,
 				30764CD28EB542B96332E02304303523 /* SenderViewModel.swift in Sources */,
 				E4FE314038CF58087546258CAB00CD3C /* String.swift in Sources */,

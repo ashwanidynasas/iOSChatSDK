@@ -80,6 +80,7 @@
 		4A2011B8FD2FAFBF09580F6445463539 /* MainChat.storyboard in Sources */ = {isa = PBXBuildFile; fileRef = E7A7A3EC5F6EFC619D20784596266EC5 /* MainChat.storyboard */; };
 		4A88FAAE5AFA7650E7A2E1F1C31B4E0E /* SDWebImageIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 09DDE2B18CE54FAA3A2A3CA63F90F524 /* SDWebImageIndicator.m */; };
 		4CAA295F8BB967445E2273FB5A53769E /* SDImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7C8DDF45AE66E6094ED1C378A19DF4 /* SDImageLoader.m */; };
+		4D10B6112C75BD400006563B /* ChatConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D10B6102C75BD400006563B /* ChatConstant.swift */; };
 		4D9C4AF52C61EF86007F9B0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A894310774DDCD9C8ABEBDAC9EDDB143 /* Assets.xcassets */; };
 		4D9C4AF72C62174F007F9B0F /* ReplyMediaTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C4AF62C62174F007F9B0F /* ReplyMediaTextCell.swift */; };
 		4D9C4B122C65388F007F9B0F /* ReplyText_MediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C4B0F2C65388F007F9B0F /* ReplyText_MediaCell.swift */; };
@@ -344,6 +345,7 @@
 		4ACB3D944EDF38E25E2FE2B8A262A9B9 /* SDImageIOAnimatedCoder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDImageIOAnimatedCoder.m; path = SDWebImage/Core/SDImageIOAnimatedCoder.m; sourceTree = "<group>"; };
 		4B8F15B35B7100E1BDBA9A3A46F33301 /* Pods-iOSChatSDK_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-iOSChatSDK_Example-frameworks.sh"; sourceTree = "<group>"; };
 		4BC73F20A69D9EB94BA491B17C736234 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = WebImage/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		4D10B6102C75BD400006563B /* ChatConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatConstant.swift; path = ../../iOSChatSDK/Classes/Macros/Constants/ChatConstant.swift; sourceTree = "<group>"; };
 		4D9C4AF62C62174F007F9B0F /* ReplyMediaTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReplyMediaTextCell.swift; path = iOSChatSDK/Classes/ReplyMediaTextCell.swift; sourceTree = "<group>"; };
 		4D9C4B0F2C65388F007F9B0F /* ReplyText_MediaCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReplyText_MediaCell.swift; path = ../iOSChatSDK/Classes/ReplyTextCell/ReplyText_MediaCell.swift; sourceTree = "<group>"; };
 		4D9C4B102C65388F007F9B0F /* ReplyText_MediaTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReplyText_MediaTextCell.swift; path = ../iOSChatSDK/Classes/ReplyTextCell/ReplyText_MediaTextCell.swift; sourceTree = "<group>"; };
@@ -652,6 +654,22 @@
 			path = "Target Support Files/Pods-iOSChatSDK_Tests";
 			sourceTree = "<group>";
 		};
+		4D10B60E2C75BCBF0006563B /* Macros */ = {
+			isa = PBXGroup;
+			children = (
+				4D10B60F2C75BD140006563B /* Constants */,
+			);
+			path = Macros;
+			sourceTree = "<group>";
+		};
+		4D10B60F2C75BD140006563B /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				4D10B6102C75BD400006563B /* ChatConstant.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
 		4D9C4B0E2C653868007F9B0F /* ReplyTextCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -831,6 +849,7 @@
 				94C5567437FDDEF4936FF080B85B6C98 /* APIManager.swift */,
 				2FD33E6807563632C8D87C136DA2A403 /* BottomViewHandler.swift */,
 				4A1D7322829A06FDE6EF73738DAAE550 /* ChatConnectListVC.swift */,
+				4D10B60E2C75BCBF0006563B /* Macros */,
 				D84601CD1AA41EAABD82C424AA83533D /* ChatMediaViewModel.swift */,
 				EAEB05E91C1B8DEB08E3322AF365D553 /* ChatMessageCell.swift */,
 				93ABA63F6AA78E47B9975C6526DCCC9F /* ChatMessageService.swift */,
@@ -1575,6 +1594,7 @@
 				C0EAA5758F183080C61E56D5F1E05699 /* MoreOptionView.swift in Sources */,
 				816F3DA30BB3AB9C1A0C37B16CF8BAF2 /* PublishMediaVC.swift in Sources */,
 				01B05B5927883BAB6DE4B1F8EFB3C832 /* ReplyMediaCell.swift in Sources */,
+				4D10B6112C75BD400006563B /* ChatConstant.swift in Sources */,
 				2F55A80ED5E95FE791012113A64A2B99 /* ReplyTextCell.swift in Sources */,
 				2FEEEC1878E66862D755725AD6EE30D8 /* RoomCreateService.swift in Sources */,
 				30764CD28EB542B96332E02304303523 /* SenderViewModel.swift in Sources */,

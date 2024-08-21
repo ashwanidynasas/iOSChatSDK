@@ -9,13 +9,6 @@ import UIKit
 import AVFAudio
 
 class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,PublishMediaDelegate,AVAudioRecorderDelegate, AVAudioPlayerDelegate, MediaFullVCDelegate, MediaContentCellDelegate {
-    func itemDeleteFromChat(_ didSendData: String) {
-        if didSendData == "deleteItem"{
-            fetchMessages()
-        }
-    }
-    
-    
 
     @IBOutlet weak var sendBtn: UIButton!
     @IBOutlet weak var plusBtn: UIButton!
@@ -40,9 +33,6 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
     
     @IBOutlet weak var replyBottomView:UIView!
     @IBOutlet weak var replyBottomViewHeight: NSLayoutConstraint!
-
-    var bottomViewHandler: BottomViewHandler?
-    
     //Reply View Outlet
     @IBOutlet weak var replyUserName:UILabel!
     @IBOutlet weak var replyUserDesc:UILabel!
@@ -50,37 +40,47 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
     @IBOutlet weak var replyViewWidthConstraint: NSLayoutConstraint!//replyUserImgView width
 
     
+    // Constants
     let tableCell = "CustomTableViewCell"
     let mediaTableCell = "MediaTextTVCell"
     let replyTextTVCell = "ReplyTextTVCell"
-
-    let apiClient = RoomAPIClient()
+    // User-related variables
     var chatUserID: String!
     var currentUser: String!
+    // State variables
     var isToggled = false
     var isReply = false
-    var imageFetched:UIImage! = nil
-    var videoFetched:URL!
-    
+    private var isUserScrolling = false
+    // Media-related variables
+    var imageFetched: UIImage? = nil
+    var videoFetched: URL?
     var audioRecorder: AVAudioRecorder?
     var audioPlayer: AVAudioPlayer?
     var recordingSession: AVAudioSession!
     var audioFilename: URL!
+    // Timer variables
     var timer: Timer?
+    private var fetchTimer: Timer?
     var recordingDuration: TimeInterval = 0
-
+    // UI-related variables
     private var customTabBar: CustomTabBar?
-    private var deleteViewModel = DeleteMessageViewModel()
+    var bottomViewHandler: BottomViewHandler?
+    // Event-related variables
     var eventID: String! = ""
-
+    // API Clients and ViewModels
+    let apiClient = RoomAPIClient()
+    private var deleteViewModel = DeleteMessageViewModel()
     private let sendMsgModel = SenderViewModel()
     private let viewModel = MessageViewModel()
     private let mediaViewModel = ChatMediaViewModel()
     private let replyViewModel = ChatReplyViewModel()
-
-    private var fetchTimer: Timer?
-    private var isUserScrolling = false
-
+    
+    func itemDeleteFromChat(_ didSendData: String) {
+        if didSendData == "deleteItem"{
+            fetchMessages()
+        }
+    }
+    
     func setButtonTintColor(button: UIButton, color: UIColor) {
         button.tintColor = color
     }
@@ -138,8 +138,8 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         chatRoomTableView.separatorStyle = .none
         chatRoomTableView.register(ChatMessageCell.self, forCellReuseIdentifier: "ChatMessageCell")
         chatRoomTableView.register(MediaContentCell.self, forCellReuseIdentifier: "MediaContentCell")
-        chatRoomTableView.register(ReplyTextCell.self, forCellReuseIdentifier: "ReplyTextCell")
-        chatRoomTableView.register(ReplyMediaTextCell.self, forCellReuseIdentifier: "ReplyMediaTextCell")
+//        chatRoomTableView.register(ReplyTextCell.self, forCellReuseIdentifier: "ReplyTextCell")
+//        chatRoomTableView.register(ReplyMediaTextCell.self, forCellReuseIdentifier: "ReplyMediaTextCell")
         
         
         chatRoomTableView.register(ReplyText_TextCell.self, forCellReuseIdentifier: String(describing: ReplyText_TextCell.self))

@@ -230,9 +230,9 @@ class ReplyText_MediaTextCell: UITableViewCell {
         minWidthConstraint.constant = max(minWidth, Constants.minBubbleWidth)
         
         // Configure read indicator
-        readIndicatorImageView.image = UIImage(named: "read_indicator", in: Bundle(for: ReplyMediaTextCell.self), compatibleWith: nil)
+        readIndicatorImageView.image = UIImage(named: "read_indicator", in: Bundle(for: ReplyText_MediaTextCell.self), compatibleWith: nil)
         
-        messageMediaImage.image = UIImage(named: "userPlaceholder", in: Bundle(for: ReplyMediaTextCell.self), compatibleWith: nil)
+        messageMediaImage.image = UIImage(named: "userPlaceholder", in: Bundle(for: ReplyText_MediaTextCell.self), compatibleWith: nil)
         
         configureTextMessage(message.content?.body ?? "", replyText: message.content?.relatesTo?.inReplyTo?.sender ?? "", replyImage: message.content?.relatesTo?.inReplyTo?.content?.S3thumbnailUrl ?? "", replyDesc: message.content?.relatesTo?.inReplyTo?.content?.body ?? "")
         

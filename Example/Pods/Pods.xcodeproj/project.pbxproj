@@ -670,6 +670,13 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
+		4D10B6122C75C6820006563B /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		4D9C4B0E2C653868007F9B0F /* ReplyTextCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -853,6 +860,7 @@
 				D84601CD1AA41EAABD82C424AA83533D /* ChatMediaViewModel.swift */,
 				EAEB05E91C1B8DEB08E3322AF365D553 /* ChatMessageCell.swift */,
 				93ABA63F6AA78E47B9975C6526DCCC9F /* ChatMessageService.swift */,
+				4D10B6122C75C6820006563B /* New Group */,
 				7D1BDD9FB01901442DCFC88157BF762D /* ChatReplyViewModel.swift */,
 				18355863DA9C08FB751943129D383190 /* ConnectionListService.swift */,
 				529F39F1DAC81AC804E1ED0951628E24 /* ConnectionListVC.swift */,

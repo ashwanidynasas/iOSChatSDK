@@ -677,6 +677,14 @@
 			path = "New Group";
 			sourceTree = "<group>";
 		};
+		4D10B6132C75C7ED0006563B /* sampleFolder */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = sampleFolder;
+			path = iOSChatSDK/Classes/sampleFolder;
+			sourceTree = "<group>";
+		};
 		4D9C4B0E2C653868007F9B0F /* ReplyTextCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -862,6 +870,7 @@
 				93ABA63F6AA78E47B9975C6526DCCC9F /* ChatMessageService.swift */,
 				4D10B6122C75C6820006563B /* New Group */,
 				7D1BDD9FB01901442DCFC88157BF762D /* ChatReplyViewModel.swift */,
+				4D10B6132C75C7ED0006563B /* sampleFolder */,
 				18355863DA9C08FB751943129D383190 /* ConnectionListService.swift */,
 				529F39F1DAC81AC804E1ED0951628E24 /* ConnectionListVC.swift */,
 				E50FF7A848CC1E0D86E712400DD09108 /* CustomTableViewCell.swift */,

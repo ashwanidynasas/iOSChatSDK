@@ -654,35 +654,13 @@
 			path = "Target Support Files/Pods-iOSChatSDK_Tests";
 			sourceTree = "<group>";
 		};
-		4D10B60E2C75BCBF0006563B /* Macros */ = {
-			isa = PBXGroup;
-			children = (
-				4D10B60F2C75BD140006563B /* Constants */,
-			);
-			path = Macros;
-			sourceTree = "<group>";
-		};
-		4D10B60F2C75BD140006563B /* Constants */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Constants;
-			sourceTree = "<group>";
-		};
-		4D10B6122C75C6820006563B /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
-			sourceTree = "<group>";
-		};
-		4D10B6132C75C7ED0006563B /* sampleFolder */ = {
+		4D10B6162C75CA9E0006563B /* Macros */ = {
 			isa = PBXGroup;
 			children = (
 				4D10B6142C75C8470006563B /* ChatConstant.swift */,
 			);
-			name = sampleFolder;
-			path = iOSChatSDK/Classes/sampleFolder;
+			name = Macros;
+			path = iOSChatSDK/Classes/Macros;
 			sourceTree = "<group>";
 		};
 		4D9C4B0E2C653868007F9B0F /* ReplyTextCell */ = {
@@ -864,15 +842,13 @@
 				94C5567437FDDEF4936FF080B85B6C98 /* APIManager.swift */,
 				2FD33E6807563632C8D87C136DA2A403 /* BottomViewHandler.swift */,
 				4A1D7322829A06FDE6EF73738DAAE550 /* ChatConnectListVC.swift */,
-				4D10B60E2C75BCBF0006563B /* Macros */,
 				D84601CD1AA41EAABD82C424AA83533D /* ChatMediaViewModel.swift */,
 				EAEB05E91C1B8DEB08E3322AF365D553 /* ChatMessageCell.swift */,
 				93ABA63F6AA78E47B9975C6526DCCC9F /* ChatMessageService.swift */,
-				4D10B6122C75C6820006563B /* New Group */,
 				7D1BDD9FB01901442DCFC88157BF762D /* ChatReplyViewModel.swift */,
-				4D10B6132C75C7ED0006563B /* sampleFolder */,
 				18355863DA9C08FB751943129D383190 /* ConnectionListService.swift */,
 				529F39F1DAC81AC804E1ED0951628E24 /* ConnectionListVC.swift */,
+				4D10B6162C75CA9E0006563B /* Macros */,
 				E50FF7A848CC1E0D86E712400DD09108 /* CustomTableViewCell.swift */,
 				2985A0492A8E34482DF00FFB643B61E5 /* CustomTableViewCell.xib */,
 				4E65FB86AFFAEE9F18E2C40FD540DD13 /* CustomTopView.swift */,

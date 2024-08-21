@@ -9,44 +9,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Chat Connect ListVC-->
-        <scene sceneID="Ptr-5h-9bu">
-            <objects>
-                <viewController storyboardIdentifier="ChatConnectListVC" id="cUR-wX-zlI" customClass="ChatConnectListVC" customModule="iOSChatSDK" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Vnd-I9-3fQ">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1St-Pd-7Z1">
-                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="FXY-TA-1jh">
-                                    <size key="itemSize" width="128" height="128"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells/>
-                                <connections>
-                                    <outlet property="dataSource" destination="cUR-wX-zlI" id="zrJ-mH-Wpd"/>
-                                    <outlet property="delegate" destination="cUR-wX-zlI" id="cGg-Qa-yTQ"/>
-                                </connections>
-                            </collectionView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="JFA-Uk-pkm"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="JFA-Uk-pkm" firstAttribute="trailing" secondItem="1St-Pd-7Z1" secondAttribute="trailing" id="OOh-Os-R0K"/>
-                            <constraint firstItem="1St-Pd-7Z1" firstAttribute="leading" secondItem="JFA-Uk-pkm" secondAttribute="leading" id="XRz-Dt-1Rt"/>
-                            <constraint firstItem="JFA-Uk-pkm" firstAttribute="bottom" secondItem="1St-Pd-7Z1" secondAttribute="bottom" id="f47-T7-6f2"/>
-                            <constraint firstItem="1St-Pd-7Z1" firstAttribute="top" secondItem="JFA-Uk-pkm" secondAttribute="top" id="vKO-Qz-7Fn"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XOC-4C-I62" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-843.51145038167931" y="37.323943661971832"/>
-        </scene>
         <!--Main ChatVC-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
@@ -495,7 +457,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a2Z-o9-Woh">
-                                        <rect key="frame" x="28" y="77" width="286.33333333333348" height="35"/>
+                                        <rect key="frame" x="28" y="77" width="286.33333333333331" height="35"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type your message here..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8QT-Wp-beb">
                                                 <rect key="frame" x="39" y="0.0" width="170.33333333333334" height="35"/>

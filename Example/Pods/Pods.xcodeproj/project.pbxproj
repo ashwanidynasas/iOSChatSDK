@@ -81,17 +81,17 @@
 		4A88FAAE5AFA7650E7A2E1F1C31B4E0E /* SDWebImageIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 09DDE2B18CE54FAA3A2A3CA63F90F524 /* SDWebImageIndicator.m */; };
 		4CAA295F8BB967445E2273FB5A53769E /* SDImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = CB7C8DDF45AE66E6094ED1C378A19DF4 /* SDImageLoader.m */; };
 		4D10B6152C75C8470006563B /* ChatConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D10B6142C75C8470006563B /* ChatConstant.swift */; };
+		4D10B6252C75CC640006563B /* ReplyText_MediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D10B6212C75CC640006563B /* ReplyText_MediaCell.swift */; };
+		4D10B6262C75CC640006563B /* ReplyText_MediaTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D10B6222C75CC640006563B /* ReplyText_MediaTextCell.swift */; };
+		4D10B6272C75CC640006563B /* ReplyText_TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D10B6232C75CC640006563B /* ReplyText_TextCell.swift */; };
+		4D10B6302C75CC7A0006563B /* ReplyMediaText_MediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D10B6282C75CC7A0006563B /* ReplyMediaText_MediaCell.swift */; };
+		4D10B6312C75CC7A0006563B /* ReplyMediaText_MediaTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D10B6292C75CC7A0006563B /* ReplyMediaText_MediaTextCell.swift */; };
+		4D10B6322C75CC7A0006563B /* ReplyMediaText_TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D10B62A2C75CC7A0006563B /* ReplyMediaText_TextCell.swift */; };
+		4D10B6332C75CC7A0006563B /* ReplyMedia_MediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D10B62C2C75CC7A0006563B /* ReplyMedia_MediaCell.swift */; };
+		4D10B6342C75CC7A0006563B /* ReplyMedia_MediaTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D10B62D2C75CC7A0006563B /* ReplyMedia_MediaTextCell.swift */; };
+		4D10B6352C75CC7A0006563B /* ReplyMedia_TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D10B62E2C75CC7A0006563B /* ReplyMedia_TextCell.swift */; };
 		4D9C4AF52C61EF86007F9B0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A894310774DDCD9C8ABEBDAC9EDDB143 /* Assets.xcassets */; };
 		4D9C4AF72C62174F007F9B0F /* ReplyMediaTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C4AF62C62174F007F9B0F /* ReplyMediaTextCell.swift */; };
-		4D9C4B122C65388F007F9B0F /* ReplyText_MediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C4B0F2C65388F007F9B0F /* ReplyText_MediaCell.swift */; };
-		4D9C4B132C65388F007F9B0F /* ReplyText_MediaTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C4B102C65388F007F9B0F /* ReplyText_MediaTextCell.swift */; };
-		4D9C4B142C65388F007F9B0F /* ReplyText_TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C4B112C65388F007F9B0F /* ReplyText_TextCell.swift */; };
-		4D9C4B1A2C6539AF007F9B0F /* ReplyMediaText_MediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C4B172C6539AF007F9B0F /* ReplyMediaText_MediaCell.swift */; };
-		4D9C4B1B2C6539AF007F9B0F /* ReplyMediaText_MediaTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C4B182C6539AF007F9B0F /* ReplyMediaText_MediaTextCell.swift */; };
-		4D9C4B1C2C6539AF007F9B0F /* ReplyMediaText_TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C4B192C6539AF007F9B0F /* ReplyMediaText_TextCell.swift */; };
-		4D9C4B202C6539BA007F9B0F /* ReplyMedia_MediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C4B1D2C6539B9007F9B0F /* ReplyMedia_MediaCell.swift */; };
-		4D9C4B212C6539BA007F9B0F /* ReplyMedia_MediaTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C4B1E2C6539B9007F9B0F /* ReplyMedia_MediaTextCell.swift */; };
-		4D9C4B222C6539BA007F9B0F /* ReplyMedia_TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D9C4B1F2C6539B9007F9B0F /* ReplyMedia_TextCell.swift */; };
 		4DFCB3D9623FCA43D3E1BFDA528EB587 /* UIView+WebCacheOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = ED125922FB25702F3C26C4BD2DED8061 /* UIView+WebCacheOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EB89C761657851CDA570168AFCAC0A0 /* MediaTextTVCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = CF7C0A11B8DA20DA4082806EE577F873 /* MediaTextTVCell.xib */; };
 		4EC633971567BFD6384859B76E1276F1 /* SDWebImageCacheKeyFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5250EA4D49A59FFB24E0F6459FDE328D /* SDWebImageCacheKeyFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -346,16 +346,16 @@
 		4B8F15B35B7100E1BDBA9A3A46F33301 /* Pods-iOSChatSDK_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-iOSChatSDK_Example-frameworks.sh"; sourceTree = "<group>"; };
 		4BC73F20A69D9EB94BA491B17C736234 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = WebImage/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		4D10B6142C75C8470006563B /* ChatConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatConstant.swift; sourceTree = "<group>"; };
+		4D10B6212C75CC640006563B /* ReplyText_MediaCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyText_MediaCell.swift; sourceTree = "<group>"; };
+		4D10B6222C75CC640006563B /* ReplyText_MediaTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyText_MediaTextCell.swift; sourceTree = "<group>"; };
+		4D10B6232C75CC640006563B /* ReplyText_TextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyText_TextCell.swift; sourceTree = "<group>"; };
+		4D10B6282C75CC7A0006563B /* ReplyMediaText_MediaCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyMediaText_MediaCell.swift; sourceTree = "<group>"; };
+		4D10B6292C75CC7A0006563B /* ReplyMediaText_MediaTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyMediaText_MediaTextCell.swift; sourceTree = "<group>"; };
+		4D10B62A2C75CC7A0006563B /* ReplyMediaText_TextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyMediaText_TextCell.swift; sourceTree = "<group>"; };
+		4D10B62C2C75CC7A0006563B /* ReplyMedia_MediaCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyMedia_MediaCell.swift; sourceTree = "<group>"; };
+		4D10B62D2C75CC7A0006563B /* ReplyMedia_MediaTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyMedia_MediaTextCell.swift; sourceTree = "<group>"; };
+		4D10B62E2C75CC7A0006563B /* ReplyMedia_TextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyMedia_TextCell.swift; sourceTree = "<group>"; };
 		4D9C4AF62C62174F007F9B0F /* ReplyMediaTextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReplyMediaTextCell.swift; path = iOSChatSDK/Classes/ReplyMediaTextCell.swift; sourceTree = "<group>"; };
-		4D9C4B0F2C65388F007F9B0F /* ReplyText_MediaCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReplyText_MediaCell.swift; path = ../iOSChatSDK/Classes/ReplyTextCell/ReplyText_MediaCell.swift; sourceTree = "<group>"; };
-		4D9C4B102C65388F007F9B0F /* ReplyText_MediaTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReplyText_MediaTextCell.swift; path = ../iOSChatSDK/Classes/ReplyTextCell/ReplyText_MediaTextCell.swift; sourceTree = "<group>"; };
-		4D9C4B112C65388F007F9B0F /* ReplyText_TextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReplyText_TextCell.swift; path = ../iOSChatSDK/Classes/ReplyTextCell/ReplyText_TextCell.swift; sourceTree = "<group>"; };
-		4D9C4B172C6539AF007F9B0F /* ReplyMediaText_MediaCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReplyMediaText_MediaCell.swift; path = ../iOSChatSDK/Classes/ReplyMediaTextCell/ReplyMediaText_MediaCell.swift; sourceTree = "<group>"; };
-		4D9C4B182C6539AF007F9B0F /* ReplyMediaText_MediaTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReplyMediaText_MediaTextCell.swift; path = ../iOSChatSDK/Classes/ReplyMediaTextCell/ReplyMediaText_MediaTextCell.swift; sourceTree = "<group>"; };
-		4D9C4B192C6539AF007F9B0F /* ReplyMediaText_TextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReplyMediaText_TextCell.swift; path = ../iOSChatSDK/Classes/ReplyMediaTextCell/ReplyMediaText_TextCell.swift; sourceTree = "<group>"; };
-		4D9C4B1D2C6539B9007F9B0F /* ReplyMedia_MediaCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReplyMedia_MediaCell.swift; path = ../iOSChatSDK/Classes/ReplyMediaCell/ReplyMedia_MediaCell.swift; sourceTree = "<group>"; };
-		4D9C4B1E2C6539B9007F9B0F /* ReplyMedia_MediaTextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReplyMedia_MediaTextCell.swift; path = ../iOSChatSDK/Classes/ReplyMediaCell/ReplyMedia_MediaTextCell.swift; sourceTree = "<group>"; };
-		4D9C4B1F2C6539B9007F9B0F /* ReplyMedia_TextCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReplyMedia_TextCell.swift; path = ../iOSChatSDK/Classes/ReplyMediaCell/ReplyMedia_TextCell.swift; sourceTree = "<group>"; };
 		4E65FB86AFFAEE9F18E2C40FD540DD13 /* CustomTopView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CustomTopView.swift; path = iOSChatSDK/Classes/CustomTopView.swift; sourceTree = "<group>"; };
 		4E9A608DCF04FD972479EBF6958081EB /* SDImageTransformer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDImageTransformer.h; path = SDWebImage/Core/SDImageTransformer.h; sourceTree = "<group>"; };
 		51F0A992BAA9CE4D404CC90275012A8A /* CustomTopView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = CustomTopView.xib; sourceTree = "<group>"; };
@@ -663,34 +663,109 @@
 			path = iOSChatSDK/Classes/Macros;
 			sourceTree = "<group>";
 		};
-		4D9C4B0E2C653868007F9B0F /* ReplyTextCell */ = {
+		4D10B6182C75CB140006563B /* Singleton */ = {
 			isa = PBXGroup;
 			children = (
-				4D9C4B112C65388F007F9B0F /* ReplyText_TextCell.swift */,
-				4D9C4B0F2C65388F007F9B0F /* ReplyText_MediaCell.swift */,
-				4D9C4B102C65388F007F9B0F /* ReplyText_MediaTextCell.swift */,
 			);
-			path = ReplyTextCell;
+			name = Singleton;
+			path = iOSChatSDK/Classes/Singleton;
 			sourceTree = "<group>";
 		};
-		4D9C4B152C65389A007F9B0F /* ReplyMediaCell */ = {
+		4D10B6192C75CB620006563B /* Media */ = {
 			isa = PBXGroup;
 			children = (
-				4D9C4B1F2C6539B9007F9B0F /* ReplyMedia_TextCell.swift */,
-				4D9C4B1D2C6539B9007F9B0F /* ReplyMedia_MediaCell.swift */,
-				4D9C4B1E2C6539B9007F9B0F /* ReplyMedia_MediaTextCell.swift */,
 			);
-			path = ReplyMediaCell;
+			path = Media;
 			sourceTree = "<group>";
 		};
-		4D9C4B162C65398D007F9B0F /* ReplyMediaTextCell */ = {
+		4D10B61A2C75CB620006563B /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				4D9C4B192C6539AF007F9B0F /* ReplyMediaText_TextCell.swift */,
-				4D9C4B172C6539AF007F9B0F /* ReplyMediaText_MediaCell.swift */,
-				4D9C4B182C6539AF007F9B0F /* ReplyMediaText_MediaTextCell.swift */,
+				4D10B6192C75CB620006563B /* Media */,
 			);
-			path = ReplyMediaTextCell;
+			name = Cells;
+			path = iOSChatSDK/Classes/Cells;
+			sourceTree = "<group>";
+		};
+		4D10B61B2C75CB800006563B /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Services;
+			path = iOSChatSDK/Classes/Services;
+			sourceTree = "<group>";
+		};
+		4D10B61C2C75CBD00006563B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		4D10B61D2C75CBD00006563B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4D10B61E2C75CBD00006563B /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4D10B61F2C75CBD00006563B /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4D10B6202C75CBD00006563B /* MVVM */ = {
+			isa = PBXGroup;
+			children = (
+				4D10B61C2C75CBD00006563B /* Controller */,
+				4D10B61D2C75CBD00006563B /* Model */,
+				4D10B61E2C75CBD00006563B /* View */,
+				4D10B61F2C75CBD00006563B /* ViewModel */,
+			);
+			name = MVVM;
+			path = iOSChatSDK/Classes/MVVM;
+			sourceTree = "<group>";
+		};
+		4D10B6242C75CC640006563B /* ReplyTextCell */ = {
+			isa = PBXGroup;
+			children = (
+				4D10B6212C75CC640006563B /* ReplyText_MediaCell.swift */,
+				4D10B6222C75CC640006563B /* ReplyText_MediaTextCell.swift */,
+				4D10B6232C75CC640006563B /* ReplyText_TextCell.swift */,
+			);
+			name = ReplyTextCell;
+			path = iOSChatSDK/Classes/ReplyTextCell;
+			sourceTree = "<group>";
+		};
+		4D10B62B2C75CC7A0006563B /* ReplyMediaTextCell */ = {
+			isa = PBXGroup;
+			children = (
+				4D10B6282C75CC7A0006563B /* ReplyMediaText_MediaCell.swift */,
+				4D10B6292C75CC7A0006563B /* ReplyMediaText_MediaTextCell.swift */,
+				4D10B62A2C75CC7A0006563B /* ReplyMediaText_TextCell.swift */,
+			);
+			name = ReplyMediaTextCell;
+			path = iOSChatSDK/Classes/ReplyMediaTextCell;
+			sourceTree = "<group>";
+		};
+		4D10B62F2C75CC7A0006563B /* ReplyMediaCell */ = {
+			isa = PBXGroup;
+			children = (
+				4D10B62C2C75CC7A0006563B /* ReplyMedia_MediaCell.swift */,
+				4D10B62D2C75CC7A0006563B /* ReplyMedia_MediaTextCell.swift */,
+				4D10B62E2C75CC7A0006563B /* ReplyMedia_TextCell.swift */,
+			);
+			name = ReplyMediaCell;
+			path = iOSChatSDK/Classes/ReplyMediaCell;
 			sourceTree = "<group>";
 		};
 		551B874D8C9B7FCC40602E83FDB94B84 /* UIExtension */ = {
@@ -739,88 +814,6 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		91AAE5E52C748D0400982359 /* Singleton */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Singleton;
-			sourceTree = "<group>";
-		};
-		91AAE5E62C748D4600982359 /* Macros */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Macros;
-			sourceTree = "<group>";
-		};
-		91AAE5E92C748E2D00982359 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				91AAE5EA2C748E3900982359 /* Media */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
-		91AAE5EA2C748E3900982359 /* Media */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Media;
-			sourceTree = "<group>";
-		};
-		91AAE5EB2C748E4500982359 /* MVVM */ = {
-			isa = PBXGroup;
-			children = (
-				91AAE5EF2C748E7600982359 /* Controller */,
-				91AAE5EE2C748E5E00982359 /* Model */,
-				91AAE5ED2C748E5800982359 /* View */,
-				91AAE5EC2C748E4A00982359 /* ViewModel */,
-			);
-			path = MVVM;
-			sourceTree = "<group>";
-		};
-		91AAE5EC2C748E4A00982359 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		91AAE5ED2C748E5800982359 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		91AAE5EE2C748E5E00982359 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		91AAE5EF2C748E7600982359 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
-		91AAE5F02C748EB000982359 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Helpers;
-			sourceTree = "<group>";
-		};
-		91AAE5F12C748ED000982359 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
 		9296C80945140B0477FDDF3AE7284703 /* SenderChatRoom */ = {
 			isa = PBXGroup;
 			children = (
@@ -833,22 +826,20 @@
 		9B35E6EA28B835DF63F4EA4844EE4868 /* iOSChatSDK */ = {
 			isa = PBXGroup;
 			children = (
-				91AAE5F12C748ED000982359 /* Services */,
-				91AAE5F02C748EB000982359 /* Helpers */,
-				91AAE5EB2C748E4500982359 /* MVVM */,
-				91AAE5E92C748E2D00982359 /* Cells */,
-				91AAE5E62C748D4600982359 /* Macros */,
-				91AAE5E52C748D0400982359 /* Singleton */,
-				94C5567437FDDEF4936FF080B85B6C98 /* APIManager.swift */,
-				2FD33E6807563632C8D87C136DA2A403 /* BottomViewHandler.swift */,
+				4D10B6162C75CA9E0006563B /* Macros */,
+				4D10B6182C75CB140006563B /* Singleton */,
+				4D10B61A2C75CB620006563B /* Cells */,
+				4D10B61B2C75CB800006563B /* Services */,
+				4D10B6202C75CBD00006563B /* MVVM */,
+				EAEB05E91C1B8DEB08E3322AF365D553 /* ChatMessageCell.swift */,
 				4A1D7322829A06FDE6EF73738DAAE550 /* ChatConnectListVC.swift */,
 				D84601CD1AA41EAABD82C424AA83533D /* ChatMediaViewModel.swift */,
-				EAEB05E91C1B8DEB08E3322AF365D553 /* ChatMessageCell.swift */,
+				94C5567437FDDEF4936FF080B85B6C98 /* APIManager.swift */,
+				2FD33E6807563632C8D87C136DA2A403 /* BottomViewHandler.swift */,
 				93ABA63F6AA78E47B9975C6526DCCC9F /* ChatMessageService.swift */,
 				7D1BDD9FB01901442DCFC88157BF762D /* ChatReplyViewModel.swift */,
 				18355863DA9C08FB751943129D383190 /* ConnectionListService.swift */,
 				529F39F1DAC81AC804E1ED0951628E24 /* ConnectionListVC.swift */,
-				4D10B6162C75CA9E0006563B /* Macros */,
 				E50FF7A848CC1E0D86E712400DD09108 /* CustomTableViewCell.swift */,
 				2985A0492A8E34482DF00FFB643B61E5 /* CustomTableViewCell.xib */,
 				4E65FB86AFFAEE9F18E2C40FD540DD13 /* CustomTopView.swift */,
@@ -864,10 +855,10 @@
 				AF110B8A55438350ECE99D4501342181 /* ChatRoomVC.swift */,
 				4D9C4AF62C62174F007F9B0F /* ReplyMediaTextCell.swift */,
 				BF48A7128635253B4DCA2BEDB496C27A /* ReplyTextCell.swift */,
+				4D10B6242C75CC640006563B /* ReplyTextCell */,
+				4D10B62F2C75CC7A0006563B /* ReplyMediaCell */,
+				4D10B62B2C75CC7A0006563B /* ReplyMediaTextCell */,
 				A4C06E24732B4B0656C98F301EA62887 /* ReplyMediaCell.swift */,
-				4D9C4B0E2C653868007F9B0F /* ReplyTextCell */,
-				4D9C4B152C65389A007F9B0F /* ReplyMediaCell */,
-				4D9C4B162C65398D007F9B0F /* ReplyMediaTextCell */,
 				2A9E658FC5CB806AA1D38FC35AD3C64C /* RoomCreateService.swift */,
 				82B14A91DD9636D4B8C268262C0379AB /* Unwrapping.swift */,
 				20D8306F7DA764B1361967485C9B8E12 /* UserService.swift */,
@@ -1545,53 +1536,53 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D10B6332C75CC7A0006563B /* ReplyMedia_MediaCell.swift in Sources */,
 				B5AE752E12254D918EBA542469B21807 /* APIManager.swift in Sources */,
 				426A8E71EADBC296C6DD49F4F94E5E99 /* AppColors.swift in Sources */,
 				F0F0A5EC0B5192DFA646AF80CAC01E8B /* BottomViewHandler.swift in Sources */,
 				0F03880865EC059050FD11FDE7E72A0C /* CacheManager.swift in Sources */,
 				82C7456A49AE628987B883C5C68AF80A /* ChatConnectListVC.swift in Sources */,
-				4D9C4B212C6539BA007F9B0F /* ReplyMedia_MediaTextCell.swift in Sources */,
-				4D9C4B1C2C6539AF007F9B0F /* ReplyMediaText_TextCell.swift in Sources */,
 				F16AEACB964EFDABC415F1FFADB040DE /* ChatMediaViewModel.swift in Sources */,
 				8997EE18EADCA4EEB3C537E101BDFDD1 /* ChatMessageCell.swift in Sources */,
-				4D9C4B142C65388F007F9B0F /* ReplyText_TextCell.swift in Sources */,
 				512E0C9C4B00FA27B06DC05F3D2FB748 /* ChatMessageService.swift in Sources */,
 				99B86297693E8F33F58D899CF36E5788 /* ChatReplyViewModel.swift in Sources */,
 				241670FB1F66C42117EB23EF9BCD6B78 /* ChatRoomVC.swift in Sources */,
 				FCB3F06D8F9E771E9CE62884D009020B /* CircleObject.swift in Sources */,
 				BC13CE3592475E6E7343105866F5A127 /* ConnectionListService.swift in Sources */,
-				4D9C4B132C65388F007F9B0F /* ReplyText_MediaTextCell.swift in Sources */,
+				4D10B6272C75CC640006563B /* ReplyText_TextCell.swift in Sources */,
 				91AAE5E82C748DDE00982359 /* UIView.swift in Sources */,
 				0941B17320E401452FF24B7BF46A6143 /* ConnectionListVC.swift in Sources */,
 				D7C88D073D65F3CBBD10BA4028183B62 /* CustomTableViewCell.swift in Sources */,
 				DFFEFC853C33F7E1B0215024BDA22CAA /* CustomTableViewCell.xib in Sources */,
 				D1B79F0B1A4B1A125020EEE1740737A8 /* CustomTopView.swift in Sources */,
-				4D9C4B202C6539BA007F9B0F /* ReplyMedia_MediaCell.swift in Sources */,
 				4D9C4AF72C62174F007F9B0F /* ReplyMediaTextCell.swift in Sources */,
-				4D9C4B122C65388F007F9B0F /* ReplyText_MediaCell.swift in Sources */,
 				52AE5BAD235C2655823C18087A78833E /* CustomTopView.xib in Sources */,
-				4D9C4B1A2C6539AF007F9B0F /* ReplyMediaText_MediaCell.swift in Sources */,
+				4D10B6342C75CC7A0006563B /* ReplyMedia_MediaTextCell.swift in Sources */,
 				2BAFE0E1ED8EEC6F0D7375383C0C2608 /* DataComponent.storyboard in Sources */,
+				4D10B6322C75CC7A0006563B /* ReplyMediaText_TextCell.swift in Sources */,
 				E4D9972C8691F2A939D36A6F8CC4D0F9 /* DeleteViewModel.swift in Sources */,
 				CAC99C832D9288B89412F414062388C9 /* iOSChatSDK-dummy.m in Sources */,
 				6B8347A6E3CC2A34875445BBF91DB434 /* LoginService.swift in Sources */,
+				4D10B6252C75CC640006563B /* ReplyText_MediaCell.swift in Sources */,
 				4A2011B8FD2FAFBF09580F6445463539 /* MainChat.storyboard in Sources */,
 				CB2DC609CB06360FD8A3A8CC4681B9DF /* MainChatVC.swift in Sources */,
 				6E14B517CF0779712F1A23E3E0B8F1E6 /* MediaContentCell.swift in Sources */,
 				75446DE15491D61001C86B8AE7B5F3D8 /* MediaFullVC.swift in Sources */,
 				000EABF0D77FC831F30F95D106A20D6E /* MediaTextTVCell.swift in Sources */,
 				4EB89C761657851CDA570168AFCAC0A0 /* MediaTextTVCell.xib in Sources */,
-				4D9C4B1B2C6539AF007F9B0F /* ReplyMediaText_MediaTextCell.swift in Sources */,
-				4D9C4B222C6539BA007F9B0F /* ReplyMedia_TextCell.swift in Sources */,
+				4D10B6302C75CC7A0006563B /* ReplyMediaText_MediaCell.swift in Sources */,
 				0985C82A1E17BBB1134B61C7788B5E35 /* MenuBottomView.swift in Sources */,
+				4D10B6352C75CC7A0006563B /* ReplyMedia_TextCell.swift in Sources */,
 				C0EAA5758F183080C61E56D5F1E05699 /* MoreOptionView.swift in Sources */,
 				816F3DA30BB3AB9C1A0C37B16CF8BAF2 /* PublishMediaVC.swift in Sources */,
 				01B05B5927883BAB6DE4B1F8EFB3C832 /* ReplyMediaCell.swift in Sources */,
+				4D10B6312C75CC7A0006563B /* ReplyMediaText_MediaTextCell.swift in Sources */,
 				4D10B6152C75C8470006563B /* ChatConstant.swift in Sources */,
 				2F55A80ED5E95FE791012113A64A2B99 /* ReplyTextCell.swift in Sources */,
 				2FEEEC1878E66862D755725AD6EE30D8 /* RoomCreateService.swift in Sources */,
 				30764CD28EB542B96332E02304303523 /* SenderViewModel.swift in Sources */,
 				E4FE314038CF58087546258CAB00CD3C /* String.swift in Sources */,
+				4D10B6262C75CC640006563B /* ReplyText_MediaTextCell.swift in Sources */,
 				398EE03291D4649704E2DAA770D757B3 /* Unwrapping.swift in Sources */,
 				61D57C43B00796325843875EE6FD8A60 /* UserService.swift in Sources */,
 			);

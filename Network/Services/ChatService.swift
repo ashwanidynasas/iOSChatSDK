@@ -25,6 +25,21 @@ class ChatService: GenericClient {
     }
     
     //MARK: - list connections
+    func login(showloader: Bool = false,
+               parameters : LoginParameter,
+               completion: @escaping (Result<LoginResponse?, APIError>, [AnyHashable : Any]?) -> ()) {
+        self.showLoader = showloader
+        guard let request = ChatServiceEndPoint.login.postRequest(parameters: parameters, headers: []) else {
+            completion(.failure(.invalidRequestURL), nil)
+            return
+        }
+        fetch(with: request, showloader: showloader, decode: { json -> LoginResponse? in
+            guard let results = json as? LoginResponse else { return  nil }
+            return results
+        }, completion: completion)
+    }
+    
+    //MARK: - list connections
     func listConnections(showloader: Bool = false, 
                           parameters: FetchConnectionsParameter,
                           completion: @escaping (Result<ConnectionResponse?, APIError>, [AnyHashable : Any]?) -> ()) {
@@ -104,6 +119,12 @@ class ChatService: GenericClient {
 
 
 //MARK: - REQUEST PARAMETERS
+struct LoginParameter: DictionaryEncodable {
+    var username: String
+    var loginJWTToken : String
+    
+}
+
 struct FetchConnectionsParameter: DictionaryEncodable {
     var circleId: String
     var circleHash : String

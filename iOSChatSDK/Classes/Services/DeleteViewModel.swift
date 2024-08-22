@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 struct MessageRedactRequest: Codable {
     let accessToken: String
     let roomID: String

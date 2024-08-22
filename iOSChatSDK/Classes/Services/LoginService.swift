@@ -74,3 +74,15 @@ class LoginViewModel {
         return UserDefaults.standard.string(forKey: "access_token")
     }
 }
+
+
+struct API{
+    
+    static let login = "http://157.241.58.41/chat_api/auth/login"
+    static let createRoom = "http://157.241.58.41/chat_api/room/create"
+    static let sendText = "http://157.241.58.41/chat_api/message/send/text"
+    static let redactMessage = "http://157.241.58.41/chat_api/message/redact"
+    static let fetchUserlist = "http://157.241.58.41/chat_api/list-user-apple"
+    static let sendMedia = "http://157.241.58.41/chat_api/message/send/"
+    static let reply = "http://157.241.58.41/chat_api/message/reply"
+}

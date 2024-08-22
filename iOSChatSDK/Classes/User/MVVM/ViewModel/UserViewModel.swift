@@ -5,10 +5,13 @@
 //  Created by Ashwani on 21/08/24.
 //
 
+//MARK: - MODULES
 import Foundation
 
+//MARK: - CLASS
 public class UserViewModel {
     
+    //MARK: - PROPERTIES
     private var userService: UserService
     public var users: [User] = []
     public var errorMessage: String?
@@ -19,7 +22,8 @@ public class UserViewModel {
     public init(userService: UserService = UserService()) {
         self.userService = userService
     }
-    
+   
+    //MARK: - FUNCTIONS
     public func fetchUsers() {
         userService.fetchUsers { [weak self] result in
             switch result {

@@ -11,8 +11,8 @@ import Foundation
 public class UserService {
     public init() {}
     
-    public func fetchUsers(completion: @escaping (Result<[User], Error>) -> Void) {
-        let url = URL(string: API.fetchUsers)!
+    func fetchUsers(completion: @escaping (Result<[User], Error>) -> Void) {
+        let url = URL(string: API.fetchUserlist)!
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"

@@ -18,6 +18,7 @@ enum ChatServiceEndPoint {
     case fetchUserlist
     case sendMedia
     case reply
+    case getMessages(roomId : String)
 }
 
 extension ChatServiceEndPoint: Endpoint {
@@ -32,6 +33,7 @@ extension ChatServiceEndPoint: Endpoint {
         case .fetchUserlist : return "/list-user-apple"
         case .sendMedia : return "/message/send/"
         case .reply : return "/message/reply"
+        case .getMessages(let roomId) : return "http://chat.sqrcle.co/_matrix/client/r0/rooms/\(roomId)/messages?dir=b"
         }
     }
 }

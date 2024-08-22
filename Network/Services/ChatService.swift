@@ -39,6 +39,22 @@ class ChatService: GenericClient {
         }, completion: completion)
     }
     
+    func getMessages(showloader: Bool = false,
+                          roomId: String,
+                     accessToken: String,
+                          completion: @escaping (Result<MessageResponse?, APIError>, [AnyHashable : Any]?) -> ()) {
+        self.showLoader = showloader
+        let headers = [HTTPHeader.authorization(accessToken)]
+        guard let request = ChatServiceEndPoint.getMessages(roomId: roomId).getRequest(parameters: nil, headers: headers) else {
+            completion(.failure(.invalidRequestURL), nil)
+            return
+        }
+        fetch(with: request, showloader: showloader, decode: { json -> MessageResponse? in
+            guard let results = json as? MessageResponse else { return  nil }
+            return results
+        }, completion: completion)
+    }
+    
 }
 
 

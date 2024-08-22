@@ -5,48 +5,37 @@
 //  Created by Ashwani on 21/08/24.
 //
 
+//MARK: - MODULES
 import Foundation
 
+//MARK: - CLASS
 class MessageViewModel {
+    
+    //MARK: - PROPERTIES
     var messages: [Messages] = []
+    private var service : ChatService?
+    
     var onUpdate: (() -> Void)?
 
-    func fetchMessages(accessToken: String) {
-        let room_id = UserDefaults.standard.string(forKey: "room_id")
-        print("room_id ChatRoomAPIClient: \(room_id ?? "")")
-
-        guard let url = URL(string: "http://chat.sqrcle.co/_matrix/client/r0/rooms/\(room_id ?? "")/messages?dir=b") else { return }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        
-        let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
-            guard let data = data, error == nil else {
-                print("Error fetching messages: \(error?.localizedDescription ?? "Unknown error")")
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let messageResponse = try decoder.decode(MessageResponse.self, from: data)
-
-                if let messages = messageResponse.chunk {
+    //MARK: - FUNCTIONS
+    func getMessages(accessToken: String) {
+        guard let room_id = UserDefaults.standard.string(forKey: "room_id") else { return }
+        service = ChatService(configuration: .default)
+        service?.getMessages(roomId: room_id, accessToken : accessToken , completion: { (result, headers) in
+            switch result {
+            case .success(let value):
+                if let messages = value?.chunk {
                     let filteredMessages = messages.filter { message in
                             message.type == "m.room.message" && message.content != nil && message.content?.msgtype != nil
                         }
-                    self?.messages = filteredMessages.sorted { $0.originServerTs ?? 0 < $1.originServerTs ?? 0 }
+                    self.messages = filteredMessages.sorted { $0.originServerTs ?? 0 < $1.originServerTs ?? 0 }
                 } else {
                     print("No messages found in response")
                 }
-                DispatchQueue.main.async {
-                    self?.onUpdate?()
-                }
-            } catch {
-                print("Error decoding messages: \(error)")
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-        }
-        
-        task.resume()
+        })
     }
+    
 }

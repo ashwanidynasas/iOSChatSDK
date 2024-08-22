@@ -7,6 +7,18 @@
 
 import Foundation
 
+struct API{
+    
+    static let login = "http://157.241.58.41/chat_api/auth/login"
+    static let listConnecttions = "http://157.241.58.41/chat_api/list-connections"
+    static let createRoom = "http://157.241.58.41/chat_api/room/create"
+    static let sendText = "http://157.241.58.41/chat_api/message/send/text"
+    static let redactMessage = "http://157.241.58.41/chat_api/message/redact"
+    static let fetchUsers = "http://157.241.58.41/chat_api/list-user-apple"
+    static let sendMedia = "http://157.241.58.41/chat_api/message/send/"
+    static let reply = "http://157.241.58.41/chat_api/message/reply"
+}
+
 
 class ConnectionViewModel {
     var connections: [Connection] = [] {
@@ -18,7 +30,7 @@ class ConnectionViewModel {
     var bindViewModelToController: (() -> ()) = {}
     
     func fetchConnections(circleId: String, circleHash: String) {
-        let url = URL(string: "http://157.241.58.41/chat_api/list-connections")!
+        guard let url = URL(string: API.listConnecttions) else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -48,3 +60,4 @@ class ConnectionViewModel {
         task.resume()
     }
 }
+

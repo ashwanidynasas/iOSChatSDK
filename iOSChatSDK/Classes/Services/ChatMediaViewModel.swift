@@ -12,7 +12,7 @@ class ChatMediaViewModel {
     
     func uploadFile(accessToken: String, roomID: String, body: String, msgType: String, mimetype: String, fileName: String, imageFilePath: UIImage? = nil,videoFilePath: URL? = nil,mediaType:String, completion: @escaping (Result<UploadResponse, Error>) -> Void) {
         
-        let url = URL(string: "http://157.241.58.41/chat_api/message/send/\(mediaType)")!
+        let url = URL(string: "\(API.sendMedia)\(mediaType)")!
         //        print("url \(url)")
         //        print("msgType \(msgType)")
         //        print("mimetype \(mimetype)")

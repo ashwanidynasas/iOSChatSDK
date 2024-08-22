@@ -8,6 +8,7 @@
 import Foundation
 
 public class UserViewModel {
+    
     private var userService: UserService
     public var users: [User] = []
     public var errorMessage: String?

@@ -30,7 +30,7 @@ class SenderViewModel {
     var chatMessageResponse: ChatMessageResponse?
     
     func sendMessage(roomID: String, body: String, msgType: String, accessToken: String, completion: @escaping (ChatMessageResponse?) -> Void) {
-        guard let url = URL(string: "http://157.241.58.41/chat_api/message/send/text") else {
+        guard let url = URL(string: API.sendText) else {
             return
         }
         

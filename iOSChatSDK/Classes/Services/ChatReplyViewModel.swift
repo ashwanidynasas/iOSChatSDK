@@ -12,7 +12,7 @@ class ChatReplyViewModel {
     
     func uploadFileChatReply(accessToken: String, roomID: String, eventID: String, body: String, msgType: String, mimetype: String? = nil , fileName: String? = nil, imageFilePath: UIImage? = nil, videoFilePath: URL? = nil, completion: @escaping (Result<UploadResponse, Error>) -> Void) {
         
-        let url = URL(string: "http://157.241.58.41/chat_api/message/reply")!
+        let url = URL(string: API.reply)!
         print("url \(url)")
         print("msgType \(msgType)")
         print("accessToken \(accessToken)")

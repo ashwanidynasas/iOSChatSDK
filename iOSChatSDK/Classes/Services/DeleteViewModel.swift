@@ -63,7 +63,7 @@ struct MessageRedactRequest: Codable {
 
 class DeleteMessageViewModel {
     func redactMessage(request: MessageRedactRequest, completion: @escaping (Result<String, Error>) -> Void) {
-        guard let url = URL(string: "http://157.241.58.41/chat_api/message/redact") else {
+        guard let url = URL(string: API.redactMessage) else {
             completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
             return
         }

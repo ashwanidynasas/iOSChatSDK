@@ -12,17 +12,11 @@ public class UserService {
     public init() {}
     
     public func fetchUsers(completion: @escaping (Result<[User], Error>) -> Void) {
-        let url = URL(string: "http://157.241.58.41/chat_api/list-user-apple")!
+        let url = URL(string: API.fetchUsers)!
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        
-        // Set headers if needed
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        // Add any necessary body data
-        // request.httpBody = ... // If there's any body data to include
-        
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 completion(.failure(error))

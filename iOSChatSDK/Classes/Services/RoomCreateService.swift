@@ -38,7 +38,7 @@ class RoomAPIClient {
     }
     
     func createRoom(accessToken: String, invitees: [String], defaultChat: Bool, completion: @escaping (Result<String, Error>) -> Void) {
-        let url = URL(string: "http://157.241.58.41/chat_api/room/create")!
+        let url = URL(string: API.createRoom)!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")

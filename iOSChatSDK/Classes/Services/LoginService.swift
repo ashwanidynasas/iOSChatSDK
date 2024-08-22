@@ -38,7 +38,7 @@ class LoginViewModel {
     var bindViewModelToController: (() -> ()) = {}
     
     func login(username: String, loginJWTToken: String, completion: @escaping (String?) -> Void) {
-          let url = URL(string: "http://157.241.58.41/chat_api/auth/login")!
+        let url = URL(string: API.login)!
           var request = URLRequest(url: url)
           request.httpMethod = "POST"
           request.addValue("application/json", forHTTPHeaderField: "Content-Type")

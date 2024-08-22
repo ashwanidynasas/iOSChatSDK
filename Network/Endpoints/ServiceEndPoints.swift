@@ -25,14 +25,14 @@ extension ChatServiceEndPoint: Endpoint {
 
     var path: String {
         switch self {
-        case .login: return "/auth/login"
-        case .listConnecttions: return "/list-connections"
-        case .createRoom: return "/room/create"
-        case .sendText: return "/message/send/text"
-        case .redactMessage: return "/message/redact"
-        case .fetchUserlist : return "/list-user-apple"
-        case .sendMedia : return "/message/send/"
-        case .reply : return "/message/reply"
+        case .login: return "/chat_api/auth/login"
+        case .listConnecttions: return "/chat_api/list-connections"
+        case .createRoom: return "/chat_api/room/create"
+        case .sendText: return "/chat_api/message/send/text"
+        case .redactMessage: return "/chat_api/message/redact"
+        case .fetchUserlist : return "/chat_api/list-user-apple"
+        case .sendMedia : return "/chat_api/message/send/"
+        case .reply : return "/chat_api/message/reply"
         case .getMessages(let roomId) : return "http://chat.sqrcle.co/_matrix/client/r0/rooms/\(roomId)/messages?dir=b"
         }
     }

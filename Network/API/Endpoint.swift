@@ -32,7 +32,7 @@ protocol Endpoint {
 extension Endpoint {
     
     var base: String {
-        return "http://157.241.58.41/chat_api"
+        return "http://157.241.58.41"
     }
     
     var urlComponents: URLComponents? {

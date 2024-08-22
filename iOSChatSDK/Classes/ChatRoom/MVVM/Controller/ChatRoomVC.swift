@@ -533,7 +533,7 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
             }
         }
         let token = UserDefaults.standard.string(forKey: "access_token")
-        viewModel.fetchMessages(accessToken: "\(token ?? "")")
+        viewModel.getMessages(accessToken: /token)
     }
     
     public func createRoomCall(){

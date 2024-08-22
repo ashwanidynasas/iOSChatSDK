@@ -55,6 +55,25 @@ class ChatService: GenericClient {
         }, completion: completion)
     }
     
+    func sendMessage(showloader: Bool = false,
+                     roomID: String,
+                     body: String,
+                     msgType: String,
+                     accessToken: String,
+                     completion: @escaping (Result<ChatMessageResponse?, APIError>, [AnyHashable : Any]?) -> ()) {
+        
+        self.showLoader = showloader
+        let headers = [HTTPHeader.contentType("application/json")]
+        guard let request = ChatServiceEndPoint.sendText.postRequest(parameters: nil, headers: headers) else {
+            completion(.failure(.invalidRequestURL), nil)
+            return
+        }
+        fetch(with: request, showloader: showloader, decode: { json -> ChatMessageResponse? in
+            guard let results = json as? ChatMessageResponse else { return  nil }
+            return results
+        }, completion: completion)
+    }
+    
 }
 
 
@@ -71,4 +90,12 @@ struct FetchConnectionsParameter: DictionaryEncodable {
     var circleId: String
     var circleHash : String
     
+}
+
+
+struct ChatMessageRequest: Codable {
+    let roomID: String
+    let body: String
+    let msgType: String
+    let accessToken: String
 }

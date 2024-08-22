@@ -38,4 +38,29 @@ class MessageViewModel {
         })
     }
     
+    func sendMessage(roomID: String,
+                     body: String,
+                     msgType: String,
+                     accessToken: String,
+                     completion: @escaping (ChatMessageResponse?) -> Void) {
+        service = ChatService(configuration: .default)
+        service?.sendMessage(roomID: roomID,
+                             body: body,
+                             msgType: msgType,
+                             accessToken: accessToken,
+                             completion: { (result, headers) in
+            
+            switch result {
+            case .success(let value):
+                if let success = value?.success, success {
+                    completion(value)
+                } else {
+                    print(/value?.message)
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        })
+    }
 }

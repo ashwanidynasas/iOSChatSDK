@@ -7,12 +7,7 @@
 
 import Foundation
 
-struct ChatMessageRequest: Codable {
-    let roomID: String
-    let body: String
-    let msgType: String
-    let accessToken: String
-}
+
 
 struct ChatMessageResponse: Codable {
     let success: Bool
@@ -27,9 +22,15 @@ struct ChatMessageDetails: Codable {
 }
 
 class SenderViewModel {
-    var chatMessageResponse: ChatMessageResponse?
     
-    func sendMessage(roomID: String, body: String, msgType: String, accessToken: String, completion: @escaping (ChatMessageResponse?) -> Void) {
+    //var chatMessageResponse: ChatMessageResponse?
+    
+    func sendMessage(roomID: String, 
+                     body: String,
+                     msgType: String,
+                     accessToken: String,
+                     completion: @escaping (ChatMessageResponse?) -> Void) {
+        
         guard let url = URL(string: API.sendText) else {
             return
         }

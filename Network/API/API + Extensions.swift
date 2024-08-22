@@ -85,7 +85,7 @@ enum HTTPHeader {
         switch self {
         case .contentType(let value): return (field: "content-type", value: value)
         case .accept(let value): return (field: "Accept", value: value)
-        case .authorization(let value): return (field: "authorization", value: value)
+        case .authorization(let value): return (field: "authorization", value: "Bearer \(value)")
         case .machineId(let value): return (field: "x-machineId", value: value)
         case .circleHash(let value): return (field: "Circle-Hash", value: value)
         case .privateKey(let value): return (field: "PrivateKey", value: value)

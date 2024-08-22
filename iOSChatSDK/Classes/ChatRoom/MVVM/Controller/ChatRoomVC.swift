@@ -69,7 +69,6 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
     var eventID: String! = ""
     // API Clients and ViewModels
     let apiClient = RoomAPIClient()
-    private var deleteViewModel = DeleteMessageViewModel()
     private let viewModel = MessageViewModel()
     private let mediaViewModel = ChatMediaViewModel()
     private let replyViewModel = ChatReplyViewModel()
@@ -155,7 +154,8 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
     }
     
     private func startFetchingMessages() {
-        fetchTimer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(fetchMessages), userInfo: nil, repeats: true)
+        fetchMessages()
+        //fetchTimer = Timer.scheduledTimer(timeInterval: 100.0, target: self, selector: #selector(fetchMessages), userInfo: nil, repeats: true)
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -1077,10 +1077,9 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
             body: "spam"
         )
         
-        deleteViewModel.redactMessage(request: request) { result in
+        viewModel.redactMessage(request: request) { result in
             switch result {
-            case .success(let message):
-                print("delete response message ----->>>> \(message)")
+            case .success(let result):
                 DispatchQueue.main.async {
                     self.fetchMessages()
                 }

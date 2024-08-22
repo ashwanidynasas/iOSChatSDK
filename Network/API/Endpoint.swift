@@ -42,8 +42,13 @@ extension Endpoint {
     }
     
     var request: URLRequest? {
-        guard let url = urlComponents?.url ?? URL("\(self.base)\(self.path)") else {
+        guard var url = urlComponents?.url ?? URL("\(self.base)\(self.path)") else {
             return nil
+        }
+        if url.path.contains("chat.sqrcle.co"){
+            if let chaturl = URL(/self.path){
+                url = chaturl
+            }
         }
         let request = URLRequest(url: url)
         return request

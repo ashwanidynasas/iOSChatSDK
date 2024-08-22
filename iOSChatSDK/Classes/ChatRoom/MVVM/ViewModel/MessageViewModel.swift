@@ -29,6 +29,7 @@ class MessageViewModel {
                             message.type == "m.room.message" && message.content != nil && message.content?.msgtype != nil
                         }
                     self.messages = filteredMessages.sorted { $0.originServerTs ?? 0 < $1.originServerTs ?? 0 }
+                    self.onUpdate?()
                 } else {
                     print("No messages found in response")
                 }
@@ -53,6 +54,7 @@ class MessageViewModel {
             switch result {
             case .success(let value):
                 if let success = value?.success, success {
+                    //self.connections = value?.details.connections ?? []
                     completion(value)
                 } else {
                     print(/value?.message)
@@ -63,4 +65,24 @@ class MessageViewModel {
             }
         })
     }
+    
+    func redactMessage(request: MessageRedactRequest, completion: @escaping (Result<String?, Error>) -> Void) {
+        service = ChatService(configuration: .default)
+        service?.redactMessage(request: request, completion: { (result, headers) in
+            
+            switch result {
+            case .success(let value):
+                if let success = value?.success, success {
+                    completion(.success("Message deleted successfully"))
+                } else {
+                    print(/value?.message)
+                }
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        })
+    }
+    
+    
 }

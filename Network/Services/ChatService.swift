@@ -63,8 +63,9 @@ class ChatService: GenericClient {
                      completion: @escaping (Result<ChatMessageResponse?, APIError>, [AnyHashable : Any]?) -> ()) {
         
         self.showLoader = showloader
-        let headers = [HTTPHeader.contentType("application/json")]
-        guard let request = ChatServiceEndPoint.sendText.postRequest(parameters: nil, headers: headers) else {
+        //let headers = [HTTPHeader.contentType("application/json")]
+        let parameters = ChatMessageRequest(roomID: roomID, body: body, msgType: msgType, accessToken: accessToken)
+        guard let request = ChatServiceEndPoint.sendText.postRequest(parameters: parameters, headers: []) else {
             completion(.failure(.invalidRequestURL), nil)
             return
         }
@@ -73,6 +74,23 @@ class ChatService: GenericClient {
             return results
         }, completion: completion)
     }
+    
+    func redactMessage(showloader: Bool = false,
+                       request: MessageRedactRequest,
+                     completion: @escaping (Result<ChatMessageResponse?, APIError>, [AnyHashable : Any]?) -> ()) {
+        
+        self.showLoader = showloader
+        let headers = [HTTPHeader.authorization(request.accessToken)]
+        guard let request = ChatServiceEndPoint.redactMessage.postRequest(parameters: request, headers: []) else {
+            completion(.failure(.invalidRequestURL), nil)
+            return
+        }
+        fetch(with: request, showloader: showloader, decode: { json -> ChatMessageResponse? in
+            guard let results = json as? ChatMessageResponse else { return  nil }
+            return results
+        }, completion: completion)
+    }
+    
     
 }
 
@@ -98,4 +116,12 @@ struct ChatMessageRequest: Codable {
     let body: String
     let msgType: String
     let accessToken: String
+}
+
+
+struct MessageRedactRequest: Codable {
+    let accessToken: String
+    let roomID: String
+    let eventID: String
+    let body: String
 }

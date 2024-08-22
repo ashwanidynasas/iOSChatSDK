@@ -17,7 +17,7 @@ class MediaFullVC: UIViewController, TopViewDelegate {
     @IBOutlet weak var fullImgView:UIImageView!
     @IBOutlet weak var bottomView:UIView!
     @IBOutlet weak var videoPlayerBackView: UIView!
-    private var deleteViewModel = DeleteMessageViewModel()
+    private var deleteViewModel = MessageViewModel()
     
     var currentUser: String! = ""
     var imageFetched:UIImage! = nil
@@ -108,13 +108,14 @@ class MediaFullVC: UIViewController, TopViewDelegate {
             body: "spam"
         )
         
-        deleteViewModel.redactMessage(request: request) { result in
+        deleteViewModel.redactMessage(request: request) { [weak self] result in
+            
             switch result {
-            case .success(let message):
-                print("delete response message ----->>>> \(message)")
+            case .success(let value):
+                //print("delete response message ----->>>> \(message)")
                 DispatchQueue.main.async {
-                    self.delegate?.itemDeleteFromChat("deleteItem")
-                    self.navigationController?.popViewController(animated: true)
+                    self?.delegate?.itemDeleteFromChat("deleteItem")
+                    self?.navigationController?.popViewController(animated: true)
                 }
             case .failure(let error):
                 print("Failed to redact message: \(error.localizedDescription)")

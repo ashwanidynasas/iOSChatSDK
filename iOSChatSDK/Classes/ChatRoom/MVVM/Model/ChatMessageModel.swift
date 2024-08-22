@@ -7,6 +7,18 @@
 
 import Foundation
 
+struct ChatMessageResponse: Codable {
+    let success: Bool
+    let message: String
+    let redirectUrl: String
+    let details: ChatMessageDetails
+}
+
+struct ChatMessageDetails: Codable {
+    let response: String
+    let chat_event_id: String
+}
+
 struct MessageResponse: Codable {
     let chunk: [Messages]?
     let start: String?

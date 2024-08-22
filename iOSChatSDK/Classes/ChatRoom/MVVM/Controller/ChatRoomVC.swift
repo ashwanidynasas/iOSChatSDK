@@ -70,7 +70,6 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
     // API Clients and ViewModels
     let apiClient = RoomAPIClient()
     private var deleteViewModel = DeleteMessageViewModel()
-    private let sendMsgModel = SenderViewModel()
     private let viewModel = MessageViewModel()
     private let mediaViewModel = ChatMediaViewModel()
     private let replyViewModel = ChatReplyViewModel()
@@ -428,7 +427,7 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         }else{
             let body = self.sendMsgTF.text
             let msgType = "m.text"
-            sendMsgModel.sendMessage(roomID: /room_id, body: /body, msgType: msgType, accessToken: /accessToken) { [weak self] response in
+            viewModel.sendMessage(roomID: /room_id, body: /body, msgType: msgType, accessToken: /accessToken) { [weak self] response in
                 DispatchQueue.main.async {
                     if let response = response {
                         print("Response: \(response.details.response)\nEvent ID: \(response.details.chat_event_id)")

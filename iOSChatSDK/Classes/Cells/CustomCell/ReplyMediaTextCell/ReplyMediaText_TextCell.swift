@@ -12,7 +12,7 @@ import SDWebImage
 class ReplyMediaText_TextCell: UITableViewCell {
     private let bubbleBackgroundView = UIView()
     let playButton = UIButton() // Added play button
-    weak var delegate: ReplyMediaText_TextCellDelegate?
+    weak var delegate: DelegatePlay?
     private let upperbubbleBackgroundView = UIView()
     private let messageLabel = UILabel()
     private let timestampLabel = UILabel()
@@ -45,12 +45,7 @@ class ReplyMediaText_TextCell: UITableViewCell {
         static let imageViewSizeZero: CGSize = CGSize(width: 0, height: 0)
 
     }
-    private enum MessageType: String {
-        case text = "m.text"
-        case video = "m.video"
-        case image = "m.image"
-        case audio = "m.audio"
-    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()

@@ -26,7 +26,7 @@ class MediaFullVC: UIViewController {
     var videoPlayerContainerView: CustomVideoPlayerContainerView!
     var player: AVPlayer?
     var eventID: String! = ""
-    weak var delegate: MediaFullVCDelegate?
+    weak var delegate: DelegateMediaFullVC?
     
     override func viewDidLoad() {
         super.viewDidLoad()

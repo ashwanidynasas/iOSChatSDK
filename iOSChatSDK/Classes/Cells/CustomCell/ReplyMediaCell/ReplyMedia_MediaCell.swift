@@ -13,7 +13,7 @@ import SDWebImage
 class ReplyMedia_MediaCell: UITableViewCell {
     private let bubbleBackgroundView = UIView()
     let playButton = UIButton() // Added play button
-    weak var delegate: ReplyMedia_MediaCellDelegate?
+    weak var delegate: DelegatePlay?
     private let upperbubbleBackgroundView = UIView()
     private let messageMediaImage = UIImageView()
     private let timestampLabel = UILabel()
@@ -25,13 +25,6 @@ class ReplyMedia_MediaCell: UITableViewCell {
     private var upperbubbleBackgroundViewHeightConstraint: NSLayoutConstraint!
     private let titleLabel = UILabel()
     private let replyImageView = UIImageView()
-
-    private enum MessageType: String {
-        case text = "m.text"
-        case video = "m.video"
-        case image = "m.image"
-        case audio = "m.audio"
-    }
 
     private struct Constants {
         static let bubbleCornerRadius: CGFloat = 20

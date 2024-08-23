@@ -12,7 +12,7 @@ import SDWebImage
 class ReplyText_TextCell: UITableViewCell {
     private let bubbleBackgroundView = UIView()
     let playButton = UIButton() // Added play button
-    weak var delegate: ReplyText_TextCellDelegate?
+    weak var delegate: DelegatePlay?
     private let upperbubbleBackgroundView = UIView()
     private let messageLabel = UILabel()
     private let timestampLabel = UILabel()

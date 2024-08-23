@@ -26,7 +26,7 @@ class MediaTextTVCell: UITableViewCell {
     private var trailingConstraint: NSLayoutConstraint!
 
     @IBOutlet weak var playButton:UIButton!
-    weak var delegate: MediaTextCellDelegate?
+    weak var delegate: DelegatePlay?
 
     func mediaConfigure(with message: Messages, currentUser: String) {
 

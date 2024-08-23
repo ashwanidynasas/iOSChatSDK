@@ -15,7 +15,7 @@ class MediaContentCell: UITableViewCell {
     private var messageImageView = UIImageView()
     private let readIndicatorImageView = UIImageView() // Added read indicator
     let playButton = UIButton() // Added play button
-    weak var delegate: MediaContentCellDelegate?
+    weak var delegate: DelegatePlay?
 
     private var leadingConstraint: NSLayoutConstraint!
     private var trailingConstraint: NSLayoutConstraint!

@@ -5,16 +5,18 @@
 //  Created by Ashwani on 27/06/24.
 //
 
+//MARK: - MODULES
 import UIKit
 import AVFAudio
 
-class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate ,AVAudioRecorderDelegate, AVAudioPlayerDelegate, MediaFullVCDelegate, MediaContentCellDelegate {
+//MARK: - CLASS
+class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
 
+    //MARK: - OUTLETS
     @IBOutlet weak var sendBtn: UIButton!
     @IBOutlet weak var plusBtn: UIButton!
     @IBOutlet weak var emojiBtn: UIButton!
     @IBOutlet weak var cameraBtn: UIButton!
-
     @IBOutlet weak var backTFView: UIView!
     @IBOutlet weak var backBottomView: UIView!
     @IBOutlet weak var bottomAudioView: UIView!
@@ -39,79 +41,37 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
     @IBOutlet weak var replyUserImgView:UIImageView!
     @IBOutlet weak var replyViewWidthConstraint: NSLayoutConstraint!//replyUserImgView width
 
+    //MARK: - PROPERTIES
     
-    // Constants
-    let tableCell = "CustomTableViewCell"
-    let mediaTableCell = "MediaTextTVCell"
-    let replyTextTVCell = "ReplyTextTVCell"
-    // User-related variables
-    var chatUserID: String!
-    var currentUser: String!
-    // State variables
-    var isToggled = false
-    var isReply = false
-    private var isUserScrolling = false
-    // Media-related variables
-    var imageFetched: UIImage? = nil
-    var videoFetched: URL?
+    //MARK: - AVFOUNDATION PROPERTIES
     var audioRecorder: AVAudioRecorder?
     var audioPlayer: AVAudioPlayer?
     var recordingSession: AVAudioSession!
-    var audioFilename: URL!
-    // Timer variables
-    var timer: Timer?
-    private var fetchTimer: Timer?
-    var recordingDuration: TimeInterval = 0
-    // UI-related variables
-    private var customTabBar: CustomTabBar?
-    var bottomViewHandler: BottomViewHandler?
-    // Event-related variables
-    var eventID: String! = ""
-    // API Clients and ViewModels
+    
+    //MARK: - VIEWMODEL
     let apiClient = RoomAPIClient()
-    private let viewModel = MessageViewModel()
+    let viewModel = MessageViewModel()
     private let mediaViewModel = ChatMediaViewModel()
     private let replyViewModel = ChatReplyViewModel()
     
-    func itemDeleteFromChat(_ didSendData: String) {
-        if didSendData == "deleteItem"{
-            fetchMessages()
-        }
-    }
-    
-    func setButtonTintColor(button: UIButton, color: UIColor) {
-        button.tintColor = color
-    }
-    
-    private enum MessageType: String {
-        case audio = "m.audio"
-        case video = "m.video"
-        case image = "m.image"
-        case text = "m.text"
+    // Constants
+    let replyTextTVCell = "ReplyTextTVCell"
+    var chatUserID: String!
+    var currentUser: String!
+    var isToggled = false
+    var isReply = false
+    private var isUserScrolling = false
+    var imageFetched: UIImage? = nil
+    var videoFetched: URL?
+    var audioFilename: URL!
+    var timer: Timer?
+    private var fetchTimer: Timer?
+    var recordingDuration: TimeInterval = 0
+    private var customTabBar: CustomTabBar?
+    var bottomViewHandler: BottomViewHandler?
+    var eventID: String! = ""
 
-    }
-
-    func setupAudio(){
-        audioTimeLbl.text = "00:00"
-
-        recordingSession = AVAudioSession.sharedInstance()
-        do {
-            try recordingSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
-            try recordingSession.setActive(true)
-            recordingSession.requestRecordPermission() { allowed in
-                DispatchQueue.main.async {
-                    if allowed {
-                        print("Microphone access granted")
-                    } else {
-                        print("Failed to gain microphone access")
-                    }
-                }
-            }
-        } catch {
-            print("Failed to set up audio session")
-        }
-    }
-    
+    //MARK: - VIEW CYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         print("currentUser   <<<----\(currentUser ?? "")")
@@ -133,45 +93,11 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         createRoomCall()
         setupCustomBottomView()
 //        fetchMessages()
-        chatRoomTableView.separatorStyle = .none
-        chatRoomTableView.register(ChatMessageCell.self, forCellReuseIdentifier: "ChatMessageCell")
-        chatRoomTableView.register(MediaContentCell.self, forCellReuseIdentifier: "MediaContentCell")
-//        chatRoomTableView.register(ReplyTextCell.self, forCellReuseIdentifier: "ReplyTextCell")
-//        chatRoomTableView.register(ReplyMediaTextCell.self, forCellReuseIdentifier: "ReplyMediaTextCell")
-        
-        
-        chatRoomTableView.register(ReplyText_TextCell.self, forCellReuseIdentifier: String(describing: ReplyText_TextCell.self))
-        chatRoomTableView.register(ReplyText_MediaCell.self, forCellReuseIdentifier: String(describing: ReplyText_MediaCell.self))
-        chatRoomTableView.register(ReplyText_MediaTextCell.self, forCellReuseIdentifier: String(describing: ReplyText_MediaTextCell.self))
-        chatRoomTableView.register(ReplyMedia_TextCell.self, forCellReuseIdentifier: String(describing: ReplyMedia_TextCell.self))
-        chatRoomTableView.register(ReplyMedia_MediaCell.self, forCellReuseIdentifier: String(describing: ReplyMedia_MediaCell.self))
-        chatRoomTableView.register(ReplyMedia_MediaTextCell.self, forCellReuseIdentifier: String(describing: ReplyMedia_MediaTextCell.self))
-        chatRoomTableView.register(ReplyMediaText_TextCell.self, forCellReuseIdentifier: String(describing: ReplyMediaText_TextCell.self))
-        chatRoomTableView.register(ReplyMediaText_MediaCell.self, forCellReuseIdentifier: String(describing: ReplyMediaText_MediaCell.self))
-        chatRoomTableView.register(ReplyMediaText_MediaTextCell.self, forCellReuseIdentifier: String(describing: ReplyMediaText_MediaTextCell.self))
+        setupTable()
 
 
     }
     
-    private func startFetchingMessages() {
-        fetchMessages()
-        //fetchTimer = Timer.scheduledTimer(timeInterval: 100.0, target: self, selector: #selector(fetchMessages), userInfo: nil, repeats: true)
-    }
-    
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        isUserScrolling = true
-    }
-
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if !decelerate {
-            isUserScrolling = false
-        }
-    }
-
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        isUserScrolling = false
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         isToggled = false
@@ -184,71 +110,17 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         fetchTimer?.invalidate()
         fetchTimer = nil
     }
-
-    func setupUI() {
-        let startColor = UIColor.init(hex: "000000")
-        let endColor = UIColor.init(hex: "520093")
-        self.view.setGradientBackground(startColor: startColor, endColor: endColor)
-        let buttons = [sendBtn, plusBtn,cameraBtn]
-        for button in buttons {
-            setButtonTintColor(button: button!, color: Colors.Circles.violet)
-        }
-        setButtonTintColor(button: emojiBtn!, color: UIColor.init(hex: "979797"))
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
-        sendMsgTF.inputAccessoryView = UIView()
-        sendMsgTF.delegate = self
-        sendMsgTF.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        sendMsgTF.addTarget(self, action: #selector(textFieldTapped(_:)), for: .touchDown)
-
-        backTFView.layer.cornerRadius = 24
-        backTFView.clipsToBounds = true
-        sendBtn.makeCircular()
-        chatRoomTableView.backgroundColor = .clear
-        
-        replyUserImgView.layer.cornerRadius = replyUserImgView.frame.size.width/2
-        replyUserImgView.clipsToBounds = true
-        
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-        longPressRecognizer.minimumPressDuration = 1.0
-        sendBtn.addGestureRecognizer(longPressRecognizer)
-        setupAudio()
+    
+    private func startFetchingMessages() {
+        fetchMessages()
+        //fetchTimer = Timer.scheduledTimer(timeInterval: 100.0, target: self, selector: #selector(fetchMessages), userInfo: nil, repeats: true)
     }
     
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        return false
-    }
     
-    func registerNib() {
-        let nib = UINib(nibName: tableCell, bundle: Bundle(for: CustomTableViewCell.self))
-        chatRoomTableView.register(nib, forCellReuseIdentifier: "customTableViewCell")
-        chatRoomTableView.rowHeight = UITableView.automaticDimension
-        chatRoomTableView.estimatedRowHeight = 100
-        let medianib = UINib(nibName: mediaTableCell, bundle: Bundle(for: MediaTextTVCell.self))
-        chatRoomTableView.register(medianib, forCellReuseIdentifier: "mediaTextTVCell")
-        
-    }
-    @objc func textFieldTapped(_ textField:UITextField) {
-//        moreViewHide()
-    }
-    @objc func textFieldDidChange(_ textField: UITextField) {
-        self.bottomAudioView.isHidden  = true
 
-        if textField.text?.isEmpty == false {
-        DispatchQueue.main.async {
-            self.sendBtn.setImage(UIImage(named: "sendIcon", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), for: .normal)
-        }
-            sendBtn.removeTarget(self, action: #selector(micButtonTapped), for: .touchUpInside)
-            sendBtn.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
-        } else {
-            DispatchQueue.main.async {
-                self.sendBtn.setImage(UIImage(named: "mic", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), for: .normal)
-            }
-            sendBtn.removeTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
-            sendBtn.addTarget(self, action: #selector(micButtonTapped), for: .touchUpInside)
-        }
-    }
+    
+    
     @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
         if gestureRecognizer.state == .began {
             print("Long press detected")
@@ -265,34 +137,7 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         print("Mic button tapped")
 
     }
-    func startRecording() {
-        audioFilename = getDocumentsDirectory().appendingPathComponent("recording.m4a")
-
-        let settings = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-            AVSampleRateKey: 12000,
-            AVNumberOfChannelsKey: 1,
-            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-        ]
-
-        do {
-            audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
-            audioRecorder?.delegate = self
-            audioRecorder?.record()
-//            sendBtn.setTitle("Stop", for: .normal)
-//            sendBtn.removeTarget(self, action: #selector(micButtonTapped), for: .touchUpInside)
-//            sendBtn.addTarget(self, action: #selector(stopRecording), for: .touchUpInside)
-            
-            // Start the timer
-            recordingDuration = 0
-            audioTimeLbl.text = "00:00"
-            timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
-
-        } catch {
-            // Failed to start recording
-            finishRecording(success: false)
-        }
-    }
+    
     @objc func updateTimer() {
         recordingDuration += 1
         let minutes = Int(recordingDuration) / 60
@@ -362,20 +207,7 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
-    // AVAudioRecorderDelegate method
-  func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-      finishRecording(success: flag)
-  }
-  
-  // AVAudioPlayerDelegate methods (optional)
-  func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-      // Handle playback finished
-  }
-
-  func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
-      // Handle playback error
-      print("Audio playback error: \(String(describing: error?.localizedDescription))")
-  }
+    
     @IBAction func sendMsgAction(_ sender: UIButton) {
         if sendMsgTF.text?.isEmpty == false {
             sendButtonTapped()
@@ -516,7 +348,7 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
             print("perform action")
         }
     }
-    @objc private func fetchMessages() {
+    @objc func fetchMessages() {
 //        DispatchQueue.main.async {
 //            self.sendMsgTF.text = ""
 //            self.sendBtn.setImage(UIImage(named: "mic", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), for: .normal)
@@ -662,292 +494,40 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
     }
 
     // MARK: - UIImagePickerControllerDelegate Methods
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        imageFetched = nil
-        videoFetched = nil
-        if let mediaType = info[UIImagePickerController.InfoKey.mediaType] as? String {
-            if mediaType == "public.image" {
-                if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-                    imageFetched = selectedImage
-                    gotoPublishView()
-                }
-            } else if mediaType == "public.movie" {
-                if let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? URL {
-                    videoFetched = videoURL
-                    gotoPublishView()
-                }
-            }
-        }
-        // Dismiss the picker
-        picker.dismiss(animated: true, completion: nil)
-    }
     
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        // Dismiss the picker
-        picker.dismiss(animated: true, completion: nil)
-    }
 
     
 }
 
-//MARK: - CUSTOM DELEGATES
-extension ChatRoomVC : DelegatePublishMedia{
-    func didReceiveData(data: String) {
-        if data == "update"{
-            fetchMessages()
-        }else{
-            print("return from detail screen")
-        }
-    }
-}
 
-extension ChatRoomVC : DelegateChatMessageCell{
-    func longPressPlay(in cell: ChatMessageCell) {
-        longPressedFunc(cell: cell)
-    }
-}
-
-extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDelegate,ReplyText_TextCellDelegate,ReplyText_MediaCellDelegate,ReplyText_MediaTextCellDelegate,ReplyMedia_TextCellDelegate,ReplyMedia_MediaCellDelegate,ReplyMedia_MediaTextCellDelegate,ReplyMediaText_TextCellDelegate,ReplyMediaText_MediaCellDelegate,ReplyMediaText_MediaTextCellDelegate {
+extension ChatRoomVC{
     
     
-    // MARK: - UITableViewDelegate, UITableViewDataSource
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.messages.count
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let message = viewModel.messages[indexPath.row]
+}
+
+//MARK: - FUNCTIONS
+extension ChatRoomVC{
+    // MARK: - Delete Message
+    private func redactMessage() {
+        let roomID = UserDefaults.standard.string(forKey: "room_id")
+        let accessToken = UserDefaults.standard.string(forKey: "access_token")
+        let request = MessageRedactRequest(
+            accessToken: /accessToken,
+            roomID: /roomID,
+            eventID: /eventID,
+            body: "spam"
+        )
         
-        let mainContent = message.content
-        let relatesTo = mainContent?.relatesTo
-        let inReplyTo = relatesTo?.inReplyTo
-        let replyContent = inReplyTo?.content
-        let mainMsgType = mainContent?.msgtype
-        let mainBody = mainContent?.body
-        let replyMsgType = replyContent?.msgtype
-        let replyBody = replyContent?.body
-        
-        // Check for absence of m.relates_to and m.in_reply_to
-        if relatesTo == nil && inReplyTo == nil {
-            if mainMsgType == "m.text" {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "ChatMessageCell", for: indexPath) as! ChatMessageCell
-                cell.configure(with: message, currentUser: currentUser)
-                cell.overlayButton.tag = indexPath.row
-                cell.delegate = self
-                cell.selectionStyle = .none
-                return cell
-            } else if (mainMsgType == "m.image" || mainMsgType == "m.video" || mainMsgType == "m.audio") && ((mainBody?.isEmpty) == false) {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "mediaTextTVCell", for: indexPath) as! MediaTextTVCell
-                // Configure the cell
-                cell.mediaConfigure(with: message, currentUser: currentUser)
-                cell.playButton.tag = indexPath.row
-                cell.delegate = self
-                cell.selectionStyle = .none
-                return cell
-            } else if (mainMsgType == "m.image" || mainMsgType == "m.video" || mainMsgType == "m.audio") && ((mainBody?.isEmpty) == true) {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "MediaContentCell", for: indexPath) as! MediaContentCell
-                // Configure the cell
-                cell.mediaConfigure(with: message, currentUser: currentUser)
-                cell.playButton.tag = indexPath.row
-                cell.delegate = self
-                cell.selectionStyle = .none
-                return cell
-            }
-        }
-        // Determine the cell type
-        if replyMsgType == "m.text" && mainMsgType == "m.text" {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyText_TextCell", for: indexPath) as! ReplyText_TextCell
-            cell.configure(with: message, currentUser: currentUser)
-            cell.playButton.tag = indexPath.row
-            cell.delegate = self
-            cell.selectionStyle = .none
-            return cell
-        }
-        else if replyMsgType == "m.text" && mainMsgType == "m.image" && (mainBody?.isEmpty ?? false) {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyText_MediaCell", for: indexPath) as! ReplyText_MediaCell
-            cell.configure(with: message, currentUser: currentUser)
-            cell.playButton.tag = indexPath.row
-            cell.delegate = self
-            cell.selectionStyle = .none
-            return cell
-        }
-        else if replyMsgType == "m.text" && mainMsgType == "m.image" && ((mainBody?.isEmpty) == false) {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyText_MediaTextCell", for: indexPath) as! ReplyText_MediaTextCell
-            cell.configure(with: message, currentUser: currentUser)
-            cell.playButton.tag = indexPath.row
-            cell.delegate = self
-            cell.selectionStyle = .none
-            return cell
-        }
-        else if (replyMsgType == "m.image" || replyMsgType == "m.video" || replyMsgType == "m.audio") && (replyBody?.isEmpty ?? false) && mainMsgType == "m.text" && ((mainBody?.isEmpty) == false) {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyMedia_TextCell", for: indexPath) as! ReplyMedia_TextCell
-            cell.configure(with: message, currentUser: currentUser)
-            cell.playButton.tag = indexPath.row
-            cell.delegate = self
-            cell.selectionStyle = .none
-            return cell
-        } else if (replyMsgType == "m.image" || replyMsgType == "m.video" || replyMsgType == "m.audio") && (replyBody?.isEmpty ?? false) && mainMsgType == "m.image" && (mainBody?.isEmpty ?? false) {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyMedia_MediaCell", for: indexPath) as! ReplyMedia_MediaCell
-            cell.configure(with: message, currentUser: currentUser)
-            cell.playButton.tag = indexPath.row
-            cell.delegate = self
-            cell.selectionStyle = .none
-            return cell
-        } else if (replyMsgType == "m.image" || replyMsgType == "m.video" || replyMsgType == "m.audio") && (replyBody?.isEmpty ?? false) && mainMsgType == "m.image" && ((mainBody?.isEmpty) == false) {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyMedia_MediaTextCell", for: indexPath) as! ReplyMedia_MediaTextCell
-            cell.configure(with: message, currentUser: currentUser)
-            cell.playButton.tag = indexPath.row
-            cell.delegate = self
-            cell.selectionStyle = .none
-            return cell
-        } else if (replyMsgType == "m.image" || replyMsgType == "m.video" || replyMsgType == "m.audio") && ((replyBody?.isEmpty) == false) && mainMsgType == "m.text" && ((mainBody?.isEmpty) == false) {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyMediaText_TextCell", for: indexPath) as! ReplyMediaText_TextCell
-            cell.configure(with: message, currentUser: currentUser)
-            cell.playButton.tag = indexPath.row
-            cell.delegate = self
-            cell.selectionStyle = .none
-            return cell
-        } else if (replyMsgType == "m.image" || replyMsgType == "m.video" || replyMsgType == "m.audio") && ((replyBody?.isEmpty) == false) && mainMsgType == "m.image" && (mainBody?.isEmpty ?? false) {
-            // ReplyMediaText_MediaCell
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyMediaText_MediaCell", for: indexPath) as! ReplyMediaText_MediaCell
-            cell.configure(with: message, currentUser: currentUser)
-            cell.playButton.tag = indexPath.row
-            cell.delegate = self
-            cell.selectionStyle = .none
-            return cell
-        } else if (replyMsgType == "m.image" || replyMsgType == "m.video" || replyMsgType == "m.audio") && ((replyBody?.isEmpty) == false) && mainMsgType == "m.image" && ((mainBody?.isEmpty) == false) {
-            // ReplyMediaText_MediaTextCell
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ReplyMediaText_MediaTextCell", for: indexPath) as! ReplyMediaText_MediaTextCell
-            cell.configure(with: message, currentUser: currentUser)
-            cell.playButton.tag = indexPath.row
-            cell.delegate = self
-            cell.selectionStyle = .none
-            return cell
-        }
-        
-        return UITableViewCell()
-    }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let message = viewModel.messages[indexPath.row]
-        if let inReplyTo = message.content?.relatesTo?.inReplyTo {
-            return UITableView.automaticDimension
-        }
-        if let msgType = MessageType(rawValue: message.content?.msgtype ?? "") {
-            if (msgType == .image) || (msgType == .audio) || (msgType == .video) {
-                if message.content?.body == "" {
-                    return 200
+        viewModel.redactMessage(request: request) { result in
+            switch result {
+            case .success(let result):
+                DispatchQueue.main.async {
+                    self.fetchMessages()
                 }
-                return UITableView.automaticDimension
+            case .failure(let error):
+                print("Failed to redact message: \(error.localizedDescription)")
             }
         }
-        return UITableView.automaticDimension
-    }
-    
-    // MARK: - ChatMessageCellDelegate Methods
-    
-    
-    // MARK: - MediaTextTVCellDelegate Methods
-    func didTapPlayButton(in cell: MediaTextTVCell) {
-        previewcallfunc(cell: cell)
-    }
-    
-    func didLongPressPlayButton(in cell: MediaTextTVCell) {
-        longPressedFunc(cell: cell)
-    }
-    
-    // MARK: - MediaContentCellDelegate Methods
-    func didLongPressPlayButton(in cell: MediaContentCell) {
-        longPressedFunc(cell: cell)
-    }
-    
-    func didTapPlayButton(in cell: MediaContentCell) {
-        previewcallfunc(cell: cell)
-    }
-    
-    func didTapPlayButton(in cell: ReplyText_TextCell) {
-        print("Text only - no preview")
-    }
-    
-    func didLongPressPlayButton(in cell: ReplyText_TextCell) {
-        print("didLongPressPlayButton")
-        longPressedFunc(cell: cell)
-    }
-    
-    func didTapPlayButton(in cell: ReplyText_MediaCell) {
-        print("preview")
-        previewcallfunc(cell: cell)
-    }
-    
-    func didLongPressPlayButton(in cell: ReplyText_MediaCell) {
-        print("didLongPressPlayButton")
-        longPressedFunc(cell: cell)
-    }
-    
-    func didTapPlayButton(in cell: ReplyText_MediaTextCell) {
-        print("preview")
-        previewcallfunc(cell: cell)
-    }
-    
-    func didLongPressPlayButton(in cell: ReplyText_MediaTextCell) {
-        print("preview")
-        previewcallfunc(cell: cell)
-    }
-    
-    func didTapPlayButton(in cell: ReplyMedia_TextCell) {
-        print("Text only - no preview")
-    }
-    
-    func didLongPressPlayButton(in cell: ReplyMedia_TextCell) {
-        print("didLongPressPlayButton")
-        longPressedFunc(cell: cell)
-    }
-    
-    func didTapPlayButton(in cell: ReplyMedia_MediaCell) {
-        print("preview")
-        previewcallfunc(cell: cell)
-    }
-    
-    func didLongPressPlayButton(in cell: ReplyMedia_MediaCell) {
-        print("didLongPressPlayButton")
-        longPressedFunc(cell: cell)
-    }
-    
-    func didTapPlayButton(in cell: ReplyMedia_MediaTextCell) {
-        print("preview")
-        previewcallfunc(cell: cell)
-    }
-    
-    func didLongPressPlayButton(in cell: ReplyMedia_MediaTextCell) {
-        print("didLongPressPlayButton")
-        longPressedFunc(cell: cell)
-    }
-    
-    func didTapPlayButton(in cell: ReplyMediaText_TextCell) {
-        print("Text only - no preview")
-    }
-    
-    func didLongPressPlayButton(in cell: ReplyMediaText_TextCell) {
-        print("didLongPressPlayButton")
-        longPressedFunc(cell: cell)
-    }
-    
-    func didTapPlayButton(in cell: ReplyMediaText_MediaCell) {
-        print("preview")
-        previewcallfunc(cell: cell)
-    }
-    
-    func didLongPressPlayButton(in cell: ReplyMediaText_MediaCell) {
-        print("didLongPressPlayButton")
-        longPressedFunc(cell: cell)
-    }
-    
-    func didTapPlayButton(in cell: ReplyMediaText_MediaTextCell) {
-        print("preview")
-        previewcallfunc(cell: cell)
-    }
-    
-    func didLongPressPlayButton(in cell: ReplyMediaText_MediaTextCell) {
-        print("didLongPressPlayButton")
-        longPressedFunc(cell: cell)
     }
     
     func longPressedFunc(cell:UITableViewCell){
@@ -1071,33 +651,58 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
             print("perform action")
         }
     }
-    
-    // MARK: - Delete Chat API
-    private func redactMessage() {
-        let roomID = UserDefaults.standard.string(forKey: "room_id")
-        let accessToken = UserDefaults.standard.string(forKey: "access_token")
-        let request = MessageRedactRequest(
-            accessToken: /accessToken,
-            roomID: /roomID,
-            eventID: /eventID,
-            body: "spam"
-        )
-        
-        viewModel.redactMessage(request: request) { result in
-            switch result {
-            case .success(let result):
-                DispatchQueue.main.async {
-                    self.fetchMessages()
-                }
-            case .failure(let error):
-                print("Failed to redact message: \(error.localizedDescription)")
-            }
-        }
-    }
 }
 
-extension ChatRoomVC: DelegateTopView {
-    func back() {
-        self.navigationController?.popViewController(animated: true)
+//MARK: - SCROLL VIEW
+extension ChatRoomVC{
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        isUserScrolling = true
     }
+
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            isUserScrolling = false
+        }
+    }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        isUserScrolling = false
+    }
+
+}
+
+//MARK: - SETUP UI
+extension ChatRoomVC{
+    func setButtonTintColor(button: UIButton, color: UIColor) {
+        button.tintColor = color
+    }
+    
+    func setupUI() {
+        let startColor = UIColor.init(hex: "000000")
+        let endColor = UIColor.init(hex: "520093")
+        self.view.setGradientBackground(startColor: startColor, endColor: endColor)
+        let buttons = [sendBtn, plusBtn,cameraBtn]
+        for button in buttons {
+            setButtonTintColor(button: button!, color: Colors.Circles.violet)
+        }
+        setButtonTintColor(button: emojiBtn!, color: UIColor.init(hex: "979797"))
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        setupTextfield()
+        
+        backTFView.layer.cornerRadius = 24
+        backTFView.clipsToBounds = true
+        sendBtn.makeCircular()
+        chatRoomTableView.backgroundColor = .clear
+        
+        replyUserImgView.layer.cornerRadius = replyUserImgView.frame.size.width/2
+        replyUserImgView.clipsToBounds = true
+        
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        longPressRecognizer.minimumPressDuration = 1.0
+        sendBtn.addGestureRecognizer(longPressRecognizer)
+        setupAudio()
+    }
+    
+    
+    
 }

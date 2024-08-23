@@ -149,11 +149,36 @@ struct ChatMessageCellConstants {
     struct Gesture {
         static let longPressMinimumPressDuration: CFTimeInterval = 0.5
     }
+
+}
+
+
+enum MessageType: String {
+    case text = "m.text"
+    case audio = "m.audio"
+    case video = "m.video"
+    case image = "m.image"
+
+}
+
+struct Cell {
+    static let custom    = "CustomTableViewCell"
+    static let mediaText = "MediaTextTVCell"
     
-    struct MessageType {
-        static let text = "m.text"
-        static let audio = "m.audio"
-        static let video = "m.video"
-        static let image = "m.image"
-    }
+    static let message = "ChatMessageCell"
+    static let media = "MediaContentCell"
+    
+    
+    static let ReplyText_TextCell = "ReplyText_TextCell"
+    static let ReplyText_MediaCell = "ReplyText_MediaCell"
+    static let ReplyText_MediaTextCell = "ReplyText_MediaTextCell"
+    
+    static let ReplyMedia_TextCell = "ReplyMedia_TextCell"
+    static let ReplyMedia_MediaCell = "ReplyMedia_MediaCell"
+    static let ReplyMedia_MediaTextCell = "ReplyMedia_MediaTextCell"
+    
+    static let ReplyMediaText_TextCell = "ReplyMediaText_TextCell"
+    static let ReplyMediaText_MediaCell = "ReplyMediaText_MediaCell"
+    static let ReplyMediaText_MediaTextCell = "ReplyMediaText_MediaTextCell"
+    
 }

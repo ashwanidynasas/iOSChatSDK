@@ -5,24 +5,29 @@
 //  Created by Ashwani on 27/06/24.
 //
 
+//MARK: - MODULES
 import UIKit
 
+//MARK: - CLASS
 class ConnectionListVC: UIViewController {
     
+    //MARK: - OUTLETS
     @IBOutlet weak var listTableView:UITableView!
-    let tableCell = "CustomTableViewCell"
+    
+    //MARK: - PROPERTIES
     private var cListViewModel: ConnectionViewModel!
 
     var chatUserID:String!
     
+    //MARK: - VIEW CYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.backgroundColor = .white
         self.title = "Connection List"
 
-        let nib = UINib(nibName: tableCell, bundle: Bundle(for: CustomTableViewCell.self))
-        listTableView.register(nib, forCellReuseIdentifier: "customTableViewCell")
+        let nib = UINib(nibName: Cell.custom, bundle: Bundle(for: CustomTableViewCell.self))
+        listTableView.register(nib, forCellReuseIdentifier: Cell.custom)
         cListViewModel = ConnectionViewModel()
         cListViewModel.bindViewModelToController = {
             self.updateUI()
@@ -45,14 +50,14 @@ class ConnectionListVC: UIViewController {
     
 }
 
-//MARK: - Table Delegate & Datasource
-extension ConnectionListVC:UITableViewDelegate,UITableViewDataSource {
+//MARK: - UITABLEVIEW DELEGATES
+extension ConnectionListVC: UITableViewDelegate,UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cListViewModel.connections.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = listTableView.dequeueReusableCell(withIdentifier: "customTableViewCell", for: indexPath) as! CustomTableViewCell
+        let cell = listTableView.dequeueReusableCell(withIdentifier: Cell.custom, for: indexPath) as! CustomTableViewCell
         
         let connection = cListViewModel.connections[indexPath.row]
         cell.senderTextLabel.isHidden = true

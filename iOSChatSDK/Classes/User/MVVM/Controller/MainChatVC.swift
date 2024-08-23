@@ -13,7 +13,6 @@ public class MainChatVC: UIViewController {
 
     @IBOutlet weak var userChatTV:UITableView!
     
-    let tableCell = "CustomTableViewCell"
     private var viewModel = UserViewModel()
     public var tableView: UITableView!
     var jwt_Token:String!
@@ -35,8 +34,8 @@ public class MainChatVC: UIViewController {
         CacheManager.shared.shrinkCache(limit: 10 * 1024 * 1024)
 
         //Custom Cell register.
-        let nib = UINib(nibName: tableCell, bundle: Bundle(for: CustomTableViewCell.self))
-        userChatTV.register(nib, forCellReuseIdentifier: "customTableViewCell")
+        let nib = UINib(nibName: Cell.custom, bundle: Bundle(for: CustomTableViewCell.self))
+        userChatTV.register(nib, forCellReuseIdentifier: Cell.custom)
         
         viewModel.usersDidChange = { [weak self] in
             DispatchQueue.main.async {
@@ -105,7 +104,7 @@ extension MainChatVC: UITableViewDelegate,UITableViewDataSource{
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = userChatTV.dequeueReusableCell(withIdentifier: "customTableViewCell", for: indexPath) as! CustomTableViewCell
+        let cell = userChatTV.dequeueReusableCell(withIdentifier: Cell.custom, for: indexPath) as! CustomTableViewCell
         let user = viewModel.users[indexPath.row]
         cell.senderTextLabel?.text = user.username
         cell.selectionStyle = .none

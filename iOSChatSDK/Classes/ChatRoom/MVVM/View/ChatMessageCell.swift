@@ -9,21 +9,13 @@ class ChatMessageCell: UITableViewCell {
     private let readIndicatorImageView = UIImageView()
     private let messageImageView = UIImageView()
     let overlayButton = UIButton()
-    weak var delegate: DelegateChatMessageCell?
+    weak var delegate: DelegatePlay?
 
     private var leadingConstraint: NSLayoutConstraint!
     private var trailingConstraint: NSLayoutConstraint!
     private var minWidthConstraint: NSLayoutConstraint!
     private var maxWidthConstraint: NSLayoutConstraint!
     private var messageImageViewHeightConstraint: NSLayoutConstraint!
-
-    private enum MessageType: String {
-        case text = "m.text"
-        case audio = "m.audio"
-        case video = "m.video"
-        case image = "m.image"
-
-    }
 
     private struct Constants {
         static let bubbleCornerRadius: CGFloat = 20
@@ -96,7 +88,7 @@ class ChatMessageCell: UITableViewCell {
     }
     @objc private func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
-            delegate?.longPressPlay(in: self)
+            delegate?.didLongPressPlayButton(in: self)
         }
     }
     private func setupConstraints() {

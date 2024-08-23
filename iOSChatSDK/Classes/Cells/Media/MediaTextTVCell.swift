@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol MediaTextCellDelegate: AnyObject {
-    func didTapPlayButton(in cell: MediaTextTVCell)
-    func didLongPressPlayButton(in cell: MediaTextTVCell)
-}
 
 class MediaTextTVCell: UITableViewCell {
     

@@ -7,10 +7,7 @@
 
 import UIKit
 
-protocol MediaContentCellDelegate: AnyObject {
-    func didTapPlayButton(in cell: MediaContentCell)
-    func didLongPressPlayButton(in cell: MediaContentCell)
-}
+
 
 class MediaContentCell: UITableViewCell {
     private let bubbleBackgroundView = UIView()

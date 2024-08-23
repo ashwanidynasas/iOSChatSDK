@@ -8,10 +8,8 @@
 import UIKit
 import AVKit
 import AVFoundation
-protocol MediaFullVCDelegate: AnyObject {
-    func itemDeleteFromChat(_ didSendData: String)
-}
-class MediaFullVC: UIViewController, TopViewDelegate {
+
+class MediaFullVC: UIViewController {
     
     @IBOutlet weak var topView: CustomTopView!
     @IBOutlet weak var fullImgView:UIImageView!
@@ -146,9 +144,7 @@ class MediaFullVC: UIViewController, TopViewDelegate {
         self.view.setGradientBackground(startColor: UIColor.init(hex: "000000"), endColor: UIColor.init(hex: "520093"))
     }
     
-    func backButtonTapped() {
-        self.navigationController?.popViewController(animated: true)
-    }
+    
     
     @objc private func buttonTapped(_ sender: UIButton) {
         let tag = sender.tag
@@ -166,6 +162,12 @@ class MediaFullVC: UIViewController, TopViewDelegate {
             break
             
         }
+    }
+}
+
+extension MediaFullVC : DelegateTopView{
+    func back() {
+        self.navigationController?.popViewController(animated: true)
     }
 }
 

@@ -147,6 +147,7 @@
 		91E172D82C77235900427F88 /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E172D72C77235900427F88 /* ChatService.swift */; };
 		91E172DA2C7725BA00427F88 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E172D92C7725BA00427F88 /* Logger.swift */; };
 		91E172DC2C7728BE00427F88 /* Threads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E172DB2C7728BE00427F88 /* Threads.swift */; };
+		91E172DE2C785DD600427F88 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E172DD2C785DD600427F88 /* Protocols.swift */; };
 		937D6966FD44A9A799ED6574EC78CC4F /* UIImage+Transform.h in Headers */ = {isa = PBXBuildFile; fileRef = 77D302E8294799802C8D1E8F199E4738 /* UIImage+Transform.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		99B86297693E8F33F58D899CF36E5788 /* ChatReplyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1BDD9FB01901442DCFC88157BF762D /* ChatReplyViewModel.swift */; };
 		9AF09A8AF1301B3B97DA1E5B76A19645 /* SDImageTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E9A608DCF04FD972479EBF6958081EB /* SDImageTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -422,6 +423,7 @@
 		91E172D72C77235900427F88 /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
 		91E172D92C7725BA00427F88 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		91E172DB2C7728BE00427F88 /* Threads.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Threads.swift; sourceTree = "<group>"; };
+		91E172DD2C785DD600427F88 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		9205E8EDC209367A98C743C2D4ECAF19 /* SDWebImageDownloader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageDownloader.h; path = SDWebImage/Core/SDWebImageDownloader.h; sourceTree = "<group>"; };
 		92733644440AF5671140EF6182FC6899 /* SDImageAPNGCoder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDImageAPNGCoder.m; path = SDWebImage/Core/SDImageAPNGCoder.m; sourceTree = "<group>"; };
 		9279638FB531D93EBEA05BBF370853EC /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -647,6 +649,7 @@
 				82B14A91DD9636D4B8C268262C0379AB /* Unwrapping.swift */,
 				823F4E47728D10A751AAE58BF929D240 /* CircleObject.swift */,
 				51F0A992BAA9CE4D404CC90275012A8A /* CustomTopView.xib */,
+				91E172DD2C785DD600427F88 /* Protocols.swift */,
 			);
 			name = Helpers;
 			path = iOSChatSDK/Classes/Helpers;
@@ -1715,6 +1718,7 @@
 				52AE5BAD235C2655823C18087A78833E /* CustomTopView.xib in Sources */,
 				4D10B6342C75CC7A0006563B /* ReplyMedia_MediaTextCell.swift in Sources */,
 				2BAFE0E1ED8EEC6F0D7375383C0C2608 /* DataComponent.storyboard in Sources */,
+				91E172DE2C785DD600427F88 /* Protocols.swift in Sources */,
 				91E172D42C77219200427F88 /* APIError.swift in Sources */,
 				4D10B6322C75CC7A0006563B /* ReplyMediaText_TextCell.swift in Sources */,
 				91E172DC2C7728BE00427F88 /* Threads.swift in Sources */,

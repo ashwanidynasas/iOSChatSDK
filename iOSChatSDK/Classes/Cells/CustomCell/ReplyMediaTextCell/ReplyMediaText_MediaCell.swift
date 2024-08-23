@@ -8,10 +8,7 @@
 import Foundation
 import SDWebImage
 
-protocol ReplyMediaText_MediaCellDelegate: AnyObject {
-    func didTapPlayButton(in cell: ReplyMediaText_MediaCell)
-    func didLongPressPlayButton(in cell: ReplyMediaText_MediaCell)
-}
+
 
 class ReplyMediaText_MediaCell: UITableViewCell {
     private let bubbleBackgroundView = UIView()

@@ -7,9 +7,6 @@
 
 import UIKit
 
-protocol TopViewDelegate: AnyObject {
-    func backButtonTapped()
-}
 
 class CustomTopView: UIView {
 
@@ -18,7 +15,7 @@ class CustomTopView: UIView {
      @IBOutlet weak var titleLabel: UILabel!
      @IBOutlet weak var searchButton: UIButton!
     
-    weak var delegate: TopViewDelegate?
+    weak var delegate : DelegateTopView?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,7 +23,7 @@ class CustomTopView: UIView {
     }
     
     @IBAction func backActionBtn(_ sender: UIButton) {
-        delegate?.backButtonTapped()
+        delegate?.back()
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)

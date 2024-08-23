@@ -1,9 +1,7 @@
 import UIKit
 import SDWebImage
 import AVFoundation
-protocol ChatMessageCellDelegate: AnyObject {
-    func didLongPressPlayButton(in cell: ChatMessageCell)
-}
+
 class ChatMessageCell: UITableViewCell {
     private let bubbleBackgroundView = UIView()
     private let messageLabel = UILabel()
@@ -11,7 +9,7 @@ class ChatMessageCell: UITableViewCell {
     private let readIndicatorImageView = UIImageView()
     private let messageImageView = UIImageView()
     let overlayButton = UIButton()
-    weak var delegate: ChatMessageCellDelegate?
+    weak var delegate: DelegateChatMessageCell?
 
     private var leadingConstraint: NSLayoutConstraint!
     private var trailingConstraint: NSLayoutConstraint!
@@ -98,7 +96,7 @@ class ChatMessageCell: UITableViewCell {
     }
     @objc private func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
-            delegate?.didLongPressPlayButton(in: self)
+            delegate?.longPressPlay(in: self)
         }
     }
     private func setupConstraints() {

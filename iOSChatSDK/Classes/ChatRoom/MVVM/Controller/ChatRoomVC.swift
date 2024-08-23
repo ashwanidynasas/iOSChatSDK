@@ -8,7 +8,7 @@
 import UIKit
 import AVFAudio
 
-class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate,PublishMediaDelegate,AVAudioRecorderDelegate, AVAudioPlayerDelegate, MediaFullVCDelegate, MediaContentCellDelegate {
+class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate ,AVAudioRecorderDelegate, AVAudioPlayerDelegate, MediaFullVCDelegate, MediaContentCellDelegate {
 
     @IBOutlet weak var sendBtn: UIButton!
     @IBOutlet weak var plusBtn: UIButton!
@@ -618,7 +618,7 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         viewController.currentUser = currentUser
         viewController.videoFetched = videoFetched
         viewController.imageFetched = imageFetched
-        viewController.publishDelegate = self
+        viewController.delegate = self
         viewController.isReply = isReply
         viewController.username = self.replyUserName.text
         viewController.userDesc = self.replyUserDesc.text
@@ -682,14 +682,6 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
         picker.dismiss(animated: true, completion: nil)
     }
     
-    func didReceiveData(data: String) {
-        if data == "update"{
-            fetchMessages()
-        }else{
-            print("return from detail screen")
-        }
-    }
-    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         // Dismiss the picker
         picker.dismiss(animated: true, completion: nil)
@@ -698,7 +690,24 @@ class ChatRoomVC: UIViewController,UITextFieldDelegate,UIImagePickerControllerDe
     
 }
 
-extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDelegate,ChatMessageCellDelegate,ReplyText_TextCellDelegate,ReplyText_MediaCellDelegate,ReplyText_MediaTextCellDelegate,ReplyMedia_TextCellDelegate,ReplyMedia_MediaCellDelegate,ReplyMedia_MediaTextCellDelegate,ReplyMediaText_TextCellDelegate,ReplyMediaText_MediaCellDelegate,ReplyMediaText_MediaTextCellDelegate {
+//MARK: - CUSTOM DELEGATES
+extension ChatRoomVC : DelegatePublishMedia{
+    func didReceiveData(data: String) {
+        if data == "update"{
+            fetchMessages()
+        }else{
+            print("return from detail screen")
+        }
+    }
+}
+
+extension ChatRoomVC : DelegateChatMessageCell{
+    func longPressPlay(in cell: ChatMessageCell) {
+        longPressedFunc(cell: cell)
+    }
+}
+
+extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDelegate,ReplyText_TextCellDelegate,ReplyText_MediaCellDelegate,ReplyText_MediaTextCellDelegate,ReplyMedia_TextCellDelegate,ReplyMedia_MediaCellDelegate,ReplyMedia_MediaTextCellDelegate,ReplyMediaText_TextCellDelegate,ReplyMediaText_MediaCellDelegate,ReplyMediaText_MediaTextCellDelegate {
     
     
     // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -834,10 +843,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
     }
     
     // MARK: - ChatMessageCellDelegate Methods
-    func didLongPressPlayButton(in cell: ChatMessageCell) {
-        print("long pressed")
-        longPressedFunc(cell: cell)
-    }
+    
     
     // MARK: - MediaTextTVCellDelegate Methods
     func didTapPlayButton(in cell: MediaTextTVCell) {
@@ -1090,8 +1096,8 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource,MediaTextCellDe
     }
 }
 
-extension ChatRoomVC: TopViewDelegate {
-    func backButtonTapped() {
+extension ChatRoomVC: DelegateTopView {
+    func back() {
         self.navigationController?.popViewController(animated: true)
     }
 }

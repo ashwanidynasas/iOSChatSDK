@@ -10,11 +10,7 @@ import UIKit
 import AVKit
 import AVFoundation
 
-protocol PublishMediaDelegate: AnyObject {
-    func didReceiveData(data: String)
-}
-
-class PublishMediaVC: UIViewController,UITextFieldDelegate,TopViewDelegate {
+class PublishMediaVC: UIViewController,UITextFieldDelegate {
     
     @IBOutlet weak var topView: CustomTopView!
     @IBOutlet weak var fullImgView:UIImageView!
@@ -31,7 +27,7 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate,TopViewDelegate {
     @IBOutlet weak var replyBottomView:UIView!
     @IBOutlet weak var replyBottomViewHeight: NSLayoutConstraint!
 
-    weak var publishDelegate: PublishMediaDelegate?
+    weak var delegate: DelegatePublishMedia?
     
     var currentUser: String!
     var imageFetched:UIImage! = nil
@@ -162,10 +158,7 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate,TopViewDelegate {
         self.view.setGradientBackground(startColor: UIColor.init(hex: "000000"), endColor: UIColor.init(hex: "520093"))
     }
     
-    func backButtonTapped() {
-        publishDelegate?.didReceiveData(data: "back")
-        self.navigationController?.popViewController(animated: true)
-    }
+    
     
     @IBAction func sendAction(_ sender: UIButton) {
         let room_id = UserDefaults.standard.string(forKey: "room_id")
@@ -179,7 +172,7 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate,TopViewDelegate {
                     // Update UI or perform other actions on success
                     DispatchQueue.global().async {
                         DispatchQueue.main.async {
-                            self.publishDelegate?.didReceiveData(data: "update")
+                            self.delegate?.didReceiveData(data: "update")
                             self.navigationController?.popViewController(animated: true)
                         }
                     }
@@ -201,7 +194,7 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate,TopViewDelegate {
 
                         DispatchQueue.global().async {
                             DispatchQueue.main.async {
-                                self.publishDelegate?.didReceiveData(data: "update")
+                                self.delegate?.didReceiveData(data: "update")
                                 self.navigationController?.popViewController(animated: true)
                             }
                         }
@@ -219,7 +212,7 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate,TopViewDelegate {
                         // Update UI or perform other actions on success
                         DispatchQueue.global().async {
                             DispatchQueue.main.async {
-                                self.publishDelegate?.didReceiveData(data: "update")
+                                self.delegate?.didReceiveData(data: "update")
                                 self.navigationController?.popViewController(animated: true)
                             }
                         }
@@ -232,6 +225,16 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate,TopViewDelegate {
     }
     
 }
+
+//MARK: - CUSTOM DELEGATES
+extension PublishMediaVC : DelegateTopView{
+    func back() {
+        delegate?.didReceiveData(data: "back")
+        self.navigationController?.popViewController(animated: true)
+    }
+}
+
+
 class VideoPlayerContainerView: UIView {
     var playerViewController: AVPlayerViewController?
     

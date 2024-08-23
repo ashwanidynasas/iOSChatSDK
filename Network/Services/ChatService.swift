@@ -40,9 +40,9 @@ class ChatService: GenericClient {
     }
     
     //MARK: - list connections
-    func listConnections(showloader: Bool = false, 
-                          parameters: FetchConnectionsParameter,
-                          completion: @escaping (Result<ConnectionResponse?, APIError>, [AnyHashable : Any]?) -> ()) {
+    func listConnections(showloader: Bool = false,
+                         parameters: FetchConnectionsParameter,
+                         completion: @escaping (Result<ConnectionResponse?, APIError>, [AnyHashable : Any]?) -> ()) {
         self.showLoader = showloader
         guard let request = ChatServiceEndPoint.listConnecttions.postRequest(parameters: parameters, headers: []) else {
             completion(.failure(.invalidRequestURL), nil)
@@ -55,9 +55,9 @@ class ChatService: GenericClient {
     }
     
     func getMessages(showloader: Bool = false,
-                          roomId: String,
+                     roomId: String,
                      accessToken: String,
-                          completion: @escaping (Result<MessageResponse?, APIError>, [AnyHashable : Any]?) -> ()) {
+                     completion: @escaping (Result<MessageResponse?, APIError>, [AnyHashable : Any]?) -> ()) {
         self.showLoader = showloader
         let headers = [HTTPHeader.authorization(accessToken)]
         guard let request = ChatServiceEndPoint.getMessages(roomId: roomId).getRequest(parameters: nil, headers: headers) else {
@@ -92,7 +92,7 @@ class ChatService: GenericClient {
     
     func redactMessage(showloader: Bool = false,
                        request: MessageRedactRequest,
-                     completion: @escaping (Result<ChatMessageResponse?, APIError>, [AnyHashable : Any]?) -> ()) {
+                       completion: @escaping (Result<ChatMessageResponse?, APIError>, [AnyHashable : Any]?) -> ()) {
         
         self.showLoader = showloader
         let headers = [HTTPHeader.authorization(request.accessToken)]
@@ -105,16 +105,7 @@ class ChatService: GenericClient {
             return results
         }, completion: completion)
     }
-    
-    
 }
-
-
-
-
-
-
-
 
 
 

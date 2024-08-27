@@ -156,6 +156,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
         
         return UITableView.automaticDimension
     }
+    
 }
 
 

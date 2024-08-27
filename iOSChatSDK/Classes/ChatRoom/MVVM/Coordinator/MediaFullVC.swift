@@ -5,29 +5,37 @@
 //  Created by Ashwani on 09/07/24.
 //
 
+//MARK: - MODULES
 import UIKit
 import AVKit
 import AVFoundation
 
+//MARK: - CLASS
 class MediaFullVC: UIViewController {
     
+    //MARK: - OUTLETS
     @IBOutlet weak var topView: CustomTopView!
     @IBOutlet weak var fullImgView:UIImageView!
     @IBOutlet weak var bottomView:UIView!
     @IBOutlet weak var videoPlayerBackView: UIView!
+    
+    //MARK: - VIEWMODEL
     private var deleteViewModel = MessageViewModel()
     
-    var currentUser: String! = ""
-    var imageFetched:UIImage! = nil
-    var videoFetched:URL!
-    var imageSelectURL:String! = ""
-    var s3MediaURL:String! = ""
+    //MARK: - PROPERTIES
+    var currentUser: String?
+    var imageFetched: UIImage?
+    var videoFetched: URL?
+    var imageSelectURL :String?
+    var s3MediaURL :String?
     var mediaType:String! = ""
     var videoPlayerContainerView: CustomVideoPlayerContainerView!
     var player: AVPlayer?
-    var eventID: String! = ""
+    var eventID: String?
+    
     weak var delegate: DelegateMediaFullVC?
     
+    //MARK: - VIEW CYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCustomBottomView()
@@ -35,7 +43,7 @@ class MediaFullVC: UIViewController {
         setupUI()
         topView.searchButton.isHidden = true
         videoPlayerBackView.isHidden = true
-        if let videoURL = imageSelectURL.modifiedString.mediaURL {
+        if let videoURL = imageSelectURL?.modifiedString.mediaURL {
             if mediaType == "m.image" {
                 self.fullImgView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: MediaFullVC.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
             }else{
@@ -44,6 +52,12 @@ class MediaFullVC: UIViewController {
             }
         }
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
     
     func setupVideoPlayerContainerView() {
         videoPlayerContainerView = CustomVideoPlayerContainerView(frame: .zero)
@@ -57,8 +71,6 @@ class MediaFullVC: UIViewController {
             videoPlayerContainerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
     }
-    
-    
     
     private func redactMessage() {
         let roomID = UserDefaults.standard.string(forKey: "room_id")
@@ -79,7 +91,6 @@ class MediaFullVC: UIViewController {
             
             switch result {
             case .success(let value):
-                //print("delete response message ----->>>> \(message)")
                 DispatchQueue.main.async {
                     self?.delegate?.itemDeleteFromChat("deleteItem")
                     self?.navigationController?.popViewController(animated: true)
@@ -102,13 +113,9 @@ class MediaFullVC: UIViewController {
         self.addChild(avPlayerController)
         self.videoPlayerBackView.addSubview(avPlayerController.view);
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
-    }
     
     func setupUI(){
-        topView.titleLabel.text = currentUser
+        topView.titleLabel.text = /currentUser
         topView.delegate = self
         self.view.setGradientBackground(startColor: UIColor.init(hex: "000000"), endColor: UIColor.init(hex: "520093"))
     }
@@ -119,14 +126,6 @@ class MediaFullVC: UIViewController {
         let tag = sender.tag
         print("Button with tag \(tag) tapped")
         switch tag {
-        case 1:
-            print("Action for Button 1")
-        case 2:
-            print("Action for Button 2")
-        case 3:
-            print("Action for Button 3")
-        case 4:
-            print("Action for Button 4")
         default:
             break
             
@@ -134,12 +133,36 @@ class MediaFullVC: UIViewController {
     }
 }
 
+//MARK: - CUSTOM DELEGATES
 extension MediaFullVC : DelegateTopView{
     func back() {
         self.navigationController?.popViewController(animated: true)
     }
 }
 
+
+//MARK: - BOTTOM VIEW
+extension MediaFullVC{
+    private func setupCustomBottomView() {
+        bottomView.backgroundColor = .clear
+        let customTabBar = CustomTabBar(items: [.save , .delete , .forward , .pin])
+        customTabBar.translatesAutoresizingMaskIntoConstraints = false
+        bottomView.addSubview(customTabBar)
+        customTabBar.didSelectTab = { tabIndex in
+            switch tabIndex {
+            case Item.delete.ordinal():
+                self.redactMessage()
+            default:
+                break
+            }
+        }
+    }
+}
+
+
+
+
+//MARK: - VIDEO PLAYER VIEW
 class CustomVideoPlayerContainerView: UIView {
     var playerViewController: AVPlayerViewController?
     
@@ -170,26 +193,6 @@ class CustomVideoPlayerContainerView: UIView {
         }
         set {
             playerViewController?.player = newValue
-        }
-    }
-}
-
-
-//MARK: - BOTTOM VIEW
-extension MediaFullVC{
-    private func setupCustomBottomView() {
-        bottomView.backgroundColor = .clear
-        let customTabBar = CustomTabBar(items: [.save , .delete , .forward , .pin])
-        customTabBar.translatesAutoresizingMaskIntoConstraints = false
-        bottomView.addSubview(customTabBar)
-        customTabBar.didSelectTab = { tabIndex in
-            switch tabIndex {
-            case Item.delete.ordinal():
-                self.redactMessage()
-            default:
-                break
-                
-            }
         }
     }
 }

@@ -46,10 +46,10 @@ class CustomTabBarButton: UIButton {
     
     init(image: UIImage?) {
         super.init(frame: .zero)
-
+        
         overlapButton.setImage(image, for: .normal)
         addSubview(imageBackView)
-
+        
         NSLayoutConstraint.activate([
             imageBackView.topAnchor.constraint(equalTo: self.topAnchor),
             imageBackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
@@ -58,22 +58,22 @@ class CustomTabBarButton: UIButton {
         ])
         
         imageBackView.addSubview(buttonImageView)
-
-            NSLayoutConstraint.activate([
-                buttonImageView.centerXAnchor.constraint(equalTo: imageBackView.centerXAnchor),
-                buttonImageView.centerYAnchor.constraint(equalTo: imageBackView.centerYAnchor),
-                buttonImageView.widthAnchor.constraint(equalToConstant: 20),
-                buttonImageView.heightAnchor.constraint(equalToConstant: 20)
-            ])
-            
-            addSubview(buttonTitleLabel)
-            
-            NSLayoutConstraint.activate([
-                buttonTitleLabel.topAnchor.constraint(equalTo: imageBackView.bottomAnchor, constant: 5),
-                buttonTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant:4),
-                buttonTitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant:-4),
-                buttonTitleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant:-4)
-            ])
+        
+        NSLayoutConstraint.activate([
+            buttonImageView.centerXAnchor.constraint(equalTo: imageBackView.centerXAnchor),
+            buttonImageView.centerYAnchor.constraint(equalTo: imageBackView.centerYAnchor),
+            buttonImageView.widthAnchor.constraint(equalToConstant: 20),
+            buttonImageView.heightAnchor.constraint(equalToConstant: 20)
+        ])
+        
+        addSubview(buttonTitleLabel)
+        
+        NSLayoutConstraint.activate([
+            buttonTitleLabel.topAnchor.constraint(equalTo: imageBackView.bottomAnchor, constant: 5),
+            buttonTitleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor,constant:4),
+            buttonTitleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor,constant:-4),
+            buttonTitleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor,constant:-4)
+        ])
         
         addSubview(overlapButton)
         NSLayoutConstraint.activate([
@@ -83,9 +83,9 @@ class CustomTabBarButton: UIButton {
             overlapButton.heightAnchor.constraint(equalToConstant: 40)
         ])
         overlapButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-            
-        }
-
+        
+    }
+    
     func setTitle(_ title: String) {
         buttonTitleLabel.text = title
     }
@@ -96,7 +96,7 @@ class CustomTabBarButton: UIButton {
     @objc private func buttonTapped() {
         tapAction?()
     }
-      
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -124,17 +124,17 @@ class CustomTabBar: UIView {
     private var items : [Item]
     private var buttons: [CustomTabBarButton] = []
     var didSelectTab: ((Int) -> Void)?
-
+    
     init(items: [Item]) {
         self.items = items
         super.init(frame: .zero)
         setupView()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func setupView() {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -148,9 +148,12 @@ class CustomTabBar: UIView {
             button.setButtonTint(item.color)
             button.tag = index
             button.tapAction = { [weak self] in
-                self?.handleButtonTap(index: index)
+                guard let self = self else { return }
+                for (idx, button) in self.buttons.enumerated() {
+                    button.isSelected = idx == index
+                }
+                self.didSelectTab?(item.ordinal())
             }
-//            button.tintColor = .green
             buttons.append(button)
             stackView.addArrangedSubview(button)
         }
@@ -173,13 +176,7 @@ class CustomTabBar: UIView {
             ])
         }
     }
-    private func handleButtonTap(index: Int) {
-           for button in buttons {
-               button.isSelected = false
-           }
-           buttons[index].isSelected = true
-           didSelectTab?(index)
-       }
+
 }
 
 enum Item : CaseIterable{
@@ -244,4 +241,5 @@ enum Item : CaseIterable{
         default         : return .white
         }
     }
+ 
 }

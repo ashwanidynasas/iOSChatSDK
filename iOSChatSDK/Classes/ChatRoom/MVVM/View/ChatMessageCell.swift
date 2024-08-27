@@ -234,11 +234,6 @@ class ChatMessageCell: UITableViewCell {
         }
     }
                                                   
-                                                  
-                                                  
-                                                  
-                                                  
-                                                  
     private func applyBubbleShape(isCurrentUser: Bool) {
         bubbleBackgroundView.layer.cornerRadius = 12
         if isCurrentUser {

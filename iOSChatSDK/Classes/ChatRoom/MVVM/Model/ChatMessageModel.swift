@@ -49,6 +49,46 @@ struct Messages: Codable {
         case userId = "user_id"
         case age
     }
+    
+    var isNotReply : Bool{
+        return content?.relatesTo == nil && content?.relatesTo?.inReplyTo == nil
+    }
+    
+    var chatType : ChatType{
+        if isNotReply{
+            if content?.msgtype == MessageType.text{
+                return .text
+            }else{ //audio, video , image
+                return /content?.body == "" ? .media : .mediaText
+            }
+        }else{
+            
+            let replyType = content?.relatesTo?.inReplyTo?.content?.msgtype
+            let replybody = content?.relatesTo?.inReplyTo?.content?.body
+            
+            if content?.msgtype == MessageType.text{
+                if replyType == MessageType.text{
+                    return .textToText
+                }else{
+                    return /replybody == "" ? .mediaToText : .mediaTextToText
+                }
+            }else{
+                if /content?.body == ""{
+                    if replyType == MessageType.text{
+                        return .textToMedia
+                    }else{
+                        return /replybody == "" ? .mediaToMedia : .mediaTextToMedia
+                    }
+                }else{
+                    if replyType == MessageType.text{
+                        return .textToMediaText
+                    }else{
+                        return /replybody == "" ? .mediaToMediaText : .mediaTextToMediaText
+                    }
+                }
+            }
+        }
+    }
 }
 
 struct MessageContent: Codable {
@@ -73,6 +113,8 @@ struct MessageContent: Codable {
         case relatesTo = "m.relates_to"
         case info
     }
+    
+    
 }
 
 struct RelatesTo: Codable {
@@ -129,3 +171,23 @@ struct SendMediaResponse: Codable {
     }
 }
 
+
+
+enum ChatType {
+    
+    case text
+    case media
+    case mediaText
+    
+    case textToText
+    case textToMedia
+    case textToMediaText
+    
+    case mediaToText
+    case mediaToMedia
+    case mediaToMediaText
+    
+    case mediaTextToText
+    case mediaTextToMedia
+    case mediaTextToMediaText
+}

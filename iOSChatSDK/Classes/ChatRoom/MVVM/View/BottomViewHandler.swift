@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 class BottomViewHandler {
+    
     let replyBottomView: UIView
     let backTFView: UIView
     let morebottomView: UIView

@@ -50,14 +50,14 @@ class MediaTextTVCell: UITableViewCell {
             trailing.constant = 160
             readIndicatorImageView.isHidden = true
         }
-        if message.content?.msgtype == "m.image" {
+        if message.content?.msgtype == MessageType.image {
             playButton.setImage(nil, for: .normal)
             if let imageUrlString = message.content?.url, let imageUrl = imageUrlString.modifiedString.mediaURL {
                 // Load the image from the URL
                 self.messageImageView.sd_setImage(with: imageUrl, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
                 
             }
-        }else if message.content?.msgtype == "m.video" {
+        }else if message.content?.msgtype == MessageType.video {
             if let videoURL = message.content?.S3thumbnailUrl {
                 fetchThumbnail(videoURL)
             }else{
@@ -67,7 +67,7 @@ class MediaTextTVCell: UITableViewCell {
             }
             self.playButton.setImage(UIImage(named: "PlayIcon", in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil), for: .normal)
 
-        }else if message.content?.msgtype == "m.audio" {
+        }else if message.content?.msgtype == MessageType.audio {
             let imageView = UIImageView(image: UIImage(named: "userPlaceholder", in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil)) // Replace with your image names
             self.messageImageView = imageView
             self.playButton.setImage(UIImage(named: "PlayIcon", in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil), for: .normal)

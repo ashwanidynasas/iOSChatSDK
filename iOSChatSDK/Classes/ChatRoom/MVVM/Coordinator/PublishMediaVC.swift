@@ -167,7 +167,7 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate {
             
             if isReply {
                 let body = self.sendMsgTF.text
-                let msgType = "m.video"
+                let msgType = MessageType.video
                 let mimeType = "video/mp4"
                 let fileName = "upload.mp4"
                 
@@ -215,7 +215,7 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate {
         }else{
             if isReply {
                 let body = self.sendMsgTF.text
-                let msgType = "m.image"
+                let msgType = MessageType.image.rawValue
                 let mimeType = "image/jpeg"
                 let fileName = "a1.jpg"
                 

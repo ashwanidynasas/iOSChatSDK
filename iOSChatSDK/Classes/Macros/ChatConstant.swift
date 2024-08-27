@@ -153,11 +153,11 @@ struct ChatMessageCellConstants {
 }
 
 
-enum MessageType: String {
-    case text = "m.text"
-    case audio = "m.audio"
-    case video = "m.video"
-    case image = "m.image"
+struct MessageType {
+    static let text = "m.text"
+    static let audio = "m.audio"
+    static let video = "m.video"
+    static let image = "m.image"
 
 }
 

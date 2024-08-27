@@ -54,14 +54,14 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
         
         // Check for absence of m.relates_to and m.in_reply_to
         if relatesTo == nil && inReplyTo == nil {
-            if mainMsgType == "m.text" {
+            if mainMsgType == MessageType.text {
                 let cell = tableView.dequeueReusableCell(withIdentifier: Cell.message, for: indexPath) as! ChatMessageCell
                 cell.configure(with: message, currentUser: currentUser)
                 cell.overlayButton.tag = indexPath.row
                 cell.delegate = self
                 cell.selectionStyle = .none
                 return cell
-            } else if (mainMsgType == "m.image" || mainMsgType == "m.video" || mainMsgType == "m.audio") && ((mainBody?.isEmpty) == false) {
+            } else if (mainMsgType == MessageType.image || mainMsgType == MessageType.video || mainMsgType == MessageType.audio) && ((mainBody?.isEmpty) == false) {
                 let cell = tableView.dequeueReusableCell(withIdentifier: Cell.mediaText, for: indexPath) as! MediaTextTVCell
                 // Configure the cell
                 cell.mediaConfigure(with: message, currentUser: currentUser)
@@ -69,7 +69,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
                 cell.delegate = self
                 cell.selectionStyle = .none
                 return cell
-            } else if (mainMsgType == "m.image" || mainMsgType == "m.video" || mainMsgType == "m.audio") && ((mainBody?.isEmpty) == true) {
+            } else if (mainMsgType == MessageType.image || mainMsgType == MessageType.video || mainMsgType == MessageType.audio) && ((mainBody?.isEmpty) == true) {
                 let cell = tableView.dequeueReusableCell(withIdentifier: Cell.media, for: indexPath) as! MediaContentCell
                 // Configure the cell
                 cell.mediaConfigure(with: message, currentUser: currentUser)
@@ -80,7 +80,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
             }
         }
         // Determine the cell type
-        if replyMsgType == "m.text" && mainMsgType == "m.text" {
+        if replyMsgType == MessageType.text && mainMsgType == MessageType.text {
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.ReplyText_TextCell, for: indexPath) as! ReplyText_TextCell
             cell.configure(with: message, currentUser: currentUser)
             cell.playButton.tag = indexPath.row
@@ -88,7 +88,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
             return cell
         }
-        else if replyMsgType == "m.text" && mainMsgType == "m.image" && (mainBody?.isEmpty ?? false) {
+        else if replyMsgType == MessageType.text && mainMsgType == MessageType.image && (mainBody?.isEmpty ?? false) {
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.ReplyText_MediaCell, for: indexPath) as! ReplyText_MediaCell
             cell.configure(with: message, currentUser: currentUser)
             cell.playButton.tag = indexPath.row
@@ -96,7 +96,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
             return cell
         }
-        else if replyMsgType == "m.text" && mainMsgType == "m.image" && ((mainBody?.isEmpty) == false) {
+        else if replyMsgType == MessageType.text && mainMsgType == MessageType.image && ((mainBody?.isEmpty) == false) {
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.ReplyText_MediaTextCell, for: indexPath) as! ReplyText_MediaTextCell
             cell.configure(with: message, currentUser: currentUser)
             cell.playButton.tag = indexPath.row
@@ -104,35 +104,35 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
             cell.selectionStyle = .none
             return cell
         }
-        else if (replyMsgType == "m.image" || replyMsgType == "m.video" || replyMsgType == "m.audio") && (replyBody?.isEmpty ?? false) && mainMsgType == "m.text" && ((mainBody?.isEmpty) == false) {
+        else if (replyMsgType == MessageType.image || replyMsgType == MessageType.video || replyMsgType == MessageType.audio) && (replyBody?.isEmpty ?? false) && mainMsgType == MessageType.text && ((mainBody?.isEmpty) == false) {
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.ReplyMedia_TextCell, for: indexPath) as! ReplyMedia_TextCell
             cell.configure(with: message, currentUser: currentUser)
             cell.playButton.tag = indexPath.row
             cell.delegate = self
             cell.selectionStyle = .none
             return cell
-        } else if (replyMsgType == "m.image" || replyMsgType == "m.video" || replyMsgType == "m.audio") && (replyBody?.isEmpty ?? false) && mainMsgType == "m.image" && (mainBody?.isEmpty ?? false) {
+        } else if (replyMsgType == MessageType.image || replyMsgType == MessageType.video || replyMsgType == MessageType.audio) && (replyBody?.isEmpty ?? false) && mainMsgType == MessageType.image && (mainBody?.isEmpty ?? false) {
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.ReplyMedia_MediaCell, for: indexPath) as! ReplyMedia_MediaCell
             cell.configure(with: message, currentUser: currentUser)
             cell.playButton.tag = indexPath.row
             cell.delegate = self
             cell.selectionStyle = .none
             return cell
-        } else if (replyMsgType == "m.image" || replyMsgType == "m.video" || replyMsgType == "m.audio") && (replyBody?.isEmpty ?? false) && mainMsgType == "m.image" && ((mainBody?.isEmpty) == false) {
+        } else if (replyMsgType == MessageType.image || replyMsgType == MessageType.video || replyMsgType == MessageType.audio) && (replyBody?.isEmpty ?? false) && mainMsgType == MessageType.image && ((mainBody?.isEmpty) == false) {
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.ReplyMedia_MediaTextCell, for: indexPath) as! ReplyMedia_MediaTextCell
             cell.configure(with: message, currentUser: currentUser)
             cell.playButton.tag = indexPath.row
             cell.delegate = self
             cell.selectionStyle = .none
             return cell
-        } else if (replyMsgType == "m.image" || replyMsgType == "m.video" || replyMsgType == "m.audio") && ((replyBody?.isEmpty) == false) && mainMsgType == "m.text" && ((mainBody?.isEmpty) == false) {
+        } else if (replyMsgType == MessageType.image || replyMsgType == MessageType.video || replyMsgType == MessageType.audio) && ((replyBody?.isEmpty) == false) && mainMsgType == MessageType.text && ((mainBody?.isEmpty) == false) {
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.ReplyMediaText_TextCell, for: indexPath) as! ReplyMediaText_TextCell
             cell.configure(with: message, currentUser: currentUser)
             cell.playButton.tag = indexPath.row
             cell.delegate = self
             cell.selectionStyle = .none
             return cell
-        } else if (replyMsgType == "m.image" || replyMsgType == "m.video" || replyMsgType == "m.audio") && ((replyBody?.isEmpty) == false) && mainMsgType == "m.image" && (mainBody?.isEmpty ?? false) {
+        } else if (replyMsgType == MessageType.image || replyMsgType == MessageType.video || replyMsgType == MessageType.audio) && ((replyBody?.isEmpty) == false) && mainMsgType == MessageType.image && (mainBody?.isEmpty ?? false) {
             // ReplyMediaText_MediaCell
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.ReplyMediaText_MediaCell, for: indexPath) as! ReplyMediaText_MediaCell
             cell.configure(with: message, currentUser: currentUser)
@@ -140,7 +140,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
             cell.delegate = self
             cell.selectionStyle = .none
             return cell
-        } else if (replyMsgType == "m.image" || replyMsgType == "m.video" || replyMsgType == "m.audio") && ((replyBody?.isEmpty) == false) && mainMsgType == "m.image" && ((mainBody?.isEmpty) == false) {
+        } else if (replyMsgType == MessageType.image || replyMsgType == MessageType.video || replyMsgType == MessageType.audio) && ((replyBody?.isEmpty) == false) && mainMsgType == MessageType.image && ((mainBody?.isEmpty) == false) {
             // ReplyMediaText_MediaTextCell
             let cell = tableView.dequeueReusableCell(withIdentifier: Cell.ReplyMediaText_MediaTextCell, for: indexPath) as! ReplyMediaText_MediaTextCell
             cell.configure(with: message, currentUser: currentUser)

@@ -44,7 +44,7 @@ class MediaFullVC: UIViewController {
         topView.searchButton.isHidden = true
         videoPlayerBackView.isHidden = true
         if let videoURL = imageSelectURL?.modifiedString.mediaURL {
-            if mediaType == "m.image" {
+            if mediaType == MessageType.image {
                 self.fullImgView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: MediaFullVC.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
             }else{
                 videoPlayerBackView.isHidden = false

@@ -230,7 +230,7 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
         if isReply {
             
             let body = self.sendMsgTF.text
-            let msgType = "m.text"
+            let msgType = MessageType.text
 
             let replyRequest = ReplyMediaRequest(accessToken: /accessToken, roomID: /room_id, eventID: eventID, body: /body, msgType: "m.text")
             
@@ -263,7 +263,7 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
             }
         }else{
             let body = self.sendMsgTF.text
-            let msgType = "m.text"
+            let msgType = MessageType.text
             viewModel.sendMessage(roomID: /room_id, body: /body, msgType: msgType, accessToken: /accessToken) { [weak self] response in
                 DispatchQueue.main.async {
                     if let response = response {

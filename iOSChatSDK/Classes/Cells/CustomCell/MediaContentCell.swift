@@ -165,7 +165,7 @@ class MediaContentCell: UITableViewCell {
             leadingConstraint.isActive = true
             trailingConstraint.isActive = false
         }
-        if message.content?.msgtype == "m.image" {
+        if message.content?.msgtype == MessageType.image {
             playButton.setImage(nil, for: .normal)
             if let imageUrlString = message.content?.url, let imageUrl = imageUrlString.modifiedString.mediaURL {
                 // Load the image from the URL
@@ -176,7 +176,7 @@ class MediaContentCell: UITableViewCell {
                 let imageView = UIImageView(image: UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil))
                 self.messageImageView = imageView
             }
-        }else if message.content?.msgtype == "m.video" {
+        }else if message.content?.msgtype == MessageType.video {
             if let videoURL = message.content?.S3thumbnailUrl {
                 fetchThumbnail(videoURL)
             }else{
@@ -185,7 +185,7 @@ class MediaContentCell: UITableViewCell {
             }
             self.playButton.setImage(UIImage(named: "PlayIcon", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
 
-        }else if message.content?.msgtype == "m.audio" {
+        }else if message.content?.msgtype == MessageType.audio {
             self.messageImageView.image = UIImage(named: "placeholder")
 
 //            let imageView = UIImageView(image: UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil))

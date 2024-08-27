@@ -58,38 +58,7 @@ class MediaFullVC: UIViewController {
         ])
     }
     
-    private func setupCustomBottomView() {
-        bottomView.backgroundColor = .clear
-        let buttonImages = [
-            UIImage(named: "Save", in: Bundle(for: MediaFullVC.self), compatibleWith: nil)!,
-            UIImage(named: "Delete", in: Bundle(for: MediaFullVC.self), compatibleWith: nil)!,
-            UIImage(named: "Forward", in: Bundle(for: MediaFullVC.self), compatibleWith: nil)!,
-            UIImage(named: "Pin", in: Bundle(for: MediaFullVC.self), compatibleWith: nil)!
-        ]
-        let buttonTitles = ["Save", "Delete", "Forward","Pin"]
-        let customTabBar = CustomTabBar(buttonTitles: buttonTitles, buttonImages: buttonImages, buttonColors: Colors.Circles.violet)
-        customTabBar.translatesAutoresizingMaskIntoConstraints = false
-        bottomView.addSubview(customTabBar)
-        customTabBar.didSelectTab = { tabIndex in
-            print("Selected tab index: \(tabIndex)")
-            let tag = tabIndex
-            print("Button with tag \(tag) tapped")
-            switch tag {
-            case 0:
-                print("Action for Button 1")
-            case 1:
-                print("Action for Button 2")
-                self.redactMessage()
-            case 2:
-                print("Action for Button 3")
-            case 3:
-                print("Action for Button 4")
-            default:
-                break
-                
-            }
-        }
-    }
+    
     
     private func redactMessage() {
         let roomID = UserDefaults.standard.string(forKey: "room_id")
@@ -201,6 +170,26 @@ class CustomVideoPlayerContainerView: UIView {
         }
         set {
             playerViewController?.player = newValue
+        }
+    }
+}
+
+
+//MARK: - BOTTOM VIEW
+extension MediaFullVC{
+    private func setupCustomBottomView() {
+        bottomView.backgroundColor = .clear
+        let customTabBar = CustomTabBar(items: [.save , .delete , .forward , .pin])
+        customTabBar.translatesAutoresizingMaskIntoConstraints = false
+        bottomView.addSubview(customTabBar)
+        customTabBar.didSelectTab = { tabIndex in
+            switch tabIndex {
+            case Item.delete.ordinal():
+                self.redactMessage()
+            default:
+                break
+                
+            }
         }
     }
 }

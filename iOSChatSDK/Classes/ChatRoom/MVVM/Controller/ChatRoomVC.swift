@@ -304,15 +304,7 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
         moreViewHeight.constant = 0.0
         backBottomViewHeight.constant = 74.0
         morebottomView.backgroundColor = .clear
-        let buttonImages = [
-            UIImage(named: "Media", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
-            UIImage(named: "MoreCamera", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
-            UIImage(named: "Location", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
-            UIImage(named: "Document", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
-            UIImage(named: "ZC", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!
-        ]
-        let buttonTitles = ["Media", "Camera", "Location","Document","Send ZC"]
-        customTabBar = CustomTabBar(buttonTitles: buttonTitles, buttonImages: buttonImages, buttonColors: UIColor.white)
+        customTabBar = CustomTabBar(items: [.media , .camera, .location , .document , .zc])
         
         if let customTabBar = customTabBar {
             customTabBar.translatesAutoresizingMaskIntoConstraints = false
@@ -331,26 +323,18 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
     func bottomMediaActionPerform(_ tapIndex:Int){
         
         switch tapIndex {
-        case 0:
-            print("Media")
+        case Item.media.ordinal():
             DispatchQueue.main.async {
                 self.openGallery()
                 self.bottomViewHandler?.BV_TF_Appear_More_Disappear()
             }
-        case 1:
-            print("Camera")
+        case Item.camera.ordinal():
             DispatchQueue.main.async {
                 self.openCamera()
                 self.bottomViewHandler?.BV_TF_Appear_More_Disappear()
             }
-        case 2:
-            print("Location")
-        case 3:
-            print("Document")
-        case 4:
-            print("Send ZC")
         default:
-            print("perform action")
+            break
         }
     }
     @objc func fetchMessages() {
@@ -574,16 +558,7 @@ extension ChatRoomVC{
                     }
                 }
             }
-            
-            let buttonImages = [
-                UIImage(named: "copy", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
-                UIImage(named: "deleteB", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
-                UIImage(named: "forwardB", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
-                UIImage(named: "reply", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!,
-                UIImage(named: "cancel", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!
-            ]
-            let buttonTitles = ["Copy", "Delete", "Forward","Reply","Cancel"]
-            customTabBar = CustomTabBar(buttonTitles: buttonTitles, buttonImages: buttonImages, buttonColors: UIColor.white)
+            customTabBar = CustomTabBar(items: [.copy , .delete , .forward , .reply , .cancel])
             if let customTabBar = customTabBar {
                 customTabBar.translatesAutoresizingMaskIntoConstraints = false
                 morebottomView.addSubview(customTabBar)
@@ -627,9 +602,9 @@ extension ChatRoomVC{
     func bottomSelectMediaActionPerform(_ tapIndex:Int){
         
         switch tapIndex {
-        case 0:
+        case Item.copy.ordinal():
             print("copy")
-        case 1:
+        case Item.deleteB.ordinal():
             print("delete")
             DispatchQueue.main.async {
                 self.redactMessage()
@@ -637,17 +612,14 @@ extension ChatRoomVC{
                 self.removeCustomTabBar()
                 self.setupCustomBottomView()
             }
-        case 2:
+        case Item.forwardB.ordinal():
             print("forward")
-        case 3:
-            print("click on reply")
-            print(eventID!)
+        case Item.reply.ordinal():
             isToggled = false
             isReply = true
             bottomViewHandler?.BV_Reply_TF_Appear()
             
-        case 4:
-            print("cancel")
+        case Item.cancel.ordinal():
             DispatchQueue.main.async {
                 self.isReply = false
                 self.bottomViewHandler?.BV_TF_Appear()
@@ -707,7 +679,4 @@ extension ChatRoomVC{
         sendBtn.addGestureRecognizer(longPressRecognizer)
         setupAudio()
     }
-    
-    
-    
 }

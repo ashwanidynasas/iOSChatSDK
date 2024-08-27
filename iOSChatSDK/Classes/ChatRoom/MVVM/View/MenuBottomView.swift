@@ -102,20 +102,31 @@ class CustomTabBarButton: UIButton {
     }
     
 }
-// Custom Tab Bar View
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//MARK: - Custom Tab Bar View
 class CustomTabBar: UIView {
-
-    private var buttonTitles: [String]
-    private var buttonImages: [UIImage]
-    private var buttonTintColor: UIColor
-
+    
+    private var items : [Item]
     private var buttons: [CustomTabBarButton] = []
     var didSelectTab: ((Int) -> Void)?
 
-    init(buttonTitles: [String], buttonImages: [UIImage],buttonColors: UIColor) {
-        self.buttonTitles = buttonTitles
-        self.buttonImages = buttonImages
-        self.buttonTintColor = buttonColors
+    init(items: [Item]) {
+        self.items = items
         super.init(frame: .zero)
         setupView()
     }
@@ -131,10 +142,10 @@ class CustomTabBar: UIView {
         stackView.alignment = .center
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
-        for (index, image) in buttonImages.enumerated() {
-            let button = CustomTabBarButton(image: image)
-            button.setTitle(buttonTitles[index])
-            button.setButtonTint(buttonTintColor)
+        for (index, item) in items.enumerated() {
+            let button = CustomTabBarButton(image: UIImage(named: /item.image, in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!)
+            button.setTitle(/item.title)
+            button.setButtonTint(item.color)
             button.tag = index
             button.tapAction = { [weak self] in
                 self?.handleButtonTap(index: index)
@@ -163,15 +174,74 @@ class CustomTabBar: UIView {
         }
     }
     private func handleButtonTap(index: Int) {
-           // Deselect all buttons
            for button in buttons {
                button.isSelected = false
            }
-           
-           // Select the tapped button
            buttons[index].isSelected = true
-           
-           // Notify delegate or closure
            didSelectTab?(index)
        }
+}
+
+enum Item : CaseIterable{
+    case media
+    case camera
+    case location
+    case document
+    case zc
+    
+    case copy
+    case deleteB
+    case forwardB
+    case reply
+    case cancel
+    
+    case save
+    case delete
+    case forward
+    case pin
+    
+    var title : String{
+        switch self{
+        case .media      : return "Media"
+        case .camera     : return "Camera"
+        case .location   : return "Location"
+        case .document   : return "Document"
+        case .zc         : return "Send ZC"
+        case .copy       : return "Copy"
+        case .deleteB    : return "Delete"
+        case .forwardB   : return "Forward"
+        case .reply      : return "Reply"
+        case .cancel     : return "Cancel"
+        case .save       : return "Save"
+        case .delete     : return "Delete"
+        case .forward    : return "Forward"
+        case .pin        : return "Pin"
+        }
+    }
+    
+    var image : String{
+        switch self{
+        case .media      : return "Media"
+        case .camera     : return "MoreCamera"
+        case .location   : return "Location"
+        case .document   : return "Document"
+        case .zc         : return "ZC"
+        case .copy       : return "copy"
+        case .deleteB    : return "deleteB"
+        case .forwardB   : return "forwardB"
+        case .reply      : return "reply"
+        case .cancel     : return "cancel"
+        case .save       : return "Save"
+        case .delete     : return "Delete"
+        case .forward    : return "Forward"
+        case .pin        : return "Pin"
+        }
+    }
+    
+    var color : UIColor{
+        switch self{
+        case .save , .delete , .forward , .pin : return Colors.Circles.violet
+        default         : return .white
+        }
+    }
 }

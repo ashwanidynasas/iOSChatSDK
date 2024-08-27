@@ -70,7 +70,7 @@ class MoreOptionView: UIView {
       let containerView = UIView()
       containerView.backgroundColor = .lightGray // Set background color (optional)
 
-      let imageView = UIImageView(image: UIImage(named: "read_indicator", in: Bundle(for: ChatMessageCell.self), compatibleWith: nil)) // Replace with your image names
+        let imageView = UIImageView(image: UIImage(named: ChatConstants.Image.readIndicator, in: Bundle(for: ChatMessageCell.self), compatibleWith: nil)) // Replace with your image names
                 
       imageView.contentMode = .scaleAspectFit // Adjust content mode as needed
       imageView.clipsToBounds = true

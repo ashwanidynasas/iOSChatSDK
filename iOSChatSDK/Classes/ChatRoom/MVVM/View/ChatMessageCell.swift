@@ -160,7 +160,7 @@ class ChatMessageCell: UITableViewCell {
         minWidthConstraint.constant = max(minWidth, Constants.minBubbleWidth)
 
         // Configure read indicator
-        readIndicatorImageView.image = UIImage(named: "read_indicator", in: Bundle(for: ChatMessageCell.self), compatibleWith: nil)
+        readIndicatorImageView.image = UIImage(named: ChatConstants.Image.readIndicator, in: Bundle(for: ChatMessageCell.self), compatibleWith: nil)
 
         // Handle different message types
         let msgType = /message.content?.msgtype
@@ -213,7 +213,7 @@ class ChatMessageCell: UITableViewCell {
 
         if let url = mediaUrl.modifiedString.mediaURL {
 
-            self.messageImageView.sd_setImage(with: url, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: ChatMessageCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+            self.messageImageView.sd_setImage(with: url, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ChatMessageCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
               
             messageImageViewHeightConstraint.constant = 150 // Set desired height for the image view
           } else {

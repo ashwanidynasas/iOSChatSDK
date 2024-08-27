@@ -7,10 +7,6 @@
 
 import Foundation
 
-struct ImagePickerMedia{
-    static let image = "public.image"
-    static let video = "public.movie"
-}
 
 //MARK: - IMAGE PICKER DELEGATES
 extension ChatRoomVC : UIImagePickerControllerDelegate{

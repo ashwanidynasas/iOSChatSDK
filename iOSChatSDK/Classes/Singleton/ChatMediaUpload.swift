@@ -59,8 +59,8 @@ class ChatMediaUpload {
                                      eventID: String? = nil,
                                      completion: @escaping (Result<String, Error>) -> Void) {
         
-        guard let roomID = UserDefaults.standard.string(forKey: "room_id"),
-              let accessToken = UserDefaults.standard.string(forKey: "access_token") else {
+        guard let roomID = UserDefaultsManager.roomID,
+        let accessToken = UserDefaultsManager.accessToken else {
             completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Missing roomID or accessToken"])))
             return
         }
@@ -100,13 +100,13 @@ class ChatMediaUpload {
 
     public func getMimeTypeAndFileName(for msgType: String) -> (mimeType: String, fileName: String, mediaType: String) {
         switch msgType {
-        case "m.image":
+        case MessageType.image:
             return ("image/jpeg", "a1.jpg", "image")
-        case "m.video":
+        case MessageType.video:
             return ("video/mp4", "upload.mp4", "video")
-        case "m.file":
+        case MessageType.file:
             return ("application/x-python-code", "upload.py", "file")
-        case "m.audio":
+        case MessageType.audio:
             return ("audio/mp3", "Audio File", "audio")
         default:
             return ("", "", "")

@@ -32,7 +32,7 @@ class CustomTopView: UIView {
     
     func commonInit() {
         self.backgroundColor = .clear
-        if let viewFromXib = Bundle(for: type(of: self)).loadNibNamed("CustomTopView", owner: self, options: nil)?.first as? UIView {
+        if let viewFromXib = Bundle(for: type(of: self)).loadNibNamed(Cell_Chat.CustomTopView, owner: self, options: nil)?.first as? UIView {
             viewFromXib.frame = self.bounds
             addSubview(viewFromXib)
         } else {

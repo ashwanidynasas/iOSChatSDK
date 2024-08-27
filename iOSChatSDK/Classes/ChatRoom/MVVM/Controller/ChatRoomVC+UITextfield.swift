@@ -31,13 +31,13 @@ extension ChatRoomVC : UITextFieldDelegate{
 
         if textField.text?.isEmpty == false {
         DispatchQueue.main.async {
-            self.sendBtn.setImage(UIImage(named: "sendIcon", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), for: .normal)
+            self.sendBtn.setImage(UIImage(named: ChatConstants.Image.sendIcon, in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), for: .normal)
         }
             sendBtn.removeTarget(self, action: #selector(micButtonTapped), for: .touchUpInside)
             sendBtn.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
         } else {
             DispatchQueue.main.async {
-                self.sendBtn.setImage(UIImage(named: "mic", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), for: .normal)
+                self.sendBtn.setImage(UIImage(named: ChatConstants.Image.mic, in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), for: .normal)
             }
             sendBtn.removeTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
             sendBtn.addTarget(self, action: #selector(micButtonTapped), for: .touchUpInside)

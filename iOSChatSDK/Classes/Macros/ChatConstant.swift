@@ -71,6 +71,14 @@ struct ChatConstants {
     // Default delay for async operations (in seconds)
     static let asyncDelay: TimeInterval = 2.0
     
+    struct Image {
+        static let readIndicator = "read_indicator"
+        static let playIcon = "PlayIcon"
+        static let placeholder = "placeholder"
+        static let userPlaceholder = "userPlaceholder"
+        static let sendIcon = "sendIcon"
+        static let mic = "mic"
+    }
 }
 
     // MARK: - View Heights
@@ -137,7 +145,7 @@ struct ChatMessageCellConstant {
     
     struct ReadIndicator {
         static let size: CGFloat = 7
-        static let imageName: String = "read_indicator"
+//        static let imageName: String = "read_indicator"
         static let trailingPadding: CGFloat = -2
         static let bottomPadding: CGFloat = -10
     }
@@ -168,7 +176,8 @@ struct MessageType {
     static let audio = "m.audio"
     static let video = "m.video"
     static let image = "m.image"
-
+    static let file = "m.file"
+    static let roomMsg = "m.room.message"
 }
 
 struct Cell_Chat {
@@ -191,6 +200,7 @@ struct Cell_Chat {
     static let ReplyMediaText_MediaCell = "ReplyMediaText_MediaCell"
     static let ReplyMediaText_MediaTextCell = "ReplyMediaText_MediaTextCell"
     
+    static let CustomTopView = "CustomTopView"
 }
 
 struct SB {
@@ -232,10 +242,6 @@ struct MediaCell_Chat {
     static let defaultBackgroundColor: UIColor = .clear
     
     // Image and Icon Names
-    static let readIndicatorImageName = "read_indicator"
-    static let playIconImageName = "PlayIcon"
-    static let placeholderImageName = "placeholder"
-    static let userPlaceholderImageName = "userPlaceholder"
 }
     
 struct ReplyCell_Chat {
@@ -254,4 +260,9 @@ struct ReplyCell_Chat {
     static let maxBubbleWidthRatio: CGFloat = 0.75
     static let dateFormat: String = "hh:mm a"
     static let imageViewSize: CGSize = CGSize(width: 120, height: 120)
+}
+
+struct ImagePickerMedia{
+    static let image = "public.image"
+    static let video = "public.movie"
 }

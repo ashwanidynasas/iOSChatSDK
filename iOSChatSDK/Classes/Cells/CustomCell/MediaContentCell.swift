@@ -58,11 +58,11 @@ class MediaContentCell: UITableViewCell {
         timestampLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(timestampLabel)
         
-        readIndicatorImageView.image = UIImage(named: "read_indicator", in: Bundle(for: MediaContentCell.self), compatibleWith: nil)
+        readIndicatorImageView.image = UIImage(named: ChatConstants.Image.readIndicator, in: Bundle(for: MediaContentCell.self), compatibleWith: nil)
         readIndicatorImageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(readIndicatorImageView)
 
-        playButton.setImage(UIImage(named: "PlayIcon", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
+        playButton.setImage(UIImage(named: ChatConstants.Image.playIcon, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
         playButton.translatesAutoresizingMaskIntoConstraints = false
         bubbleBackgroundView.addSubview(playButton)
         
@@ -170,42 +170,42 @@ class MediaContentCell: UITableViewCell {
             if let imageUrlString = message.content?.url, let imageUrl = imageUrlString.modifiedString.mediaURL {
                 // Load the image from the URL
 //                self.messageImageView.sd_setImage(with: imageUrl, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
-                self.messageImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "userPlaceholder"), options: [], completed: nil)
+                self.messageImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: ChatConstants.Image.userPlaceholder), options: [], completed: nil)
 
             }else{
-                let imageView = UIImageView(image: UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil))
+                let imageView = UIImageView(image: UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: MediaContentCell.self), compatibleWith: nil))
                 self.messageImageView = imageView
             }
         }else if message.content?.msgtype == MessageType.video {
             if let videoURL = message.content?.S3thumbnailUrl {
                 fetchThumbnail(videoURL)
             }else{
-                let imageView = UIImageView(image: UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil))
+                let imageView = UIImageView(image: UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: MediaContentCell.self), compatibleWith: nil))
                 self.messageImageView = imageView
             }
-            self.playButton.setImage(UIImage(named: "PlayIcon", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
+            self.playButton.setImage(UIImage(named: ChatConstants.Image.playIcon, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
 
         }else if message.content?.msgtype == MessageType.audio {
-            self.messageImageView.image = UIImage(named: "placeholder")
+            self.messageImageView.image = UIImage(named: ChatConstants.Image.placeholder)
 
 //            let imageView = UIImageView(image: UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil))
 //            self.messageImageView = imageView
-            self.playButton.setImage(UIImage(named: "PlayIcon", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
+            self.playButton.setImage(UIImage(named: ChatConstants.Image.playIcon, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
             
         }else{
-            self.messageImageView.image = UIImage(named: "placeholder")
+            self.messageImageView.image = UIImage(named: ChatConstants.Image.placeholder)
         }
         
         
     }
     
     func fetchThumbnail(_ s3MediaUrl:String) {
-        guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(s3MediaUrl)") else {
+        guard let videoURL = URL(string: "\(S3MediaURL_Chat.URL)\(s3MediaUrl)") else {
             print("Error: Invalid video URL")
             return
         }
         DispatchQueue.main.async {
-            self.messageImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+            self.messageImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
 
         }
 

@@ -14,6 +14,8 @@ struct ChatConstants {
     struct API {
         static let roomID = "room_id"
         static let accessToken = "access_token"
+        static let failedAccessToken = "Failed to retrieve access token"
+        static let AccessToken = "Access Token"
     }
 
     // Media Types
@@ -36,6 +38,7 @@ struct ChatConstants {
     struct FileName {
         static let image = "a1.jpg"
         static let video = "upload.mp4"
+        static let document = "upload.py"
         static let audio = "Audio File"
     }
 
@@ -185,4 +188,79 @@ struct Cell {
 
 struct SB {
     static let main = "MainChat"
+}
+
+//MainChatVC & ConnectionListVC
+struct API_ChatService {
+    static let baseURL = "http://157.241.58.41/chat_api/"
+    static let createRoom = "\(baseURL)room/create"
+    static let fetchUserlist = "\(baseURL)list-user-apple"
+    static let sendMedia = "\(baseURL)message/send/"
+    static let reply = "\(baseURL)message/reply"
+}
+
+struct Storyboard {
+    static let mainChat = "MainChat"
+    static let mainChatVCIdentifier = "MainChatVC"
+    static let connectionListVCIdentifier = "ConnectionListVC"
+    static let chatRoomVCIdentifier = "ChatRoomVC"
+}
+
+struct Alerts {
+    static let errorTitle = "Error"
+    static let okButtonTitle = "OK"
+    static let sdkNotFoundMessage = "SDK not found in CustomPods"
+    static let accessTokenTitle = "Access Token"
+    static let accessTokenErrorMessage = "Failed to retrieve access token"
+}
+
+struct Titles {
+    static let chatSDK = "Chat SDK"
+    static let connectionList = "Connection List"
+}
+  
+struct URLs {
+    static let placeholderImageName = "placeholder"
+    static let defaultCircleId = "591cd8b1-2288-4e6c-ad7d-c2bdc7d786fe"
+}
+
+struct S3MediaURL {
+    static let s3MediaURL: String = "https://d3qie74tq3tm9f.cloudfront.net/"
+}
+
+//MediaContentCell
+struct MediaContentTVCell {
+    static let bubbleDiameter: CGFloat = 170
+    static let timestampFont: UIFont = .systemFont(ofSize: 8)
+    static let timestampColor: UIColor = .lightGray
+    static let readIndicatorSize: CGFloat = 7
+    static let padding: CGFloat = 12
+    static let timestampPadding: CGFloat = 4
+    static let dateFormat: String = "hh:mm a"
+    static let playButtonSize: CGFloat = 30
+    static let defaultBackgroundColor: UIColor = .clear
+    
+    // Image and Icon Names
+    static let readIndicatorImageName = "read_indicator"
+    static let playIconImageName = "PlayIcon"
+    static let placeholderImageName = "placeholder"
+    static let userPlaceholderImageName = "userPlaceholder"
+}
+    
+struct ReplyMediaTextCell {
+    static let bubbleCornerRadius: CGFloat = 20
+    static let bubbleShadowColor: CGColor = UIColor.black.cgColor
+    static let bubbleShadowOffset = CGSize(width: 0, height: 2)
+    static let bubbleShadowOpacity: Float = 0.3
+    static let bubbleShadowRadius: CGFloat = 4
+    static let messageFont: UIFont = .systemFont(ofSize: 12)
+    static let timestampFont: UIFont = .systemFont(ofSize: 8)
+    static let timestampColor: UIColor = .lightGray
+    static let readIndicatorSize: CGFloat = 7
+    static let padding: CGFloat = 12
+    static let timestampPadding: CGFloat = 4
+    static let minBubbleWidth: CGFloat = 180
+    static let maxBubbleWidthRatio: CGFloat = 0.75
+    static let dateFormat: String = "hh:mm a"
+    static let imageViewSize: CGSize = CGSize(width: 120, height: 120)
 }

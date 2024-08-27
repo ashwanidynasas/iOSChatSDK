@@ -26,8 +26,8 @@ class ConnectionListVC: UIViewController {
         self.view.backgroundColor = .white
         self.title = "Connection List"
 
-        let nib = UINib(nibName: Cell.custom, bundle: Bundle(for: CustomTableViewCell.self))
-        listTableView.register(nib, forCellReuseIdentifier: Cell.custom)
+        let nib = UINib(nibName: Cell_Chat.custom, bundle: Bundle(for: CustomTableViewCell.self))
+        listTableView.register(nib, forCellReuseIdentifier: Cell_Chat.custom)
         cListViewModel = ConnectionViewModel()
         cListViewModel.bindViewModelToController = {
             self.updateUI()
@@ -57,7 +57,7 @@ extension ConnectionListVC: UITableViewDelegate,UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = listTableView.dequeueReusableCell(withIdentifier: Cell.custom, for: indexPath) as! CustomTableViewCell
+        let cell = listTableView.dequeueReusableCell(withIdentifier: Cell_Chat.custom, for: indexPath) as! CustomTableViewCell
         
         let connection = cListViewModel.connections[indexPath.row]
         cell.senderTextLabel.isHidden = true

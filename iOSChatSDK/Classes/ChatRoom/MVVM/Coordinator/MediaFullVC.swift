@@ -45,7 +45,7 @@ class MediaFullVC: UIViewController {
         videoPlayerBackView.isHidden = true
         if let videoURL = imageSelectURL?.modifiedString.mediaURL {
             if mediaType == MessageType.image {
-                self.fullImgView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: MediaFullVC.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                self.fullImgView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: ChatMessageCellConstant.ImageView.placeholderImageName, in: Bundle(for: MediaFullVC.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
             }else{
                 videoPlayerBackView.isHidden = false
                 playVideo()
@@ -73,18 +73,16 @@ class MediaFullVC: UIViewController {
     }
     
     private func redactMessage() {
-        let roomID = UserDefaults.standard.string(forKey: "room_id")
-        let accessToken = UserDefaults.standard.string(forKey: "access_token")
+//        let roomID = UserDefaults.standard.string(forKey: "room_id")
+//        let accessToken = UserDefaults.standard.string(forKey: "access_token")
+        let roomID = UserDefaultsManager.roomID
+        let accessToken = UserDefaultsManager.accessToken
         
-        print("roomID id ----> \(roomID ?? "")")
-        print("accessToken id ----> \(accessToken ?? "")")
-        print("event id ----> \(eventID ?? "")")
-
         let request = MessageRedactRequest(
             accessToken: /accessToken,
             roomID: /roomID,
             eventID: /eventID,
-            body: "spam"
+            body: ChatConstants.Common.spam
         )
         
         deleteViewModel.redactMessage(request: request) { [weak self] result in
@@ -92,7 +90,7 @@ class MediaFullVC: UIViewController {
             switch result {
             case .success(let value):
                 DispatchQueue.main.async {
-                    self?.delegate?.itemDeleteFromChat("deleteItem")
+                    self?.delegate?.itemDeleteFromChat(ChatConstants.Common.deleteItem)//"deleteItem")
                     self?.navigationController?.popViewController(animated: true)
                 }
             case .failure(let error):
@@ -102,7 +100,7 @@ class MediaFullVC: UIViewController {
     }
     
     func playVideo() {
-        guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(/s3MediaURL)") else {
+        guard let videoURL = URL(string: "\(S3MediaURL_Chat.URL)\(/s3MediaURL)") else {
             print("Error: Invalid video URL")
             return
         }
@@ -117,18 +115,16 @@ class MediaFullVC: UIViewController {
     func setupUI(){
         topView.titleLabel.text = /currentUser
         topView.delegate = self
-        self.view.setGradientBackground(startColor: UIColor.init(hex: "000000"), endColor: UIColor.init(hex: "520093"))
+        self.view.setGradientBackground(startColor: Colors.Circles.black, endColor: Colors.Circles.violet)
     }
     
     
     
     @objc private func buttonTapped(_ sender: UIButton) {
         let tag = sender.tag
-        print("Button with tag \(tag) tapped")
         switch tag {
         default:
             break
-            
         }
     }
 }

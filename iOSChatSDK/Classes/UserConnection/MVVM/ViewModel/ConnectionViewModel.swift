@@ -50,7 +50,8 @@ class LoginViewModel {
     var loginResponse: LoginResponse? {
         didSet {
             if let token = loginResponse?.details.accessToken {
-                UserDefaults.standard.set(token, forKey: "access_token")
+//                UserDefaults.standard.set(token, forKey: "access_token")
+                UserDefaultsManager.saveAccessToken(token)
             }
             self.bindViewModelToController()
         }

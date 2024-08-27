@@ -12,10 +12,10 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
     
     func setupTable(){
         chatRoomTableView.rowHeight = UITableView.automaticDimension
-        chatRoomTableView.estimatedRowHeight = 100
+        chatRoomTableView.estimatedRowHeight = Height_Chat.estimationRowHeight
         chatRoomTableView.separatorStyle = .none
-        let medianib = UINib(nibName: Cell.mediaText, bundle: Bundle(for: MediaTextTVCell.self))
-        chatRoomTableView.register(medianib, forCellReuseIdentifier: Cell.mediaText)
+        let medianib = UINib(nibName: Cell_Chat.mediaText, bundle: Bundle(for: MediaTextTVCell.self))
+        chatRoomTableView.register(medianib, forCellReuseIdentifier: Cell_Chat.mediaText)
         chatRoomTableView.registerCells([ChatMessageCell.self,
                                          MediaContentCell.self,
                                          ReplyText_TextCell.self,
@@ -41,7 +41,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
         switch message.chatType{
             
         case .text:
-            let cell = tableView.dequeueReusableCell(withIdentifier: Cell.message, for: indexPath) as! ChatMessageCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: Cell_Chat.message, for: indexPath) as! ChatMessageCell
             cell.configure(with: message, currentUser: currentUser)
             cell.overlayButton.tag = indexPath.row
             cell.delegate = self
@@ -49,7 +49,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
             return cell
             
         case .media:
-            let cell = tableView.dequeueReusableCell(withIdentifier: Cell.media, for: indexPath) as! MediaContentCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: Cell_Chat.media, for: indexPath) as! MediaContentCell
             // Configure the cell
             cell.mediaConfigure(with: message, currentUser: currentUser)
             cell.playButton.tag = indexPath.row
@@ -58,7 +58,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
             return cell
             
         case .mediaText:
-            let cell = tableView.dequeueReusableCell(withIdentifier: Cell.mediaText, for: indexPath) as! MediaTextTVCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: Cell_Chat.mediaText, for: indexPath) as! MediaTextTVCell
             // Configure the cell
             cell.mediaConfigure(with: message, currentUser: currentUser)
             cell.playButton.tag = indexPath.row
@@ -67,7 +67,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
             return cell
             
         case .textToText:
-            let cell = tableView.dequeueReusableCell(withIdentifier: Cell.ReplyText_TextCell, for: indexPath) as! ReplyText_TextCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: Cell_Chat.ReplyText_TextCell, for: indexPath) as! ReplyText_TextCell
             cell.configure(with: message, currentUser: currentUser)
             cell.playButton.tag = indexPath.row
             cell.delegate = self
@@ -75,7 +75,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
             return cell
             
         case .textToMedia:
-            let cell = tableView.dequeueReusableCell(withIdentifier: Cell.ReplyText_MediaCell, for: indexPath) as! ReplyText_MediaCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: Cell_Chat.ReplyText_MediaCell, for: indexPath) as! ReplyText_MediaCell
             cell.configure(with: message, currentUser: currentUser)
             cell.playButton.tag = indexPath.row
             cell.delegate = self
@@ -83,7 +83,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
             return cell
             
         case .textToMediaText:
-            let cell = tableView.dequeueReusableCell(withIdentifier: Cell.ReplyText_MediaTextCell, for: indexPath) as! ReplyText_MediaTextCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: Cell_Chat.ReplyText_MediaTextCell, for: indexPath) as! ReplyText_MediaTextCell
             cell.configure(with: message, currentUser: currentUser)
             cell.playButton.tag = indexPath.row
             cell.delegate = self
@@ -91,7 +91,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
             return cell
             
         case .mediaToText:
-            let cell = tableView.dequeueReusableCell(withIdentifier: Cell.ReplyMedia_TextCell, for: indexPath) as! ReplyMedia_TextCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: Cell_Chat.ReplyMedia_TextCell, for: indexPath) as! ReplyMedia_TextCell
             cell.configure(with: message, currentUser: currentUser)
             cell.playButton.tag = indexPath.row
             cell.delegate = self
@@ -99,7 +99,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
             return cell
             
         case .mediaToMedia:
-            let cell = tableView.dequeueReusableCell(withIdentifier: Cell.ReplyMedia_MediaCell, for: indexPath) as! ReplyMedia_MediaCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: Cell_Chat.ReplyMedia_MediaCell, for: indexPath) as! ReplyMedia_MediaCell
             cell.configure(with: message, currentUser: currentUser)
             cell.playButton.tag = indexPath.row
             cell.delegate = self
@@ -107,7 +107,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
             return cell
             
         case .mediaToMediaText:
-            let cell = tableView.dequeueReusableCell(withIdentifier: Cell.ReplyMedia_MediaTextCell, for: indexPath) as! ReplyMedia_MediaTextCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: Cell_Chat.ReplyMedia_MediaTextCell, for: indexPath) as! ReplyMedia_MediaTextCell
             cell.configure(with: message, currentUser: currentUser)
             cell.playButton.tag = indexPath.row
             cell.delegate = self
@@ -115,7 +115,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
             return cell
         
         case .mediaTextToText:
-            let cell = tableView.dequeueReusableCell(withIdentifier: Cell.ReplyMediaText_TextCell, for: indexPath) as! ReplyMediaText_TextCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: Cell_Chat.ReplyMediaText_TextCell, for: indexPath) as! ReplyMediaText_TextCell
             cell.configure(with: message, currentUser: currentUser)
             cell.playButton.tag = indexPath.row
             cell.delegate = self
@@ -123,7 +123,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
             return cell
             
         case .mediaTextToMedia:
-            let cell = tableView.dequeueReusableCell(withIdentifier: Cell.ReplyMediaText_MediaCell, for: indexPath) as! ReplyMediaText_MediaCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: Cell_Chat.ReplyMediaText_MediaCell, for: indexPath) as! ReplyMediaText_MediaCell
             cell.configure(with: message, currentUser: currentUser)
             cell.playButton.tag = indexPath.row
             cell.delegate = self
@@ -131,7 +131,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
             return cell
             
         case .mediaTextToMediaText:
-            let cell = tableView.dequeueReusableCell(withIdentifier: Cell.ReplyMediaText_MediaTextCell, for: indexPath) as! ReplyMediaText_MediaTextCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: Cell_Chat.ReplyMediaText_MediaTextCell, for: indexPath) as! ReplyMediaText_MediaTextCell
             cell.configure(with: message, currentUser: currentUser)
             cell.playButton.tag = indexPath.row
             cell.delegate = self
@@ -149,7 +149,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
         let msgType = /message.content?.msgtype
         if (msgType == MessageType.image) || (msgType == MessageType.audio) || (msgType == MessageType.video) {
             if message.content?.body == "" {
-                return 200
+                return Height_Chat.cellHeight
             }
             return UITableView.automaticDimension
         }

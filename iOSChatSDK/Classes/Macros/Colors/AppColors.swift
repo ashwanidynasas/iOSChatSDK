@@ -53,6 +53,7 @@ struct Colors{
         static let orange = UIColor(hex: "#B76300")
         static let red = UIColor(hex: "#B50000")
         static let grey = UIColor(hex: "#5D5D5D")
+        static let black = UIColor.init(hex: "#000000")
     }
     
     struct borders{
@@ -79,6 +80,7 @@ extension String{
         case "orange" : return Colors.Circles.orange
         case "red"    : return Colors.Circles.red
         case "grey"    : return Colors.Circles.grey
+        case "black" : return Colors.Circles.black
         default       : return Colors.Circles.violet
         }
     }

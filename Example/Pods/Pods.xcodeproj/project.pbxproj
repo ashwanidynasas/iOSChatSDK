@@ -93,6 +93,7 @@
 		4D10B6602C75DF430006563B /* ConnectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D10B65F2C75DF430006563B /* ConnectionModel.swift */; };
 		4D10B6682C75E68F0006563B /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D10B6672C75E68F0006563B /* MessageViewModel.swift */; };
 		4D10B66A2C75E6D30006563B /* ChatMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D10B6692C75E6D30006563B /* ChatMessageModel.swift */; };
+		4D10B6722C7DE7B40006563B /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D10B6712C7DE7B40006563B /* UserDefaultManager.swift */; };
 		4D9C4AF52C61EF86007F9B0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A894310774DDCD9C8ABEBDAC9EDDB143 /* Assets.xcassets */; };
 		4DFCB3D9623FCA43D3E1BFDA528EB587 /* UIView+WebCacheOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = ED125922FB25702F3C26C4BD2DED8061 /* UIView+WebCacheOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EB89C761657851CDA570168AFCAC0A0 /* MediaTextTVCell.xib in Sources */ = {isa = PBXBuildFile; fileRef = CF7C0A11B8DA20DA4082806EE577F873 /* MediaTextTVCell.xib */; };
@@ -367,6 +368,7 @@
 		4D10B65F2C75DF430006563B /* ConnectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionModel.swift; sourceTree = "<group>"; };
 		4D10B6672C75E68F0006563B /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
 		4D10B6692C75E6D30006563B /* ChatMessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageModel.swift; sourceTree = "<group>"; };
+		4D10B6712C7DE7B40006563B /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
 		4E65FB86AFFAEE9F18E2C40FD540DD13 /* CustomTopView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CustomTopView.swift; sourceTree = "<group>"; };
 		4E9A608DCF04FD972479EBF6958081EB /* SDImageTransformer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDImageTransformer.h; path = SDWebImage/Core/SDImageTransformer.h; sourceTree = "<group>"; };
 		51F0A992BAA9CE4D404CC90275012A8A /* CustomTopView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = CustomTopView.xib; sourceTree = "<group>"; };
@@ -653,6 +655,7 @@
 			children = (
 				91E172DB2C7728BE00427F88 /* Threads.swift */,
 				91E172D92C7725BA00427F88 /* Logger.swift */,
+				4D10B6712C7DE7B40006563B /* UserDefaultManager.swift */,
 				551B874D8C9B7FCC40602E83FDB94B84 /* UIExtension */,
 				82B14A91DD9636D4B8C268262C0379AB /* Unwrapping.swift */,
 				823F4E47728D10A751AAE58BF929D240 /* CircleObject.swift */,
@@ -1759,6 +1762,7 @@
 				4D10B6312C75CC7A0006563B /* ReplyMediaText_MediaTextCell.swift in Sources */,
 				4D10B6152C75C8470006563B /* ChatConstant.swift in Sources */,
 				2FEEEC1878E66862D755725AD6EE30D8 /* RoomCreateService.swift in Sources */,
+				4D10B6722C7DE7B40006563B /* UserDefaultManager.swift in Sources */,
 				E4FE314038CF58087546258CAB00CD3C /* String.swift in Sources */,
 				4D10B6262C75CC640006563B /* ReplyText_MediaTextCell.swift in Sources */,
 				398EE03291D4649704E2DAA770D757B3 /* Unwrapping.swift in Sources */,

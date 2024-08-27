@@ -49,7 +49,6 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("isReply \(String(describing: isReply))")
         if isReply {
             self.replyBottomView.isHidden = false
         }else{
@@ -58,16 +57,11 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate {
         self.replyUserName.text = username
         self.replyUserDesc.text = userDesc
         self.replyUserImgView.image = userImage
-        print("username \(String(describing: username))")
-        print("userDesc \(String(describing: userDesc))")
         
         setupUI()
         setupVideoPlayerContainerView()
         topView.searchButton.isHidden = true
         sendBtn.tintColor = Colors.Circles.violet
-        print("currentUser \(String(describing: currentUser))")
-        print("imageFetched \(String(describing: imageFetched))")
-        print("videoFetched \(String(describing: videoFetched))")
         self.fullImgView.image = imageFetched
         self.sendMsgTF.inputAccessoryView = UIView()
         //        IQKeyboardManager.shared().isEnabled = false
@@ -82,7 +76,6 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate {
     @IBAction func replyCancelView(_ sender: UIButton) {
         isReply = false
         self.replyBottomView.isHidden = true
-        //        bottomViewHandler?.BV_Reply_Disappear_More_Disappear()
     }
     
     func setupVideoPlayerContainerView() {
@@ -100,8 +93,6 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate {
     
     func playVideo() {
         if  let videoURL = videoFetched{
-            //               player = AVPlayer(url: videoURL)
-            //               videoPlayerContainerView.player = player
             let player = AVPlayer(url: videoURL)
             let avPlayerController = AVPlayerViewController()
             avPlayerController.player = player;
@@ -111,36 +102,11 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate {
             
         }
     }
-    
-    //    deinit {
-    //        // Remove observer
-    //        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-    //        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    //
-    //    }
-    
-    //    @objc func keyboardWillShow(notification: NSNotification) {
-    //         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-    //             if self.backTFView.frame.origin.y == 0 {
-    //                 self.backTFView.frame.origin.y -= keyboardSize.height
-    //             }
-    //         }
-    //     }
-    //
-    //     @objc func keyboardWillHide(notification: NSNotification) {
-    //         if self.backTFView.frame.origin.y != 0 {
-    //             self.backTFView.frame.origin.y = 0
-    //         }
-    //     }
-    
+        
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
-    
-    //     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    //         self.view.endEditing(true)
-    //     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -154,22 +120,24 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate {
         backTFView.layer.cornerRadius = 18
         backTFView.clipsToBounds = true
         sendBtn.makeCircular()
-        self.view.setGradientBackground(startColor: UIColor.init(hex: "000000"), endColor: UIColor.init(hex: "520093"))
+        self.view.setGradientBackground(startColor: Colors.Circles.black, endColor: Colors.Circles.violet)
     }
     
     
     
     @IBAction func sendAction(_ sender: UIButton) {
-        let room_id = UserDefaults.standard.string(forKey: "room_id")
-        let accessToken = UserDefaults.standard.string(forKey: "access_token")
+//        let room_id = UserDefaults.standard.string(forKey: "room_id")
+//        let accessToken = UserDefaults.standard.string(forKey: "access_token")
+        let room_id = UserDefaultsManager.roomID
+        let accessToken = UserDefaultsManager.accessToken
         
         if imageFetched == nil {
             
             if isReply {
                 let body = self.sendMsgTF.text
                 let msgType = MessageType.video
-                let mimeType = "video/mp4"
-                let fileName = "upload.mp4"
+                let mimeType = ChatConstants.MimeType.videoMP4
+                let fileName = ChatConstants.FileName.video//"upload.mp4"
                 
                 let replyRequest = ReplyMediaRequest(accessToken: /accessToken, roomID: /room_id, eventID: eventID, body: /body, msgType: /msgType,mimetype: mimeType,fileName: fileName,imageFilePath: imageFetched)
                 
@@ -181,10 +149,9 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate {
                     switch result {
                     case .success(let response):
                         print("Success: \(response.message)")
-                        
                         DispatchQueue.global().async {
                             DispatchQueue.main.async {
-                                self.delegate?.didReceiveData(data: "update")
+                                self.delegate?.didReceiveData(data: ChatConstants.Common.update)//"update")
                                 self.navigationController?.popViewController(animated: true)
                             }
                         }
@@ -196,14 +163,13 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate {
                 }
             }
             else{
-                ChatMediaUpload.shared.sendImageFromGalleryAPICall(video: videoFetched, msgType: "m.video", body:self.sendMsgTF.text) { result in
+                ChatMediaUpload.shared.sendImageFromGalleryAPICall(video: videoFetched, msgType: MessageType.video, body:self.sendMsgTF.text) { result in
                     switch result {
                     case .success(let message):
                         print("Success: \(message)")
-                        // Update UI or perform other actions on success
                         DispatchQueue.global().async {
                             DispatchQueue.main.async {
-                                self.delegate?.didReceiveData(data: "update")
+                                self.delegate?.didReceiveData(data: ChatConstants.Common.update)//"update")
                                 self.navigationController?.popViewController(animated: true)
                             }
                         }
@@ -216,8 +182,8 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate {
             if isReply {
                 let body = self.sendMsgTF.text
                 let msgType = MessageType.image
-                let mimeType = "image/jpeg"
-                let fileName = "a1.jpg"
+                let mimeType = ChatConstants.MimeType.imageJPEG//"image/jpeg"
+                let fileName = ChatConstants.FileName.image//"a1.jpg"
                 
                 let replyRequest = ReplyMediaRequest(accessToken: /accessToken, roomID: /room_id, eventID: eventID, body: /body, msgType: /msgType,mimetype: mimeType,fileName: fileName,imageFilePath: imageFetched)
                 
@@ -229,10 +195,9 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate {
                     switch result {
                     case .success(let response):
                         print("Success: \(response.message)")
-                        
                         DispatchQueue.global().async {
                             DispatchQueue.main.async {
-                                self.delegate?.didReceiveData(data: "update")
+                                self.delegate?.didReceiveData(data: ChatConstants.Common.update)//"update")
                                 self.navigationController?.popViewController(animated: true)
                             }
                         }
@@ -243,14 +208,13 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate {
                     }
                 }
             }else{
-                ChatMediaUpload.shared.sendImageFromGalleryAPICall(image: imageFetched, msgType: "m.image", body:self.sendMsgTF.text) { result in
+                ChatMediaUpload.shared.sendImageFromGalleryAPICall(image: imageFetched, msgType: MessageType.image, body:self.sendMsgTF.text) { result in
                     switch result {
                     case .success(let message):
                         print("Success: \(message)")
-                        // Update UI or perform other actions on success
                         DispatchQueue.global().async {
                             DispatchQueue.main.async {
-                                self.delegate?.didReceiveData(data: "update")
+                                self.delegate?.didReceiveData(data: ChatConstants.Common.update)
                                 self.navigationController?.popViewController(animated: true)
                             }
                         }
@@ -266,7 +230,7 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate {
 //MARK: - CUSTOM DELEGATES
 extension PublishMediaVC : DelegateTopView{
     func back() {
-        delegate?.didReceiveData(data: "back")
+        delegate?.didReceiveData(data: ChatConstants.Common.back)
         self.navigationController?.popViewController(animated: true)
     }
 }

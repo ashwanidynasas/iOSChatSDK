@@ -20,7 +20,7 @@ extension ChatRoomVC: DelegateTopView {
 extension ChatRoomVC : DelegatePublishMedia{
     
     func didReceiveData(data: String) {
-        if data == "update"{
+        if data == ChatConstants.Common.update{
             fetchMessages()
         }else{
             print("return from detail screen")
@@ -31,7 +31,7 @@ extension ChatRoomVC : DelegatePublishMedia{
 
 extension ChatRoomVC : DelegateMediaFullVC{
     func itemDeleteFromChat(_ didSendData: String) {
-        if didSendData == "deleteItem"{
+        if didSendData == ChatConstants.Common.deleteItem{
             fetchMessages()
         }
     }

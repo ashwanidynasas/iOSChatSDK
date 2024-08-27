@@ -51,8 +51,7 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
     //MARK: - VIEWMODEL
     let apiClient = RoomAPIClient()
     let viewModel = MessageViewModel()
-    private let mediaViewModel = ChatMediaViewModel()
-    private let replyViewModel = ChatReplyViewModel()
+//    private let replyViewModel = ChatReplyViewModel()
     
     // Constants
     let replyTextTVCell = "ReplyTextTVCell"
@@ -174,7 +173,7 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
     }
     
     func sendAudioMedia(){
-        APIManager.shared.sendImageFromGalleryAPICall(audio: audioFilename, msgType: "m.audio", body:"") { result in
+        ChatMediaUpload.shared.sendImageFromGalleryAPICall(audio: audioFilename, msgType: "m.audio", body:"") { result in
             switch result {
             case .success(let message):
                 print("Success: \(message)")
@@ -233,7 +232,13 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
             let body = self.sendMsgTF.text
             let msgType = "m.text"
 
-            replyViewModel.uploadFileChatReply(accessToken: /accessToken, roomID: /room_id, eventID: eventID, body: /body, msgType: msgType){ result in
+            let replyRequest = ReplyMediaRequest(accessToken: /accessToken, roomID: /room_id, eventID: eventID, body: /body, msgType: "m.text")
+            
+//            let mimeTypeAndFileName = ChatMediaUpload.shared.getMimeTypeAndFileName(for: /msgType)
+
+            let replyRequests = SendMediaRequest(accessToken: /accessToken, roomID: /room_id, body: /body, msgType: /msgType,eventID: eventID)
+
+            ChatMediaUpload.shared.uploadFileChatReply(replyRequest:replyRequests,isImage: false){ result in
                 switch result {
                 case .success(let response):
                     DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) {

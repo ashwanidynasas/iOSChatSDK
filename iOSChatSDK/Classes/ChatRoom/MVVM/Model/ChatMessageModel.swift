@@ -112,3 +112,20 @@ struct Unsigned: Codable {
     let age: Int?
 }
 
+struct SendMediaResponse: Codable {
+    let success: Bool
+    let message: String
+    let redirectUrl: String
+    let details: Details
+    
+    struct Details: Codable {
+        let response: String
+        let chatEventId: String
+        
+        enum CodingKeys: String, CodingKey {
+            case response
+            case chatEventId = "chat_event_id"
+        }
+    }
+}
+

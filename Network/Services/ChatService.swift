@@ -137,3 +137,102 @@ struct MessageRedactRequest: Codable {
     let eventID: String
     let body: String
 }
+
+
+//Media Request
+struct SendMediaRequest: Codable {
+    let accessToken: String
+    let roomID: String
+    let body: String
+    let msgType: String
+    let mimetype: String?
+    let fileName: String?
+    let mediaType: String?
+    let eventID: String?
+    var imageFilePath: UIImage? = nil
+    var videoFilePath: URL? = nil
+
+    enum CodingKeys: String, CodingKey {
+        case accessToken
+        case roomID
+        case eventID
+        case body
+        case msgType
+        case mimetype
+        case fileName
+        case mediaType
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(accessToken, forKey: .accessToken)
+        try container.encode(roomID, forKey: .roomID)
+        try container.encode(eventID, forKey: .eventID)
+        try container.encode(body, forKey: .body)
+        try container.encode(msgType, forKey: .msgType)
+        try container.encode(mimetype, forKey: .mimetype)
+        try container.encode(fileName, forKey: .fileName)
+        try container.encode(mediaType, forKey: .mediaType)
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        accessToken = try container.decode(String.self, forKey: .accessToken)
+        roomID = try container.decode(String.self, forKey: .roomID)
+        eventID = try container.decode(String.self, forKey: .eventID)
+        body = try container.decode(String.self, forKey: .body)
+        msgType = try container.decode(String.self, forKey: .msgType)
+        mimetype = try container.decode(String.self, forKey: .mimetype)
+        fileName = try container.decode(String.self, forKey: .fileName)
+        mediaType = try container.decode(String.self, forKey: .mediaType)
+        imageFilePath = nil
+        videoFilePath = nil
+    }
+    
+    init(accessToken: String, roomID: String, body: String, msgType: String, mimetype: String? = nil, fileName: String? = nil, mediaType: String? = "",eventID:String? = "", imageFilePath: UIImage? = nil, videoFilePath: URL? = nil) {
+        self.accessToken = accessToken
+        self.roomID = roomID
+        self.body = body
+        self.msgType = msgType
+        self.mimetype = mimetype
+        self.fileName = fileName
+        self.mediaType = mediaType
+        self.imageFilePath = imageFilePath
+        self.videoFilePath = videoFilePath
+        self.eventID = eventID
+    }
+}
+
+struct ReplyMediaRequest {
+    let accessToken: String
+    let roomID: String
+    let eventID: String
+    let body: String
+    let msgType: String
+    let mimetype: String?
+    let fileName: String?
+    let imageFilePath: UIImage?
+    let videoFilePath: URL?
+    
+    init(
+        accessToken: String,
+        roomID: String,
+        eventID: String,
+        body: String,
+        msgType: String,
+        mimetype: String? = nil,
+        fileName: String? = nil,
+        imageFilePath: UIImage? = nil,
+        videoFilePath: URL? = nil
+    ) {
+        self.accessToken = accessToken
+        self.roomID = roomID
+        self.eventID = eventID
+        self.body = body
+        self.msgType = msgType
+        self.mimetype = mimetype
+        self.fileName = fileName
+        self.imageFilePath = imageFilePath
+        self.videoFilePath = videoFilePath
+    }
+}

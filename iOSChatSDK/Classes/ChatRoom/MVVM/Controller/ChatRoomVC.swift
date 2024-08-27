@@ -527,8 +527,8 @@ extension ChatRoomVC{
             self.eventID = message.eventId
             removeCustomTabBar()
             bottomViewHandler?.BV_More_Appear()
-            if let msgType = MessageType(rawValue: message.content?.msgtype ?? "") {
-                if (msgType == .image) {
+            let msgType = /message.content?.msgtype
+                if msgType == MessageType.image {
                     guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(message.content?.S3MediaUrl ?? "")") else {
                         print("Error: Invalid video URL")
                         return
@@ -539,7 +539,7 @@ extension ChatRoomVC{
                         self.replyUserDesc.text = message.content?.body
                         self.replyUserName.text = message.sender
                     }
-                }else if (msgType == .audio) || (msgType == .video) {
+                }else if (msgType == MessageType.audio) || (msgType == MessageType.video) {
                     guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(message.content?.S3thumbnailUrl ?? "")") else {
                         print("Error: Invalid video URL")
                         return
@@ -557,7 +557,7 @@ extension ChatRoomVC{
                         self.replyUserName.text = message.sender
                     }
                 }
-            }
+            
             customTabBar = CustomTabBar(items: [.copy , .delete , .forward , .reply , .cancel])
             if let customTabBar = customTabBar {
                 customTabBar.translatesAutoresizingMaskIntoConstraints = false

@@ -215,7 +215,7 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate {
         }else{
             if isReply {
                 let body = self.sendMsgTF.text
-                let msgType = MessageType.image.rawValue
+                let msgType = MessageType.image
                 let mimeType = "image/jpeg"
                 let fileName = "a1.jpg"
                 

@@ -157,14 +157,14 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
         if let inReplyTo = message.content?.relatesTo?.inReplyTo {
             return UITableView.automaticDimension
         }
-        if let msgType = MessageType(rawValue: message.content?.msgtype ?? "") {
-            if (msgType == .image) || (msgType == .audio) || (msgType == .video) {
-                if message.content?.body == "" {
-                    return 200
-                }
-                return UITableView.automaticDimension
+        let msgType = /message.content?.msgtype
+        if (msgType == MessageType.image) || (msgType == MessageType.audio) || (msgType == MessageType.video) {
+            if message.content?.body == "" {
+                return 200
             }
+            return UITableView.automaticDimension
         }
+        
         return UITableView.automaticDimension
     }
 }

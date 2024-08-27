@@ -243,9 +243,9 @@ class ReplyMedia_MediaTextCell: UITableViewCell {
         configureTextMessage(message.content?.body ?? "", replyText: message.content?.relatesTo?.inReplyTo?.sender ?? "", replyImage: message.content?.relatesTo?.inReplyTo?.content?.S3thumbnailUrl ?? "", replyDesc: message.content?.relatesTo?.inReplyTo?.content?.body ?? "")
         
         // Handle different message types
-        if let msgType = MessageType(rawValue: message.content?.relatesTo?.inReplyTo?.content?.msgtype ?? "") {
+        let msgType = /message.content?.relatesTo?.inReplyTo?.content?.msgtype
             
-            if (msgType == .image) {
+            if (msgType == MessageType.image) {
                 guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(message.content?.relatesTo?.inReplyTo?.content?.S3MediaUrl ?? "")") else {
                     print("Error: Invalid video URL")
                     return
@@ -253,7 +253,7 @@ class ReplyMedia_MediaTextCell: UITableViewCell {
                 DispatchQueue.main.async {
                     self.replyImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: ReplyMedia_MediaTextCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
                 }
-            }else if (msgType == .audio) || (msgType == .video) {
+            }else if (msgType == MessageType.audio) || (msgType == MessageType.video) {
                 guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(message.content?.relatesTo?.inReplyTo?.content?.S3thumbnailUrl ?? "")") else {
                     print("Error: Invalid video URL")
                     return
@@ -262,7 +262,7 @@ class ReplyMedia_MediaTextCell: UITableViewCell {
                     self.replyImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: ReplyMedia_MediaTextCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
                 }
             }
-        }
+        
 
     }
 

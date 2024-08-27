@@ -163,18 +163,20 @@ class ChatMessageCell: UITableViewCell {
         readIndicatorImageView.image = UIImage(named: "read_indicator", in: Bundle(for: ChatMessageCell.self), compatibleWith: nil)
 
         // Handle different message types
-        if let msgType = MessageType(rawValue: message.content?.msgtype ?? "") {
+        let msgType = /message.content?.msgtype
             switch msgType {
-            case .text:
+            case MessageType.text:
                 configureTextMessage(message.content?.body ?? "")
-            case .audio:
+            case MessageType.audio:
                 configureAudioMessage(message.content?.body ?? "")
-            case .video:
+            case MessageType.video:
                 configureVideoMessage(message.content?.url ?? "")
-            case .image:
+            case MessageType.image:
                 configureImageMessage(message.content?.body ?? "", mediaUrl: message.content?.url ?? "")
+            default:
+                break
             }
-        }
+        
         // Adjust constraints based on content
         updateConstraintsForContent()
 

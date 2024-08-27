@@ -52,9 +52,7 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
     let apiClient = RoomAPIClient()
     let viewModel = MessageViewModel()
 //    private let replyViewModel = ChatReplyViewModel()
-    
-    // Constants
-    let replyTextTVCell = "ReplyTextTVCell"
+
     var chatUserID: String!
     var currentUser: String!
     var isToggled = false
@@ -88,7 +86,6 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
         customTopView.delegate = self
         backBottomView.backgroundColor = .clear
         setupUI()
-        registerNib()
         createRoomCall()
         setupCustomBottomView()
 //        fetchMessages()
@@ -429,24 +426,7 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
         backBottomViewHeight.constant = 56.0
         scrollToBottom()
     }
-
-    // MARK: - Publish Screen
-    func gotoPublishView(){
-        let storyboard = UIStoryboard(name: "MainChat", bundle: Bundle(for: ChatRoomVC.self))
-        guard let viewController = storyboard.instantiateViewController(withIdentifier: "PublishMediaVC") as? PublishMediaVC else {
-            fatalError("ViewController Not Found")
-        }
-        viewController.currentUser = currentUser
-        viewController.videoFetched = videoFetched
-        viewController.imageFetched = imageFetched
-        viewController.delegate = self
-        viewController.isReply = isReply
-        viewController.username = self.replyUserName.text
-        viewController.userDesc = self.replyUserDesc.text
-        viewController.userImage = self.replyUserImgView.image
-        viewController.eventID = self.eventID
-        self.navigationController?.pushViewController(viewController, animated: true)
-    }
+    
     // MARK: - Open Camera Function
     private func openCamera() {
       guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
@@ -605,7 +585,6 @@ extension ChatRoomVC{
         case Item.copy.ordinal():
             print("copy")
         case Item.deleteB.ordinal():
-            print("delete")
             DispatchQueue.main.async {
                 self.redactMessage()
                 self.bottomViewHandler?.BV_TF_Appear()
@@ -625,7 +604,7 @@ extension ChatRoomVC{
                 self.bottomViewHandler?.BV_TF_Appear()
             }
         default:
-            print("perform action")
+            break
         }
     }
 }
@@ -678,5 +657,24 @@ extension ChatRoomVC{
         longPressRecognizer.minimumPressDuration = 1.0
         sendBtn.addGestureRecognizer(longPressRecognizer)
         setupAudio()
+    }
+}
+
+//MARK: - NAVIGATION
+extension ChatRoomVC{
+    
+    func 
+    publish(){
+        guard let vc = UIStoryboard(name: SB.main, bundle: Bundle(for: ChatRoomVC.self)).instantiateViewController(withIdentifier: String(describing: PublishMediaVC.self)) as? PublishMediaVC else { return  }
+        vc.currentUser = currentUser
+        vc.videoFetched = videoFetched
+        vc.imageFetched = imageFetched
+        vc.delegate     = self
+        vc.isReply      = isReply
+        vc.username     = replyUserName.text
+        vc.userDesc     = replyUserDesc.text
+        vc.userImage    = replyUserImgView.image
+        vc.eventID      =  eventID
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -23,4 +23,9 @@ extension UIView {
 
 extension UITableView{
     
+    func registerCells(_ cells : [AnyClass]){
+        for cell in cells{
+            self.register(cell, forCellReuseIdentifier: String(describing: cell.self))
+        }
+    }
 }

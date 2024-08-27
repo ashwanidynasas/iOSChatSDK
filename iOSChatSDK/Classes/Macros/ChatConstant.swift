@@ -182,3 +182,7 @@ struct Cell {
     static let ReplyMediaText_MediaTextCell = "ReplyMediaText_MediaTextCell"
     
 }
+
+struct SB {
+    static let main = "MainChat"
+}

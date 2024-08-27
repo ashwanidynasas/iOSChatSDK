@@ -102,7 +102,7 @@ class MediaFullVC: UIViewController {
     }
     
     func playVideo() {
-        guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(s3MediaURL ?? "")") else {
+        guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(/s3MediaURL)") else {
             print("Error: Invalid video URL")
             return
         }

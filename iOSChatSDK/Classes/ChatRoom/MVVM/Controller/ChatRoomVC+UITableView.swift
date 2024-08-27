@@ -10,29 +10,23 @@ import Foundation
 //MARK: - UITABLEVIEW DELEGATES
 extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
     
-    func registerNib() {
-        let nib = UINib(nibName: Cell.custom, bundle: Bundle(for: CustomTableViewCell.self))
-        chatRoomTableView.register(nib, forCellReuseIdentifier: Cell.custom)
+    func setupTable(){
         chatRoomTableView.rowHeight = UITableView.automaticDimension
         chatRoomTableView.estimatedRowHeight = 100
+        chatRoomTableView.separatorStyle = .none
         let medianib = UINib(nibName: Cell.mediaText, bundle: Bundle(for: MediaTextTVCell.self))
         chatRoomTableView.register(medianib, forCellReuseIdentifier: Cell.mediaText)
-        
-    }
-    
-    func setupTable(){
-        chatRoomTableView.separatorStyle = .none
-        chatRoomTableView.register(ChatMessageCell.self, forCellReuseIdentifier: Cell.message)
-        chatRoomTableView.register(MediaContentCell.self, forCellReuseIdentifier: Cell.media)
-        chatRoomTableView.register(ReplyText_TextCell.self, forCellReuseIdentifier: String(describing: ReplyText_TextCell.self))
-        chatRoomTableView.register(ReplyText_MediaCell.self, forCellReuseIdentifier: String(describing: ReplyText_MediaCell.self))
-        chatRoomTableView.register(ReplyText_MediaTextCell.self, forCellReuseIdentifier: String(describing: ReplyText_MediaTextCell.self))
-        chatRoomTableView.register(ReplyMedia_TextCell.self, forCellReuseIdentifier: String(describing: ReplyMedia_TextCell.self))
-        chatRoomTableView.register(ReplyMedia_MediaCell.self, forCellReuseIdentifier: String(describing: ReplyMedia_MediaCell.self))
-        chatRoomTableView.register(ReplyMedia_MediaTextCell.self, forCellReuseIdentifier: String(describing: ReplyMedia_MediaTextCell.self))
-        chatRoomTableView.register(ReplyMediaText_TextCell.self, forCellReuseIdentifier: String(describing: ReplyMediaText_TextCell.self))
-        chatRoomTableView.register(ReplyMediaText_MediaCell.self, forCellReuseIdentifier: String(describing: ReplyMediaText_MediaCell.self))
-        chatRoomTableView.register(ReplyMediaText_MediaTextCell.self, forCellReuseIdentifier: String(describing: ReplyMediaText_MediaTextCell.self))
+        chatRoomTableView.registerCells([ChatMessageCell.self,
+                                         MediaContentCell.self,
+                                         ReplyText_TextCell.self,
+                                         ReplyText_MediaCell.self ,
+                                         ReplyText_MediaTextCell.self , 
+                                         ReplyMedia_TextCell.self,
+                                         ReplyMedia_MediaCell.self,
+                                         ReplyMedia_MediaTextCell.self,
+                                         ReplyMediaText_TextCell.self,
+                                         ReplyMediaText_MediaCell.self,
+                                         ReplyMediaText_MediaTextCell.self])
     }
     
     
@@ -168,3 +162,4 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
         return UITableView.automaticDimension
     }
 }
+

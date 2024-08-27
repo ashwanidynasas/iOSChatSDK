@@ -7,29 +7,37 @@
 
 import Foundation
 
+struct ImagePickerMedia{
+    static let image = "public.image"
+    static let video = "public.movie"
+}
+
+//MARK: - IMAGE PICKER DELEGATES
 extension ChatRoomVC : UIImagePickerControllerDelegate{
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
         imageFetched = nil
         videoFetched = nil
+        
         if let mediaType = info[UIImagePickerController.InfoKey.mediaType] as? String {
-            if mediaType == "public.image" {
+            
+            if mediaType == ImagePickerMedia.image {
                 if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
                     imageFetched = selectedImage
-                    gotoPublishView()
+                    publish()
                 }
-            } else if mediaType == "public.movie" {
+            } else if mediaType == ImagePickerMedia.video {
                 if let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? URL {
                     videoFetched = videoURL
-                    gotoPublishView()
+                    publish()
                 }
             }
         }
-        // Dismiss the picker
         picker.dismiss(animated: true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        // Dismiss the picker
         picker.dismiss(animated: true, completion: nil)
     }
 }

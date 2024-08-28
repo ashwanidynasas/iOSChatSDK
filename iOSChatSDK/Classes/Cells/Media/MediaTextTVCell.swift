@@ -37,7 +37,7 @@ class MediaTextTVCell: UITableViewCell {
 
         let timestamp = Date(timeIntervalSince1970: Double(message.originServerTs ?? 0) / 1000)
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = Constants.dateFormat
+        dateFormatter.dateFormat = ChatConstants.Bubble.dateFormat
         timestampLabel.text = dateFormatter.string(from: timestamp)
         applyBubbleShape(isCurrentUser: isCurrentUser)
 
@@ -54,23 +54,23 @@ class MediaTextTVCell: UITableViewCell {
             playButton.setImage(nil, for: .normal)
             if let imageUrlString = message.content?.url, let imageUrl = imageUrlString.modifiedString.mediaURL {
                 // Load the image from the URL
-                self.messageImageView.sd_setImage(with: imageUrl, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                self.messageImageView.sd_setImage(with: imageUrl, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
                 
             }
         }else if message.content?.msgtype == MessageType.video {
             if let videoURL = message.content?.S3thumbnailUrl {
                 fetchThumbnail(videoURL)
             }else{
-                let imageView = UIImageView(image: UIImage(named: "userPlaceholder", in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil)) // Replace with your image names
+                let imageView = UIImageView(image: UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil)) // Replace with your image names
 
                 self.messageImageView = imageView
             }
-            self.playButton.setImage(UIImage(named: "PlayIcon", in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil), for: .normal)
+            self.playButton.setImage(UIImage(named: ChatConstants.Image.playIcon, in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil), for: .normal)
 
         }else if message.content?.msgtype == MessageType.audio {
-            let imageView = UIImageView(image: UIImage(named: "userPlaceholder", in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil)) // Replace with your image names
+            let imageView = UIImageView(image: UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil)) // Replace with your image names
             self.messageImageView = imageView
-            self.playButton.setImage(UIImage(named: "PlayIcon", in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil), for: .normal)
+            self.playButton.setImage(UIImage(named: ChatConstants.Image.playIcon, in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil), for: .normal)
             
         }
         
@@ -78,12 +78,12 @@ class MediaTextTVCell: UITableViewCell {
     }
     
     func fetchThumbnail(_ s3MediaUrl:String) {
-        guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(s3MediaUrl)") else {
+        guard let videoURL = URL(string: "\(ChatConstants.S3Media.URL)\(s3MediaUrl)") else {
             print("Error: Invalid video URL")
             return
         }
         DispatchQueue.main.async {
-            self.messageImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+            self.messageImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
 
         }
 
@@ -93,11 +93,11 @@ class MediaTextTVCell: UITableViewCell {
         // Initialization code
         backgroundColor = .clear
         bubbleBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-        bubbleBackgroundView.layer.cornerRadius = Constants.bubbleCornerRadius
-        bubbleBackgroundView.layer.shadowColor = Constants.bubbleShadowColor
-        bubbleBackgroundView.layer.shadowOffset = Constants.bubbleShadowOffset
-        bubbleBackgroundView.layer.shadowOpacity = Constants.bubbleShadowOpacity
-        bubbleBackgroundView.layer.shadowRadius = Constants.bubbleShadowRadius
+        bubbleBackgroundView.layer.cornerRadius = ChatConstants.ReplyBubble.cornerRadius
+        bubbleBackgroundView.layer.shadowColor = ChatConstants.Bubble.shadowColor
+        bubbleBackgroundView.layer.shadowOffset = ChatConstants.Bubble.shadowOffset
+        bubbleBackgroundView.layer.shadowOpacity = ChatConstants.Bubble.shadowOpacity
+        bubbleBackgroundView.layer.shadowRadius = ChatConstants.Bubble.shadowRadius
         bubbleBackgroundView.backgroundColor =  Colors.Circles.violet
 
         messageImageView.layer.cornerRadius = messageImageView.frame.size.width/2
@@ -106,7 +106,7 @@ class MediaTextTVCell: UITableViewCell {
         imageBackView.layer.cornerRadius = imageBackView.frame.size.width/2
         imageBackView.clipsToBounds = true
 
-        playButton.setImage(UIImage(named: "PlayIcon", in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil), for: .normal)
+        playButton.setImage(UIImage(named: ChatConstants.Image.playIcon, in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil), for: .normal)
 
         // Setup tap gesture recognizer
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
@@ -128,22 +128,22 @@ class MediaTextTVCell: UITableViewCell {
         }
     }
     
-    private struct Constants {
-        static let bubbleCornerRadius: CGFloat = 20
-        static let bubbleShadowColor: CGColor = UIColor.black.cgColor
-        static let bubbleShadowOffset = CGSize(width: 0, height: 2)
-        static let bubbleShadowOpacity: Float = 0.3
-        static let bubbleShadowRadius: CGFloat = 4
-        static let messageFont: UIFont = .systemFont(ofSize: 12)
-        static let timestampFont: UIFont = .systemFont(ofSize: 8)
-        static let timestampColor: UIColor = .lightGray
-        static let readIndicatorSize: CGFloat = 7
-        static let padding: CGFloat = 12
-        static let timestampPadding: CGFloat = 4
-        static let minBubbleWidth: CGFloat = 100
-        static let maxBubbleWidthRatio: CGFloat = 10.75
-        static let dateFormat: String = "hh:mm a"
-    }
+//    private struct Constants {
+//        static let bubbleCornerRadius: CGFloat = 20
+//        static let bubbleShadowColor: CGColor = UIColor.black.cgColor
+//        static let bubbleShadowOffset = CGSize(width: 0, height: 2)
+//        static let bubbleShadowOpacity: Float = 0.3
+//        static let bubbleShadowRadius: CGFloat = 4
+//        static let messageFont: UIFont = .systemFont(ofSize: 12)
+//        static let timestampFont: UIFont = .systemFont(ofSize: 8)
+//        static let timestampColor: UIColor = .lightGray
+//        static let readIndicatorSize: CGFloat = 7
+//        static let padding: CGFloat = 12
+//        static let timestampPadding: CGFloat = 4
+//        static let minBubbleWidth: CGFloat = 100
+//        static let maxBubbleWidthRatio: CGFloat = 10.75
+//        static let dateFormat: String = "hh:mm a"
+//    }
 
     
    

@@ -12,7 +12,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
     
     func setupTable(){
         chatRoomTableView.rowHeight = UITableView.automaticDimension
-        chatRoomTableView.estimatedRowHeight = Height_Chat.estimationRowHeight
+        chatRoomTableView.estimatedRowHeight = ChatConstants.BubbleHeight.estimationRowHeight
         chatRoomTableView.separatorStyle = .none
         let medianib = UINib(nibName: Cell_Chat.mediaText, bundle: Bundle(for: MediaTextTVCell.self))
         chatRoomTableView.register(medianib, forCellReuseIdentifier: Cell_Chat.mediaText)
@@ -149,7 +149,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
         let msgType = /message.content?.msgtype
         if (msgType == MessageType.image) || (msgType == MessageType.audio) || (msgType == MessageType.video) {
             if message.content?.body == "" {
-                return Height_Chat.cellHeight
+                return ChatConstants.BubbleHeight.cellHeight
             }
             return UITableView.automaticDimension
         }

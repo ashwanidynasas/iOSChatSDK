@@ -5,13 +5,15 @@
 //  Created by Ashwani on 11/07/24.
 //
 
+//MARK: - MODULES
 import UIKit
-//import IQKeyboardManager
 import AVKit
 import AVFoundation
 
-class PublishMediaVC: UIViewController,UITextFieldDelegate {
+//MARK: - CLASS
+class PublishMediaVC: UIViewController {
     
+    //MARK: - OUTLETS
     @IBOutlet weak var topView: CustomTopView!
     @IBOutlet weak var fullImgView:UIImageView!
     @IBOutlet weak var sendMsgTF:UITextField!
@@ -27,6 +29,7 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var replyBottomView:UIView!
     @IBOutlet weak var replyBottomViewHeight: NSLayoutConstraint!
     
+    //MARK: - PROPERTIES
     weak var delegate: DelegatePublishMedia?
     
     var currentUser: String!
@@ -38,33 +41,32 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate {
     var userImage:UIImage! = nil
     var eventID: String! = ""
     
-    //    var videoPlayerView: VideoPlayerCustomView!
     var videoPlayerContainerView: VideoPlayerContainerView!
     var player: AVPlayer?
     
+    //MARK: - VIEW CYCLE
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if isReply {
-            self.replyBottomView.isHidden = false
-        }else{
-            self.replyBottomView.isHidden = true
-        }
-        self.replyUserName.text = username
-        self.replyUserDesc.text = userDesc
-        self.replyUserImgView.image = userImage
         
+        replyBottomView.isHidden = !isReply
+        replyUserName.text = username
+        replyUserDesc.text = userDesc
+        replyUserImgView.image = userImage
         setupUI()
         setupVideoPlayerContainerView()
         topView.searchButton.isHidden = true
         sendBtn.tintColor = Colors.Circles.violet
-        self.fullImgView.image = imageFetched
-        self.sendMsgTF.inputAccessoryView = UIView()
-        //        IQKeyboardManager.shared().isEnabled = false
+        fullImgView.image = imageFetched
+        sendMsgTF.inputAccessoryView = UIView()
         videoPlayerBackView.isHidden = true
         
         if imageFetched == nil {
@@ -73,61 +75,13 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate {
         }
     }
     
+    //MARK: - ACTIONS
     @IBAction func replyCancelView(_ sender: UIButton) {
         isReply = false
-        self.replyBottomView.isHidden = true
+        replyBottomView.isHidden = true
     }
-    
-    func setupVideoPlayerContainerView() {
-        videoPlayerContainerView = VideoPlayerContainerView(frame: self.videoPlayerBackView.bounds)
-        videoPlayerContainerView.translatesAutoresizingMaskIntoConstraints = false
-        self.videoPlayerBackView.addSubview(videoPlayerContainerView)
-        
-        NSLayoutConstraint.activate([
-            videoPlayerContainerView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            videoPlayerContainerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            videoPlayerContainerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            videoPlayerContainerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-        ])
-    }
-    
-    func playVideo() {
-        if  let videoURL = videoFetched{
-            let player = AVPlayer(url: videoURL)
-            let avPlayerController = AVPlayerViewController()
-            avPlayerController.player = player;
-            avPlayerController.view.frame = self.videoPlayerBackView.bounds;
-            self.addChild(avPlayerController)
-            self.videoPlayerBackView.addSubview(avPlayerController.view);
-            
-        }
-    }
-        
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
-    }
-    
-    func setupUI(){
-        topView.titleLabel.text = currentUser
-        topView.delegate = self
-        sendMsgTF.delegate = self
-        backTFView.layer.cornerRadius = 18
-        backTFView.clipsToBounds = true
-        sendBtn.makeCircular()
-        self.view.setGradientBackground(startColor: Colors.Circles.black, endColor: Colors.Circles.violet)
-    }
-    
-    
     
     @IBAction func sendAction(_ sender: UIButton) {
-//        let room_id = UserDefaults.standard.string(forKey: "room_id")
-//        let accessToken = UserDefaults.standard.string(forKey: "access_token")
         let room_id = UserDefaultsManager.roomID
         let accessToken = UserDefaultsManager.accessToken
         
@@ -139,13 +93,27 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate {
                 let mimeType = ChatConstants.MimeType.videoMP4
                 let fileName = ChatConstants.FileName.video//"upload.mp4"
                 
-                let replyRequest = ReplyMediaRequest(accessToken: /accessToken, roomID: /room_id, eventID: eventID, body: /body, msgType: /msgType,mimetype: mimeType,fileName: fileName,imageFilePath: imageFetched)
+                let replyRequest = ReplyMediaRequest(accessToken: /accessToken, 
+                                                     roomID: /room_id,
+                                                     eventID: eventID,
+                                                     body: /body,
+                                                     msgType: /msgType,
+                                                     mimetype: mimeType,
+                                                     fileName: fileName,
+                                                     imageFilePath: imageFetched)
                 
                 let mimeTypeAndFileName = ChatMediaUpload.shared.getMimeTypeAndFileName(for: /msgType)
                 
-                let replyRequests = SendMediaRequest(accessToken: /accessToken, roomID: /room_id, body: /body, msgType: /msgType, mediaType: mimeTypeAndFileName.mediaType,eventID: eventID,imageFilePath: imageFetched)
+                let replyRequests = SendMediaRequest(accessToken: /accessToken, 
+                                                     roomID: /room_id,
+                                                     body: /body,
+                                                     msgType: /msgType,
+                                                     mediaType: mimeTypeAndFileName.mediaType,
+                                                     eventID: eventID,
+                                                     imageFilePath: imageFetched)
                 
-                ChatMediaUpload.shared.uploadFileChatReply(replyRequest:replyRequests,isImage: false){ result in
+                ChatMediaUpload.shared.uploadFileChatReply(replyRequest: replyRequests,
+                                                           isImage: false ){ result in
                     switch result {
                     case .success(let response):
                         print("Success: \(response.message)")
@@ -185,11 +153,24 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate {
                 let mimeType = ChatConstants.MimeType.imageJPEG//"image/jpeg"
                 let fileName = ChatConstants.FileName.image//"a1.jpg"
                 
-                let replyRequest = ReplyMediaRequest(accessToken: /accessToken, roomID: /room_id, eventID: eventID, body: /body, msgType: /msgType,mimetype: mimeType,fileName: fileName,imageFilePath: imageFetched)
+                let replyRequest = ReplyMediaRequest(accessToken: /accessToken, 
+                                                     roomID: /room_id,
+                                                     eventID: eventID,
+                                                     body: /body,
+                                                     msgType: /msgType,
+                                                     mimetype: mimeType,
+                                                     fileName: fileName,
+                                                     imageFilePath: imageFetched)
                 
                 let mimeTypeAndFileName = ChatMediaUpload.shared.getMimeTypeAndFileName(for: /msgType)
                 
-                let replyRequests = SendMediaRequest(accessToken: /accessToken, roomID: /room_id, body: /body, msgType: /msgType, mediaType: mimeTypeAndFileName.mediaType,eventID: eventID,imageFilePath: imageFetched)
+                let replyRequests = SendMediaRequest(accessToken: /accessToken, 
+                                                     roomID: /room_id,
+                                                     body: /body,
+                                                     msgType: /msgType,
+                                                     mediaType: mimeTypeAndFileName.mediaType,
+                                                     eventID: eventID,
+                                                     imageFilePath: imageFetched)
                 
                 ChatMediaUpload.shared.uploadFileChatReply(replyRequest:replyRequests,isImage: true){ result in
                     switch result {
@@ -227,6 +208,44 @@ class PublishMediaVC: UIViewController,UITextFieldDelegate {
     }
 }
 
+//MARK: - SETUP UI
+extension PublishMediaVC{
+    func setupUI(){
+        topView.titleLabel.text = currentUser
+        topView.delegate = self
+        sendMsgTF.delegate = self
+        backTFView.layer.cornerRadius = 18
+        backTFView.clipsToBounds = true
+        sendBtn.makeCircular()
+        self.view.setGradientBackground(startColor: Colors.Circles.black, endColor: Colors.Circles.violet)
+    }
+    
+    func setupVideoPlayerContainerView() {
+        videoPlayerContainerView = VideoPlayerContainerView(frame: self.videoPlayerBackView.bounds)
+        videoPlayerContainerView.translatesAutoresizingMaskIntoConstraints = false
+        self.videoPlayerBackView.addSubview(videoPlayerContainerView)
+        
+        NSLayoutConstraint.activate([
+            videoPlayerContainerView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            videoPlayerContainerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            videoPlayerContainerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            videoPlayerContainerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+        ])
+    }
+    
+    func playVideo() {
+        if  let videoURL = videoFetched{
+            let player = AVPlayer(url: videoURL)
+            let avPlayerController = AVPlayerViewController()
+            avPlayerController.player = player
+            avPlayerController.view.frame = self.videoPlayerBackView.bounds
+            self.addChild(avPlayerController)
+            self.videoPlayerBackView.addSubview(avPlayerController.view)
+            
+        }
+    }
+}
+
 //MARK: - CUSTOM DELEGATES
 extension PublishMediaVC : DelegateTopView{
     func back() {
@@ -235,7 +254,14 @@ extension PublishMediaVC : DelegateTopView{
     }
 }
 
+extension PublishMediaVC : UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
 
+//MARK: - VIEW
 class VideoPlayerContainerView: UIView {
     var playerViewController: AVPlayerViewController?
     

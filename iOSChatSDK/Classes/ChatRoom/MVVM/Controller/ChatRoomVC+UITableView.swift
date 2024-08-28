@@ -159,7 +159,19 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
     
 }
 
+//MARK: - SCROLL VIEW
+extension ChatRoomVC{
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        isScrolling = true
+    }
 
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            isScrolling = false
+        }
+    }
 
-
-
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        isScrolling = false
+    }
+}

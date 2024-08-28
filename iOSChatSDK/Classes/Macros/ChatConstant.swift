@@ -32,25 +32,25 @@ struct ChatConstants {
     }
     
     struct Storyboard {
-        static let mainChat = "MainChat"
-        static let mainChatVCIdentifier = "MainChatVC"
+        static let mainChat                   = "MainChat"
+        static let mainChatVCIdentifier       = "MainChatVC"
         static let connectionListVCIdentifier = "ConnectionListVC"
-        static let chatRoomVCIdentifier = "ChatRoomVC"
+        static let chatRoomVCIdentifier       = "ChatRoomVC"
     }
     // Media Types
     struct MediaType {
         static let image = "image"
         static let video = "video"
-        static let file = "file"
+        static let file  = "file"
         static let audio = "audio"
     }
     
     // MIME Types
     struct MimeType {
-        static let imageJPEG = "image/jpeg"
-        static let videoMP4 = "video/mp4"
+        static let imageJPEG  = "image/jpeg"
+        static let videoMP4   = "video/mp4"
         static let filePython = "application/x-python-code"
-        static let audioMP3 = "audio/mp3"
+        static let audioMP3   = "audio/mp3"
     }
     
     // File Names
@@ -172,21 +172,21 @@ struct ChatMessageCellConstant {
 
 
 struct MessageType {
-    static let text = "m.text"
-    static let audio = "m.audio"
-    static let video = "m.video"
-    static let image = "m.image"
-    static let file = "m.file"
+    static let text    = "m.text"
+    static let audio   = "m.audio"
+    static let video   = "m.video"
+    static let image   = "m.image"
+    static let file    = "m.file"
     static let roomMsg = "m.room.message"
 }
 
 struct Cell_Chat {
+    
     static let custom    = "CustomTableViewCell"
     static let mediaText = "MediaTextTVCell"
     
     static let message = "ChatMessageCell"
     static let media = "MediaContentCell"
-    
     
     static let ReplyText_TextCell = "ReplyText_TextCell"
     static let ReplyText_MediaCell = "ReplyText_MediaCell"

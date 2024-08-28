@@ -51,19 +51,23 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
     //MARK: - VIEWMODEL
     let apiClient = RoomAPIClient()
     let viewModel = MessageViewModel()
-//    private let replyViewModel = ChatReplyViewModel()
+    
+    //scroll
+    var isScrolling = false
+    
+    //timer
+    var timer: Timer?
+    private var fetchTimer: Timer?
+    var recordingDuration: TimeInterval = 0
 
     var chatUserID: String!
     var currentUser: String!
     var isToggled = false
     var isReply = false
-    private var isUserScrolling = false
     var imageFetched: UIImage? = nil
     var videoFetched: URL?
     var audioFilename: URL!
-    var timer: Timer?
-    private var fetchTimer: Timer?
-    var recordingDuration: TimeInterval = 0
+    
     private var customTabBar: CustomTabBar?
     var bottomViewHandler: BottomViewHandler?
     var eventID: String! = ""
@@ -112,11 +116,6 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
         //fetchTimer = Timer.scheduledTimer(timeInterval: 100.0, target: self, selector: #selector(fetchMessages), userInfo: nil, repeats: true)
     }
     
-    
-    
-
-    
-    
     @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
         if gestureRecognizer.state == .began {
             print("Long press detected")
@@ -131,7 +130,6 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
 
     @objc func micButtonTapped() {
         print("Mic button tapped")
-
     }
     
     @objc func updateTimer() {
@@ -284,7 +282,7 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
     }
     
     private func scrollToBottom() {
-        guard !isUserScrolling else { return }
+        guard !isScrolling else { return }
         DispatchQueue.main.async {
             if self.viewModel.messages.isEmpty {
                 return
@@ -609,23 +607,7 @@ extension ChatRoomVC{
     }
 }
 
-//MARK: - SCROLL VIEW
-extension ChatRoomVC{
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        isUserScrolling = true
-    }
 
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if !decelerate {
-            isUserScrolling = false
-        }
-    }
-
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        isUserScrolling = false
-    }
-
-}
 
 //MARK: - SETUP UI
 extension ChatRoomVC{
@@ -663,8 +645,7 @@ extension ChatRoomVC{
 //MARK: - NAVIGATION
 extension ChatRoomVC{
     
-    func 
-    publish(){
+    func publish(){
         guard let vc = UIStoryboard(name: SB.main, bundle: Bundle(for: ChatRoomVC.self)).instantiateViewController(withIdentifier: String(describing: PublishMediaVC.self)) as? PublishMediaVC else { return  }
         vc.currentUser = currentUser
         vc.videoFetched = videoFetched

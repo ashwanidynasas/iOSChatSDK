@@ -11,6 +11,7 @@ import SDWebImage
 
 
 class ReplyText_MediaCell: UITableViewCell {
+    
     private let bubbleBackgroundView = UIView()
     let playButton = UIButton() // Added play button
     weak var delegate: DelegatePlay?

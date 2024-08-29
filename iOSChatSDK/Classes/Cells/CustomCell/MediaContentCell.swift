@@ -40,20 +40,20 @@ class MediaContentCell: UITableViewCell {
         backgroundColor = .clear
 
         bubbleBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-        bubbleBackgroundView.layer.cornerRadius = Constants.bubbleDiameter / 2
+        bubbleBackgroundView.layer.cornerRadius = ChatConstants.Bubble.cornerRadius//Constants.bubbleDiameter / 2
         bubbleBackgroundView.clipsToBounds = true
-        bubbleBackgroundView.layer.borderWidth = 3.0
+        bubbleBackgroundView.layer.borderWidth = ChatConstants.Bubble.borderWidth//3.0
         bubbleBackgroundView.layer.borderColor = UIColor.white.cgColor
         contentView.addSubview(bubbleBackgroundView)
 
         messageImageView.contentMode = .scaleAspectFill
         messageImageView.translatesAutoresizingMaskIntoConstraints = false
-        messageImageView.layer.cornerRadius = Constants.bubbleDiameter / 2
+        messageImageView.layer.cornerRadius = ChatConstants.Bubble.cornerRadius//Constants.bubbleDiameter / 2
         messageImageView.clipsToBounds = true
         bubbleBackgroundView.addSubview(messageImageView)
         
-        timestampLabel.font = Constants.timestampFont
-        timestampLabel.textColor = Constants.timestampColor
+        timestampLabel.font = ChatConstants.Bubble.timeStampFont//Constants.timestampFont
+        timestampLabel.textColor = ChatConstants.Bubble.timeStampColor//Constants.timestampColor
         timestampLabel.textAlignment = .center
         timestampLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(timestampLabel)
@@ -93,30 +93,30 @@ class MediaContentCell: UITableViewCell {
             delegate?.didLongPressPlayButton(in: self)
         }
     }
-    private struct Constants {
-        static let bubbleDiameter: CGFloat = 170
-        static let timestampFont: UIFont = .systemFont(ofSize: 8)
-        static let timestampColor: UIColor = .lightGray
-        static let readIndicatorSize: CGFloat = 7
-        static let padding: CGFloat = 12
-        static let timestampPadding: CGFloat = 4
-        static let dateFormat: String = "hh:mm a"
-        static let playButtonSize: CGFloat = 30
-
-    }
+//    private struct Constants {
+//        static let bubbleDiameter: CGFloat = 170
+//        static let timestampFont: UIFont = .systemFont(ofSize: 8)
+//        static let timestampColor: UIColor = .lightGray
+//        static let readIndicatorSize: CGFloat = 7
+//        static let padding: CGFloat = 12
+//        static let timestampPadding: CGFloat = 4
+//        static let dateFormat: String = "hh:mm a"
+//        static let playButtonSize: CGFloat = 30
+//
+//    }
     private func setupConstraints() {
         
-        leadingConstraint = bubbleBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32)
-        trailingConstraint = bubbleBackgroundView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32)
-        bubbleHeightConstraint = bubbleBackgroundView.heightAnchor.constraint(equalToConstant: Constants.bubbleDiameter)
-        bubbleWidthConstraint = bubbleBackgroundView.widthAnchor.constraint(equalToConstant: Constants.bubbleDiameter)
+        leadingConstraint = bubbleBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: ChatConstants.Bubble.leadAnchor)
+        trailingConstraint = bubbleBackgroundView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: ChatConstants.Bubble.trailAnchor)
+        bubbleHeightConstraint = bubbleBackgroundView.heightAnchor.constraint(equalToConstant: ChatConstants.Bubble.diameter)
+        bubbleWidthConstraint = bubbleBackgroundView.widthAnchor.constraint(equalToConstant: ChatConstants.Bubble.diameter)
         
         messageImageViewHeightConstraint = messageImageView.heightAnchor.constraint(equalTo: bubbleBackgroundView.heightAnchor)
         messageImageViewWidthConstraint = messageImageView.widthAnchor.constraint(equalTo: bubbleBackgroundView.widthAnchor)
         
         NSLayoutConstraint.activate([
-            bubbleBackgroundView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            bubbleBackgroundView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
+            bubbleBackgroundView.topAnchor.constraint(equalTo: topAnchor, constant: ChatConstants.Bubble.topAnchor),
+            bubbleBackgroundView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: ChatConstants.Bubble.bottomAncher),
             bubbleHeightConstraint,
             bubbleWidthConstraint,
 
@@ -127,26 +127,25 @@ class MediaContentCell: UITableViewCell {
             
             playButton.centerXAnchor.constraint(equalTo: messageImageView.centerXAnchor),
             playButton.centerYAnchor.constraint(equalTo: messageImageView.centerYAnchor),
-            playButton.widthAnchor.constraint(equalToConstant: Constants.playButtonSize),
-            playButton.heightAnchor.constraint(equalToConstant: Constants.playButtonSize),
+            playButton.widthAnchor.constraint(equalToConstant: ChatConstants.Bubble.playButtonSize),
+            playButton.heightAnchor.constraint(equalToConstant: ChatConstants.Bubble.playButtonSize),
 
-            timestampLabel.topAnchor.constraint(equalTo: messageImageView.bottomAnchor, constant: -20),
+            timestampLabel.topAnchor.constraint(equalTo: messageImageView.bottomAnchor, constant: ChatConstants.Bubble.timeStampLblBAnchor),
             timestampLabel.centerXAnchor.constraint(equalTo: messageImageView.centerXAnchor),
             
             readIndicatorImageView.trailingAnchor.constraint(equalTo: timestampLabel.trailingAnchor, constant: (timestampLabel.frame.width/2+10)),
             readIndicatorImageView.centerYAnchor.constraint(equalTo: timestampLabel.centerYAnchor),
-            readIndicatorImageView.widthAnchor.constraint(equalToConstant: Constants.readIndicatorSize),
-            readIndicatorImageView.heightAnchor.constraint(equalToConstant: Constants.readIndicatorSize),
+            readIndicatorImageView.widthAnchor.constraint(equalToConstant: ChatConstants.Bubble.readIndicatorSize),
+            readIndicatorImageView.heightAnchor.constraint(equalToConstant: ChatConstants.Bubble.readIndicatorSize),
         ])
     
     }
     override func prepareForReuse() {
         super.prepareForReuse()
-        // Reset the content of the cell
         messageImageView.image = nil
         playButton.tag = 0
-        // Reset other UI elements if necessary
     }
+    
     func mediaConfigure(with message: Messages, currentUser: String) {
         
         let isCurrentUser = message.sender == currentUser
@@ -155,7 +154,7 @@ class MediaContentCell: UITableViewCell {
         
         let timestamp = Date(timeIntervalSince1970: Double(message.originServerTs ?? 0) / 1000)
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = Constants.dateFormat
+        dateFormatter.dateFormat = ChatConstants.Bubble.dateFormat
         timestampLabel.text = dateFormatter.string(from: timestamp)
         
         if isCurrentUser {
@@ -200,7 +199,7 @@ class MediaContentCell: UITableViewCell {
     }
     
     func fetchThumbnail(_ s3MediaUrl:String) {
-        guard let videoURL = URL(string: "\(S3MediaURL_Chat.URL)\(s3MediaUrl)") else {
+        guard let videoURL = URL(string: "\(ChatConstants.S3Media.URL)\(s3MediaUrl)") else {
             print("Error: Invalid video URL")
             return
         }

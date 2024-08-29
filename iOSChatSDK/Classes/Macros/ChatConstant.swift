@@ -11,24 +11,24 @@ import Foundation
 struct ChatConstants {
     
     struct Common {
-        static let update = "update"
-        static let back = "back"
-        static let deleteItem = "deleteItem"
-        static let spam = "spam"
+        static let update       = "update"
+        static let back         = "back"
+        static let deleteItem   = "deleteItem"
+        static let spam         = "spam"
     }
     
     //API Constant
     struct API {
-        static let roomID = "room_id"
-        static let accessToken = "access_token"
+        static let roomID           = "room_id"
+        static let accessToken      = "access_token"
         static let failedAccessToken = "Failed to retrieve access token"
-        static let AccessToken = "Access Token"
+        static let AccessToken      = "Access Token"
         
-        static let baseURL = "http://157.241.58.41/chat_api/"
-        static let createRoom = "\(baseURL)room/create"
+        static let baseURL      = "http://157.241.58.41/chat_api/"
+        static let createRoom   = "\(baseURL)room/create"
         static let fetchUserlist = "\(baseURL)list-user-apple"
-        static let sendMedia = "\(baseURL)message/send/"
-        static let reply = "\(baseURL)message/reply"
+        static let sendMedia    = "\(baseURL)message/send/"
+        static let reply        = "\(baseURL)message/reply"
     }
     
     struct Storyboard {
@@ -55,10 +55,10 @@ struct ChatConstants {
     
     // File Names
     struct FileName {
-        static let image = "a1.jpg"
-        static let video = "upload.mp4"
+        static let image    = "a1.jpg"
+        static let video    = "upload.mp4"
         static let document = "upload.py"
-        static let audio = "Audio File"
+        static let audio    = "Audio File"
     }
     
     // Localization Keys
@@ -72,28 +72,66 @@ struct ChatConstants {
     static let asyncDelay: TimeInterval = 2.0
     
     struct Image {
-        static let readIndicator = "read_indicator"
-        static let playIcon = "PlayIcon"
-        static let placeholder = "placeholder"
-        static let userPlaceholder = "userPlaceholder"
-        static let sendIcon = "sendIcon"
-        static let mic = "mic"
+        static let readIndicator:String    = "read_indicator"
+        static let playIcon:String         = "PlayIcon"
+        static let placeholder:String      = "placeholder"
+        static let userPlaceholder:String  = "userPlaceholder"
+        static let sendIcon:String         = "sendIcon"
+        static let mic:String              = "mic"
+    }
+    
+    struct Bubble {
+        static let diameter: CGFloat            = 170
+        static let timeStampFont: UIFont        = .systemFont(ofSize: 8)
+        static let messageFont: UIFont          = .systemFont(ofSize: 12)
+        static let timeStampColor: UIColor      = .lightGray
+        static let readIndicatorSize: CGFloat   = 7
+        static let padding: CGFloat             = 12
+        static let timeStampPadding: CGFloat    = 4
+        static let dateFormat: String           = "hh:mm a"
+        static let playButtonSize: CGFloat      = 30
+        static let leadAnchor:CGFloat           = 32
+        static let trailAnchor:CGFloat          = -32
+        static let topAnchor: CGFloat           = 16
+        static let bottomAncher: CGFloat        = -16
+        static let borderWidth:CGFloat          = 3.0
+        static let timeStampLblBAnchor:CGFloat  = -20
+        static let cornerRadius                 = diameter / 2
+        static let defaultBGColor: UIColor      = .clear
+        
+        static let shadowColor: CGColor         = UIColor.black.cgColor
+        static let shadowOffset                 = CGSize(width: 0, height: 2)
+        static let shadowOpacity: Float         = 0.3
+        static let shadowRadius: CGFloat        = 4
+
+    }
+    struct ReplyBubble {
+        static let cornerRadius: CGFloat = 20
+        static let minBubbleWidth: CGFloat = 180
+        static let maxBubbleWidthRatio: CGFloat = 0.75
+        static let imageViewSize: CGSize = CGSize(width: 30, height: 30)
+        static let imageViewSizeZero: CGSize = CGSize(width: 0, height: 0)
+        static let mediaImageViewSize: CGSize = CGSize(width: 120, height: 120)
+    }
+    
+    struct BubbleHeight {
+        static let zeroHeight: CGFloat              = 0.0
+        static let replyBottomViewHeight: CGFloat   = 46.0
+        static let textFieldViewHeight: CGFloat     = 46.0
+        static let moreViewHeight: CGFloat          = 46.0
+        static let backBottomViewHeightWithReplyMore: CGFloat   = 170.0
+        static let backBottomViewHeightWithReply: CGFloat       = 114.0
+        static let backBottomViewHeightWithMore: CGFloat        = 114.0
+        static let backBottomViewHeightOnlyTF: CGFloat          = 74.0
+        static let cellHeight:CGFloat           = 200.0
+        static let estimationRowHeight:CGFloat  = 100.0
+    }
+    
+    struct S3Media {
+        static let URL: String = "https://d3qie74tq3tm9f.cloudfront.net/"
     }
 }
 
-    // MARK: - View Heights
-struct Height_Chat {
-    static let zeroHeight: CGFloat = 0.0
-    static let replyBottomViewHeight: CGFloat = 46.0
-    static let textFieldViewHeight: CGFloat = 46.0
-    static let moreViewHeight: CGFloat = 46.0
-    static let backBottomViewHeightWithReplyMore: CGFloat = 170.0
-    static let backBottomViewHeightWithReply: CGFloat = 114.0
-    static let backBottomViewHeightWithMore: CGFloat = 114.0
-    static let backBottomViewHeightOnlyTF: CGFloat = 74.0
-    static let cellHeight:CGFloat = 200.0
-    static let estimationRowHeight:CGFloat = 100.0
-}
 struct ChatMediaConstant_Chat {
     
     struct API {
@@ -111,12 +149,12 @@ struct ChatMediaConstant_Chat {
     }
     
     struct UploadResponseKeys_Chat {
-        static let success = "success"
-        static let message = "message"
-        static let redirectUrl = "redirectUrl"
-        static let details = "details"
-        static let response = "response"
-        static let chatEventId = "chat_event_id"
+        static let success      = "success"
+        static let message      = "message"
+        static let redirectUrl  = "redirectUrl"
+        static let details      = "details"
+        static let response     = "response"
+        static let chatEventId  = "chat_event_id"
     }
 }
 struct ChatMessageCellConstant {
@@ -225,24 +263,19 @@ struct URLs_Chat {
     static let defaultCircleId = "591cd8b1-2288-4e6c-ad7d-c2bdc7d786fe"
 }
 
-struct S3MediaURL_Chat {
-    static let URL: String = "https://d3qie74tq3tm9f.cloudfront.net/"
-}
 
 //MediaContentCell
-struct MediaCell_Chat {
-    static let bubbleDiameter: CGFloat = 170
-    static let timestampFont: UIFont = .systemFont(ofSize: 8)
-    static let timestampColor: UIColor = .lightGray
-    static let readIndicatorSize: CGFloat = 7
-    static let padding: CGFloat = 12
-    static let timestampPadding: CGFloat = 4
-    static let dateFormat: String = "hh:mm a"
-    static let playButtonSize: CGFloat = 30
-    static let defaultBackgroundColor: UIColor = .clear
-    
-    // Image and Icon Names
-}
+//struct MsgView {
+//    static let bubbleDiameter: CGFloat = 170
+//    static let timestampFont: UIFont = .systemFont(ofSize: 8)
+//    static let timestampColor: UIColor = .lightGray
+//    static let readIndicatorSize: CGFloat = 7
+//    static let padding: CGFloat = 12
+//    static let timestampPadding: CGFloat = 4
+//    static let dateFormat: String = "hh:mm a"
+//    static let playButtonSize: CGFloat = 30
+//    static let defaultBackgroundColor: UIColor = .clear
+//}
     
 struct ReplyCell_Chat {
     static let bubbleCornerRadius: CGFloat = 20

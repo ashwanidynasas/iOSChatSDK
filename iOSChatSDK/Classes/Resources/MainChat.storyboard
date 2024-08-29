@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -287,8 +287,6 @@
                         <outlet property="backTFView" destination="oDt-nn-zsq" id="mSj-3h-dM2"/>
                         <outlet property="bottomAudioView" destination="hhP-it-uJ4" id="GwA-LF-yCb"/>
                         <outlet property="cameraBtn" destination="2Id-Ed-j3y" id="E3o-vc-e97"/>
-                        <outlet property="chatRoomTableView" destination="rML-cJ-Nxi" id="e4d-bz-bFF"/>
-                        <outlet property="customTopView" destination="T31-Wa-hRD" id="0IM-JA-rEO"/>
                         <outlet property="emojiBtn" destination="qTc-4C-rvO" id="Xh7-TT-IE2"/>
                         <outlet property="moreViewHeight" destination="pmQ-NM-DNf" id="E91-Sp-IFr"/>
                         <outlet property="morebottomView" destination="ulN-7i-62E" id="WVz-zC-cHe"/>
@@ -301,7 +299,9 @@
                         <outlet property="replyViewWidthConstraint" destination="ZKj-Ae-Bd4" id="Z2W-It-clS"/>
                         <outlet property="sendBtn" destination="3k9-Z2-Eu2" id="xmM-bb-cjJ"/>
                         <outlet property="sendMsgTF" destination="MbN-od-Duz" id="jFI-Uv-ZOR"/>
+                        <outlet property="tableView" destination="rML-cJ-Nxi" id="rqu-Xb-kcU"/>
                         <outlet property="textFieldViewHeight" destination="N4T-NZ-bdb" id="SFv-Pp-YIa"/>
+                        <outlet property="viewOtherUser" destination="T31-Wa-hRD" id="ykO-a7-XFw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tJt-nM-hSr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

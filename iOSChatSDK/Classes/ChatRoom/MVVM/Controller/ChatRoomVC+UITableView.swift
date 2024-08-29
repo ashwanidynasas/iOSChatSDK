@@ -11,12 +11,12 @@ import Foundation
 extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
     
     func setupTable(){
-        chatRoomTableView.rowHeight = UITableView.automaticDimension
-        chatRoomTableView.estimatedRowHeight = ChatConstants.BubbleHeight.estimationRowHeight
-        chatRoomTableView.separatorStyle = .none
+        tableView?.rowHeight = UITableView.automaticDimension
+        tableView?.estimatedRowHeight = ChatConstants.BubbleHeight.estimationRowHeight
+        tableView?.separatorStyle = .none
         let medianib = UINib(nibName: Cell_Chat.mediaText, bundle: Bundle(for: MediaTextTVCell.self))
-        chatRoomTableView.register(medianib, forCellReuseIdentifier: Cell_Chat.mediaText)
-        chatRoomTableView.registerCells([ChatMessageCell.self,
+        tableView?.register(medianib, forCellReuseIdentifier: Cell_Chat.mediaText)
+        tableView?.registerCells([ChatMessageCell.self,
                                          MediaContentCell.self,
                                          ReplyText_TextCell.self,
                                          ReplyText_MediaCell.self ,

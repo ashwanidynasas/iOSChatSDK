@@ -16,6 +16,13 @@ class CustomTopView: UIView {
      @IBOutlet weak var searchButton: UIButton!
     
     weak var delegate : DelegateTopView?
+    
+    var connection : Connection? {
+        didSet{
+            titleLabel?.text = "Other circle name"
+            //titleLabel?.text = connection?.userInfo
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)

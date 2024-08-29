@@ -15,6 +15,7 @@ public class MainChatVC: UIViewController {
     
     private var viewModel = UserViewModel()
     public var tableView: UITableView!
+    
     var jwt_Token:String!
     var access_token:String!
     var userName:String!

@@ -1,10 +1,12 @@
+//MARK: - MODULES
 import UIKit
 import SDWebImage
 import AVFoundation
 
+//MARK: - CLASS
 class ChatMessageCell: UITableViewCell {
     
-    
+    //MARK: - PROPERTIES
     private let bubbleBackgroundView = UIView()
     private let messageLabel = UILabel()
     private let timestampLabel = UILabel()
@@ -14,6 +16,7 @@ class ChatMessageCell: UITableViewCell {
     
     weak var delegate: DelegatePlay?
     
+    //MARK: - CONSTRAINTS
     private var leadingConstraint: NSLayoutConstraint!
     private var trailingConstraint: NSLayoutConstraint!
     private var minWidthConstraint: NSLayoutConstraint!
@@ -37,9 +40,11 @@ class ChatMessageCell: UITableViewCell {
         static let dateFormat: String = "hh:mm a"
     }
     
+    //MARK: - INITIALIZERS
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
+        addGestures()
         setupConstraints()
     }
     
@@ -53,6 +58,33 @@ class ChatMessageCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func addGestures(){
+        // Setup long press gesture recognizer
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture(_:)))
+        overlayButton.addGestureRecognizer(longPressGestureRecognizer)
+    }
+    
+    @objc private func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer) {
+        if gesture.state == .began {
+            delegate?.didLongPressPlayButton(in: self)
+        }
+    }
+    
+    private func applyBubbleShape(isCurrentUser: Bool) {
+        bubbleBackgroundView.layer.cornerRadius = 12
+        if isCurrentUser {
+            bubbleBackgroundView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMinXMaxYCorner]
+        } else {
+            bubbleBackgroundView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMinYCorner]
+        }
+    }
+}
+
+
+
+//MARK: - UI SETUP
+extension ChatMessageCell{
     
     private func setupViews() {
         backgroundColor = .clear
@@ -86,16 +118,25 @@ class ChatMessageCell: UITableViewCell {
         overlayButton.translatesAutoresizingMaskIntoConstraints = false
         bubbleBackgroundView.addSubview(overlayButton)
         
-        // Setup long press gesture recognizer
-        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture(_:)))
-        overlayButton.addGestureRecognizer(longPressGestureRecognizer)
+        
         
     }
-    @objc private func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer) {
-        if gesture.state == .began {
-            delegate?.didLongPressPlayButton(in: self)
+    
+    private func updateConstraintsForContent() {
+        
+        if messageLabel.isHidden {
+            messageLabel.topAnchor.constraint(equalTo: messageImageView.bottomAnchor, constant: 0).isActive = false
+        } else {
+            messageLabel.topAnchor.constraint(equalTo: messageImageView.bottomAnchor, constant: 8).isActive = true
+        }
+        
+        if messageImageView.isHidden {
+            messageImageViewHeightConstraint.constant = 0
+        } else {
+            messageImageViewHeightConstraint.constant = 150 // Set desired height for the image view
         }
     }
+    
     private func setupConstraints() {
         leadingConstraint = bubbleBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32)
         trailingConstraint = bubbleBackgroundView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32)
@@ -135,7 +176,11 @@ class ChatMessageCell: UITableViewCell {
             
         ])
     }
-    
+}
+
+
+//MARK: - CONFIGURATION
+extension ChatMessageCell{
     func configure(with message: Messages, currentUser: String) {
         let isCurrentUser = message.sender == currentUser
         bubbleBackgroundView.backgroundColor = isCurrentUser ? UIColor.black.withAlphaComponent(0.5) : Colors.Circles.violet
@@ -223,30 +268,6 @@ class ChatMessageCell: UITableViewCell {
             messageImageViewHeightConstraint.constant = 150 // Set desired height for the image view
         } else {
             messageImageViewHeightConstraint.constant = 0
-        }
-    }
-    
-    private func updateConstraintsForContent() {
-        
-        if messageLabel.isHidden {
-            messageLabel.topAnchor.constraint(equalTo: messageImageView.bottomAnchor, constant: 0).isActive = false
-        } else {
-            messageLabel.topAnchor.constraint(equalTo: messageImageView.bottomAnchor, constant: 8).isActive = true
-        }
-        
-        if messageImageView.isHidden {
-            messageImageViewHeightConstraint.constant = 0
-        } else {
-            messageImageViewHeightConstraint.constant = 150 // Set desired height for the image view
-        }
-    }
-    
-    private func applyBubbleShape(isCurrentUser: Bool) {
-        bubbleBackgroundView.layer.cornerRadius = 12
-        if isCurrentUser {
-            bubbleBackgroundView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMinXMaxYCorner]
-        } else {
-            bubbleBackgroundView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMinYCorner]
         }
     }
 }

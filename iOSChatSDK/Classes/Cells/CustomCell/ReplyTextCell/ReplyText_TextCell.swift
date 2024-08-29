@@ -25,23 +25,6 @@ class ReplyText_TextCell: UITableViewCell {
     private let titleLabel = UILabel()
     private let descriptionLabel = UILabel()
 
-//    private struct Constants {
-//        static let bubbleCornerRadius: CGFloat = 20
-//        static let bubbleShadowColor: CGColor = UIColor.black.cgColor
-//        static let bubbleShadowOffset = CGSize(width: 0, height: 2)
-//        static let bubbleShadowOpacity: Float = 0.3
-//        static let bubbleShadowRadius: CGFloat = 4
-//        static let messageFont: UIFont = .systemFont(ofSize: 12)
-//        static let timestampFont: UIFont = .systemFont(ofSize: 8)
-//        static let timestampColor: UIColor = .lightGray
-//        static let readIndicatorSize: CGFloat = 7
-//        static let padding: CGFloat = 12
-//        static let timestampPadding: CGFloat = 4
-//        static let minBubbleWidth: CGFloat = 100
-//        static let maxBubbleWidthRatio: CGFloat = 0.75
-//        static let dateFormat: String = "hh:mm a"
-//    }
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()

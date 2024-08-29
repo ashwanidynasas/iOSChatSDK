@@ -9,10 +9,13 @@
 import Foundation
 
 //MARK: - CLASS
-class ConnectionViewModel {
+class ConnectionViewModel : NSObject{
     
     //MARK: - PROPERTIES
     private var service : ChatService?
+    
+    var circleId : String?
+    var circleHash : String?
     var connections: [Connection] = [] {
         didSet {
             self.bindViewModelToController()
@@ -22,10 +25,18 @@ class ConnectionViewModel {
     var bindViewModelToController: (() -> ()) = {}
     
     
+    required init(circleId: String, circleHash : String) {
+        super.init()
+        self.service = ChatService()
+        self.circleId = circleId
+        self.circleHash = circleHash
+        fetchConnections()
+    }
+    
     //MARK: - FUNCTIONS
-    func fetchConnections(circleId: String, circleHash: String) {
-        service = ChatService(configuration: .default)
-        let parameter = FetchConnectionsParameter(circleId: circleId, circleHash: circleHash)
+    func fetchConnections() {
+        let parameter = FetchConnectionsParameter(circleId: /circleId,
+                                                  circleHash: /circleHash)
         
         service?.listConnections(parameters: parameter, completion: { (result, headers) in
             switch result {
@@ -41,6 +52,20 @@ class ConnectionViewModel {
         })
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //MARK: - CLASS
 class LoginViewModel {

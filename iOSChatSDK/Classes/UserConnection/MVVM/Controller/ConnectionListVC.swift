@@ -15,10 +15,8 @@ class ConnectionListVC: UIViewController {
     @IBOutlet weak var listTableView:UITableView!
     
     //MARK: - PROPERTIES
-    private var cListViewModel: ConnectionViewModel!
+    var viewModel: ConnectionViewModel?
 
-    var chatUserID:String!
-    
     //MARK: - VIEW CYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,12 +26,11 @@ class ConnectionListVC: UIViewController {
 
         let nib = UINib(nibName: Cell_Chat.custom, bundle: Bundle(for: CustomTableViewCell.self))
         listTableView.register(nib, forCellReuseIdentifier: Cell_Chat.custom)
-        cListViewModel = ConnectionViewModel()
-        cListViewModel.bindViewModelToController = {
-            self.updateUI()
+        viewModel?.bindViewModelToController = {
+            DispatchQueue.main.async {
+                self.listTableView.reloadData()
+            }
         }
-        print("chat userID----> \(String(describing: chatUserID))")
-        cListViewModel.fetchConnections(circleId: "591cd8b1-2288-4e6c-ad7d-c2bdc7d786fe", circleHash: chatUserID)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,25 +38,18 @@ class ConnectionListVC: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
-    private func updateUI() {
-        DispatchQueue.main.async {
-            self.listTableView.reloadData()
-        }
-    }
-       
-    
 }
 
 //MARK: - UITABLEVIEW DELEGATES
 extension ConnectionListVC: UITableViewDelegate,UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cListViewModel.connections.count
+        return /viewModel?.connections.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = listTableView.dequeueReusableCell(withIdentifier: Cell_Chat.custom, for: indexPath) as! CustomTableViewCell
         
-        let connection = cListViewModel.connections[indexPath.row]
+        guard let connection = viewModel?.connections[indexPath.row] else { return UITableViewCell() }
         cell.senderTextLabel.isHidden = true
         cell.textLabel?.text = connection.chatUserId
 
@@ -92,17 +82,12 @@ extension ConnectionListVC: UITableViewDelegate,UITableViewDataSource {
         return 44.0
     }
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("JWT_Token ---> ")
-        let bundle = Bundle(for: ConnectionListVC.self)
-        let storyboard = UIStoryboard(name: "MainChat", bundle: bundle)
-        guard let viewController = storyboard.instantiateViewController(withIdentifier: "ChatRoomVC") as? ChatRoomVC else {
-            fatalError("ViewController Not Found")
-        }
-        let selectedChatUserId = cListViewModel.connections[indexPath.row].chatUserId
-        print("selectedChatUserId   <<<----\(selectedChatUserId)")
-        viewController.chatUserID = selectedChatUserId
-        viewController.currentUser = "@\(self.chatUserID ?? ""):chat.sqrcle.co"
-        self.navigationController?.pushViewController(viewController, animated: true)
+        
+        guard let vc = UIStoryboard(name: "MainChat", bundle: Bundle(for: ConnectionListVC.self)).instantiateViewController(withIdentifier: "ChatRoomVC") as? ChatRoomVC else { return }
+        
+        vc.chatUserID = viewModel?.connections[indexPath.row].chatUserId
+        vc.currentUser = "@\(/viewModel?.circleHash):chat.sqrcle.co"
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }

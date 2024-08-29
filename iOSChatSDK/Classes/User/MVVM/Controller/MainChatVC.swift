@@ -6,37 +6,34 @@
 //
 
 import UIKit
-//import MatrixSDK
-//import IQKeyboardManager
 
+//MARK: - CLASS
 public class MainChatVC: UIViewController {
 
+    //MARK: - OUTLETS
     @IBOutlet weak var userChatTV:UITableView!
     
+    //MARK: - VIEW MODEL
+    private var loginViewModel: LoginViewModel!
     private var viewModel = UserViewModel()
+    
+    //MARK: - PROPERTIES
     public var tableView: UITableView!
     
-    var jwt_Token:String!
-    var access_token:String!
-    var userName:String!
+    public required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
     
-    private var loginViewModel: LoginViewModel!
-
-    // Required initializer for Storyboard support
-       public required init?(coder: NSCoder) {
-           super.init(coder: coder)
-       }
-    
+    //MARK: - VIEW CYCLE
     public override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.title = "Chat SDK"
-//        IQKeyboardManager.shared().isEnabled = true
         CacheManager.shared.shrinkCache(limit: 10 * 1024 * 1024)
-
-        //Custom Cell register.
         let nib = UINib(nibName: Cell_Chat.custom, bundle: Bundle(for: CustomTableViewCell.self))
         userChatTV.register(nib, forCellReuseIdentifier: Cell_Chat.custom)
+        
+        
         
         viewModel.usersDidChange = { [weak self] in
             DispatchQueue.main.async {
@@ -50,6 +47,7 @@ public class MainChatVC: UIViewController {
                 }
             }
         }
+        //fetch dummy users
         viewModel.fetchUsers()
         
         loginViewModel = LoginViewModel()
@@ -68,23 +66,17 @@ public class MainChatVC: UIViewController {
         }
         return viewController
     }
+    
     public func getJWT_Token(_ jwtToken:String, username:String){
-        loginViewModel.login(username: username, loginJWTToken: jwtToken) { accessToken in
+        
+        loginViewModel.login(username: username, 
+                             loginJWTToken: jwtToken) { accessToken in
+            
             if let accessToken = accessToken {
-                print("Access Token: \(accessToken)")
-                self.access_token = accessToken
-                
                 DispatchQueue.main.async {
-                    let alert = UIAlertController(title: "Access Token", message: self.access_token, preferredStyle: .alert)
+                    let alert = UIAlertController(title: "Access Token", message: /accessToken, preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-                        //Navigate to next screen.
-                        let bundle = Bundle(for: MainChatVC.self)
-                        let storyboard = UIStoryboard(name: "MainChat", bundle: bundle)
-                        guard let viewController = storyboard.instantiateViewController(withIdentifier: "ConnectionListVC") as? ConnectionListVC else {
-                            fatalError("ViewController Not Found")
-                        }
-                        viewController.chatUserID = self.userName
-                        self.navigationController?.pushViewController(viewController, animated: true)
+                        self.showConnections(userName: username)
                         
                     }))
                     self.present(alert, animated: true, completion: nil)
@@ -115,16 +107,28 @@ extension MainChatVC: UITableViewDelegate,UITableViewDataSource{
         return 44.0
     }
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("JWT_Token ---> ")
-        print(viewModel.users[indexPath.row].loginJWTtoken)
-        jwt_Token = viewModel.users[indexPath.row].loginJWTtoken
-        userName = viewModel.users[indexPath.row].username
+        let jwt_Token = viewModel.users[indexPath.row].loginJWTtoken
+        let userName = viewModel.users[indexPath.row].username
         DispatchQueue.main.async {
-            let alert = UIAlertController(title: self.viewModel.users[indexPath.row].username, message: self.jwt_Token, preferredStyle: .alert)
+            let alert = UIAlertController(title: userName,
+                                          message: jwt_Token,
+                                          preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-                self.getJWT_Token(self.jwt_Token, username: self.userName)
+                
+                self.getJWT_Token(jwt_Token,
+                                  username: userName)
             }))
             self.present(alert, animated: true, completion: nil)
         }
+    }
+}
+
+
+extension MainChatVC{
+    func showConnections(userName : String){
+        guard let vc = UIStoryboard(name: "MainChat", bundle: Bundle(for: MainChatVC.self)).instantiateViewController(withIdentifier: "ConnectionListVC") as? ConnectionListVC else { return  }
+        vc.viewModel = ConnectionViewModel(circleId: "591cd8b1-2288-4e6c-ad7d-c2bdc7d786fe",
+                                           circleHash: userName)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

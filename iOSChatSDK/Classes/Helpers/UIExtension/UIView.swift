@@ -9,7 +9,8 @@ import Foundation
 
 
 extension UIView {
-    func setGradientBackground(startColor: UIColor, endColor: UIColor) {
+    func setGradientBackground(startColor: UIColor?, endColor: UIColor?) {
+        guard let startColor = startColor , let endColor = endColor else { return }
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = self.bounds
         gradientLayer.colors = [startColor.cgColor, endColor.cgColor]

@@ -115,14 +115,6 @@ struct ChatConstants {
     }
     
     struct BubbleHeight {
-        static let zeroHeight: CGFloat              = 0.0
-        static let replyBottomViewHeight: CGFloat   = 46.0
-        static let textFieldViewHeight: CGFloat     = 46.0
-        static let moreViewHeight: CGFloat          = 46.0
-        static let backBottomViewHeightWithReplyMore: CGFloat   = 170.0
-        static let backBottomViewHeightWithReply: CGFloat       = 114.0
-        static let backBottomViewHeightWithMore: CGFloat        = 114.0
-        static let backBottomViewHeightOnlyTF: CGFloat          = 74.0
         static let cellHeight:CGFloat           = 200.0
         static let estimationRowHeight:CGFloat  = 100.0
     }

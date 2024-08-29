@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReplyView" customModule="Pods_iOSChatSDK_Example" customModuleProvider="target">
+            <connections>
+                <outlet property="constraintImageViewWidth" destination="rbP-HT-dV4" id="NsO-H8-XGx"/>
+                <outlet property="imageView" destination="Gqw-JM-VGC" id="DY0-8q-8CW"/>
+                <outlet property="labelDesc" destination="aQV-31-5kw" id="xZT-GJ-cLA"/>
+                <outlet property="labelName" destination="Pdc-zL-BY3" id="8Uv-vY-TpA"/>
+                <outlet property="loadView" destination="iN0-l3-epB" id="vcY-qD-uil"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="634" height="101"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jXf-ql-4Cp">
+                    <rect key="frame" x="0.0" y="0.0" width="634" height="46"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Samuel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pdc-zL-BY3">
+                            <rect key="frame" x="0.0" y="-2" width="110" height="12"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="110" id="mHK-BU-9QI"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="reply content for the media text query" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aQV-31-5kw">
+                            <rect key="frame" x="35" y="22" width="536" height="24"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FHt-Eh-zEd">
+                            <rect key="frame" x="594" y="2" width="38" height="42"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="38" id="Pr8-1Z-WWG"/>
+                                <constraint firstAttribute="height" constant="42" id="iLS-rO-4Ti"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" image="replyCancel"/>
+                            <buttonConfiguration key="configuration" style="plain" image="replyCancel"/>
+                        </button>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="Gqw-JM-VGC">
+                            <rect key="frame" x="1" y="22" width="24" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="24" id="qwe-61-Qb0"/>
+                                <constraint firstAttribute="width" constant="24" id="rbP-HT-dV4"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="aQV-31-5kw" firstAttribute="top" secondItem="Pdc-zL-BY3" secondAttribute="bottom" constant="12" id="3jv-29-ZBJ"/>
+                        <constraint firstAttribute="bottom" secondItem="aQV-31-5kw" secondAttribute="bottom" id="An2-V8-uT5"/>
+                        <constraint firstItem="Gqw-JM-VGC" firstAttribute="top" secondItem="Pdc-zL-BY3" secondAttribute="bottom" constant="12" id="BHJ-54-V19"/>
+                        <constraint firstItem="FHt-Eh-zEd" firstAttribute="leading" secondItem="aQV-31-5kw" secondAttribute="trailing" constant="23" id="N0R-nx-yta"/>
+                        <constraint firstItem="Gqw-JM-VGC" firstAttribute="leading" secondItem="jXf-ql-4Cp" secondAttribute="leading" constant="1" id="S6f-ki-76S"/>
+                        <constraint firstAttribute="trailing" secondItem="FHt-Eh-zEd" secondAttribute="trailing" constant="2" id="T3l-Hb-GeU"/>
+                        <constraint firstItem="Pdc-zL-BY3" firstAttribute="leading" secondItem="jXf-ql-4Cp" secondAttribute="leading" id="TML-y3-Lq1"/>
+                        <constraint firstAttribute="bottom" secondItem="Gqw-JM-VGC" secondAttribute="bottom" id="Wdb-jm-aU9"/>
+                        <constraint firstItem="Pdc-zL-BY3" firstAttribute="top" secondItem="jXf-ql-4Cp" secondAttribute="top" constant="-2" id="g8h-13-Qom"/>
+                        <constraint firstItem="FHt-Eh-zEd" firstAttribute="top" secondItem="jXf-ql-4Cp" secondAttribute="top" constant="2" id="q7t-tC-xF0"/>
+                        <constraint firstItem="aQV-31-5kw" firstAttribute="leading" secondItem="Gqw-JM-VGC" secondAttribute="trailing" constant="10" id="quF-ek-KaZ"/>
+                        <constraint firstAttribute="bottom" secondItem="FHt-Eh-zEd" secondAttribute="bottom" constant="2" id="xpX-q1-7hq"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="jXf-ql-4Cp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="9OF-oo-jfq"/>
+                <constraint firstItem="jXf-ql-4Cp" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="iff-GH-nTa"/>
+                <constraint firstItem="jXf-ql-4Cp" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="x5N-eh-CnZ"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="143.5114503816794" y="-244.71830985915494"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="replyCancel" width="23.333333969116211" height="23"/>
+        <image name="userPlaceholder" width="40.333332061767578" height="40"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

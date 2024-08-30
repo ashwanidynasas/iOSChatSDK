@@ -9,28 +9,59 @@ import Foundation
 
 struct UserDefaultsManager {
     
-    private enum Keys {
-        static let roomID = ChatConstants.API.roomID
-        static let accessToken = ChatConstants.API.accessToken
-    }
-    static var roomID: String? {
-        return UserDefaults.standard.string(forKey: Keys.roomID)
-    }
     
-    static var accessToken: String? {
-        return UserDefaults.standard.string(forKey: Keys.accessToken)
-    }
-    
-    static func saveRoomID(_ roomID: String) {
-        UserDefaults.standard.set(roomID, forKey: Keys.roomID)
-    }
-    
-    static func saveAccessToken(_ accessToken: String) {
-        UserDefaults.standard.set(accessToken, forKey: Keys.accessToken)
-    }
     static func clearUserCredentials() {
-        UserDefaults.standard.removeObject(forKey: Keys.roomID)
-        UserDefaults.standard.removeObject(forKey: Keys.accessToken)
+        UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.roomId.rawValue)
+        UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.accessToken.rawValue)
     }
     
+}
+
+
+class UserDefaultsHelper {
+    
+    //MARK: - GENERIC
+    class func resetDefaults() {
+        let defaults = UserDefaults.standard
+        let dictionary = defaults.dictionaryRepresentation()
+        dictionary.keys.forEach { key in
+            defaults.removeObject(forKey: key)
+        }
+    }
+    
+    class func set(_ value : Any?, forkey key: UserDefaultsKeys) {
+        if let value = value {
+            UserDefaults.standard.set(value, forKey: key.rawValue)
+        } else {
+            UserDefaults.standard.removeObject(forKey: key.rawValue)
+        }
+        UserDefaults.standard.synchronize()
+    }
+    
+    class func get(_ key : UserDefaultsKeys) -> Any? {
+        return UserDefaults.standard.object(forKey: key.rawValue)
+    }
+    
+}
+
+extension UserDefaultsHelper{
+    class func setAccessToken(_ value: String) {
+        self.set(value, forkey: .accessToken)
+    }
+    
+    class func getAccessToken() -> String? {
+        return UserDefaultsHelper.get(.accessToken) as? String
+    }
+    
+    class func setRoomId(_ value: String) {
+        self.set(value, forkey: .accessToken)
+    }
+    
+    class func getRoomId() -> String? {
+        return UserDefaultsHelper.get(.accessToken) as? String
+    }
+}
+enum UserDefaultsKeys: String {
+    case accessToken = "access_token"
+    case roomId      = "room_id"
 }

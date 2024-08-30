@@ -75,8 +75,7 @@ class LoginViewModel {
     var loginResponse: LoginResponse? {
         didSet {
             if let token = loginResponse?.details.accessToken {
-//                UserDefaults.standard.set(token, forKey: "access_token")
-                UserDefaultsManager.saveAccessToken(token)
+                UserDefaultsHelper.setAccessToken(token)
             }
             self.bindViewModelToController()
         }
@@ -103,10 +102,6 @@ class LoginViewModel {
                 print(error.localizedDescription)
             }
         })
-    }
-    
-    func fetchAccessToken() -> String? {
-        return UserDefaults.standard.string(forKey: "access_token")
     }
     
 }

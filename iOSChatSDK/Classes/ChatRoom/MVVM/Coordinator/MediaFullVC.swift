@@ -16,11 +16,11 @@ class MediaFullVC: UIViewController {
     //MARK: - OUTLETS
     @IBOutlet weak var topView: CustomTopView!
     @IBOutlet weak var fullImgView:UIImageView!
-    @IBOutlet weak var bottomView:UIView!
+    @IBOutlet weak var bottomView:MoreView!
     @IBOutlet weak var videoPlayerBackView: UIView!
     
     //MARK: - VIEWMODEL
-    private var deleteViewModel = MessageViewModel()
+    private var deleteViewModel = ChatRoomViewModel(connection: nil)
     
     //MARK: - PROPERTIES
     var currentUser: String?
@@ -38,7 +38,8 @@ class MediaFullVC: UIViewController {
     //MARK: - VIEW CYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupCustomBottomView()
+        bottomView.backgroundColor = .clear
+        bottomView?.setup(.preview)
         setupVideoPlayerContainerView()
         setupUI()
         topView.searchButton.isHidden = true
@@ -73,25 +74,14 @@ class MediaFullVC: UIViewController {
     }
     
     private func redactMessage() {
-//        let roomID = UserDefaults.standard.string(forKey: "room_id")
-//        let accessToken = UserDefaults.standard.string(forKey: "access_token")
-        let roomID = UserDefaultsManager.roomID
-        let accessToken = UserDefaultsManager.accessToken
         
-        let request = MessageRedactRequest(
-            accessToken: /accessToken,
-            roomID: /roomID,
-            eventID: /eventID,
-            body: ChatConstants.Common.spam
-        )
-        
-        deleteViewModel.redactMessage(request: request) { [weak self] result in
+        deleteViewModel.redactMessage(eventID: /eventID) { result in
             
             switch result {
             case .success(let value):
                 DispatchQueue.main.async {
-                    self?.delegate?.itemDeleteFromChat(ChatConstants.Common.deleteItem)//"deleteItem")
-                    self?.navigationController?.popViewController(animated: true)
+                    self.delegate?.itemDeleteFromChat(ChatConstants.Common.deleteItem)//"deleteItem")
+                    self.navigationController?.popViewController(animated: true)
                 }
             case .failure(let error):
                 print("Failed to redact message: \(error.localizedDescription)")
@@ -135,28 +125,6 @@ extension MediaFullVC : DelegateTopView{
         self.navigationController?.popViewController(animated: true)
     }
 }
-
-
-//MARK: - BOTTOM VIEW
-extension MediaFullVC{
-    private func setupCustomBottomView() {
-        bottomView.backgroundColor = .clear
-        let customTabBar = CustomTabBar(items: [.save , .delete , .forward , .pin])
-        customTabBar.translatesAutoresizingMaskIntoConstraints = false
-        bottomView.addSubview(customTabBar)
-        customTabBar.didSelectTab = { tabIndex in
-            switch tabIndex {
-            case Item.delete.ordinal():
-                self.redactMessage()
-            default:
-                break
-            }
-        }
-    }
-}
-
-
-
 
 //MARK: - VIDEO PLAYER VIEW
 class CustomVideoPlayerContainerView: UIView {

@@ -19,8 +19,6 @@ struct ChatConstants {
     
     //API Constant
     struct API {
-        static let roomID           = "room_id"
-        static let accessToken      = "access_token"
         static let failedAccessToken = "Failed to retrieve access token"
         static let AccessToken      = "Access Token"
         

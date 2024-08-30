@@ -32,12 +32,12 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.messages.count
+        return /viewModel?.messages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let message = viewModel.messages[indexPath.row]
+        guard let message = viewModel?.messages[indexPath.row] else { return UITableViewCell() }
         switch message.chatType{
             
         case .text:
@@ -141,14 +141,14 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let message = viewModel.messages[indexPath.row]
-        if let inReplyTo = message.content?.relatesTo?.inReplyTo {
+        let message = viewModel?.messages[indexPath.row]
+        if let inReplyTo = message?.content?.relatesTo?.inReplyTo {
             return UITableView.automaticDimension
         }
         
-        let msgType = /message.content?.msgtype
+        let msgType = /message?.content?.msgtype
         if (msgType == MessageType.image) || (msgType == MessageType.audio) || (msgType == MessageType.video) {
-            if message.content?.body == "" {
+            if /message?.content?.body == "" {
                 return ChatConstants.BubbleHeight.cellHeight
             }
             return UITableView.automaticDimension
@@ -161,6 +161,17 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
 
 //MARK: - SCROLL VIEW
 extension ChatRoomVC{
+    func scrollToBottom() {
+        guard !isScrolling else { return }
+        DispatchQueue.main.async {
+            if /self.viewModel?.messages.isEmpty {
+                return
+            }
+            let indexPath = IndexPath(row: /self.viewModel?.messages.count - 1, section: 0)
+            self.tableView?.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }
+    }
+    
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         isScrolling = true
     }

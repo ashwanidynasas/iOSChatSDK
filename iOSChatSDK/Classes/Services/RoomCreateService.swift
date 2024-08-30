@@ -31,9 +31,8 @@ class RoomAPIClient {
     
     var createResponse: CreateRoomResponse? {
         didSet {
-            if let token = createResponse?.details.room_id {
-//                UserDefaults.standard.set(token, forKey: "room_id")
-                UserDefaultsManager.saveRoomID(token)
+            if let room = createResponse?.details.room_id {
+                UserDefaultsHelper.setRoomId(room)
             }
         }
     }

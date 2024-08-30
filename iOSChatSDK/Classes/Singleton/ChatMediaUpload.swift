@@ -59,8 +59,8 @@ class ChatMediaUpload {
                                      eventID: String? = nil,
                                      completion: @escaping (Result<String, Error>) -> Void) {
         
-        guard let roomID = UserDefaultsManager.roomID,
-        let accessToken = UserDefaultsManager.accessToken else {
+        guard let roomID = UserDefaultsHelper.getRoomId(),
+        let accessToken = UserDefaultsHelper.getAccessToken() else {
             completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Missing roomID or accessToken"])))
             return
         }

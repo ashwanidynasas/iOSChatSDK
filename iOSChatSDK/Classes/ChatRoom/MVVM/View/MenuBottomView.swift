@@ -110,7 +110,7 @@ class CustomTabBar: UIView {
     
     private var items : [Item]
     private var buttons: [CustomTabBarButton] = []
-    var didSelectTab: ((Int) -> Void)?
+    var didSelectTab: ((Item) -> Void)?
     
     init(items: [Item]) {
         self.items = items
@@ -139,7 +139,7 @@ class CustomTabBar: UIView {
                 for (idx, button) in self.buttons.enumerated() {
                     button.isSelected = idx == index
                 }
-                self.didSelectTab?(item.ordinal())
+                self.didSelectTab?(item)
             }
             buttons.append(button)
             stackView.addArrangedSubview(button)
@@ -174,8 +174,8 @@ enum Item : CaseIterable{
     case zc
     
     case copy
-    case deleteB
-    case forwardB
+    case deleteSelected
+    case forwardSelected
     case reply
     case cancel
     
@@ -192,8 +192,8 @@ enum Item : CaseIterable{
         case .document   : return "Document"
         case .zc         : return "Send ZC"
         case .copy       : return "Copy"
-        case .deleteB    : return "Delete"
-        case .forwardB   : return "Forward"
+        case .deleteSelected    : return "Delete"
+        case .forwardSelected   : return "Forward"
         case .reply      : return "Reply"
         case .cancel     : return "Cancel"
         case .save       : return "Save"
@@ -211,8 +211,8 @@ enum Item : CaseIterable{
         case .document   : return "Document"
         case .zc         : return "ZC"
         case .copy       : return "copy"
-        case .deleteB    : return "deleteB"
-        case .forwardB   : return "forwardB"
+        case .deleteSelected    : return "deleteB"
+        case .forwardSelected   : return "forwardB"
         case .reply      : return "reply"
         case .cancel     : return "cancel"
         case .save       : return "Save"

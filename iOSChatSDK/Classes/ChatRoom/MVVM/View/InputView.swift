@@ -10,14 +10,13 @@ import AVFoundation
 import AVFAudio
 
 protocol DelegateInput : AnyObject{
-    func sendMessage()
+    func sendTextMessage()
     func micButtonTapped()
-    func sendAudioMedia(audioFilename : URL)
-    func openCamera()
-    func hideMore()
-    func more()
-    func cancelReply()
+    func sendAudio(audioFilename : URL)
+    func camera()
+    func attach()
 }
+
 
 class InputView: UIView {
 
@@ -31,6 +30,7 @@ class InputView: UIView {
     @IBOutlet weak var labelAudioTime: UILabel!
     
     weak var delegateInput : DelegateInput?
+    weak var delegateReply : DelegateReply?
     
     //MARK: - AVFOUNDATION PROPERTIES
     var timer: Timer?
@@ -96,9 +96,10 @@ extension InputView{
 
 
 extension InputView{
+    
     @IBAction func sendMsgAction(_ sender: UIButton) {
         if textfieldMessage?.text?.isEmpty == false {
-            delegateInput?.sendMessage()
+            delegateInput?.sendTextMessage()
         }else {
             delegateInput?.micButtonTapped()
         }
@@ -106,14 +107,13 @@ extension InputView{
     
     @IBAction func cameraActionBtn(_ sender: Any) {
         DispatchQueue.main.async {
-            self.delegateInput?.openCamera()
-            self.delegateInput?.hideMore()
+            self.delegateInput?.camera()
         }
     }
     
     //MARK: Plus Icon Action
     @IBAction func moreActoinBtn(_ sender: Any) {
-        delegateInput?.more()
+        delegateInput?.attach()
     }
 }
 
@@ -163,7 +163,7 @@ extension InputView{
         if success {
             print("Recording succeeded")
             //            sendImageFromGalleryAPICall(audio:audioFilename, msgType: "m.audio")
-            delegateInput?.sendAudioMedia(audioFilename: audioFilename)
+            delegateInput?.sendAudio(audioFilename: audioFilename)
         } else {
             print("Recording failed")
         }

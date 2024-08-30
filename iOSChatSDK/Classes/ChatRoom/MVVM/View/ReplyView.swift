@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol DelegateReply : AnyObject{
+    func cancelReply()
+}
+
 class ReplyView: UIView {
     
     private let timestampLabel = UILabel()
@@ -18,7 +22,7 @@ class ReplyView: UIView {
 
     @IBOutlet var loadView: UIView!
     
-    weak var delegate : DelegateInput?
+    weak var delegate : DelegateReply?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -54,7 +58,8 @@ class ReplyView: UIView {
 extension ReplyView{
     
     
-    func configureReply(message : Messages){
+    func configureReply(message : Messages?){
+        guard let message = message else { return }
         let msgType = /message.content?.msgtype
         if msgType == MessageType.image {
             guard let videoURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/\(message.content?.S3MediaUrl ?? "")") else {

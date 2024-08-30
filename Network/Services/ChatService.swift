@@ -71,15 +71,15 @@ class ChatService: GenericClient {
     }
     
     func sendMessage(showloader: Bool = false,
-                     roomID: String,
                      body: String,
                      msgType: String,
-                     accessToken: String,
                      completion: @escaping (Result<ChatMessageResponse?, APIError>, [AnyHashable : Any]?) -> ()) {
         
         self.showLoader = showloader
-        //let headers = [HTTPHeader.contentType("application/json")]
-        let parameters = ChatMessageRequest(roomID: roomID, body: body, msgType: msgType, accessToken: accessToken)
+        let parameters = ChatMessageRequest(roomID: /UserDefaultsHelper.getRoomId(),
+                                            body: body,
+                                            msgType: msgType,
+                                            accessToken: /UserDefaultsHelper.getAccessToken())
         guard let request = ChatServiceEndPoint.sendText.postRequest(parameters: parameters, headers: []) else {
             completion(.failure(.invalidRequestURL), nil)
             return

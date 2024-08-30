@@ -82,8 +82,8 @@ class PublishMediaVC: UIViewController {
     }
     
     @IBAction func sendAction(_ sender: UIButton) {
-        let room_id = UserDefaultsManager.roomID
-        let accessToken = UserDefaultsManager.accessToken
+        let room_id = UserDefaultsHelper.getRoomId()
+        let accessToken = UserDefaultsHelper.getAccessToken()
         
         if imageFetched == nil {
             

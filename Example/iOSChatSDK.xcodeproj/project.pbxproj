@@ -13,8 +13,6 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		9172AD1F2C80664200043DC3 /* InputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9172AD1E2C80664200043DC3 /* InputView.xib */; };
-		9172AD302C809D4400043DC3 /* ReplyView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9172AD2F2C809D4400043DC3 /* ReplyView.xib */; };
 		ACE318D3827B4737C45884B3 /* Pods_iOSChatSDK_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F73BBAFDF59984028FE8C3A8 /* Pods_iOSChatSDK_Tests.framework */; };
 		EAC72CA56438F1F94EFDF38E /* Pods_iOSChatSDK_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A90DDAF0847CE514BF18BC /* Pods_iOSChatSDK_Example.framework */; };
 /* End PBXBuildFile section */
@@ -43,8 +41,6 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		7A78EF5D77432835AB2B43C1 /* Pods-iOSChatSDK_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSChatSDK_Example.release.xcconfig"; path = "Target Support Files/Pods-iOSChatSDK_Example/Pods-iOSChatSDK_Example.release.xcconfig"; sourceTree = "<group>"; };
-		9172AD1E2C80664200043DC3 /* InputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputView.xib; sourceTree = "<group>"; };
-		9172AD2F2C809D4400043DC3 /* ReplyView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReplyView.xib; sourceTree = "<group>"; };
 		A11AD215AA78EA7470C2F9F1 /* Pods-iOSChatSDK_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSChatSDK_Example.debug.xcconfig"; path = "Target Support Files/Pods-iOSChatSDK_Example/Pods-iOSChatSDK_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		AD5471A3E71163220EEB06EA /* Pods-iOSChatSDK_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSChatSDK_Tests.release.xcconfig"; path = "Target Support Files/Pods-iOSChatSDK_Tests/Pods-iOSChatSDK_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		C3E4CFAF2165A49A767333B7 /* Pods-iOSChatSDK_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSChatSDK_Tests.debug.xcconfig"; path = "Target Support Files/Pods-iOSChatSDK_Tests/Pods-iOSChatSDK_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -156,8 +152,6 @@
 		9172AD1D2C80661D00043DC3 /* Xibs */ = {
 			isa = PBXGroup;
 			children = (
-				9172AD2F2C809D4400043DC3 /* ReplyView.xib */,
-				9172AD1E2C80664200043DC3 /* InputView.xib */,
 			);
 			name = Xibs;
 			sourceTree = "<group>";
@@ -264,8 +258,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
-				9172AD1F2C80664200043DC3 /* InputView.xib in Resources */,
-				9172AD302C809D4400043DC3 /* ReplyView.xib in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);

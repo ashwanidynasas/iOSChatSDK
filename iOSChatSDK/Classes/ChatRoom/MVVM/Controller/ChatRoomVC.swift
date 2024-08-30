@@ -16,7 +16,7 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var viewOtherUser: CustomTopView!
     @IBOutlet weak var viewSend: UIView!
-    @IBOutlet weak var viewReply: ReplyView!
+    @IBOutlet weak var viewReply: ChatReplyView!
     @IBOutlet weak var viewInput: InputView!
     @IBOutlet weak var viewMore: MoreView!
     
@@ -42,8 +42,8 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
         
         viewSend?.backgroundColor = .clear
         
-        viewReply?.delegate = self
-        viewReply?.setupUI()
+//        viewReply?.delegate = self
+//        viewReply?.setupUI()
         
         viewInput?.setupUI()
         viewInput?.layer.cornerRadius = 24
@@ -51,8 +51,11 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
         viewInput?.setupTextfield()
         viewInput?.setupAudio()
         
-        viewMore?.setup(.attach)
-        
+        if let viewMore = viewMore {
+            viewMore.setup(.attach)
+        } else {
+            print("viewMore is nil")
+        }
         setupUI()
         viewModel?.onUpdate = { [weak self] in
             DispatchQueue.main.async {
@@ -82,9 +85,9 @@ extension ChatRoomVC{
         vc.imageFetched = imageFetched
         vc.delegate     = self
         vc.isReply      = isReply
-        vc.username     = /viewReply?.labelName?.text
-        vc.userDesc     = /viewReply?.labelDesc?.text
-        vc.userImage    = /viewReply?.imageView?.image
+//        vc.username     = /viewReply?.labelName?.text
+//        vc.userDesc     = /viewReply?.labelDesc?.text
+//        vc.userImage    = /viewReply?.imageView?.image
         vc.eventID      =  eventID
         self.navigationController?.pushViewController(vc, animated: true)
     }
@@ -142,7 +145,7 @@ extension ChatRoomVC{
               let message = viewModel?.messages[indexPath.row] else { return }
         eventID = message.eventId
         
-        viewReply?.configureReply(message: viewModel?.messages[indexPath.row])
+//        viewReply?.configureReply(message: viewModel?.messages[indexPath.row])
         viewMore?.setup(.select)
         DispatchQueue.main.async {
             self.layout([.more])

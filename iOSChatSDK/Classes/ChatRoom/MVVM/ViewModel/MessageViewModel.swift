@@ -48,9 +48,11 @@ class ChatRoomViewModel : NSObject{
     
     
     func getMessages() {
+        let access_Token = UserDefaultsHelper.getAccessToken()
+
         guard let room_id = UserDefaultsHelper.getRoomId() else { return }
         service = ChatService(configuration: .default)
-        service?.getMessages(roomId: room_id, accessToken : /UserDefaultsHelper.getAccessToken() , completion: { (result, headers) in
+        service?.getMessages(roomId: room_id, accessToken : /access_Token , completion: { (result, headers) in
             switch result {
             case .success(let value):
                 if let messages = value?.chunk {

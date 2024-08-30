@@ -130,7 +130,7 @@ class CustomTabBar: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         for (index, item) in items.enumerated() {
-            let button = CustomTabBarButton(image: UIImage(named: /item.image, in: Bundle(for: ChatRoomVC.self), compatibleWith: nil)!)
+            let button = CustomTabBarButton(image: UIImage(named: /item.image, in: Bundle(for: CustomTabBar.self), compatibleWith: nil)!)
             button.setTitle(/item.title)
             button.setButtonTint(item.color)
             button.tag = index

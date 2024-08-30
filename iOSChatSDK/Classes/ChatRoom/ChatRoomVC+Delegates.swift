@@ -141,10 +141,10 @@ extension ChatRoomVC : DelegateInput{
     }
 }
 
-extension ChatRoomVC : DelegateReply{
-    func cancelReply() {
-        isReply = false
-        layout([.input])
-    }
-}
+//extension ChatRoomVC : DelegateReply{
+//    func cancelReply() {
+//        isReply = false
+//        layout([.input])
+//    }
+//}
 

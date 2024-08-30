@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -93,7 +93,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="rML-cJ-Nxi">
-                                <rect key="frame" x="0.0" y="123" width="393" height="593"/>
+                                <rect key="frame" x="0.0" y="123" width="393" height="527"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="TjJ-A5-v4A" id="Dhh-fg-y9f"/>
@@ -101,28 +101,28 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="erw-cH-UfT">
-                                <rect key="frame" x="0.0" y="716" width="393" height="2"/>
+                                <rect key="frame" x="0.0" y="650" width="393" height="2"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="auB-8j-eOW"/>
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Tib-CB-T1j">
-                                <rect key="frame" x="0.0" y="718" width="393" height="100"/>
+                                <rect key="frame" x="0.0" y="652" width="393" height="166"/>
                                 <subviews>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0rq-Iw-r4Z" customClass="ReplyView" customModule="iOSChatSDK" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="0.0"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0rq-Iw-r4Z" customClass="ReplyView" customModule="iOSChatSDK" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oDt-nn-zsq" customClass="InputView" customModule="iOSChatSDK" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="46"/>
+                                        <rect key="frame" x="0.0" y="58" width="393" height="50"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="46" id="N4T-NZ-bdb"/>
+                                            <constraint firstAttribute="height" constant="50" id="N4T-NZ-bdb"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ulN-7i-62E">
-                                        <rect key="frame" x="0.0" y="54" width="393" height="46"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ulN-7i-62E" customClass="MoreView" customModule="iOSChatSDK" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="116" width="393" height="50"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </view>
                                 </subviews>
@@ -151,7 +151,7 @@
                         <outlet property="viewInput" destination="oDt-nn-zsq" id="rzp-CW-NVA"/>
                         <outlet property="viewMore" destination="ulN-7i-62E" id="qbM-Gp-uJC"/>
                         <outlet property="viewOtherUser" destination="T31-Wa-hRD" id="ykO-a7-XFw"/>
-                        <outlet property="viewReply" destination="0rq-Iw-r4Z" id="HpX-zj-XOV"/>
+                        <outlet property="viewReply" destination="0rq-Iw-r4Z" id="ity-32-qIx"/>
                         <outlet property="viewSend" destination="Tib-CB-T1j" id="3xH-or-hOn"/>
                     </connections>
                 </viewController>

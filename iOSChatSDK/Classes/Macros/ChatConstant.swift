@@ -76,6 +76,8 @@ struct ChatConstants {
         static let userPlaceholder:String  = "userPlaceholder"
         static let sendIcon:String         = "sendIcon"
         static let mic:String              = "mic"
+        static let cancel:String           = "cancel"
+        static let replyCancel:String      = "replyCancel"
     }
     
     struct Bubble {
@@ -229,6 +231,8 @@ struct Cell_Chat {
     static let ReplyMediaText_MediaTextCell = "ReplyMediaText_MediaTextCell"
     
     static let CustomTopView = "CustomTopView"
+    static let InputView = "InputView"
+    static let ReplyView = "ReplyView"
 }
 
 struct SB {

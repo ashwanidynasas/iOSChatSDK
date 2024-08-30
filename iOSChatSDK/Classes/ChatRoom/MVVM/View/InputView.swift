@@ -30,7 +30,7 @@ class InputView: UIView {
     @IBOutlet weak var labelAudioTime: UILabel!
     
     weak var delegateInput : DelegateInput?
-    weak var delegateReply : DelegateReply?
+//    weak var delegateReply : DelegateReply?
     
     //MARK: - AVFOUNDATION PROPERTIES
     var timer: Timer?
@@ -53,9 +53,16 @@ class InputView: UIView {
     // MARK: - Private Methods
     private func commitView() {
         
+        if let viewFromXib = Bundle(for: type(of: self)).loadNibNamed(Cell_Chat.InputView, owner: self, options: nil)?.first as? UIView {
+            viewFromXib.frame = self.bounds
+            addSubview(viewFromXib)
+        } else {
+            // Handle the case where the XIB file cannot be loaded
+            print("Failed to load XIB file 'CustomTopView'")
+        }
         
-        Bundle.main.loadNibNamed("InputView", owner: self, options: nil)
-        self.addSubview(self.loadView)
+//        Bundle.main.loadNibNamed("InputView", owner: self, options: nil)
+//        self.addSubview(self.loadView)
         //ConstraintHandler.addConstraints(loadView)
     }
 }

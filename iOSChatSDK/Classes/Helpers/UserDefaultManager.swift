@@ -54,11 +54,11 @@ extension UserDefaultsHelper{
     }
     
     class func setRoomId(_ value: String) {
-        self.set(value, forkey: .accessToken)
+        self.set(value, forkey: .roomId)
     }
     
     class func getRoomId() -> String? {
-        return UserDefaultsHelper.get(.accessToken) as? String
+        return UserDefaultsHelper.get(.roomId) as? String
     }
 }
 enum UserDefaultsKeys: String {

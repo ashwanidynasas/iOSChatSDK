@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Foundation
 
 enum MoreType{
     case attach
@@ -28,9 +29,18 @@ protocol DelegateMore : AnyObject{
 class MoreView: UIView {
     
     private var customTabBar: CustomTabBar?
-    
     weak var delegate : DelegateMore?
-
+    
+    init(frame: CGRect, type: MoreType) {
+        super.init(frame: frame)
+        setup(type)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        
+    }
+    
     func setup(_ type : MoreType) {
         removeCustomTabBar()
         customTabBar = CustomTabBar(items: [.media , .camera, .location , .document , .zc])
@@ -47,5 +57,4 @@ class MoreView: UIView {
         customTabBar?.removeFromSuperview()
         customTabBar = nil
     }
-
 }

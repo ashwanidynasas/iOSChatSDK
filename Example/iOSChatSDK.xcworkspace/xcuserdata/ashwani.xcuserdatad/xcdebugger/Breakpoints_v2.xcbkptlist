@@ -20,5 +20,67 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6408796D-0A27-44AC-86CB-CB9BD9B917B2"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../iOSChatSDK/Classes/UserConnection/MVVM/ViewModel/ConnectionViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "loginResponse"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E58E7E02-D949-4045-93B4-929796BFD7B9"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../iOSChatSDK/Classes/ChatRoom/MVVM/ViewModel/MessageViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "getMessages()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E58E7E02-D949-4045-93B4-929796BFD7B9 - b453018299048f01"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "iOSChatSDK.ChatRoomViewModel.getMessages() -&gt; ()"
+                  moduleName = "iOSChatSDK"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ashwani/Documents/GitHub/iOSChatSDK/iOSChatSDK/Classes/ChatRoom/MVVM/ViewModel/MessageViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "55"
+                  endingLineNumber = "55">
+               </Location>
+               <Location
+                  uuid = "E58E7E02-D949-4045-93B4-929796BFD7B9 - 86ba49141e71a965"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (iOSChatSDK.Result&lt;Swift.Optional&lt;iOSChatSDK.MessageResponse&gt;, iOSChatSDK.APIError&gt;, Swift.Optional&lt;Swift.Dictionary&lt;Swift.AnyHashable, Any&gt;&gt;) -&gt; () in iOSChatSDK.ChatRoomViewModel.getMessages() -&gt; ()"
+                  moduleName = "iOSChatSDK"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ashwani/Documents/GitHub/iOSChatSDK/iOSChatSDK/Classes/ChatRoom/MVVM/ViewModel/MessageViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "57"
+                  endingLineNumber = "57">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

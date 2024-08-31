@@ -8,6 +8,11 @@
 import Foundation
 
 //MARK: - CUSTOM DELEGATES
+enum SendChild{
+    case input
+    case more
+    case reply
+}
 
 //MARK: - TOP VIEW
 extension ChatRoomVC: DelegateTopView {
@@ -31,10 +36,8 @@ extension ChatRoomVC : DelegatePublishMedia{
 
 
 extension ChatRoomVC : DelegateMediaFullVC{
-    func itemDeleteFromChat(_ didSendData: String) {
-        if didSendData == ChatConstants.Common.deleteItem{
-            viewModel?.getMessages()
-        }
+    func messageDeleted() {
+        viewModel?.getMessages()
     }
 }
 
@@ -76,6 +79,7 @@ extension ChatRoomVC: DelegateMore{
         case .forwardSelected : break
         case .reply:
             isReply = true
+            viewReply?.configure(with: selectedMessage)
             layout([.input , .reply])
             
         case .cancel:
@@ -97,7 +101,7 @@ extension ChatRoomVC : DelegateInput{
             return
         }
         if isReply {
-            viewModel?.sendReply(body: /viewInput?.textfieldMessage?.text, eventID: eventID, completion: { result in
+            viewModel?.sendReply(body: /viewInput?.textfieldMessage?.text, eventID: /selectedMessage?.eventId, completion: { result in
                 switch result {
                 case .success(let response):
                     self.messageSent()
@@ -141,10 +145,10 @@ extension ChatRoomVC : DelegateInput{
     }
 }
 
-//extension ChatRoomVC : DelegateReply{
-//    func cancelReply() {
-//        isReply = false
-//        layout([.input])
-//    }
-//}
+extension ChatRoomVC : DelegateReply{
+    func cancelReply() {
+        isReply = false
+        layout([.input])
+    }
+}
 

@@ -28,9 +28,9 @@ class MediaTextTVCell: UITableViewCell {
     @IBOutlet weak var playButton:UIButton!
     weak var delegate: DelegatePlay?
 
-    func mediaConfigure(with message: Messages, currentUser: String) {
+    func mediaConfigure(with message: Messages) {
 
-        let isCurrentUser = message.sender == currentUser
+        let isCurrentUser = message.sender == UserDefaultsHelper.getCurrentUser()
         bubbleBackgroundView.backgroundColor = isCurrentUser ? UIColor.black.withAlphaComponent(0.5) : Colors.Circles.violet
         timestampLabel.textColor = .white
         messageLabel.text = message.content?.body

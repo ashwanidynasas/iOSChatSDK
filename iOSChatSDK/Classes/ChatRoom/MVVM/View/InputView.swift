@@ -9,14 +9,6 @@ import UIKit
 import AVFoundation
 import AVFAudio
 
-protocol DelegateInput : AnyObject{
-    func sendTextMessage()
-    func micButtonTapped()
-    func sendAudio(audioFilename : URL)
-    func camera()
-    func attach()
-}
-
 
 class InputView: UIView {
 

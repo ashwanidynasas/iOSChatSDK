@@ -22,24 +22,13 @@ enum MoreType{
     }
 }
 
-protocol DelegateMore : AnyObject{
-    func selectedOption(_ item : Item)
-}
+
 
 class MoreView: UIView {
     
     private var customTabBar: CustomTabBar?
     weak var delegate : DelegateMore?
     
-    init(frame: CGRect, type: MoreType) {
-        super.init(frame: frame)
-        setup(type)
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        
-    }
     
     func setup(_ type : MoreType) {
         removeCustomTabBar()

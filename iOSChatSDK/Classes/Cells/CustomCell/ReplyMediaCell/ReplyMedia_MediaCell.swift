@@ -170,14 +170,14 @@ class ReplyMedia_MediaCell: UITableViewCell {
         ])
     }
 
-    func configure(with message: Messages, currentUser: String) {
+    func configure(with message: Messages) {
         if let image = message.content?.url {
             if let url = image.modifiedString.mediaURL {
                 self.messageMediaImage.sd_setImage(with: url, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ChatMessageCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
             }
         }
         
-        let isCurrentUser = message.sender == currentUser
+        let isCurrentUser = message.sender == UserDefaultsHelper.getCurrentUser()
         bubbleBackgroundView.backgroundColor = isCurrentUser ? UIColor.black.withAlphaComponent(0.5) : Colors.Circles.violet
         upperbubbleBackgroundView.backgroundColor = isCurrentUser ? Colors.Circles.violet :UIColor.black.withAlphaComponent(0.5)
         

@@ -20,18 +20,16 @@ class MediaFullVC: UIViewController {
     @IBOutlet weak var videoPlayerBackView: UIView!
     
     //MARK: - VIEWMODEL
-    private var deleteViewModel = ChatRoomViewModel(connection: nil)
+    private var viewModel = ChatRoomViewModel(connection: nil)
     
     //MARK: - PROPERTIES
-    var currentUser: String?
     var imageFetched: UIImage?
     var videoFetched: URL?
-    var imageSelectURL :String?
-    var s3MediaURL :String?
-    var mediaType:String! = ""
+    
+    var selectedMessage : Messages?
+
     var videoPlayerContainerView: CustomVideoPlayerContainerView!
     var player: AVPlayer?
-    var eventID: String?
     
     weak var delegate: DelegateMediaFullVC?
     
@@ -40,12 +38,13 @@ class MediaFullVC: UIViewController {
         super.viewDidLoad()
         bottomView.backgroundColor = .clear
         bottomView?.setup(.preview)
+        bottomView?.delegate = self
         setupVideoPlayerContainerView()
         setupUI()
         topView.searchButton.isHidden = true
         videoPlayerBackView.isHidden = true
-        if let videoURL = imageSelectURL?.modifiedString.mediaURL {
-            if mediaType == MessageType.image {
+        if let videoURL = selectedMessage?.content?.url?.modifiedString.mediaURL {
+            if /selectedMessage?.content?.msgtype == MessageType.image {
                 self.fullImgView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: ChatMessageCellConstant.ImageView.placeholderImageName, in: Bundle(for: MediaFullVC.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
             }else{
                 videoPlayerBackView.isHidden = false
@@ -75,12 +74,11 @@ class MediaFullVC: UIViewController {
     
     private func redactMessage() {
         
-        deleteViewModel.redactMessage(eventID: /eventID) { result in
-            
+        viewModel.redactMessage(eventID: /selectedMessage?.eventId) { result in
             switch result {
             case .success(let value):
                 DispatchQueue.main.async {
-                    self.delegate?.itemDeleteFromChat(ChatConstants.Common.deleteItem)//"deleteItem")
+                    self.delegate?.messageDeleted()
                     self.navigationController?.popViewController(animated: true)
                 }
             case .failure(let error):
@@ -90,7 +88,7 @@ class MediaFullVC: UIViewController {
     }
     
     func playVideo() {
-        guard let videoURL = URL(string: "\(ChatConstants.S3Media.URL)\(/s3MediaURL)") else {
+        guard let videoURL = URL(string: "\(ChatConstants.S3Media.URL)\(/(selectedMessage?.content?.S3MediaUrl ?? ""))") else {
             print("Error: Invalid video URL")
             return
         }
@@ -103,19 +101,9 @@ class MediaFullVC: UIViewController {
     }
     
     func setupUI(){
-        topView.titleLabel.text = /currentUser
+        topView.titleLabel.text = /UserDefaultsHelper.getCurrentUser()
         topView.delegate = self
         self.view.setGradientBackground(startColor: Colors.Circles.black, endColor: Colors.Circles.violet)
-    }
-    
-    
-    
-    @objc private func buttonTapped(_ sender: UIButton) {
-        let tag = sender.tag
-        switch tag {
-        default:
-            break
-        }
     }
 }
 
@@ -125,6 +113,43 @@ extension MediaFullVC : DelegateTopView{
         self.navigationController?.popViewController(animated: true)
     }
 }
+
+extension MediaFullVC : DelegateMore{
+    func selectedOption(_ item: Item) {
+        switch item{
+        case .save    : break
+        case .delete  : redactMessage()
+        case .forward : break
+        case .pin     : break
+        default       : break
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //MARK: - VIDEO PLAYER VIEW
 class CustomVideoPlayerContainerView: UIView {

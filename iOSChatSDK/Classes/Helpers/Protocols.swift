@@ -16,11 +16,27 @@ protocol DelegatePublishMedia: AnyObject {
 }
 
 protocol DelegateMediaFullVC: AnyObject {
-    func itemDeleteFromChat(_ didSendData: String)
+    func messageDeleted()
 }
 
 protocol DelegatePlay : AnyObject{
     func didTapPlayButton(in cell: UITableViewCell)
     func didLongPressPlayButton(in cell: UITableViewCell)
+}
+
+protocol DelegateReply : AnyObject{
+    func cancelReply()
+}
+
+protocol DelegateMore : AnyObject{
+    func selectedOption(_ item : Item)
+}
+
+protocol DelegateInput : AnyObject{
+    func sendTextMessage()
+    func micButtonTapped()
+    func sendAudio(audioFilename : URL)
+    func camera()
+    func attach()
 }
 

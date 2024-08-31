@@ -85,7 +85,6 @@ extension ConnectionListVC: UITableViewDelegate,UITableViewDataSource {
         
         guard let vc = UIStoryboard(name: "MainChat", bundle: Bundle(for: ConnectionListVC.self)).instantiateViewController(withIdentifier: "ChatRoomVC") as? ChatRoomVC else { return }
         vc.viewModel = ChatRoomViewModel(connection: viewModel?.connections[indexPath.row])
-        vc.currentUser = "@\(/viewModel?.circleHash):chat.sqrcle.co"
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

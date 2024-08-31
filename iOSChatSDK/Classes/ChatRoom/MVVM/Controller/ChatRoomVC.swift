@@ -21,8 +21,6 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
     @IBOutlet weak var viewMore: MoreView!
     
     //MARK: - PROPERTIES
-    var currentUser: String! //this is current circle
-    
     //MARK: - VIEWMODEL
     var viewModel : ChatRoomViewModel?
     
@@ -31,7 +29,7 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
     var imageFetched: UIImage? = nil
     var videoFetched: URL?
     var isReply = false
-    var eventID: String! = ""
+    var selectedMessage : Messages?
     
     //MARK: - VIEW CYCLE
     override func viewDidLoad() {
@@ -42,8 +40,7 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
         
         viewSend?.backgroundColor = .clear
         
-//        viewReply?.delegate = self
-//        viewReply?.setupUI()
+        viewReply?.delegate = self
         
         viewInput?.setupUI()
         viewInput?.layer.cornerRadius = 24
@@ -80,15 +77,14 @@ extension ChatRoomVC{
     
     func publish(){
         guard let vc = UIStoryboard(name: SB.main, bundle: Bundle(for: ChatRoomVC.self)).instantiateViewController(withIdentifier: String(describing: PublishMediaVC.self)) as? PublishMediaVC else { return  }
-        vc.currentUser = currentUser
         vc.videoFetched = videoFetched
         vc.imageFetched = imageFetched
         vc.delegate     = self
         vc.isReply      = isReply
-//        vc.username     = /viewReply?.labelName?.text
-//        vc.userDesc     = /viewReply?.labelDesc?.text
+        vc.username     = /selectedMessage?.sender
+        vc.userDesc     = /selectedMessage?.content?.body
 //        vc.userImage    = /viewReply?.imageView?.image
-        vc.eventID      =  eventID
+        vc.eventID      =  /selectedMessage?.eventId
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -102,13 +98,9 @@ extension ChatRoomVC{
                 return
             }
             guard let vc = UIStoryboard(name: "MainChat", bundle: Bundle(for: ChatRoomVC.self)).instantiateViewController(withIdentifier: "MediaFullVC") as? MediaFullVC else { return }
-            vc.currentUser = currentUser
             vc.videoFetched = videoFetched
             vc.imageFetched = imageFetched
-            vc.imageSelectURL = message.content?.url
-            vc.s3MediaURL = message.content?.S3MediaUrl
-            vc.mediaType =  message.content?.msgtype
-            vc.eventID = message.eventId
+            vc.selectedMessage = message
             vc.delegate = self
             self.navigationController?.pushViewController(vc, animated: true)
         }
@@ -143,7 +135,7 @@ extension ChatRoomVC{
     func select(cell:UITableViewCell){
         guard let indexPath = tableView?.indexPath(for: cell),
               let message = viewModel?.messages[indexPath.row] else { return }
-        eventID = message.eventId
+        selectedMessage = message
         
 //        viewReply?.configureReply(message: viewModel?.messages[indexPath.row])
         viewMore?.setup(.select)
@@ -153,7 +145,7 @@ extension ChatRoomVC{
     }
     
     func deleteMessage() {
-        viewModel?.redactMessage(eventID: eventID) { result in
+        viewModel?.redactMessage(eventID: /selectedMessage?.eventId) { result in
             switch result {
             case .success( _):
                 DispatchQueue.main.async {

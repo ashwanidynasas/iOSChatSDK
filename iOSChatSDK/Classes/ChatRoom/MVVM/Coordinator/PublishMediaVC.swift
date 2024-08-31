@@ -31,11 +31,10 @@ class PublishMediaVC: UIViewController {
     
     //MARK: - PROPERTIES
     weak var delegate: DelegatePublishMedia?
-    
-    var currentUser: String!
     var imageFetched:UIImage! = nil
     var videoFetched:URL! =  nil
     var isReply:Bool!
+    
     var username:String! = ""
     var userDesc:String! = ""
     var userImage:UIImage! = nil
@@ -211,7 +210,7 @@ class PublishMediaVC: UIViewController {
 //MARK: - SETUP UI
 extension PublishMediaVC{
     func setupUI(){
-        topView.titleLabel.text = currentUser
+        topView.titleLabel.text = UserDefaultsHelper.getCurrentUser()
         topView.delegate = self
         sendMsgTF.delegate = self
         backTFView.layer.cornerRadius = 18

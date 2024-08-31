@@ -181,8 +181,8 @@ extension ChatMessageCell{
 
 //MARK: - CONFIGURATION
 extension ChatMessageCell{
-    func configure(with message: Messages, currentUser: String) {
-        let isCurrentUser = message.sender == currentUser
+    func configure(with message: Messages) {
+        let isCurrentUser = message.sender == UserDefaultsHelper.getCurrentUser()
         bubbleBackgroundView.backgroundColor = isCurrentUser ? UIColor.black.withAlphaComponent(0.5) : Colors.Circles.violet
         messageLabel.textColor = .white
         timestampLabel.textColor = .white

@@ -30,6 +30,7 @@ class ConnectionViewModel : NSObject{
         self.service = ChatService()
         self.circleId = circleId
         self.circleHash = circleHash
+        UserDefaultsHelper.setCurrentUser("@\(/circleHash):chat.sqrcle.co")
         fetchConnections()
     }
     

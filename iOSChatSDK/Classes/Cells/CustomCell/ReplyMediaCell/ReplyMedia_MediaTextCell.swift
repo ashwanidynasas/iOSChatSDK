@@ -191,7 +191,7 @@ class ReplyMedia_MediaTextCell: UITableViewCell {
         ])
     }
 
-    func configure(with message: Messages, currentUser: String) {
+    func configure(with message: Messages) {
         
         if let body = message.content?.body {
             messageLabel.text = body
@@ -205,7 +205,7 @@ class ReplyMedia_MediaTextCell: UITableViewCell {
             }
         }
                 
-        let isCurrentUser = message.sender == currentUser
+        let isCurrentUser = message.sender == UserDefaultsHelper.getCurrentUser()
         bubbleBackgroundView.backgroundColor = isCurrentUser ? UIColor.black.withAlphaComponent(0.5) : Colors.Circles.violet
         upperbubbleBackgroundView.backgroundColor = isCurrentUser ? Colors.Circles.violet :UIColor.black.withAlphaComponent(0.5)
         

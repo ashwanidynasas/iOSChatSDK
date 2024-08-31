@@ -19,7 +19,7 @@ class CustomTopView: UIView {
     
     var connection : Connection? {
         didSet{
-            titleLabel?.text = "Other circle name"
+            titleLabel?.text = UserDefaultsHelper.getCurrentUser()
             //titleLabel?.text = connection?.userInfo
         }
     }

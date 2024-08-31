@@ -8,7 +8,11 @@
 import UIKit
 import Foundation
 
+
+
 class ChatReplyView: UIView {
+    
+    weak var delegate : DelegateReply?
     
     // MARK: - UI Elements
     private let labelName: UILabel = {
@@ -102,6 +106,17 @@ class ChatReplyView: UIView {
     
     // MARK: - Actions
     @objc private func replyCancelView() {
-        print("Cancel reply")
+        delegate?.cancelReply()
     }
+    
+    func configure(with message: Messages?) {
+        labelName.text = /message?.sender
+        labelDesc.text = /message?.content?.body
+        if let image = message?.content?.url {
+            if let url = image.modifiedString.mediaURL {
+                self.imageView.sd_setImage(with: url, placeholderImage: UIImage.init(systemName: "person.circle.fill"), options: .transformAnimatedImage, progress: nil, completed: nil)
+            }
+        }
+    }
+    
 }

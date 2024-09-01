@@ -17,7 +17,7 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
     @IBOutlet weak var viewOtherUser: CustomTopView!
     @IBOutlet weak var viewSend: UIView!
     @IBOutlet weak var viewReply: ChatReplyView!
-    @IBOutlet weak var viewInput: InputView!
+    @IBOutlet weak var viewInput: ChatInputView!
     @IBOutlet weak var viewMore: MoreView!
     
     //MARK: - PROPERTIES
@@ -42,11 +42,11 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
         
         viewReply?.delegate = self
         
-        viewInput?.setupUI()
+//        viewInput?.setupUI()
         viewInput?.layer.cornerRadius = 24
         viewInput?.clipsToBounds = true
-        viewInput?.setupTextfield()
-        viewInput?.setupAudio()
+//        viewInput?.setupTextfield()
+//        viewInput?.setupAudio()
         
         if let viewMore = viewMore {
             viewMore.setup(.attach)
@@ -165,8 +165,8 @@ extension ChatRoomVC{
         self.isReply = false
         DispatchQueue.main.async {
             self.layout([.input])
-            self.viewInput?.textfieldMessage?.text = ""
-            self.viewInput?.buttonSend?.setImage(UIImage(named: "mic", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), for: .normal)
+//            self.viewInput?.textfieldMessage?.text = ""
+//            self.viewInput?.buttonSend?.setImage(UIImage(named: "mic", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), for: .normal)
         }
         viewModel?.getMessages()
         scrollToBottom()

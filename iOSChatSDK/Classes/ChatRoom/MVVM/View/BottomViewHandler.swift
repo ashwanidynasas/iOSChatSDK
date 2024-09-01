@@ -12,12 +12,12 @@ import UIKit
 class BottomView: UIView {
     
     private var viewReply : ChatReplyView
-    private var viewInput : InputView
+    private var viewInput : ChatInputView
     private var viewMore  = MoreView()
     
     init(){
         self.viewReply = ChatReplyView()
-        self.viewInput = InputView()
+        self.viewInput = ChatInputView()
         
         super.init(frame: .zero)
         setupView()

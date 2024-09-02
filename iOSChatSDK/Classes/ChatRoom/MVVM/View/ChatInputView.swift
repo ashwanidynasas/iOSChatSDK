@@ -25,6 +25,7 @@ class ChatInputView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         //button.setImage(UIImage(systemName: "face.smiling"), for: .normal)
         button.setImage(UIImage(named: ChatConstants.Image.emoji, in: Bundle(for: ChatInputView.self), compatibleWith: nil), for: .normal)
+        button.tintColor = Colors.Circles.violet
         return button
     }()
     
@@ -41,6 +42,7 @@ class ChatInputView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         //button.setImage(UIImage(systemName: "camera"), for: .normal)
         button.setImage(UIImage(named: ChatConstants.Image.moreCamera, in: Bundle(for: ChatInputView.self), compatibleWith: nil), for: .normal)
+        button.tintColor = Colors.Circles.violet
         return button
     }()
     
@@ -49,6 +51,7 @@ class ChatInputView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
 //        button.setImage(UIImage(systemName: "ellipsis.circle"), for: .normal)
         button.setImage(UIImage(named: ChatConstants.Image.plusIcon, in: Bundle(for: ChatInputView.self), compatibleWith: nil), for: .normal)
+        button.tintColor = Colors.Circles.violet
         return button
     }()
     
@@ -56,7 +59,8 @@ class ChatInputView: UIView {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
 //        button.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
-        button.setImage(UIImage(named: ChatConstants.Image.sendIcon, in: Bundle(for: ChatInputView.self), compatibleWith: nil), for: .normal)
+        button.setImage(UIImage(named: ChatConstants.Image.mic, in: Bundle(for: ChatInputView.self), compatibleWith: nil), for: .normal)
+        button.tintColor = Colors.Circles.violet
         return button
     }()
     
@@ -71,7 +75,8 @@ class ChatInputView: UIView {
     private let labelAudioTime: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "00:00" // Initial text, you can customize this
+        label.font = ChatConstants.Bubble.messageFont
+        label.text = "00:00"
         return label
     }()
     
@@ -79,7 +84,7 @@ class ChatInputView: UIView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
 //        imageView.image = UIImage(systemName: "mic.fill")
-        imageView.image = UIImage(named: ChatConstants.Image.mic)
+        imageView.image = UIImage(named: ChatConstants.Image.micsound)
 
         return imageView
     }()
@@ -172,14 +177,9 @@ class ChatInputView: UIView {
         
         // Constraints for viewAudio
         NSLayoutConstraint.activate([
-//            viewAudio.leadingAnchor.constraint(equalTo: loadView.leadingAnchor,constant: 8),
             viewAudio.trailingAnchor.constraint(equalTo: buttonSend.leadingAnchor, constant: -8),
-//            viewAudio.centerYAnchor.constraint(equalTo: loadView.centerYAnchor),
-//            viewAudio.heightAnchor.constraint(equalToConstant: 40) // Adjust height as needed
-            
             viewAudio.topAnchor.constraint(equalTo: topAnchor),
             viewAudio.leadingAnchor.constraint(equalTo: leadingAnchor),
-//            viewAudio.trailingAnchor.constraint(equalTo: trailingAnchor),
             viewAudio.bottomAnchor.constraint(equalTo: bottomAnchor)
 
         ])
@@ -188,14 +188,14 @@ class ChatInputView: UIView {
         NSLayoutConstraint.activate([
             labelAudioTime.leadingAnchor.constraint(equalTo: viewAudio.leadingAnchor, constant: 8),
             labelAudioTime.centerYAnchor.constraint(equalTo: viewAudio.centerYAnchor),
-            labelAudioTime.widthAnchor.constraint(equalToConstant: 40)
+            labelAudioTime.widthAnchor.constraint(equalToConstant: 100)
         ])
         
         // Constraints for imageViewAudioIcon
         NSLayoutConstraint.activate([
             imageViewAudioIcon.leadingAnchor.constraint(equalTo: labelAudioTime.trailingAnchor, constant: 8),
             imageViewAudioIcon.centerYAnchor.constraint(equalTo: viewAudio.centerYAnchor),
-            imageViewAudioIcon.widthAnchor.constraint(equalToConstant: 20),
+            imageViewAudioIcon.widthAnchor.constraint(equalToConstant: 150),
             imageViewAudioIcon.heightAnchor.constraint(equalToConstant: 20)
         ])
     }

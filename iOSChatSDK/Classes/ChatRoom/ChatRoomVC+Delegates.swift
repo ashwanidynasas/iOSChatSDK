@@ -79,13 +79,13 @@ extension ChatRoomVC: DelegateMore{
         case .forwardSelected : break
         case .reply:
             isReply = true
-            viewReply?.configure(with: selectedMessage)
-            layout([.input , .reply])
+            viewSend.viewReply.configure(with: selectedMessage)
+            viewSend.layout([.input , .reply])
             
         case .cancel:
             isReply = false
             DispatchQueue.main.async {
-                self.layout([.input])
+                self.viewSend.layout([.input])
             }
         default : break
         }
@@ -136,16 +136,16 @@ extension ChatRoomVC : DelegateInput{
     }
     
     func attach() {
-        viewMore?.backgroundColor = .clear
-        viewMore?.setup(.attach)
-        layout(isReply ? [.reply, .input, .more] : [.input, .more])
+        viewSend.viewMore.backgroundColor = .clear
+        viewSend.viewMore.setup(.attach)
+        viewSend.layout(isReply ? [.reply, .input, .more] : [.input, .more])
     }
 }
 
 extension ChatRoomVC : DelegateReply{
     func cancelReply() {
         isReply = false
-        layout([.input])
+        viewSend.layout([.input])
     }
 }
 

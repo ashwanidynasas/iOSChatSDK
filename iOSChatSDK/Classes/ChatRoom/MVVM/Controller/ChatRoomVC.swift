@@ -15,11 +15,8 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
     //MARK: - OUTLETS
     @IBOutlet weak var tableView:UITableView!
     @IBOutlet weak var viewOtherUser: CustomTopView!
-    @IBOutlet weak var viewSend: UIView!
-    @IBOutlet weak var viewReply: ChatReplyView!
-    @IBOutlet weak var viewInput: ChatInputView!
-    @IBOutlet weak var viewMore: MoreView!
-    
+    @IBOutlet weak var viewSend: BottomView!
+   
     //MARK: - PROPERTIES
     //MARK: - VIEWMODEL
     var viewModel : ChatRoomViewModel?
@@ -34,20 +31,12 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
     //MARK: - VIEW CYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         viewOtherUser?.delegate = self
         viewOtherUser?.connection = viewModel?.connection
         
         viewSend?.backgroundColor = .clear
         
-        viewReply?.delegate = self
-        viewInput?.delegateInput = self
-        viewInput?.clipsToBounds = true
-        if let viewMore = viewMore {
-            viewMore.setup(.attach)
-        } else {
-            print("viewMore is nil")
-        }
+        
         setupUI()
         viewModel?.onUpdate = { [weak self] in
             DispatchQueue.main.async {
@@ -106,7 +95,7 @@ extension ChatRoomVC{
 extension ChatRoomVC{
     
     func setupUI() {
-        layout([.input])
+        viewSend.layout([.input, .more , .reply])
         let startColor = UIColor(hex: "000000")
         let endColor = UIColor(hex: "520093")
         self.view.setGradientBackground(startColor: startColor, endColor: endColor)
@@ -115,13 +104,7 @@ extension ChatRoomVC{
         
     }
     
-    func layout( _ children : [SendChild]){
-        DispatchQueue.main.async {
-            self.viewReply.isHidden = !children.contains(.reply)
-            self.viewInput.isHidden = !children.contains(.input)
-            self.viewMore.isHidden = !children.contains(.more)
-         }
-    }
+    
 }
 
 //MARK: - FUNCTIONS
@@ -133,9 +116,9 @@ extension ChatRoomVC{
         selectedMessage = message
         
 //        viewReply?.configureReply(message: viewModel?.messages[indexPath.row])
-        viewMore?.setup(.select)
+        viewSend.viewMore.setup(.select)
         DispatchQueue.main.async {
-            self.layout([.more])
+            self.viewSend.layout([.more])
         }
     }
     
@@ -146,7 +129,7 @@ extension ChatRoomVC{
                 DispatchQueue.main.async {
                     self.viewModel?.getMessages()
                     DispatchQueue.main.async {
-                        self.layout([.input])
+                        self.viewSend.layout([.input])
                     }
                     
                 }
@@ -159,8 +142,8 @@ extension ChatRoomVC{
     func messageSent(){
         self.isReply = false
         DispatchQueue.main.async {
-            self.layout([.input])
-            self.viewInput?.mode = .audio
+            self.viewSend.layout([.input])
+            self.viewSend.viewInput.mode = .audio
         }
         viewModel?.getMessages()
         scrollToBottom()

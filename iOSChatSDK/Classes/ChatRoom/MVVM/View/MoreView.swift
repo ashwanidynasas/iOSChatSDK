@@ -29,6 +29,16 @@ class MoreView: UIView {
     private var customTabBar: CustomTabBar?
     weak var delegate : DelegateMore?
     
+    // MARK: - Initialization
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup(.attach)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setup(.attach)
+    }
     
     func setup(_ type : MoreType) {
         removeCustomTabBar()

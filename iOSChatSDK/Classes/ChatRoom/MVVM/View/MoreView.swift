@@ -32,7 +32,7 @@ class MoreView: UIView {
     
     func setup(_ type : MoreType) {
         removeCustomTabBar()
-        customTabBar = CustomTabBar(items: [.media , .camera, .location , .document , .zc])
+        customTabBar = CustomTabBar(items: type.items)
         if let customTabBar = customTabBar {
             customTabBar.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview(customTabBar)

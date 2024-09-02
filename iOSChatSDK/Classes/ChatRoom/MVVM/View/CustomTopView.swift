@@ -16,14 +16,12 @@ class CustomTopView: UIView {
      @IBOutlet weak var searchButton: UIButton!
     
     weak var delegate : DelegateTopView?
-    
     var connection : Connection? {
         didSet{
             titleLabel?.text = UserDefaultsHelper.getCurrentUser()
             //titleLabel?.text = connection?.userInfo
         }
     }
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -36,17 +34,13 @@ class CustomTopView: UIView {
         super.init(coder: coder)
         commonInit()
     }
-    
     func commonInit() {
         self.backgroundColor = .clear
         if let viewFromXib = Bundle(for: type(of: self)).loadNibNamed(Cell_Chat.CustomTopView, owner: self, options: nil)?.first as? UIView {
             viewFromXib.frame = self.bounds
             addSubview(viewFromXib)
         } else {
-            // Handle the case where the XIB file cannot be loaded
             print("Failed to load XIB file 'CustomTopView'")
         }
     }
-    
-    
 }

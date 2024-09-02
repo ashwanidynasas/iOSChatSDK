@@ -81,12 +81,13 @@ extension ChatRoomVC{
                 print("media nil...")
                 return
             }
-            guard let vc = UIStoryboard(name: "MainChat", bundle: Bundle(for: ChatRoomVC.self)).instantiateViewController(withIdentifier: "MediaFullVC") as? MediaFullVC else { return }
-            vc.videoFetched = videoFetched
-            vc.imageFetched = imageFetched
-            vc.selectedMessage = message
-            vc.delegate = self
-            self.navigationController?.pushViewController(vc, animated: true)
+//            guard let vc = UIStoryboard(name: "MainChat", bundle: Bundle(for: ChatRoomVC.self)).instantiateViewController(withIdentifier: "MediaFullVC") as? MediaFullVC else { return }
+            let mediaPreviewVC = MediaPreviewVC()
+            mediaPreviewVC.videoFetched = videoFetched
+            mediaPreviewVC.imageFetched = imageFetched
+            mediaPreviewVC.selectedMessage = message
+            mediaPreviewVC.delegate = self
+            self.navigationController?.pushViewController(mediaPreviewVC, animated: true)
         }
     }
 }

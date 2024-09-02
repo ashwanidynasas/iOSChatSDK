@@ -144,6 +144,7 @@
 		8D95D0FD014C9C2A30943213765C387A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4B8062A824BCE7CB28FCE3129AC673B /* Foundation.framework */; };
 		9035F0522B779EC49A5635C8F75F387E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4B8062A824BCE7CB28FCE3129AC673B /* Foundation.framework */; };
 		90495BE7B464E3099D72610E0DED7A96 /* ReplyMedia_MediaTextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9F8BE0E0C3072671445BE849EEBB3B /* ReplyMedia_MediaTextCell.swift */; };
+		910BBEA02C85A7ED007825DA /* ChatAudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910BBE9F2C85A7ED007825DA /* ChatAudioView.swift */; };
 		91218968238F58BBB3E84DC5C8A25854 /* SDImageLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 81E0A688A74C081D3148DA05F2C4CFCC /* SDImageLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		920D4B61F65016C8A27FA1773E7224D3 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41D3D62F626C1D4C8C524FE5CF36BD1 /* UserService.swift */; };
 		931C00F52EF63471204D34ECE083F01E /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1640963153140EEDCF156D8FB149DF /* InputView.swift */; };
@@ -425,6 +426,7 @@
 		8FCF4D578E581CEE147D53180E62DC5C /* SDWebImageError.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageError.m; path = SDWebImage/Core/SDWebImageError.m; sourceTree = "<group>"; };
 		9027578F072E34B550325FA707B882AE /* SDmetamacros.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDmetamacros.h; path = SDWebImage/Private/SDmetamacros.h; sourceTree = "<group>"; };
 		91029E07CDCCFDBC7F389E04FE0ACB16 /* iOSChatSDK-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "iOSChatSDK-umbrella.h"; sourceTree = "<group>"; };
+		910BBE9F2C85A7ED007825DA /* ChatAudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAudioView.swift; sourceTree = "<group>"; };
 		9132B19DDC3AE5771888CADC80141E87 /* iOSChatSDK-iOSChatSDK */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "iOSChatSDK-iOSChatSDK"; path = iOSChatSDK.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		91D352349E38C51DF188DE16EF95B16E /* ReplyText_TextCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReplyText_TextCell.swift; sourceTree = "<group>"; };
 		9205E8EDC209367A98C743C2D4ECAF19 /* SDWebImageDownloader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageDownloader.h; path = SDWebImage/Core/SDWebImageDownloader.h; sourceTree = "<group>"; };
@@ -921,6 +923,7 @@
 				950E028FFD4FEB3E8FE1F6A1ABBB21E8 /* MenuBottomView.swift */,
 				51D5927713DBC36F4129799E7303B5F4 /* MoreOptionView.swift */,
 				12EC65E0C5767686C66074EC6F88E490 /* MoreView.swift */,
+				910BBE9F2C85A7ED007825DA /* ChatAudioView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1753,6 +1756,7 @@
 				734828F1616DDF41CAE4EDEEC1034E6A /* UIView.swift in Sources */,
 				DBF2748AEF64C13C76B91963DD62C0F2 /* Unwrapping.swift in Sources */,
 				423C980E8BAF5B1D033783AE4654274E /* UserDefaultManager.swift in Sources */,
+				910BBEA02C85A7ED007825DA /* ChatAudioView.swift in Sources */,
 				6B55C13DDB75AD944CF4E5A1B9C33C70 /* UserModel.swift in Sources */,
 				4D10B6902C81CEFB0006563B /* API + Extensions.swift in Sources */,
 				920D4B61F65016C8A27FA1773E7224D3 /* UserService.swift in Sources */,

@@ -9,23 +9,69 @@ import UIKit
 import Foundation
 import AVFoundation
 
+class ChatButton : UIButton{
+    open var image: UIImage? {
+        didSet {
+            setImage(image, for: .normal)
+        }
+    }
+}
+
+struct DefaultImage{
+    static let emoji   = UIImage(systemName: "face.smiling")
+    static let camera  = UIImage(systemName: "camera.fill")
+    static let more    = UIImage(systemName: "plus")
+    static let send    = UIImage(systemName: "play.fill")
+    static let audio   = UIImage(systemName: "mic.fill")
+}
+
+enum InputViewMode{
+    case send
+    case audio
+}
+
+
 class ChatInputView: UIView {
+    
+    
+    
+    open var buttonColor = UIColor.systemBlue {
+        didSet {
+            buttonEmoji.tintColor = buttonColor
+            buttonCamera.tintColor = buttonColor
+            buttonMore.tintColor = buttonColor
+            buttonMore.tintColor = buttonColor
+        }
+    }
     
     // MARK: - UI Elements
     private let loadView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 10
         return view
     }()
     
-    private let buttonEmoji: UIButton = {
-        let button = UIButton(type: .system)
+    private let viewEntry: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 20.0
+        return view
+    }()
+    
+    private let viewSend: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 20.0
+        return view
+    }()
+    
+    private let buttonEmoji: ChatButton = {
+        let button = ChatButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        //button.setImage(UIImage(systemName: "face.smiling"), for: .normal)
-        button.setImage(UIImage(named: ChatConstants.Image.emoji, in: Bundle(for: ChatInputView.self), compatibleWith: nil), for: .normal)
-        button.tintColor = Colors.Circles.violet
+        button.setImage(DefaultImage.emoji, for: .normal)
+        button.addTarget(self, action: #selector(emojiTapped(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -37,65 +83,51 @@ class ChatInputView: UIView {
         return textField
     }()
     
-    private let buttonCamera: UIButton = {
-        let button = UIButton(type: .system)
+    private let buttonCamera: ChatButton = {
+        let button = ChatButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        //button.setImage(UIImage(systemName: "camera"), for: .normal)
-        button.setImage(UIImage(named: ChatConstants.Image.moreCamera, in: Bundle(for: ChatInputView.self), compatibleWith: nil), for: .normal)
-        button.tintColor = Colors.Circles.violet
+        button.setImage(DefaultImage.camera, for: .normal)
+        button.addTarget(self, action: #selector(cameraTapped(_:)), for: .touchUpInside)
         return button
     }()
     
-    private let buttonMore: UIButton = {
-        let button = UIButton(type: .system)
+    private let buttonMore: ChatButton = {
+        let button = ChatButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-//        button.setImage(UIImage(systemName: "ellipsis.circle"), for: .normal)
-        button.setImage(UIImage(named: ChatConstants.Image.plusIcon, in: Bundle(for: ChatInputView.self), compatibleWith: nil), for: .normal)
-        button.tintColor = Colors.Circles.violet
+        button.setImage(DefaultImage.more, for: .normal)
+        button.addTarget(self, action: #selector(ChatInputView.moreTapped(_:)), for: .touchUpInside)
         return button
     }()
     
-    private let buttonSend: UIButton = {
-        let button = UIButton(type: .system)
+    private let buttonSend: ChatButton = {
+        let button = ChatButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-//        button.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
-        button.setImage(UIImage(named: ChatConstants.Image.mic, in: Bundle(for: ChatInputView.self), compatibleWith: nil), for: .normal)
-        button.tintColor = Colors.Circles.violet
+        button.setImage(DefaultImage.send, for: .normal)
+        button.addTarget(self, action: #selector(moreTapped(_:)), for: .touchUpInside)
         return button
     }()
     
-    private let viewAudio: UIView = {
-        let view = UIView()
+    private let buttonAudio: ChatButton = {
+        let button = ChatButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(DefaultImage.audio, for: .normal)
+        return button
+    }()
+    
+    private let viewAudio: ChatAudioView = {
+        let view = ChatAudioView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .lightGray
         view.isHidden = true
         return view
     }()
     
-    private let labelAudioTime: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = ChatConstants.Bubble.messageFont
-        label.text = "00:00"
-        return label
-    }()
     
-    private let imageViewAudioIcon: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-//        imageView.image = UIImage(systemName: "mic.fill")
-        imageView.image = UIImage(named: ChatConstants.Image.micsound)
-
-        return imageView
-    }()
-    
-    // MARK: - AVFoundation Properties
-    var timer: Timer?
-    var recordingDuration: TimeInterval = 0
-    var audioRecorder: AVAudioRecorder?
-    var audioPlayer: AVAudioPlayer?
-    var recordingSession: AVAudioSession!
-    var audioFilename: URL!
+    var mode : InputViewMode = .audio{
+        didSet{
+            setupMode()
+        }
+    }
     
     weak var delegateInput: DelegateInput?
     
@@ -104,6 +136,8 @@ class ChatInputView: UIView {
         super.init(frame: frame)
         setupView()
         setupConstraints()
+        setupMode()
+        setupTextfield()
         setupLongPressGesture()
     }
     
@@ -111,35 +145,57 @@ class ChatInputView: UIView {
         super.init(coder: coder)
         setupView()
         setupConstraints()
+        setupMode()
+        setupTextfield()
         setupLongPressGesture()
     }
     
     // MARK: - Setup Methods
     private func setupView() {
         addSubview(loadView)
-        loadView.addSubview(buttonEmoji)
-        loadView.addSubview(textfieldMessage)
-        loadView.addSubview(buttonCamera)
-        loadView.addSubview(buttonMore)
-        loadView.addSubview(buttonSend)
+        loadView.addSubview(viewEntry)
+        loadView.addSubview(viewSend)
+        
+        
+        viewEntry.addSubview(buttonEmoji)
+        viewEntry.addSubview(textfieldMessage)
+        viewEntry.addSubview(buttonCamera)
+        viewEntry.addSubview(buttonMore)
+        
+        viewSend.addSubview(buttonSend)
+        viewSend.addSubview(buttonAudio)
+        
         addSubview(viewAudio)
-        viewAudio.addSubview(labelAudioTime)
-        viewAudio.addSubview(imageViewAudioIcon)
     }
     
     private func setupConstraints() {
         // Constraints for loadView
         NSLayoutConstraint.activate([
             loadView.topAnchor.constraint(equalTo: topAnchor),
-            loadView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            loadView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            loadView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            loadView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             loadView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+        
+
+        NSLayoutConstraint.activate([
+            viewEntry.leadingAnchor.constraint(equalTo: loadView.leadingAnchor),
+            viewEntry.centerYAnchor.constraint(equalTo: loadView.centerYAnchor),
+            viewEntry.trailingAnchor.constraint(equalTo : viewSend.leadingAnchor, constant: -8),
+            viewEntry.heightAnchor.constraint(equalTo : loadView.heightAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            viewSend.trailingAnchor.constraint(equalTo: loadView.trailingAnchor),
+            viewSend.centerYAnchor.constraint(equalTo: loadView.centerYAnchor),
+            viewSend.widthAnchor.constraint(equalToConstant: 40),
+            viewSend.heightAnchor.constraint(equalTo : loadView.heightAnchor)
         ])
         
         // Constraints for buttonEmoji
         NSLayoutConstraint.activate([
-            buttonEmoji.leadingAnchor.constraint(equalTo: loadView.leadingAnchor, constant: 8),
-            buttonEmoji.centerYAnchor.constraint(equalTo: loadView.centerYAnchor),
+            buttonEmoji.leadingAnchor.constraint(equalTo: viewEntry.leadingAnchor, constant: 8),
+            buttonEmoji.centerYAnchor.constraint(equalTo: viewEntry.centerYAnchor),
             buttonEmoji.widthAnchor.constraint(equalToConstant: 40),
             buttonEmoji.heightAnchor.constraint(equalToConstant: 40)
         ])
@@ -147,32 +203,40 @@ class ChatInputView: UIView {
         // Constraints for textfieldMessage
         NSLayoutConstraint.activate([
             textfieldMessage.leadingAnchor.constraint(equalTo: buttonEmoji.trailingAnchor, constant: 8),
-            textfieldMessage.centerYAnchor.constraint(equalTo: loadView.centerYAnchor),
+            textfieldMessage.centerYAnchor.constraint(equalTo: viewEntry.centerYAnchor),
             textfieldMessage.trailingAnchor.constraint(equalTo: buttonCamera.leadingAnchor, constant: -8)
         ])
         
         // Constraints for buttonCamera
         NSLayoutConstraint.activate([
             buttonCamera.trailingAnchor.constraint(equalTo: buttonMore.leadingAnchor, constant: -8),
-            buttonCamera.centerYAnchor.constraint(equalTo: loadView.centerYAnchor),
+            buttonCamera.centerYAnchor.constraint(equalTo: viewEntry.centerYAnchor),
             buttonCamera.widthAnchor.constraint(equalToConstant: 40),
             buttonCamera.heightAnchor.constraint(equalToConstant: 40)
         ])
         
         // Constraints for buttonMore
         NSLayoutConstraint.activate([
-            buttonMore.trailingAnchor.constraint(equalTo: buttonSend.leadingAnchor, constant: -8),
-            buttonMore.centerYAnchor.constraint(equalTo: loadView.centerYAnchor),
+            buttonMore.trailingAnchor.constraint(equalTo: viewAudio.trailingAnchor),
+            buttonMore.centerYAnchor.constraint(equalTo: viewEntry.centerYAnchor),
             buttonMore.widthAnchor.constraint(equalToConstant: 40),
             buttonMore.heightAnchor.constraint(equalToConstant: 40)
         ])
         
         // Constraints for buttonSend
         NSLayoutConstraint.activate([
-            buttonSend.trailingAnchor.constraint(equalTo: loadView.trailingAnchor, constant: -8),
-            buttonSend.centerYAnchor.constraint(equalTo: loadView.centerYAnchor),
+            buttonSend.trailingAnchor.constraint(equalTo: viewSend.trailingAnchor, constant: -8),
+            buttonSend.centerYAnchor.constraint(equalTo: viewSend.centerYAnchor),
             buttonSend.widthAnchor.constraint(equalToConstant: 40),
             buttonSend.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        
+        // Constraints for buttonSend
+        NSLayoutConstraint.activate([
+            buttonAudio.trailingAnchor.constraint(equalTo: viewSend.trailingAnchor, constant: -8),
+            buttonAudio.centerYAnchor.constraint(equalTo: viewSend.centerYAnchor),
+            buttonAudio.widthAnchor.constraint(equalToConstant: 40),
+            buttonAudio.heightAnchor.constraint(equalToConstant: 40)
         ])
         
         // Constraints for viewAudio
@@ -184,25 +248,11 @@ class ChatInputView: UIView {
 
         ])
         
-        // Constraints for labelAudioTime
-        NSLayoutConstraint.activate([
-            labelAudioTime.leadingAnchor.constraint(equalTo: viewAudio.leadingAnchor, constant: 8),
-            labelAudioTime.centerYAnchor.constraint(equalTo: viewAudio.centerYAnchor),
-            labelAudioTime.widthAnchor.constraint(equalToConstant: 100)
-        ])
-        
-        // Constraints for imageViewAudioIcon
-        NSLayoutConstraint.activate([
-            imageViewAudioIcon.leadingAnchor.constraint(equalTo: labelAudioTime.trailingAnchor, constant: 8),
-            imageViewAudioIcon.centerYAnchor.constraint(equalTo: viewAudio.centerYAnchor),
-            imageViewAudioIcon.widthAnchor.constraint(equalToConstant: 150),
-            imageViewAudioIcon.heightAnchor.constraint(equalToConstant: 20)
-        ])
     }
     
     private func setupLongPressGesture() {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-        buttonSend.addGestureRecognizer(longPressGesture)
+        buttonAudio.addGestureRecognizer(longPressGesture)
     }
     
     // MARK: - Actions
@@ -212,5 +262,52 @@ class ChatInputView: UIView {
         } else if gesture.state == .ended || gesture.state == .cancelled {
             viewAudio.isHidden = true
         }
+    }
+    
+    @objc func emojiTapped(_ sender: UIButton?){
+        
+    }
+    
+    @objc func moreTapped(_ sender: UIButton?){
+        self.delegateInput?.attach()
+    }
+    
+    @objc func cameraTapped(_ sender: UIButton?){
+        self.delegateInput?.camera()
+    }
+    
+    
+    
+    @objc func sendTapped(_ sender: UIButton?){
+        delegateInput?.sendTextMessage()
+    }
+}
+
+
+extension ChatInputView : UITextFieldDelegate{
+    
+    func setupMode(){
+        buttonSend.isHidden = mode == .audio
+        buttonAudio.isHidden = mode == .send
+    }
+    
+    func setupTextfield(){
+        textfieldMessage.inputAccessoryView = UIView()
+        textfieldMessage.delegate = self
+        textfieldMessage.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.endEditing(true)
+        return false
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        mode = .send
+        setupMode()
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        
     }
 }

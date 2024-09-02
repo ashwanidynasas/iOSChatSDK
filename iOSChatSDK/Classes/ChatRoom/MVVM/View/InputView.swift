@@ -100,7 +100,7 @@ extension InputView{
         if textfieldMessage?.text?.isEmpty == false {
             delegateInput?.sendTextMessage()
         }else {
-            delegateInput?.micButtonTapped()
+           //mic
         }
     }
     

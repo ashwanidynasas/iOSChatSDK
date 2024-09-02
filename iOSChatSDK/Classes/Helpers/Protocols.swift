@@ -34,9 +34,12 @@ protocol DelegateMore : AnyObject{
 
 protocol DelegateInput : AnyObject{
     func sendTextMessage()
-    func micButtonTapped()
     func sendAudio(audioFilename : URL)
     func camera()
     func attach()
+}
+
+protocol DelegateAudio : AnyObject{
+    func sendAudio(audioFilename : URL)
 }
 

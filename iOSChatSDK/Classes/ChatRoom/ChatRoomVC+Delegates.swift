@@ -122,10 +122,7 @@ extension ChatRoomVC : DelegateInput{
 //            }
 //        }
     }
-    
-    func micButtonTapped() {
-        print("Mic button tapped")
-    }
+
     
     func sendAudio(audioFilename : URL){
         viewModel?.sendAudioMedia(audioFilename: audioFilename, completion: { result in

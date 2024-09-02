@@ -41,13 +41,8 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate {
         viewSend?.backgroundColor = .clear
         
         viewReply?.delegate = self
-        
-//        viewInput?.setupUI()
-        viewInput?.layer.cornerRadius = 24
+        viewInput?.delegateInput = self
         viewInput?.clipsToBounds = true
-//        viewInput?.setupTextfield()
-//        viewInput?.setupAudio()
-        
         if let viewMore = viewMore {
             viewMore.setup(.attach)
         } else {
@@ -165,8 +160,7 @@ extension ChatRoomVC{
         self.isReply = false
         DispatchQueue.main.async {
             self.layout([.input])
-//            self.viewInput?.textfieldMessage?.text = ""
-//            self.viewInput?.buttonSend?.setImage(UIImage(named: "mic", in: Bundle(for: ChatRoomVC.self), compatibleWith: nil), for: .normal)
+            self.viewInput?.mode = .audio
         }
         viewModel?.getMessages()
         scrollToBottom()

@@ -39,54 +39,18 @@ class BottomView: UIView {
     }
     
     func setupView() {
-//        
-//        viewReply.heightAnchor.constraint(equalToConstant: 64.0).isActive = true
-//        //viewReply.widthAnchor.constraint(equalToConstant: 120.0).isActive = true
-//        
-//        viewInput.heightAnchor.constraint(equalToConstant: 72.0).isActive = true
-//        //viewInput.widthAnchor.constraint(equalToConstant: 120.0).isActive = true
-//        
-//        viewMore.heightAnchor.constraint(equalToConstant: 102.0).isActive = true
-//        //viewMore.widthAnchor.constraint(equalToConstant: 120.0).isActive = true
-        
+
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
-        stackView.alignment = .bottom
+        stackView.alignment = .center
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.addArrangedSubview(viewReply)
         stackView.addArrangedSubview(viewInput)
         stackView.addArrangedSubview(viewMore)
         addSubview(stackView)
         
-//        NSLayoutConstraint.activate([
-//            stackView.topAnchor.constraint(equalTo: self.topAnchor),
-//            stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-//            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-//            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
-//        ])
-//        
-//        NSLayoutConstraint.activate([
-//            viewReply.bottomAnchor.constraint(equalTo: viewInput.topAnchor),
-//            viewReply.heightAnchor.constraint(equalToConstant: 72),
-//            viewReply.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-//            viewReply.trailingAnchor.constraint(equalTo: stackView.trailingAnchor)
-//        ])
-//        
-//        NSLayoutConstraint.activate([
-//            viewInput.bottomAnchor.constraint(equalTo: viewMore.topAnchor),
-//            viewInput.heightAnchor.constraint(equalToConstant: 72),
-//            viewInput.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-//            viewInput.trailingAnchor.constraint(equalTo: stackView.trailingAnchor)
-//        ])
-        
-        
-        NSLayoutConstraint.activate([
-            viewMore.bottomAnchor.constraint(equalTo: stackView.bottomAnchor),
-            viewMore.heightAnchor.constraint(equalToConstant: 102),
-            viewMore.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
-            viewMore.trailingAnchor.constraint(equalTo: stackView.trailingAnchor)
-        ])
+
         
     }
     override func layoutSubviews() {

@@ -96,7 +96,7 @@ extension ChatRoomVC{
 extension ChatRoomVC{
     
     func setupUI() {
-        viewSend.layout([.input, .more , .reply])
+        viewSend.layout([.input, .more ])
         let startColor = UIColor(hex: "000000")
         let endColor = UIColor(hex: "520093")
         self.view.setGradientBackground(startColor: startColor, endColor: endColor)

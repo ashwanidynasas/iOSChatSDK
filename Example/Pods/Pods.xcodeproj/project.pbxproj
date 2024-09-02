@@ -147,7 +147,6 @@
 		910BBEA02C85A7ED007825DA /* ChatAudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910BBE9F2C85A7ED007825DA /* ChatAudioView.swift */; };
 		91218968238F58BBB3E84DC5C8A25854 /* SDImageLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 81E0A688A74C081D3148DA05F2C4CFCC /* SDImageLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		920D4B61F65016C8A27FA1773E7224D3 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41D3D62F626C1D4C8C524FE5CF36BD1 /* UserService.swift */; };
-		931C00F52EF63471204D34ECE083F01E /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1640963153140EEDCF156D8FB149DF /* InputView.swift */; };
 		937D6966FD44A9A799ED6574EC78CC4F /* UIImage+Transform.h in Headers */ = {isa = PBXBuildFile; fileRef = 77D302E8294799802C8D1E8F199E4738 /* UIImage+Transform.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		93A6F7A81A1A4DB391D301F7EBD86E09 /* MainChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DAEB013B7583E974A2A72AE366BA35A /* MainChatVC.swift */; };
 		93D72323455BC05D347D332FC1C4F63B /* ReplyMedia_TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B91168E6C3E1A70077FEF512DDA1681A /* ReplyMedia_TextCell.swift */; };
@@ -160,7 +159,6 @@
 		9F20FF2BE294D4C03B3261191692010E /* BottomViewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5699F03225AF91455E3F6F30486C05 /* BottomViewHandler.swift */; };
 		9F9BC40A239CEA83F849DDC2C4F375A7 /* UIImage+Metadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 19C6C0B3CF18DD5646D1F2DDB2FAD808 /* UIImage+Metadata.m */; };
 		A02EEFC96DF92AB78F933CBC0CBAFD92 /* UIImageView+HighlightedWebCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 30B20C912ED3FA214525CBE801ADE13B /* UIImageView+HighlightedWebCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A09E614FD955B79BD815793D73F4A923 /* InputView.xib in Sources */ = {isa = PBXBuildFile; fileRef = 89714D556BB1D13C2A3EDACED02303E3 /* InputView.xib */; };
 		A1623A8868E9AC8BBEAAB9BC0421F463 /* SDImageCacheDefine.m in Sources */ = {isa = PBXBuildFile; fileRef = 73785F40EB08482D8DF2B9E8A8C8CFC7 /* SDImageCacheDefine.m */; };
 		A2DCD1D36D93DFF9EBA04C27FD6523E8 /* SDAssociatedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = DC9DB4CE052506887570F060F0B8766E /* SDAssociatedObject.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		A3F832086CE42AFD7B47F46AD1966ABE /* CustomTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE3D38A2FF67D26AF6C67CBB2B750B1 /* CustomTopView.swift */; };
@@ -391,7 +389,6 @@
 		6597E4DF56E5AB23F2836339CE55F53A /* SDImageFrame.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDImageFrame.h; path = SDWebImage/Core/SDImageFrame.h; sourceTree = "<group>"; };
 		69FA231600141378304BB8FC8FD9B8F9 /* SDAnimatedImageView+WebCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "SDAnimatedImageView+WebCache.m"; path = "SDWebImage/Core/SDAnimatedImageView+WebCache.m"; sourceTree = "<group>"; };
 		6CCF0A18D072CACC61776E2A07011D8E /* iOSChatSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = iOSChatSDK.debug.xcconfig; sourceTree = "<group>"; };
-		6D1640963153140EEDCF156D8FB149DF /* InputView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		6D8B8DA5910658FF0B4EBE77844F167A /* CircleObject.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CircleObject.swift; sourceTree = "<group>"; };
 		6E15E8212E79DB8310765810214DB5DF /* SDWebImageCacheKeyFilter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageCacheKeyFilter.m; path = SDWebImage/Core/SDWebImageCacheKeyFilter.m; sourceTree = "<group>"; };
 		6F5699F03225AF91455E3F6F30486C05 /* BottomViewHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BottomViewHandler.swift; sourceTree = "<group>"; };
@@ -420,7 +417,6 @@
 		867C8A8347D77F6EFE9A191E719198F7 /* SDWeakProxy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWeakProxy.h; path = SDWebImage/Private/SDWeakProxy.h; sourceTree = "<group>"; };
 		86B9328066EB74F91C12592CF672483B /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		884DEE05C26EAA75940284E340BCA48A /* PublishMediaVC.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PublishMediaVC.swift; sourceTree = "<group>"; };
-		89714D556BB1D13C2A3EDACED02303E3 /* InputView.xib */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.xib; path = InputView.xib; sourceTree = "<group>"; };
 		8A1097F9A84C146B5E3EFE2C1AD0C285 /* SDImageCachesManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDImageCachesManager.m; path = SDWebImage/Core/SDImageCachesManager.m; sourceTree = "<group>"; };
 		8D2606F72782B52B1FBC54890B1E71F7 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSData+ImageContentType.h"; path = "SDWebImage/Core/NSData+ImageContentType.h"; sourceTree = "<group>"; };
 		8FCF4D578E581CEE147D53180E62DC5C /* SDWebImageError.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDWebImageError.m; path = SDWebImage/Core/SDWebImageError.m; sourceTree = "<group>"; };
@@ -918,8 +914,6 @@
 				7BE3D38A2FF67D26AF6C67CBB2B750B1 /* CustomTopView.swift */,
 				B39F9C01BAD5D996399B15AAE19438BF /* ChatReplyView.swift */,
 				4D10B6972C81DE9C0006563B /* ChatInputView.swift */,
-				6D1640963153140EEDCF156D8FB149DF /* InputView.swift */,
-				89714D556BB1D13C2A3EDACED02303E3 /* InputView.xib */,
 				950E028FFD4FEB3E8FE1F6A1ABBB21E8 /* MenuBottomView.swift */,
 				51D5927713DBC36F4129799E7303B5F4 /* MoreOptionView.swift */,
 				12EC65E0C5767686C66074EC6F88E490 /* MoreView.swift */,
@@ -1720,8 +1714,6 @@
 				98FB71E2AE0200BA4B3ECD8B41569DEA /* CustomTopView.xib in Sources */,
 				4D10B6952C81CEFB0006563B /* ChatService.swift in Sources */,
 				7EB30EA945DCD085E74D9EBAE7CC87F7 /* DataComponent.storyboard in Sources */,
-				931C00F52EF63471204D34ECE083F01E /* InputView.swift in Sources */,
-				A09E614FD955B79BD815793D73F4A923 /* InputView.xib in Sources */,
 				7C0A30DB6F663D731484DA1C4C10569D /* iOSChatSDK-dummy.m in Sources */,
 				4D10B6912C81CEFB0006563B /* APIError.swift in Sources */,
 				D7BA33E013619CED18AB2A7D5B4682A5 /* Logger.swift in Sources */,

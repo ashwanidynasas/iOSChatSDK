@@ -133,7 +133,6 @@ class CustomTabBar: UIView {
             let button = CustomTabBarButton(image: UIImage(named: /item.image, in: Bundle(for: CustomTabBar.self), compatibleWith: nil)!)
             button.setTitle(/item.title)
             button.setButtonTint(item.color)
-            button.tag = index
             button.tapAction = { [weak self] in
                 guard let self = self else { return }
                 for (idx, button) in self.buttons.enumerated() {

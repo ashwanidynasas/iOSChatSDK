@@ -24,20 +24,7 @@ class ChatMessageCell: UITableViewCell {
     private var messageImageViewHeightConstraint: NSLayoutConstraint!
     
     private struct Constants {
-        static let bubbleCornerRadius: CGFloat = 20
-        static let bubbleShadowColor: CGColor = UIColor.black.cgColor
-        static let bubbleShadowOffset = CGSize(width: 0, height: 2)
-        static let bubbleShadowOpacity: Float = 0.3
-        static let bubbleShadowRadius: CGFloat = 4
-        static let messageFont: UIFont = .systemFont(ofSize: 12)
-        static let timestampFont: UIFont = .systemFont(ofSize: 8)
-        static let timestampColor: UIColor = .lightGray
-        static let readIndicatorSize: CGFloat = 7
-        static let padding: CGFloat = 12
-        static let timestampPadding: CGFloat = 4
         static let minBubbleWidth: CGFloat = 100
-        static let maxBubbleWidthRatio: CGFloat = 0.75
-        static let dateFormat: String = "hh:mm a"
     }
     
     //MARK: - INITIALIZERS
@@ -50,9 +37,7 @@ class ChatMessageCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        // Reset the content of the cell
         messageLabel.text = nil
-        // Reset other UI elements if necessary
     }
     
     required init?(coder: NSCoder) {
@@ -60,7 +45,6 @@ class ChatMessageCell: UITableViewCell {
     }
     
     func addGestures(){
-        // Setup long press gesture recognizer
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture(_:)))
         overlayButton.addGestureRecognizer(longPressGestureRecognizer)
     }
@@ -90,11 +74,11 @@ extension ChatMessageCell{
         backgroundColor = .clear
         
         bubbleBackgroundView.translatesAutoresizingMaskIntoConstraints = false
-        bubbleBackgroundView.layer.cornerRadius = Constants.bubbleCornerRadius
-        bubbleBackgroundView.layer.shadowColor = Constants.bubbleShadowColor
-        bubbleBackgroundView.layer.shadowOffset = Constants.bubbleShadowOffset
-        bubbleBackgroundView.layer.shadowOpacity = Constants.bubbleShadowOpacity
-        bubbleBackgroundView.layer.shadowRadius = Constants.bubbleShadowRadius
+        bubbleBackgroundView.layer.cornerRadius = ReplyCell_Chat.bubbleCornerRadius
+        bubbleBackgroundView.layer.shadowColor = ReplyCell_Chat.bubbleShadowColor
+        bubbleBackgroundView.layer.shadowOffset = ReplyCell_Chat.bubbleShadowOffset
+        bubbleBackgroundView.layer.shadowOpacity = ReplyCell_Chat.bubbleShadowOpacity
+        bubbleBackgroundView.layer.shadowRadius = ReplyCell_Chat.bubbleShadowRadius
         contentView.addSubview(bubbleBackgroundView)
         
         messageImageView.contentMode = .scaleAspectFit
@@ -102,12 +86,12 @@ extension ChatMessageCell{
         bubbleBackgroundView.addSubview(messageImageView)
         
         messageLabel.numberOfLines = 0
-        messageLabel.font = Constants.messageFont
+        messageLabel.font = ReplyCell_Chat.messageFont
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         bubbleBackgroundView.addSubview(messageLabel)
         
-        timestampLabel.font = Constants.timestampFont
-        timestampLabel.textColor = Constants.timestampColor
+        timestampLabel.font = ReplyCell_Chat.timestampFont
+        timestampLabel.textColor = ReplyCell_Chat.timestampColor
         timestampLabel.translatesAutoresizingMaskIntoConstraints = false
         bubbleBackgroundView.addSubview(timestampLabel)
         
@@ -117,9 +101,6 @@ extension ChatMessageCell{
         
         overlayButton.translatesAutoresizingMaskIntoConstraints = false
         bubbleBackgroundView.addSubview(overlayButton)
-        
-        
-        
     }
     
     private func updateConstraintsForContent() {
@@ -141,7 +122,7 @@ extension ChatMessageCell{
         leadingConstraint = bubbleBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32)
         trailingConstraint = bubbleBackgroundView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32)
         minWidthConstraint = bubbleBackgroundView.widthAnchor.constraint(greaterThanOrEqualToConstant: Constants.minBubbleWidth)
-        maxWidthConstraint = bubbleBackgroundView.widthAnchor.constraint(lessThanOrEqualToConstant: UIScreen.main.bounds.width * Constants.maxBubbleWidthRatio)
+        maxWidthConstraint = bubbleBackgroundView.widthAnchor.constraint(lessThanOrEqualToConstant: UIScreen.main.bounds.width * ReplyCell_Chat.maxBubbleWidthRatio)
         
         messageImageViewHeightConstraint = messageImageView.heightAnchor.constraint(equalToConstant: 0)
         
@@ -152,20 +133,20 @@ extension ChatMessageCell{
             maxWidthConstraint,
             
             messageImageView.topAnchor.constraint(equalTo: bubbleBackgroundView.topAnchor, constant: 8),
-            messageImageView.leadingAnchor.constraint(equalTo: bubbleBackgroundView.leadingAnchor, constant: Constants.padding),
-            messageImageView.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor, constant: -Constants.padding),
+            messageImageView.leadingAnchor.constraint(equalTo: bubbleBackgroundView.leadingAnchor, constant: ReplyCell_Chat.padding),
+            messageImageView.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor, constant: -ReplyCell_Chat.padding),
             messageImageViewHeightConstraint,
             
             messageLabel.topAnchor.constraint(equalTo: messageImageView.bottomAnchor, constant: 8),
-            messageLabel.leadingAnchor.constraint(equalTo: bubbleBackgroundView.leadingAnchor, constant: Constants.padding),
-            messageLabel.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor, constant: -Constants.padding),
+            messageLabel.leadingAnchor.constraint(equalTo: bubbleBackgroundView.leadingAnchor, constant: ReplyCell_Chat.padding),
+            messageLabel.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor, constant: -ReplyCell_Chat.padding),
             
-            timestampLabel.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: Constants.timestampPadding),
-            timestampLabel.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor, constant: -Constants.padding),
+            timestampLabel.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: ReplyCell_Chat.timestampPadding),
+            timestampLabel.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor, constant: -ReplyCell_Chat.padding),
             timestampLabel.bottomAnchor.constraint(equalTo: bubbleBackgroundView.bottomAnchor, constant: -8),
             
-            readIndicatorImageView.widthAnchor.constraint(equalToConstant: Constants.readIndicatorSize),
-            readIndicatorImageView.heightAnchor.constraint(equalToConstant: Constants.readIndicatorSize),
+            readIndicatorImageView.widthAnchor.constraint(equalToConstant: ReplyCell_Chat.readIndicatorSize),
+            readIndicatorImageView.heightAnchor.constraint(equalToConstant: ReplyCell_Chat.readIndicatorSize),
             readIndicatorImageView.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor, constant: -2),
             readIndicatorImageView.bottomAnchor.constraint(equalTo: bubbleBackgroundView.bottomAnchor, constant: -10),
             
@@ -173,39 +154,36 @@ extension ChatMessageCell{
             overlayButton.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor),
             overlayButton.leadingAnchor.constraint(equalTo: bubbleBackgroundView.leadingAnchor),
             overlayButton.bottomAnchor.constraint(equalTo: bubbleBackgroundView.bottomAnchor),
-            
         ])
     }
 }
 
 
+
+
 //MARK: - CONFIGURATION
 extension ChatMessageCell{
     func configure(with message: Messages) {
+        
         let isCurrentUser = message.sender == UserDefaultsHelper.getCurrentUser()
+        
         bubbleBackgroundView.backgroundColor = isCurrentUser ? UIColor.black.withAlphaComponent(0.5) : Colors.Circles.violet
         messageLabel.textColor = .white
         timestampLabel.textColor = .white
         applyBubbleShape(isCurrentUser: isCurrentUser)
         
-        if isCurrentUser {
-            leadingConstraint.isActive = false
-            trailingConstraint.isActive = true
-            readIndicatorImageView.isHidden = false
-        } else {
-            leadingConstraint.isActive = true
-            trailingConstraint.isActive = false
-            readIndicatorImageView.isHidden = true
-        }
+        leadingConstraint.isActive = !isCurrentUser
+        trailingConstraint.isActive = isCurrentUser
+        readIndicatorImageView.isHidden = !isCurrentUser
         
         let timestamp = Date(timeIntervalSince1970: Double(message.originServerTs ?? 0) / 1000)
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = Constants.dateFormat
+        dateFormatter.dateFormat = ReplyCell_Chat.dateFormat
         timestampLabel.text = dateFormatter.string(from: timestamp)
         
         // Adjust bubble width based on timestampLabel size
         let timestampSize = timestampLabel.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: timestampLabel.frame.height))
-        let minWidth = timestampSize.width + 2 * Constants.padding
+        let minWidth = timestampSize.width + 2 * ReplyCell_Chat.padding
         
         minWidthConstraint.constant = max(minWidth, Constants.minBubbleWidth)
         
@@ -241,7 +219,6 @@ extension ChatMessageCell{
     private func configureAudioMessage(_ text: String) {
         messageLabel.text = "Audio: \(text)"
         messageLabel.isHidden = false
-        // Additional setup for audio message
         messageImageView.isHidden = true
     }
     

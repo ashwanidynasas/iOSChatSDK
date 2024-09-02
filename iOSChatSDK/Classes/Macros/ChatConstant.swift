@@ -78,6 +78,9 @@ struct ChatConstants {
         static let mic:String              = "mic"
         static let cancel:String           = "cancel"
         static let replyCancel:String      = "replyCancel"
+        static let emoji:String            = "emoji"
+        static let moreCamera:String       = "MoreCamera"
+        static let plusIcon:String         = "plusIcon"
     }
     
     struct Bubble {

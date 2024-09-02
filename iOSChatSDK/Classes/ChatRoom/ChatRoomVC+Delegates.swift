@@ -97,30 +97,30 @@ extension ChatRoomVC: DelegateMore{
 extension ChatRoomVC : DelegateInput{
     
     func sendTextMessage() {
-        if viewInput?.textfieldMessage?.text == "" {
-            return
-        }
-        if isReply {
-            viewModel?.sendReply(body: /viewInput?.textfieldMessage?.text, eventID: /selectedMessage?.eventId, completion: { result in
-                switch result {
-                case .success(let response):
-                    self.messageSent()
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            })
-        }else{
-            viewModel?.sendMessage(body: /viewInput?.textfieldMessage?.text,
-                                   msgType: MessageType.text) { [weak self] response in
-                DispatchQueue.main.async {
-                    if let response = response {
-                        self?.messageSent()
-                    } else {
-                        print("No response received")
-                    }
-                }
-            }
-        }
+//        if viewInput?.textfieldMessage?.text == "" {
+//            return
+//        }
+//        if isReply {
+//            viewModel?.sendReply(body: /viewInput?.textfieldMessage?.text, eventID: /selectedMessage?.eventId, completion: { result in
+//                switch result {
+//                case .success(let response):
+//                    self.messageSent()
+//                case .failure(let error):
+//                    print(error.localizedDescription)
+//                }
+//            })
+//        }else{
+//            viewModel?.sendMessage(body: /viewInput?.textfieldMessage?.text,
+//                                   msgType: MessageType.text) { [weak self] response in
+//                DispatchQueue.main.async {
+//                    if let response = response {
+//                        self?.messageSent()
+//                    } else {
+//                        print("No response received")
+//                    }
+//                }
+//            }
+//        }
     }
     
     func micButtonTapped() {

@@ -114,7 +114,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oDt-nn-zsq" customClass="InputView" customModule="iOSChatSDK" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oDt-nn-zsq" customClass="ChatInputView" customModule="iOSChatSDK" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="58" width="393" height="50"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
@@ -148,7 +148,7 @@
                     </view>
                     <connections>
                         <outlet property="tableView" destination="rML-cJ-Nxi" id="rqu-Xb-kcU"/>
-                        <outlet property="viewInput" destination="oDt-nn-zsq" id="rzp-CW-NVA"/>
+                        <outlet property="viewInput" destination="oDt-nn-zsq" id="DDp-2x-6gm"/>
                         <outlet property="viewMore" destination="ulN-7i-62E" id="qbM-Gp-uJC"/>
                         <outlet property="viewOtherUser" destination="T31-Wa-hRD" id="ykO-a7-XFw"/>
                         <outlet property="viewReply" destination="0rq-Iw-r4Z" id="ity-32-qIx"/>

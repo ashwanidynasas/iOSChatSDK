@@ -37,6 +37,7 @@ protocol DelegateInput : AnyObject{
     func sendAudio(audioFilename : URL)
     func camera()
     func attach()
+    func hideAttach()
 }
 
 protocol DelegateAudio : AnyObject{

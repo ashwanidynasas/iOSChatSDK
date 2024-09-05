@@ -33,7 +33,8 @@ enum InputViewMode{
 
 class ChatInputView: UIView {
     
-    
+    // Toggle state
+    private var isAttachVisible = false
     
     open var buttonColor = UIColor.systemBlue {
         didSet {
@@ -269,7 +270,14 @@ class ChatInputView: UIView {
     }
     
     @objc func moreTapped(_ sender: UIButton?){
-        self.delegateInput?.attach()
+//        self.delegateInput?.attach()
+        if isAttachVisible {
+            delegateInput?.hideAttach()
+        } else {
+            delegateInput?.attach()
+        }
+        // Toggle the state
+        isAttachVisible.toggle()
     }
     
     @objc func cameraTapped(_ sender: UIButton?){

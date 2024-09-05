@@ -136,9 +136,12 @@ extension ChatRoomVC : DelegateInput{
     }
     
     func attach() {
-        viewSend.viewMore.backgroundColor = .clear
+//        viewSend.viewMore.backgroundColor = .clear
         viewSend.viewMore.setup(.attach)
         viewSend.layout(isReply ? [.reply, .input, .more] : [.input, .more])
+    }
+    func hideAttach(){
+        viewSend.layout([.input])
     }
 }
 
@@ -146,6 +149,7 @@ extension ChatRoomVC : DelegateReply{
     func cancelReply() {
         isReply = false
         viewSend.layout([.input])
+//        viewSend.resetViews()
     }
 }
 

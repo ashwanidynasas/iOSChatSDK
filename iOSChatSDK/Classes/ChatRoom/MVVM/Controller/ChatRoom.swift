@@ -34,6 +34,7 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate,BottomViewDel
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
                 self?.scrollToBottom()
+                self?.viewSend.resetViews()
             }
         }
     }
@@ -63,7 +64,7 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate,BottomViewDel
 
         // Setup BottomView
         viewSend = BottomView()
-        viewSend.backgroundColor = .white
+        viewSend.backgroundColor = .clear
         viewSend.delegate = self
         viewSend.viewReply.delegate = self
         viewSend.viewInput.delegateInput = self
@@ -186,7 +187,8 @@ extension ChatRoomVC{
     func messageSent(){
         self.isReply = false
         DispatchQueue.main.async {
-            self.viewSend.layout([.input])
+//            self.viewSend.layout([.input])
+            self.viewSend.resetViews()
             self.viewSend.viewInput.mode = .audio
         }
         viewModel?.getMessages()

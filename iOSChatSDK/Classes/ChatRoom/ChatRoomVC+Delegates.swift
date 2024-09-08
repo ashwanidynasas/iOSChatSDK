@@ -94,33 +94,34 @@ extension ChatRoomVC: DelegateMore{
 
 
 //MARK: - DELEGATE INPUT
-extension ChatRoomVC : DelegateInput{
+extension ChatRoomVC : DelegateInput,DelegateAudio{
     
     func sendTextMessage() {
-//        if viewInput?.textfieldMessage?.text == "" {
-//            return
-//        }
-//        if isReply {
-//            viewModel?.sendReply(body: /viewInput?.textfieldMessage?.text, eventID: /selectedMessage?.eventId, completion: { result in
-//                switch result {
-//                case .success(let response):
-//                    self.messageSent()
-//                case .failure(let error):
-//                    print(error.localizedDescription)
-//                }
-//            })
-//        }else{
-//            viewModel?.sendMessage(body: /viewInput?.textfieldMessage?.text,
-//                                   msgType: MessageType.text) { [weak self] response in
-//                DispatchQueue.main.async {
-//                    if let response = response {
-//                        self?.messageSent()
-//                    } else {
-//                        print("No response received")
-//                    }
-//                }
-//            }
-//        }
+        if viewSend.viewInput.textfieldMessage.text == "" {
+            return
+        }
+        if isReply {
+            viewModel?.sendReply(body: /viewSend.viewInput.textfieldMessage.text, eventID: /selectedMessage?.eventId, completion: { result in
+                switch result {
+                case .success(let response):
+                    self.messageSent()
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            })
+        }else{
+            viewModel?.sendMessage(body: /viewSend.viewInput.textfieldMessage.text,
+                                   msgType: MessageType.text) { [weak self] response in
+                DispatchQueue.main.async {
+                    if let response = response {
+                        self?.viewSend.viewInput.textfieldMessage.text = ""
+                        self?.messageSent()
+                    } else {
+                        print("No response received")
+                    }
+                }
+            }
+        }
     }
 
     
@@ -136,20 +137,19 @@ extension ChatRoomVC : DelegateInput{
     }
     
     func attach() {
-//        viewSend.viewMore.backgroundColor = .clear
         viewSend.viewMore.setup(.attach)
         viewSend.layout(isReply ? [.reply, .input, .more] : [.input, .more])
     }
     func hideAttach(){
-        viewSend.layout([.input])
+        viewSend.resetViews()
     }
 }
 
 extension ChatRoomVC : DelegateReply{
     func cancelReply() {
         isReply = false
-        viewSend.layout([.input])
-//        viewSend.resetViews()
+//        viewSend.layout([.input])
+        viewSend.resetViews()
     }
 }
 

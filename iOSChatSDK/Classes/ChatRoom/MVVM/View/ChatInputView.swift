@@ -34,33 +34,26 @@ enum InputViewMode{
 class ChatInputView: UIView {
     
     // Toggle state
-    private var isAttachVisible = false
+    public var isAttachVisible = false
     
     open var buttonColor = UIColor.systemBlue {
         didSet {
             buttonEmoji.tintColor = buttonColor
             buttonCamera.tintColor = buttonColor
             buttonMore.tintColor = buttonColor
-            buttonMore.tintColor = buttonColor
+            buttonSend.tintColor = buttonColor
+            buttonAudio.tintColor = buttonColor
         }
     }
     
     // MARK: - UI Elements
-    private let loadView: UIView = {
+    public let loadView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private let viewEntry: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 20.0
-        return view
-    }()
-    
-    private let viewSend: UIView = {
+    public let viewEntry: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
@@ -68,7 +61,15 @@ class ChatInputView: UIView {
         return view
     }()
     
-    private let buttonEmoji: ChatButton = {
+    public let viewSend: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 20.0
+        return view
+    }()
+    
+    public let buttonEmoji: ChatButton = {
         let button = ChatButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(DefaultImage.emoji, for: .normal)
@@ -76,15 +77,16 @@ class ChatInputView: UIView {
         return button
     }()
     
-    private let textfieldMessage: UITextField = {
+    public let textfieldMessage: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Type your message here..."
         textField.borderStyle = .none
+        textField.font = ChatConstants.Bubble.messageFont
         return textField
     }()
     
-    private let buttonCamera: ChatButton = {
+    public let buttonCamera: ChatButton = {
         let button = ChatButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(DefaultImage.camera, for: .normal)
@@ -92,7 +94,7 @@ class ChatInputView: UIView {
         return button
     }()
     
-    private let buttonMore: ChatButton = {
+    public let buttonMore: ChatButton = {
         let button = ChatButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(DefaultImage.more, for: .normal)
@@ -100,22 +102,22 @@ class ChatInputView: UIView {
         return button
     }()
     
-    private let buttonSend: ChatButton = {
+    public let buttonSend: ChatButton = {
         let button = ChatButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(DefaultImage.send, for: .normal)
-        button.addTarget(self, action: #selector(moreTapped(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(sendTapped(_:)), for: .touchUpInside)
         return button
     }()
     
-    private let buttonAudio: ChatButton = {
+    public let buttonAudio: ChatButton = {
         let button = ChatButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(DefaultImage.audio, for: .normal)
         return button
     }()
     
-    private let viewAudio: ChatAudioView = {
+    public let viewAudio: ChatAudioView = {
         let view = ChatAudioView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .lightGray
@@ -157,7 +159,6 @@ class ChatInputView: UIView {
         loadView.addSubview(viewEntry)
         loadView.addSubview(viewSend)
         
-        
         viewEntry.addSubview(buttonEmoji)
         viewEntry.addSubview(textfieldMessage)
         viewEntry.addSubview(buttonCamera)
@@ -178,7 +179,6 @@ class ChatInputView: UIView {
             loadView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
         
-
         NSLayoutConstraint.activate([
             viewEntry.leadingAnchor.constraint(equalTo: loadView.leadingAnchor),
             viewEntry.centerYAnchor.constraint(equalTo: loadView.centerYAnchor),
@@ -210,7 +210,7 @@ class ChatInputView: UIView {
         
         // Constraints for buttonCamera
         NSLayoutConstraint.activate([
-            buttonCamera.trailingAnchor.constraint(equalTo: buttonMore.leadingAnchor, constant: -8),
+            buttonCamera.trailingAnchor.constraint(equalTo: buttonMore.leadingAnchor, constant: -6),
             buttonCamera.centerYAnchor.constraint(equalTo: viewEntry.centerYAnchor),
             buttonCamera.widthAnchor.constraint(equalToConstant: 40),
             buttonCamera.heightAnchor.constraint(equalToConstant: 40)
@@ -218,7 +218,7 @@ class ChatInputView: UIView {
         
         // Constraints for buttonMore
         NSLayoutConstraint.activate([
-            buttonMore.trailingAnchor.constraint(equalTo: viewAudio.trailingAnchor),
+            buttonMore.trailingAnchor.constraint(equalTo: viewAudio.trailingAnchor,constant: -4),
             buttonMore.centerYAnchor.constraint(equalTo: viewEntry.centerYAnchor),
             buttonMore.widthAnchor.constraint(equalToConstant: 40),
             buttonMore.heightAnchor.constraint(equalToConstant: 40)
@@ -226,7 +226,7 @@ class ChatInputView: UIView {
         
         // Constraints for buttonSend
         NSLayoutConstraint.activate([
-            buttonSend.trailingAnchor.constraint(equalTo: viewSend.trailingAnchor, constant: -8),
+            buttonSend.trailingAnchor.constraint(equalTo: viewSend.trailingAnchor),
             buttonSend.centerYAnchor.constraint(equalTo: viewSend.centerYAnchor),
             buttonSend.widthAnchor.constraint(equalToConstant: 40),
             buttonSend.heightAnchor.constraint(equalToConstant: 40)
@@ -234,7 +234,7 @@ class ChatInputView: UIView {
         
         // Constraints for buttonSend
         NSLayoutConstraint.activate([
-            buttonAudio.trailingAnchor.constraint(equalTo: viewSend.trailingAnchor, constant: -8),
+            buttonAudio.trailingAnchor.constraint(equalTo: viewSend.trailingAnchor),
             buttonAudio.centerYAnchor.constraint(equalTo: viewSend.centerYAnchor),
             buttonAudio.widthAnchor.constraint(equalToConstant: 40),
             buttonAudio.heightAnchor.constraint(equalToConstant: 40)
@@ -246,7 +246,7 @@ class ChatInputView: UIView {
             viewAudio.topAnchor.constraint(equalTo: topAnchor),
             viewAudio.leadingAnchor.constraint(equalTo: leadingAnchor),
             viewAudio.bottomAnchor.constraint(equalTo: bottomAnchor)
-
+            
         ])
         
     }
@@ -260,8 +260,11 @@ class ChatInputView: UIView {
     @objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
             viewAudio.isHidden = false
+            delegateInput
+            viewAudio.startRecording()
         } else if gesture.state == .ended || gesture.state == .cancelled {
             viewAudio.isHidden = true
+            viewAudio.stopRecording()
         }
     }
     
@@ -270,7 +273,6 @@ class ChatInputView: UIView {
     }
     
     @objc func moreTapped(_ sender: UIButton?){
-//        self.delegateInput?.attach()
         if isAttachVisible {
             delegateInput?.hideAttach()
         } else {
@@ -283,8 +285,6 @@ class ChatInputView: UIView {
     @objc func cameraTapped(_ sender: UIButton?){
         self.delegateInput?.camera()
     }
-    
-    
     
     @objc func sendTapped(_ sender: UIButton?){
         delegateInput?.sendTextMessage()

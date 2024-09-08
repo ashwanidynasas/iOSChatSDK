@@ -127,7 +127,6 @@ extension ChatAudioView{
         
         if success {
             print("Recording succeeded")
-            //            sendImageFromGalleryAPICall(audio:audioFilename, msgType: "m.audio")
             delegate?.sendAudio(audioFilename: audioFilename)
         } else {
             print("Recording failed")

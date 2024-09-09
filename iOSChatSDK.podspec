@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'iOSChatSDK'
-  s.version          = '0.0.11'
+  s.version          = '0.0.12'
   s.summary          = 'iOSChatSDK >> Custom Chat Integration with Sqrcle with multiple features.'
 
 # This description is used to generate tags and improve search results.
@@ -31,7 +31,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '13.0'
   s.swift_version = '5.0'
 #  s.source_files = 'iOSChatSDK/**/*'
-#  s.source_files = 'iOSChatSDK/Classes/**/*'
+  s.source_files = 'iOSChatSDK/Classes/**/*'
 
   s.resource_bundles = {
       'iOSChatSDK' => ['iOSChatSDK/Classes/Resources/**/*.{storyboard,xib,xcassets}','iOSChatSDK/Assets/Classes/**/*','iOSChatSDK/Classes/Resources/Assets/*']

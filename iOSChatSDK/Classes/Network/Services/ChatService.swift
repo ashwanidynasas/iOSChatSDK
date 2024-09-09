@@ -95,7 +95,7 @@ class ChatService: GenericClient {
                        completion: @escaping (Result<ChatMessageResponse?, APIError>, [AnyHashable : Any]?) -> ()) {
         
         self.showLoader = showloader
-        let headers = [HTTPHeader.authorization(request.accessToken)]
+//        let headers = [HTTPHeader.authorization(request.accessToken)]
         guard let request = ChatServiceEndPoint.redactMessage.postRequest(parameters: request, headers: []) else {
             completion(.failure(.invalidRequestURL), nil)
             return

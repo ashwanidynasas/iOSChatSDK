@@ -139,7 +139,7 @@ class ChatRoomViewModel : NSObject{
     func sendMedia(replyRequests : SendMediaRequest, completion: @escaping (Result<String?, Error>) -> Void) {
         ChatMediaUpload.shared.uploadFileChatReply(replyRequest:replyRequests,isImage: false){ result in
             switch result {
-            case .success(let response):
+            case .success(_):
                 completion(.success("Message sent successfully"))
             case .failure(let error):
                 DispatchQueue.main.async {
@@ -158,7 +158,7 @@ class ChatRoomViewModel : NSObject{
         
         ChatMediaUpload.shared.uploadFileChatReply(replyRequest:replyRequests,isImage: false){ result in
             switch result {
-            case .success(let response):
+            case .success(_):
                 completion(result)
             case .failure(let error):
                 print("Error: \(error.localizedDescription)")

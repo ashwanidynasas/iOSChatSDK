@@ -143,6 +143,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let message = viewModel?.messages[indexPath.row]
         if let inReplyTo = message?.content?.relatesTo?.inReplyTo {
+            print(inReplyTo)
             return UITableView.automaticDimension
         }
         

@@ -89,17 +89,17 @@ class PublishMediaVC: UIViewController {
             if isReply {
                 let body = self.sendMsgTF.text
                 let msgType = MessageType.video
-                let mimeType = ChatConstants.MimeType.videoMP4
-                let fileName = ChatConstants.FileName.video//"upload.mp4"
+//                let mimeType = ChatConstants.MimeType.videoMP4
+//                let fileName = ChatConstants.FileName.video//"upload.mp4"
                 
-                let replyRequest = ReplyMediaRequest(accessToken: /accessToken, 
-                                                     roomID: /room_id,
-                                                     eventID: eventID,
-                                                     body: /body,
-                                                     msgType: /msgType,
-                                                     mimetype: mimeType,
-                                                     fileName: fileName,
-                                                     imageFilePath: imageFetched)
+//                let replyRequest = ReplyMediaRequest(accessToken: /accessToken, 
+//                                                     roomID: /room_id,
+//                                                     eventID: eventID,
+//                                                     body: /body,
+//                                                     msgType: /msgType,
+//                                                     mimetype: mimeType,
+//                                                     fileName: fileName,
+//                                                     imageFilePath: imageFetched)
                 
                 let mimeTypeAndFileName = ChatMediaUpload.shared.getMimeTypeAndFileName(for: /msgType)
                 
@@ -149,17 +149,17 @@ class PublishMediaVC: UIViewController {
             if isReply {
                 let body = self.sendMsgTF.text
                 let msgType = MessageType.image
-                let mimeType = ChatConstants.MimeType.imageJPEG//"image/jpeg"
-                let fileName = ChatConstants.FileName.image//"a1.jpg"
+//                let mimeType = ChatConstants.MimeType.imageJPEG//"image/jpeg"
+//                let fileName = ChatConstants.FileName.image//"a1.jpg"
                 
-                let replyRequest = ReplyMediaRequest(accessToken: /accessToken, 
-                                                     roomID: /room_id,
-                                                     eventID: eventID,
-                                                     body: /body,
-                                                     msgType: /msgType,
-                                                     mimetype: mimeType,
-                                                     fileName: fileName,
-                                                     imageFilePath: imageFetched)
+//                let replyRequest = ReplyMediaRequest(accessToken: /accessToken, 
+//                                                     roomID: /room_id,
+//                                                     eventID: eventID,
+//                                                     body: /body,
+//                                                     msgType: /msgType,
+//                                                     mimetype: mimeType,
+//                                                     fileName: fileName,
+//                                                     imageFilePath: imageFetched)
                 
                 let mimeTypeAndFileName = ChatMediaUpload.shared.getMimeTypeAndFileName(for: /msgType)
                 

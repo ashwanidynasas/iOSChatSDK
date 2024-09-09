@@ -103,7 +103,7 @@ extension ChatRoomVC : DelegateInput,DelegateAudio{
         if isReply {
             viewModel?.sendReply(body: /viewSend.viewInput.textfieldMessage.text, eventID: /selectedMessage?.eventId, completion: { result in
                 switch result {
-                case .success(let response):
+                case .success(_):
                     self.messageSent()
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -113,7 +113,7 @@ extension ChatRoomVC : DelegateInput,DelegateAudio{
             viewModel?.sendMessage(body: /viewSend.viewInput.textfieldMessage.text,
                                    msgType: MessageType.text) { [weak self] response in
                 DispatchQueue.main.async {
-                    if let response = response {
+                    if response != nil {
                         self?.viewSend.viewInput.textfieldMessage.text = ""
                         self?.messageSent()
                     } else {
@@ -128,7 +128,7 @@ extension ChatRoomVC : DelegateInput,DelegateAudio{
     func sendAudio(audioFilename : URL){
         viewModel?.sendAudioMedia(audioFilename: audioFilename, completion: { result in
             switch result{
-            case .success(let msg) :
+            case .success(_) :
                 self.messageSent()
             case .failure(let error) :
                 print("Error: \(error.localizedDescription)")

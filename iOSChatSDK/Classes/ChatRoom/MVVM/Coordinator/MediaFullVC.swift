@@ -76,7 +76,7 @@ class MediaFullVC: UIViewController {
         
         viewModel.redactMessage(eventID: /selectedMessage?.eventId) { result in
             switch result {
-            case .success(let value):
+            case .success(_):
                 DispatchQueue.main.async {
                     self.delegate?.messageDeleted()
                     self.navigationController?.popViewController(animated: true)

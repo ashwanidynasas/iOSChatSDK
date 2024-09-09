@@ -137,6 +137,7 @@ extension ChatRoomVC{
         guard let indexPath = tableView?.indexPath(for: cell),
               let message = viewModel?.messages[indexPath.row] else { return }
         if let msgType = viewModel?.messages[indexPath.row].content?.msgtype {
+            print(/msgType)
             if message.content?.url == nil  {
                 print("media nil...")
                 return

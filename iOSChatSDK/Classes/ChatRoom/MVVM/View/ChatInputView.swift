@@ -73,7 +73,7 @@ class ChatInputView: UIView {
         let button = ChatButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(DefaultImage.emoji, for: .normal)
-        button.addTarget(self, action: #selector(emojiTapped(_:)), for: .touchUpInside)
+        button.addTarget(ChatInputView.self, action: #selector(emojiTapped(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -90,7 +90,7 @@ class ChatInputView: UIView {
         let button = ChatButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(DefaultImage.camera, for: .normal)
-        button.addTarget(self, action: #selector(cameraTapped(_:)), for: .touchUpInside)
+        button.addTarget(ChatInputView.self, action: #selector(cameraTapped(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -98,7 +98,7 @@ class ChatInputView: UIView {
         let button = ChatButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(DefaultImage.more, for: .normal)
-        button.addTarget(self, action: #selector(ChatInputView.moreTapped(_:)), for: .touchUpInside)
+        button.addTarget(ChatInputView.self, action: #selector(ChatInputView.moreTapped(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -106,7 +106,7 @@ class ChatInputView: UIView {
         let button = ChatButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(DefaultImage.send, for: .normal)
-        button.addTarget(self, action: #selector(sendTapped(_:)), for: .touchUpInside)
+        button.addTarget(ChatInputView.self, action: #selector(sendTapped(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -260,7 +260,6 @@ class ChatInputView: UIView {
     @objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
             viewAudio.isHidden = false
-            delegateInput
             viewAudio.startRecording()
         } else if gesture.state == .ended || gesture.state == .cancelled {
             viewAudio.isHidden = true

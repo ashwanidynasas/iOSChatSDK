@@ -76,19 +76,19 @@ extension Endpoint {
     
     //POST
     func postRequest(urlParameters: DictionaryEncodable? = nil, parameters: Encodable? = nil, headers: [HTTPHeader] = [], isImage : Bool? = false) -> URLRequest? {
-        var header = headers
+        let header = headers
         return makeRequest(type: .post, urlparameters: urlParameters,parameters: parameters, headers: header, isImage: isImage)
     }
     
     //GET
     func getRequest(parameters: DictionaryEncodable? = nil, headers: [HTTPHeader] = []) -> URLRequest? {
-        var header = headers
+        let header = headers
         return makeRequest(type: .get,urlparameters: parameters, headers: header)
     }
     
     //PUT
     func putRequest(urlParameters: DictionaryEncodable? = nil, parameters: Encodable? = nil, headers: [HTTPHeader] = []) -> URLRequest? {
-        var header = headers
+        let header = headers
         return makeRequest(type: .put, urlparameters: urlParameters,parameters: parameters, headers: header)
     }
     

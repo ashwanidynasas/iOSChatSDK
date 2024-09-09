@@ -36,6 +36,12 @@ class ChatInputView: UIView {
     // Toggle state
     public var isAttachVisible = false
     
+    private var buttonEmoji: ChatButton!
+    private var buttonCamera: ChatButton!
+    public var buttonMore: ChatButton!
+    public var buttonSend: ChatButton!
+    public var buttonAudio: ChatButton!
+    
     open var buttonColor = UIColor.systemBlue {
         didSet {
             buttonEmoji.tintColor = buttonColor
@@ -69,14 +75,6 @@ class ChatInputView: UIView {
         return view
     }()
     
-    public let buttonEmoji: ChatButton = {
-        let button = ChatButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(DefaultImage.emoji, for: .normal)
-        button.addTarget(ChatInputView.self, action: #selector(emojiTapped(_:)), for: .touchUpInside)
-        return button
-    }()
-    
     public let textfieldMessage: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -84,37 +82,6 @@ class ChatInputView: UIView {
         textField.borderStyle = .none
         textField.font = ChatConstants.Bubble.messageFont
         return textField
-    }()
-    
-    public let buttonCamera: ChatButton = {
-        let button = ChatButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(DefaultImage.camera, for: .normal)
-        button.addTarget(ChatInputView.self, action: #selector(cameraTapped(_:)), for: .touchUpInside)
-        return button
-    }()
-    
-    public let buttonMore: ChatButton = {
-        let button = ChatButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(DefaultImage.more, for: .normal)
-        button.addTarget(ChatInputView.self, action: #selector(ChatInputView.moreTapped(_:)), for: .touchUpInside)
-        return button
-    }()
-    
-    public let buttonSend: ChatButton = {
-        let button = ChatButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(DefaultImage.send, for: .normal)
-        button.addTarget(ChatInputView.self, action: #selector(sendTapped(_:)), for: .touchUpInside)
-        return button
-    }()
-    
-    public let buttonAudio: ChatButton = {
-        let button = ChatButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(DefaultImage.audio, for: .normal)
-        return button
     }()
     
     public let viewAudio: ChatAudioView = {
@@ -137,6 +104,7 @@ class ChatInputView: UIView {
     // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupUI()
         setupView()
         setupConstraints()
         setupMode()
@@ -146,13 +114,33 @@ class ChatInputView: UIView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        setupUI()
         setupView()
         setupConstraints()
         setupMode()
         setupTextfield()
         setupLongPressGesture()
     }
+    // MARK: - Setup UI
+    private func setupUI() {
+        // Initialize and configure the buttons
+        buttonEmoji = createChatButton(image: /DefaultImage.emoji, action: #selector(emojiTapped(_:)))
+        buttonCamera = createChatButton(image: /DefaultImage.camera, action: #selector(cameraTapped(_:)))
+        buttonMore = createChatButton(image: /DefaultImage.more, action: #selector(moreTapped(_:)))
+        buttonSend = createChatButton(image: /DefaultImage.send, action: #selector(sendTapped(_:)))
+        buttonAudio = createChatButton(image: /DefaultImage.audio, action: nil)
+    }
     
+    // Helper method to create buttons
+    private func createChatButton(image: UIImage, action: Selector?) -> ChatButton {
+        let button = ChatButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(image, for: .normal)
+        if let action = action {
+            button.addTarget(self, action: action, for: .touchUpInside)
+        }
+        return button
+    }
     // MARK: - Setup Methods
     private func setupView() {
         addSubview(loadView)
@@ -270,8 +258,9 @@ class ChatInputView: UIView {
     @objc func emojiTapped(_ sender: UIButton?){
         
     }
+    //    @objc private func moreTapped(_ sender: UIButton) {
     
-    @objc func moreTapped(_ sender: UIButton?){
+    @objc func moreTapped(_ sender: UIButton) {
         if isAttachVisible {
             delegateInput?.hideAttach()
         } else {
@@ -288,6 +277,7 @@ class ChatInputView: UIView {
     @objc func sendTapped(_ sender: UIButton?){
         delegateInput?.sendTextMessage()
     }
+    
 }
 
 

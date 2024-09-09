@@ -71,7 +71,7 @@
 		43F93ED54EC176295EF366A740E01172 /* SDDeviceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AADD7510466115613A19B4D7019E32F /* SDDeviceHelper.m */; };
 		449F6DDFDA01061F0B001BCB31ED4455 /* SDWebImage-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = ACFC8C9017E4313795778CDADFA84D76 /* SDWebImage-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		44A583ECB05274181A788551DD0CAC4F /* PublishMediaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884DEE05C26EAA75940284E340BCA48A /* PublishMediaVC.swift */; };
-		45B78B6A44F17A50C14978F3278AACB4 /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C8BB1EBCE6632F5DC73B24BAD8B233 /* MessageViewModel.swift */; };
+		45B78B6A44F17A50C14978F3278AACB4 /* ChatRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C8BB1EBCE6632F5DC73B24BAD8B233 /* ChatRoomViewModel.swift */; };
 		45B7E00A483125FDBA7807A8E39CA6FA /* DataComponent.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 730B7B8D9FFC21851DEB67160F0FC975 /* DataComponent.storyboard */; };
 		45C47D2E7DC2AC0332CDD2323355F483 /* SDImageCachesManagerOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B78C07859543713843BCE34D0DA5191 /* SDImageCachesManagerOperation.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		4624831E1C1A912E31BA028AD4C1FA7C /* SDWebImageDownloaderConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C347FF113DA3F8B04A8DF2724F0102 /* SDWebImageDownloaderConfig.m */; };
@@ -324,7 +324,7 @@
 		1F08F565517D5288B0DA9F6A12833BB5 /* UIImage+ExtendedCacheData.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+ExtendedCacheData.m"; path = "SDWebImage/Core/UIImage+ExtendedCacheData.m"; sourceTree = "<group>"; };
 		1FB006EEA81EB8CD9158583BCC884A07 /* SDAnimatedImageView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDAnimatedImageView.h; path = SDWebImage/Core/SDAnimatedImageView.h; sourceTree = "<group>"; };
 		20455AF618361234A6AE4AC7A588B868 /* SDWebImageIndicator.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageIndicator.h; path = SDWebImage/Core/SDWebImageIndicator.h; sourceTree = "<group>"; };
-		20C8BB1EBCE6632F5DC73B24BAD8B233 /* MessageViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
+		20C8BB1EBCE6632F5DC73B24BAD8B233 /* ChatRoomViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ChatRoomViewModel.swift; sourceTree = "<group>"; };
 		2175BE4D196BE8580534D3F5DAD11B39 /* SDImageTransformer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SDImageTransformer.m; path = SDWebImage/Core/SDImageTransformer.m; sourceTree = "<group>"; };
 		227A1370BF1655EF787D84DED55044C9 /* Pods-iOSChatSDK_Tests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-iOSChatSDK_Tests"; path = Pods_iOSChatSDK_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		23AA9714783078CD4E0BCE2389816162 /* SDAnimatedImageRep.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDAnimatedImageRep.h; path = SDWebImage/Core/SDAnimatedImageRep.h; sourceTree = "<group>"; };
@@ -648,7 +648,7 @@
 		1865695DFA5E07CEE02E0133A8147C3F /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				20C8BB1EBCE6632F5DC73B24BAD8B233 /* MessageViewModel.swift */,
+				20C8BB1EBCE6632F5DC73B24BAD8B233 /* ChatRoomViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1736,7 +1736,7 @@
 				4D10B6942C81CEFB0006563B /* ServiceEndPoints.swift in Sources */,
 				15AF398C3902ED90561421D781567A6D /* MediaTextTVCell.xib in Sources */,
 				9E6D1B18E555F5F9BD3A5DD7BF0624EE /* MenuBottomView.swift in Sources */,
-				45B78B6A44F17A50C14978F3278AACB4 /* MessageViewModel.swift in Sources */,
+				45B78B6A44F17A50C14978F3278AACB4 /* ChatRoomViewModel.swift in Sources */,
 				EAED95A5053EEECD32E993838B2F422C /* MoreOptionView.swift in Sources */,
 				E81840528BB5940391897707A5607BAC /* MoreView.swift in Sources */,
 				61CC45C26A8933909F4FA1B2937B2AD9 /* Protocols.swift in Sources */,

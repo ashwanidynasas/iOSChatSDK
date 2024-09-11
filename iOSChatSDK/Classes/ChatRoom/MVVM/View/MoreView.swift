@@ -24,9 +24,9 @@ enum MoreType{
 
 
 
-class MoreView: UIView {
+public class MoreView: UIView {
     
-    private var customTabBar: CustomTabBar?
+    public var customTabBar: CustomTabBar?
     weak var delegate : DelegateMore?
     
     // MARK: - Initialization

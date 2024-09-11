@@ -8,10 +8,10 @@
 import UIKit
 
 // Custom Tab Bar Button
-class CustomTabBarButton: UIButton {
+open class CustomTabBarButton: UIButton {
     var tapAction: (() -> Void)?
     
-    private let overlapButton:UIButton = {
+    public let overlapButton:UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tintColor = .blue
@@ -19,14 +19,14 @@ class CustomTabBarButton: UIButton {
         return button
     }()
     
-    private let buttonImageView: UIImageView = {
+    public let buttonImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    private let imageBackView:UIView = {
+    public let imageBackView:UIView = {
         let backview = UIView()
         backview.backgroundColor = .white
         backview.layer.cornerRadius = 20
@@ -35,7 +35,7 @@ class CustomTabBarButton: UIButton {
         return backview
     }()
     
-    private let buttonTitleLabel: UILabel = {
+    public let buttonTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textAlignment = .center
@@ -97,7 +97,7 @@ class CustomTabBarButton: UIButton {
         tapAction?()
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
@@ -106,10 +106,10 @@ class CustomTabBarButton: UIButton {
 
 
 //MARK: - Custom Tab Bar View
-class CustomTabBar: UIView {
+open class CustomTabBar: UIView {
     
     private var items : [Item]
-    private var buttons: [CustomTabBarButton] = []
+    public var buttons: [CustomTabBarButton] = []
     var didSelectTab: ((Item) -> Void)?
     
     init(items: [Item]) {
@@ -118,11 +118,11 @@ class CustomTabBar: UIView {
         setupView()
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupView() {
+    public func setupView() {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
@@ -153,7 +153,7 @@ class CustomTabBar: UIView {
             stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
     }
-    override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         // Ensure the width of the tab bar matches the screen width
         if let superview = superview {

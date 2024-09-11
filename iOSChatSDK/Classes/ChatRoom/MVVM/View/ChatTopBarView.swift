@@ -8,18 +8,18 @@
 import Foundation
 import UIKit
 
-class ChatTopBarView: UIView {
+open class ChatTopBarView: UIView {
 
     // MARK: - UI Components
-    private let loadView: UIView = {
+    public let loadView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
         return view
     }()
 
-    private var backButton: UIButton!
-    private var imageView: UIImageView!
+    public var backButton: UIButton!
+    public var imageView: UIImageView!
     public var titleLabel: UILabel!
     public var searchButton: UIButton!
 
@@ -43,19 +43,19 @@ class ChatTopBarView: UIView {
         commonInit()
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         super.init(coder: coder)
         commonInit()
     }
     
     // MARK: - Setup Methods
-    private func commonInit() {
+    public func commonInit() {
         self.backgroundColor = .clear
         setupUI()
         setupConstraints()
     }
 
-    private func setupUI() {
+    public func setupUI() {
         // Initialize backButton
         addSubview(loadView)
 
@@ -91,7 +91,7 @@ class ChatTopBarView: UIView {
         loadView.addSubview(searchButton)
     }
 
-    private func setupConstraints() {
+    public func setupConstraints() {
         // Constraints for loadView
         NSLayoutConstraint.activate([
             loadView.topAnchor.constraint(equalTo: topAnchor),

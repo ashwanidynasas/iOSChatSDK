@@ -10,22 +10,22 @@ import Foundation
 import SDWebImage
 
 
-class ReplyText_MediaCell: UITableViewCell {
+open class ReplyText_MediaCell: UITableViewCell {
     
-    private let bubbleBackgroundView = UIView()
+    public let bubbleBackgroundView = UIView()
     let playButton = UIButton() // Added play button
     weak var delegate: DelegatePlay?
-    private let upperbubbleBackgroundView = UIView()
-    private let messageMediaImage = UIImageView()
-    private let timestampLabel = UILabel()
-    private let readIndicatorImageView = UIImageView()
-    private var leadingConstraint: NSLayoutConstraint!
-    private var trailingConstraint: NSLayoutConstraint!
-    private var minWidthConstraint: NSLayoutConstraint!
-    private var maxWidthConstraint: NSLayoutConstraint!
-    private var upperbubbleBackgroundViewHeightConstraint: NSLayoutConstraint!
-    private let titleLabel = UILabel()
-    private let descriptionLabel = UILabel()
+    public let upperbubbleBackgroundView = UIView()
+    public let messageMediaImage = UIImageView()
+    public let timestampLabel = UILabel()
+    public let readIndicatorImageView = UIImageView()
+    public var leadingConstraint: NSLayoutConstraint!
+    public var trailingConstraint: NSLayoutConstraint!
+    public var minWidthConstraint: NSLayoutConstraint!
+    public var maxWidthConstraint: NSLayoutConstraint!
+    public var upperbubbleBackgroundViewHeightConstraint: NSLayoutConstraint!
+    public let titleLabel = UILabel()
+    public let descriptionLabel = UILabel()
 
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -33,15 +33,15 @@ class ReplyText_MediaCell: UITableViewCell {
         setupViews()
         setupConstraints()
     }
-    override func prepareForReuse() {
+    open override func prepareForReuse() {
         super.prepareForReuse()
         messageMediaImage.image = nil
     }
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupViews() {
+    public func setupViews() {
         backgroundColor = .clear
         contentView.addSubview(bubbleBackgroundView)
         bubbleBackgroundView.translatesAutoresizingMaskIntoConstraints = false
@@ -93,7 +93,7 @@ class ReplyText_MediaCell: UITableViewCell {
 
     }
 
-    private func setupConstraints() {
+    public func setupConstraints() {
         leadingConstraint = bubbleBackgroundView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: ChatConstants.Bubble.leadAnchor)
         trailingConstraint = bubbleBackgroundView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -ChatConstants.Bubble.trailAnchor)
         minWidthConstraint = bubbleBackgroundView.widthAnchor.constraint(greaterThanOrEqualToConstant: ChatConstants.ReplyBubble.minBubbleWidth)
@@ -204,7 +204,7 @@ class ReplyText_MediaCell: UITableViewCell {
             delegate?.didLongPressPlayButton(in: self)
         }
     }
-    private func configureTextMessage(_ text: String, replyText:String,replyImage:String, replyDesc:String) {
+    public func configureTextMessage(_ text: String, replyText:String,replyImage:String, replyDesc:String) {
         
         titleLabel.text = replyText
         descriptionLabel.text = replyDesc
@@ -212,7 +212,7 @@ class ReplyText_MediaCell: UITableViewCell {
         
 
     }
-    private func applyBubbleShape(isCurrentUser: Bool) {
+    public func applyBubbleShape(isCurrentUser: Bool) {
         bubbleBackgroundView.layer.cornerRadius = 12
         if isCurrentUser {
             bubbleBackgroundView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMinXMaxYCorner]

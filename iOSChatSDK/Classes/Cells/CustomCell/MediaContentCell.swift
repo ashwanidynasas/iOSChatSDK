@@ -9,34 +9,34 @@ import UIKit
 
 
 
-class MediaContentCell: UITableViewCell {
-    private let bubbleBackgroundView = UIView()
-    private let timestampLabel = UILabel()
-    private var messageImageView = UIImageView()
-    private let readIndicatorImageView = UIImageView() // Added read indicator
+open class MediaContentCell: UITableViewCell {
+    public let bubbleBackgroundView = UIView()
+    public let timestampLabel = UILabel()
+    public var messageImageView = UIImageView()
+    public let readIndicatorImageView = UIImageView() // Added read indicator
     let playButton = UIButton() // Added play button
     weak var delegate: DelegatePlay?
 
-    private var leadingConstraint: NSLayoutConstraint!
-    private var trailingConstraint: NSLayoutConstraint!
-    private var maxWidthConstraint: NSLayoutConstraint!
+    public var leadingConstraint: NSLayoutConstraint!
+    public var trailingConstraint: NSLayoutConstraint!
+    public var maxWidthConstraint: NSLayoutConstraint!
 
-    private var bubbleHeightConstraint: NSLayoutConstraint!
-    private var bubbleWidthConstraint: NSLayoutConstraint!
-    private var messageImageViewHeightConstraint: NSLayoutConstraint!
-    private var messageImageViewWidthConstraint: NSLayoutConstraint!
+    public var bubbleHeightConstraint: NSLayoutConstraint!
+    public var bubbleWidthConstraint: NSLayoutConstraint!
+    public var messageImageViewHeightConstraint: NSLayoutConstraint!
+    public var messageImageViewWidthConstraint: NSLayoutConstraint!
 
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
         setupConstraints()
     }
 
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    private func setupViews() {
+    public func setupViews() {
         backgroundColor = .clear
 
         bubbleBackgroundView.translatesAutoresizingMaskIntoConstraints = false
@@ -93,7 +93,7 @@ class MediaContentCell: UITableViewCell {
             delegate?.didLongPressPlayButton(in: self)
         }
     }
-//    private struct Constants {
+//    public struct Constants {
 //        static let bubbleDiameter: CGFloat = 170
 //        static let timestampFont: UIFont = .systemFont(ofSize: 8)
 //        static let timestampColor: UIColor = .lightGray
@@ -104,7 +104,7 @@ class MediaContentCell: UITableViewCell {
 //        static let playButtonSize: CGFloat = 30
 //
 //    }
-    private func setupConstraints() {
+    public func setupConstraints() {
         
         leadingConstraint = bubbleBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: ChatConstants.Bubble.leadAnchor)
         trailingConstraint = bubbleBackgroundView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: ChatConstants.Bubble.trailAnchor)
@@ -140,7 +140,7 @@ class MediaContentCell: UITableViewCell {
         ])
     
     }
-    override func prepareForReuse() {
+    open override func prepareForReuse() {
         super.prepareForReuse()
         messageImageView.image = nil
         playButton.tag = 0

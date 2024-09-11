@@ -39,3 +39,12 @@ extension ChatServiceEndPoint: Endpoint {
 }
 
 
+
+
+public struct API{
+    
+    static let createRoom = "http://157.241.58.41/chat_api/room/create"
+    static let fetchUserlist = "http://157.241.58.41/chat_api/list-user-apple"
+    static let sendMedia = "http://157.241.58.41/chat_api/message/send/"
+    static let reply = "http://157.241.58.41/chat_api/message/reply"
+}

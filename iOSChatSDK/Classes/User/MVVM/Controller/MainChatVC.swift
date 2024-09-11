@@ -14,7 +14,7 @@ public class MainChatVC: UIViewController {
     @IBOutlet weak var userChatTV:UITableView!
     
     //MARK: - VIEW MODEL
-    private var loginViewModel: LoginViewModel!
+    private var loginViewModel: ChatViewModel!
     private var viewModel = UserViewModel()
     
     //MARK: - PROPERTIES
@@ -50,7 +50,7 @@ public class MainChatVC: UIViewController {
         //fetch dummy users
         viewModel.fetchUsers()
         
-        loginViewModel = LoginViewModel()
+        loginViewModel = ChatViewModel()
     }
     
     public func showError(_ message: String) {
@@ -69,7 +69,7 @@ public class MainChatVC: UIViewController {
     
     public func getJWT_Token(_ jwtToken:String, username:String){
         
-        loginViewModel.login(username: username, 
+        loginViewModel.login(username: username,
                              loginJWTToken: jwtToken) { accessToken in
             
             if let accessToken = accessToken {

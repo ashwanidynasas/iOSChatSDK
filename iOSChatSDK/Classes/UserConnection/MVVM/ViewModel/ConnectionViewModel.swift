@@ -9,7 +9,7 @@
 import Foundation
 
 //MARK: - CLASS
-class ConnectionViewModel : NSObject{
+public class ConnectionViewModel : NSObject{
     
     //MARK: - PROPERTIES
     private var service : ChatService?
@@ -21,9 +21,7 @@ class ConnectionViewModel : NSObject{
             self.bindViewModelToController()
         }
     }
-    
     var bindViewModelToController: (() -> ()) = {}
-    
     
     required init(circleId: String, circleHash : String) {
         super.init()
@@ -54,26 +52,13 @@ class ConnectionViewModel : NSObject{
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //MARK: - CLASS
-class LoginViewModel {
+open class ChatViewModel {
     
     //MARK: - PROPERTIES
-    private var service : ChatService?
-    var loginResponse: LoginResponse? {
+    open var service : ChatService?
+    
+    open var loginResponse: LoginResponse? {
         didSet {
             if let token = loginResponse?.details.accessToken {
                 UserDefaultsHelper.setAccessToken(token)
@@ -81,14 +66,25 @@ class LoginViewModel {
             self.bindViewModelToController()
         }
     }
-
+    
+    open var createResponse: CreateRoomResponse? {
+        didSet {
+            if let room = createResponse?.details.room_id {
+                UserDefaultsHelper.setRoomId(room)
+            }
+        }
+    }
+    
     var bindViewModelToController: (() -> ()) = {}
+
+    //MARK: - INITIALIZER
+    public init() {}
     
     //MARK: - FUNCTIONS
-    func login(username: String, loginJWTToken: String, completion: @escaping (String?) -> Void) {
+    open func login(username: String, loginJWTToken: String, completion: @escaping (String?) -> Void) {
         
         service = ChatService(configuration: .default)
-        let parameter = LoginParameter(username: username, loginJWTToken: loginJWTToken)
+        let parameter = ChatLoginParameter(username: username, loginJWTToken: loginJWTToken)
         
         service?.login(parameters: parameter, completion: { (result, headers) in
             switch result {
@@ -98,6 +94,7 @@ class LoginViewModel {
                     completion(value?.details.accessToken)
                 } else {
                     print(/value?.message)
+                    completion(nil)
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -105,16 +102,67 @@ class LoginViewModel {
         })
     }
     
+    open func createRoom(accessToken: String,
+                         invitees: [String],
+                         defaultChat: Bool,
+                         completion: @escaping (Bool, String) -> Void) {
+        
+        guard let url = URL(string: API.createRoom) else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let requestBody = CreateRoomRequest(accessToken: accessToken, invitees: invitees, default_chat: defaultChat)
+        
+        do {
+            let jsonData = try JSONEncoder().encode(requestBody)
+            request.httpBody = jsonData
+            
+            let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let error = error {
+                    completion(false , error.localizedDescription)
+                    return
+                }
+                
+                guard let data = data else {
+                    let error = NSError(domain: "ResponseError", code: 0, userInfo: [NSLocalizedDescriptionKey: "No data received"])
+                    completion(false , error.localizedDescription)
+                    return
+                }
+                
+                do {
+                    let response = try JSONDecoder().decode(CreateRoomResponse.self, from: data)
+                    if response.success {
+                        self.createResponse = response
+                        completion(true, response.details.room_id)
+                    } else {
+                        let error = NSError(domain: "APIError", code: 0, userInfo: [NSLocalizedDescriptionKey: response.message])
+                        completion(false , error.localizedDescription)
+                    }
+                } catch {
+                    completion(false , error.localizedDescription)
+                }
+            }
+            
+            task.resume()
+        } catch {
+            completion(false , error.localizedDescription)
+        }
+    }
+    
 }
 
-struct LoginResponse: Codable {
+
+//MARK: - MODELS
+
+public struct LoginResponse: Codable {
     let success: Bool
     let message: String
     let redirectUrl: String
     let details: Details
 }
 
-struct Details: Codable {
+public struct Details: Codable {
     let accessToken: String
     let response: String
 
@@ -124,12 +172,22 @@ struct Details: Codable {
     }
 }
 
-
-
-struct API{
-    
-    static let createRoom = "http://157.241.58.41/chat_api/room/create"
-    static let fetchUserlist = "http://157.241.58.41/chat_api/list-user-apple"
-    static let sendMedia = "http://157.241.58.41/chat_api/message/send/"
-    static let reply = "http://157.241.58.41/chat_api/message/reply"
+public struct CreateRoomRequest: Codable {
+    let accessToken: String
+    let invitees: [String]
+    let default_chat: Bool
 }
+
+// Response model
+public struct CreateRoomResponse: Codable {
+    let success: Bool
+    let message: String
+    let redirectUrl: String
+    let details: RoomDetails
+}
+
+public struct RoomDetails: Codable {
+    let room_id: String
+    let response: String
+}
+

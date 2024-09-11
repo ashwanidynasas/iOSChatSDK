@@ -10,12 +10,12 @@ import Foundation
 
 
 
-class ChatReplyView: UIView {
+open class ChatReplyView: UIView {
     
     weak var delegate : DelegateReply?
     
     // MARK: - UI Elements
-    private let labelName: UILabel = {
+    public let labelName: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.widthAnchor.constraint(equalToConstant: 100).isActive = true
@@ -26,7 +26,7 @@ class ChatReplyView: UIView {
         return label
     }()
     
-    private let labelDesc: UILabel = {
+    public let labelDesc: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "label desc translatesAutoresizingMaskIntoConstraints translatesAutoresizingMaskIntoConstraints translatesAutoresizingMaskIntoConstraints"
@@ -36,7 +36,7 @@ class ChatReplyView: UIView {
         return label
     }()
     
-    private let imageView: UIImageView = {
+    public let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.widthAnchor.constraint(equalToConstant: 25).isActive = true
@@ -47,7 +47,7 @@ class ChatReplyView: UIView {
         return imageView
     }()
     
-    private let crossButton: UIButton = {
+    public let crossButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.widthAnchor.constraint(equalToConstant: 25).isActive = true
@@ -63,14 +63,14 @@ class ChatReplyView: UIView {
         setupConstraints()
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         super.init(coder: coder)
         setupView()
         setupConstraints()
     }
     
     // MARK: - Setup Methods
-    private func setupView() {
+    public func setupView() {
         addSubview(labelName)
         addSubview(imageView)
         addSubview(labelDesc)
@@ -78,7 +78,7 @@ class ChatReplyView: UIView {
         crossButton.addTarget(self, action: #selector(replyCancelView), for: .touchUpInside)
     }
     
-    private func setupConstraints() {
+    public func setupConstraints() {
         NSLayoutConstraint.activate([
             labelName.topAnchor.constraint(equalTo: topAnchor, constant: 4),
             labelName.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8)

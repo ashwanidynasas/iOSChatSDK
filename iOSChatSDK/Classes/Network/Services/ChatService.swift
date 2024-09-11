@@ -10,23 +10,23 @@ import Foundation
 import UIKit
 
 //MARK: - CLASS
-class ChatService: GenericClient {
+open class ChatService: GenericClient {
     
     typealias T = ConnectionResponse
     var showLoader: Bool = true
     internal let session: URLSession
     
-    init(configuration: URLSessionConfiguration) {
+    public init(configuration: URLSessionConfiguration) {
         self.session = URLSession(configuration: configuration)
     }
     
-    convenience init() {
+    public convenience init() {
         self.init(configuration: .default)
     }
     
     //MARK: - list connections
     func login(showloader: Bool = false,
-               parameters : LoginParameter,
+               parameters : ChatLoginParameter,
                completion: @escaping (Result<LoginResponse?, APIError>, [AnyHashable : Any]?) -> ()) {
         self.showLoader = showloader
         guard let request = ChatServiceEndPoint.login.postRequest(parameters: parameters, headers: []) else {
@@ -110,7 +110,7 @@ class ChatService: GenericClient {
 
 
 //MARK: - REQUEST PARAMETERS
-struct LoginParameter: DictionaryEncodable {
+struct ChatLoginParameter: DictionaryEncodable {
     var username: String
     var loginJWTToken : String
     

@@ -11,18 +11,18 @@ import Foundation
 
 
 //MARK: - CLASS
-class ChatRoomViewModel : NSObject{
+open class ChatRoomViewModel : NSObject{
     
     //MARK: - PROPERTIES
     var connection : Connection?
     var messages: [Messages] = []
     
-    private var service : ChatService?
-    let apiClient = RoomAPIClient()
+    public var service : ChatService?
+    let apiClient = ChatViewModel()
     
     var onUpdate: (() -> Void)?
     
-    required init(connection: Connection?) {
+    required public init(connection: Connection?) {
         super.init()
         self.service = ChatService()
         self.connection = connection
@@ -34,14 +34,14 @@ class ChatRoomViewModel : NSObject{
         
         apiClient.createRoom(accessToken: /UserDefaultsHelper.getAccessToken(),
                              invitees: [/connection?.chatUserId],
-                             defaultChat: true) { result in
-            switch result {
-            case .success(let roomId):
+                             defaultChat: true) { (success, result) in
+            if success{
+                let roomId = result
                 print("Room created successfully with ID: \(roomId)")
                 let room_id = UserDefaults.standard.string(forKey: "room_id")
                 print("room_id: \(room_id ?? "")")
-            case .failure(let error):
-                print("Failed to create room: \(error.localizedDescription)")
+            }else{
+                print("Failed to create room: \(result)")
             }
         }
     }

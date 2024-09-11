@@ -8,7 +8,7 @@
 import Foundation
 
 //MARK: - CLASS
-class ChatRoomVC: UIViewController, UINavigationControllerDelegate,BottomViewDelegate {
+open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomViewDelegate {
 
     // MARK: - Properties
     public var tableView: UITableView!
@@ -26,7 +26,7 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate,BottomViewDel
     private var viewSendHeightConstraint: NSLayoutConstraint!
 
     // MARK: - VIEW CYCLE
-    override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         setupUIVC()
         setupTable()
@@ -39,7 +39,7 @@ class ChatRoomVC: UIViewController, UINavigationControllerDelegate,BottomViewDel
         }
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         isReply = false
         viewModel?.getMessages()

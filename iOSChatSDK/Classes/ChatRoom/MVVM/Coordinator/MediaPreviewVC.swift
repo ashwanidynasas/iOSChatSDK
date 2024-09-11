@@ -12,17 +12,17 @@ import AVKit
 import AVFoundation
 
 //MARK: - CLASS
-class MediaPreviewVC: UIViewController {
+open class MediaPreviewVC: UIViewController {
 
     //MARK: - UI COMPONENTS
-    private var topView: ChatTopBarView!
-    private var fullImgView: UIImageView!
-    private var bottomView: MoreView!
-    private var videoPlayerBackView: UIView!
-    private var videoPlayerContainerView: CustomVideoPlayerContainerView!
+    public var topView: ChatTopBarView!
+    public var fullImgView: UIImageView!
+    public var bottomView: MoreView!
+    public var videoPlayerBackView: UIView!
+    public var videoPlayerContainerView: CustomVideoPlayerContainerView!
 
     //MARK: - VIEWMODEL
-    private var viewModel = ChatRoomViewModel(connection: nil)
+    public var viewModel = ChatRoomViewModel(connection: nil)
 
     //MARK: - PROPERTIES
     var imageFetched: UIImage?
@@ -33,7 +33,7 @@ class MediaPreviewVC: UIViewController {
     weak var delegate: DelegateMediaFullVC?
 
     //MARK: - VIEW CYCLE
-    override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupVideoPlayerContainerView()
@@ -41,13 +41,13 @@ class MediaPreviewVC: UIViewController {
         configureUI()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
     //MARK: - SETUP METHODS
-    private func setupUI() {
+    public func setupUI() {
         // Initialize and configure topView
         topView = ChatTopBarView()
         topView.translatesAutoresizingMaskIntoConstraints = false
@@ -75,7 +75,7 @@ class MediaPreviewVC: UIViewController {
         self.view.addSubview(videoPlayerBackView)
     }
 
-    private func setupVideoPlayerContainerView() {
+    public func setupVideoPlayerContainerView() {
         // Initialize and configure videoPlayerContainerView
         videoPlayerContainerView = CustomVideoPlayerContainerView(frame: .zero)
         videoPlayerContainerView.translatesAutoresizingMaskIntoConstraints = false
@@ -90,7 +90,7 @@ class MediaPreviewVC: UIViewController {
         ])
     }
 
-    private func setupConstraints() {
+    public func setupConstraints() {
         // Constraints for topView
         NSLayoutConstraint.activate([
             topView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -124,7 +124,7 @@ class MediaPreviewVC: UIViewController {
         ])
     }
 
-    private func configureUI() {
+    public func configureUI() {
         topView.titleLabel.text = /UserDefaultsHelper.getCurrentUser()
         self.view.setGradientBackground(startColor: Colors.Circles.black, endColor: Colors.Circles.violet)
         
@@ -138,7 +138,7 @@ class MediaPreviewVC: UIViewController {
         }
     }
 
-    private func redactMessage() {
+    public func redactMessage() {
         viewModel.redactMessage(eventID: /selectedMessage?.eventId) { result in
             switch result {
             case .success(_):
@@ -152,7 +152,7 @@ class MediaPreviewVC: UIViewController {
         }
     }
 
-    private func playVideo() {
+    public func playVideo() {
         guard let videoURL = URL(string: "\(ChatConstants.S3Media.URL)\(/(selectedMessage?.content?.S3MediaUrl ?? ""))") else {
             print("Error: Invalid video URL")
             return

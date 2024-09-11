@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserDefaultsManager {
+public struct UserDefaultsManager {
     
     
     static func clearUserCredentials() {
@@ -18,7 +18,7 @@ struct UserDefaultsManager {
 }
 
 
-class UserDefaultsHelper {
+open class UserDefaultsHelper {
     
     //MARK: - GENERIC
     class func resetDefaults() {

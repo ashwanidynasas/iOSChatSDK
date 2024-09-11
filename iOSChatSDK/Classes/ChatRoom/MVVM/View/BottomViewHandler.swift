@@ -12,7 +12,7 @@ protocol BottomViewDelegate: AnyObject {
     func updateBottomViewHeight(to height: CGFloat)
 }
 
-class BottomView: UIView {
+open class BottomView: UIView {
     
     weak var delegate: BottomViewDelegate?
     
@@ -37,22 +37,22 @@ class BottomView: UIView {
     }()
     
     // Constraints
-    private var redViewTopConstraint: NSLayoutConstraint!
-    private var greenViewTopConstraint: NSLayoutConstraint!
-    private var blueViewTopConstraint: NSLayoutConstraint!
+    public var redViewTopConstraint: NSLayoutConstraint!
+    public var greenViewTopConstraint: NSLayoutConstraint!
+    public var blueViewTopConstraint: NSLayoutConstraint!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
         viewMore.setup(.attach)
     }
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         super.init(coder: coder)
         setupView()
         viewMore.setup(.attach)
     }
     
-    private func setupView() {
+    public func setupView() {
         addSubview(viewReply)
         addSubview(viewInput)
         addSubview(viewMore)
@@ -99,7 +99,7 @@ class BottomView: UIView {
         }
     }
     
-    private func updateConstraintsForVisibility() {
+    public func updateConstraintsForVisibility() {
         greenViewTopConstraint.isActive = false
         if viewReply.isHidden {
             greenViewTopConstraint = viewInput.topAnchor.constraint(equalTo: topAnchor)
@@ -122,7 +122,7 @@ class BottomView: UIView {
         }
     }
     
-    private func updateHeight() {
+    public func updateHeight() {
         layoutIfNeeded()
         let visibleSubviews = [viewReply, viewInput, viewMore].filter { !$0.isHidden }
         var totalHeight: CGFloat = 0

@@ -13,10 +13,10 @@ import Foundation
 import AVFoundation
 
 
-class ChatAudioView: UIView {
+public class ChatAudioView: UIView {
     
     // MARK: - UI Elements
-    private let labelAudioTime: UILabel = {
+    public let labelAudioTime: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = ChatConstants.Bubble.messageFont
@@ -24,7 +24,7 @@ class ChatAudioView: UIView {
         return label
     }()
     
-    private let imageViewAudioIcon: UIImageView = {
+    public let imageViewAudioIcon: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = DefaultImage.audio
@@ -55,12 +55,12 @@ class ChatAudioView: UIView {
     }
     
     // MARK: - Setup Methods
-    private func setupView() {
+    public func setupView() {
         addSubview(labelAudioTime)
         addSubview(imageViewAudioIcon)
     }
     
-    private func setupConstraints() {
+    public func setupConstraints() {
         
         // Constraints for labelAudioTime
         NSLayoutConstraint.activate([
@@ -164,16 +164,16 @@ extension ChatAudioView : AVAudioRecorderDelegate, AVAudioPlayerDelegate{
     
     
     // AVAudioRecorderDelegate method
-    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+    public func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         finishRecording(success: flag)
     }
     
     // AVAudioPlayerDelegate methods (optional)
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+    public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         // Handle playback finished
     }
     
-    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+    public func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
         // Handle playback error
         print("Audio playback error: \(String(describing: error?.localizedDescription))")
     }

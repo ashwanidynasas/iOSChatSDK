@@ -20,7 +20,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
                                          MediaContentCell.self,
                                          ReplyText_TextCell.self,
                                          ReplyText_MediaCell.self ,
-                                         ReplyText_MediaTextCell.self , 
+                                         ReplyText_MediaTextCell.self ,
                                          ReplyMedia_TextCell.self,
                                          ReplyMedia_MediaCell.self,
                                          ReplyMedia_MediaTextCell.self,
@@ -31,11 +31,11 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
     
     
     // MARK: - UITableViewDelegate, UITableViewDataSource
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return /viewModel?.messages.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let message = viewModel?.messages[indexPath.row] else { return UITableViewCell() }
         switch message.chatType{
@@ -140,7 +140,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let message = viewModel?.messages[indexPath.row]
         if let inReplyTo = message?.content?.relatesTo?.inReplyTo {
             print(inReplyTo)
@@ -173,17 +173,17 @@ extension ChatRoomVC{
         }
     }
     
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         isScrolling = true
     }
 
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
             isScrolling = false
         }
     }
 
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         isScrolling = false
     }
 }

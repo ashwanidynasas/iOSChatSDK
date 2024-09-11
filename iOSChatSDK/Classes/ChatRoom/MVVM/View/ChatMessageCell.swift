@@ -4,26 +4,26 @@ import SDWebImage
 import AVFoundation
 
 //MARK: - CLASS
-class ChatMessageCell: UITableViewCell {
+open class ChatMessageCell: UITableViewCell {
     
     //MARK: - PROPERTIES
-    private let bubbleBackgroundView = UIView()
-    private let messageLabel = UILabel()
-    private let timestampLabel = UILabel()
-    private let readIndicatorImageView = UIImageView()
-    private let messageImageView = UIImageView()
+    public let bubbleBackgroundView = UIView()
+    public let messageLabel = UILabel()
+    public let timestampLabel = UILabel()
+    public let readIndicatorImageView = UIImageView()
+    public let messageImageView = UIImageView()
     let overlayButton = UIButton()
     
     weak var delegate: DelegatePlay?
     
     //MARK: - CONSTRAINTS
-    private var leadingConstraint: NSLayoutConstraint!
-    private var trailingConstraint: NSLayoutConstraint!
-    private var minWidthConstraint: NSLayoutConstraint!
-    private var maxWidthConstraint: NSLayoutConstraint!
-    private var messageImageViewHeightConstraint: NSLayoutConstraint!
+    public var leadingConstraint: NSLayoutConstraint!
+    public var trailingConstraint: NSLayoutConstraint!
+    public var minWidthConstraint: NSLayoutConstraint!
+    public var maxWidthConstraint: NSLayoutConstraint!
+    public var messageImageViewHeightConstraint: NSLayoutConstraint!
     
-    private struct Constants {
+    public struct Constants {
         static let minBubbleWidth: CGFloat = 100
     }
     
@@ -35,12 +35,12 @@ class ChatMessageCell: UITableViewCell {
         setupConstraints()
     }
     
-    override func prepareForReuse() {
+    open override func prepareForReuse() {
         super.prepareForReuse()
         messageLabel.text = nil
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -49,13 +49,13 @@ class ChatMessageCell: UITableViewCell {
         overlayButton.addGestureRecognizer(longPressGestureRecognizer)
     }
     
-    @objc private func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer) {
+    @objc public func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
             delegate?.didLongPressPlayButton(in: self)
         }
     }
     
-    private func applyBubbleShape(isCurrentUser: Bool) {
+    public func applyBubbleShape(isCurrentUser: Bool) {
         bubbleBackgroundView.layer.cornerRadius = 12
         if isCurrentUser {
             bubbleBackgroundView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner, .layerMinXMaxYCorner]
@@ -70,7 +70,7 @@ class ChatMessageCell: UITableViewCell {
 //MARK: - UI SETUP
 extension ChatMessageCell{
     
-    private func setupViews() {
+    public func setupViews() {
         backgroundColor = .clear
         
         bubbleBackgroundView.translatesAutoresizingMaskIntoConstraints = false
@@ -103,7 +103,7 @@ extension ChatMessageCell{
         bubbleBackgroundView.addSubview(overlayButton)
     }
     
-    private func updateConstraintsForContent() {
+    public func updateConstraintsForContent() {
         
         if messageLabel.isHidden {
             messageLabel.topAnchor.constraint(equalTo: messageImageView.bottomAnchor, constant: 0).isActive = false
@@ -118,7 +118,7 @@ extension ChatMessageCell{
         }
     }
     
-    private func setupConstraints() {
+    public func setupConstraints() {
         leadingConstraint = bubbleBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 32)
         trailingConstraint = bubbleBackgroundView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -32)
         minWidthConstraint = bubbleBackgroundView.widthAnchor.constraint(greaterThanOrEqualToConstant: Constants.minBubbleWidth)
@@ -210,19 +210,19 @@ extension ChatMessageCell{
         
     }
     
-    private func configureTextMessage(_ text: String) {
+    public func configureTextMessage(_ text: String) {
         messageLabel.text = text
         messageLabel.isHidden = false
         messageImageView.isHidden = true
     }
     
-    private func configureAudioMessage(_ text: String) {
+    public func configureAudioMessage(_ text: String) {
         messageLabel.text = "Audio: \(text)"
         messageLabel.isHidden = false
         messageImageView.isHidden = true
     }
     
-    private func configureVideoMessage(_ text: String) {
+    public func configureVideoMessage(_ text: String) {
         messageLabel.isHidden = true
         messageImageView.isHidden = false
         if text.modifiedString.mediaURL != nil {
@@ -232,7 +232,7 @@ extension ChatMessageCell{
         }
     }
     
-    private func configureImageMessage(_ text: String,mediaUrl:String) {
+    public func configureImageMessage(_ text: String,mediaUrl:String) {
         
         messageLabel.text = text
         messageLabel.isHidden = false

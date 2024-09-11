@@ -9,7 +9,7 @@ import UIKit
 import Foundation
 import AVFoundation
 
-class ChatButton : UIButton{
+public class ChatButton : UIButton{
     open var image: UIImage? {
         didSet {
             setImage(image, for: .normal)
@@ -31,13 +31,13 @@ enum InputViewMode{
 }
 
 
-class ChatInputView: UIView {
+public class ChatInputView: UIView {
     
     // Toggle state
     public var isAttachVisible = false
     
-    private var buttonEmoji: ChatButton!
-    private var buttonCamera: ChatButton!
+    public var buttonEmoji: ChatButton!
+    public var buttonCamera: ChatButton!
     public var buttonMore: ChatButton!
     public var buttonSend: ChatButton!
     public var buttonAudio: ChatButton!
@@ -122,7 +122,7 @@ class ChatInputView: UIView {
         setupLongPressGesture()
     }
     // MARK: - Setup UI
-    private func setupUI() {
+    public func setupUI() {
         // Initialize and configure the buttons
         buttonEmoji = createChatButton(image: /DefaultImage.emoji, action: #selector(emojiTapped(_:)))
         buttonCamera = createChatButton(image: /DefaultImage.camera, action: #selector(cameraTapped(_:)))
@@ -132,7 +132,7 @@ class ChatInputView: UIView {
     }
     
     // Helper method to create buttons
-    private func createChatButton(image: UIImage, action: Selector?) -> ChatButton {
+    public func createChatButton(image: UIImage, action: Selector?) -> ChatButton {
         let button = ChatButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(image, for: .normal)
@@ -142,7 +142,7 @@ class ChatInputView: UIView {
         return button
     }
     // MARK: - Setup Methods
-    private func setupView() {
+    public func setupView() {
         addSubview(loadView)
         loadView.addSubview(viewEntry)
         loadView.addSubview(viewSend)
@@ -158,7 +158,7 @@ class ChatInputView: UIView {
         addSubview(viewAudio)
     }
     
-    private func setupConstraints() {
+    public func setupConstraints() {
         // Constraints for loadView
         NSLayoutConstraint.activate([
             loadView.topAnchor.constraint(equalTo: topAnchor),
@@ -239,7 +239,7 @@ class ChatInputView: UIView {
         
     }
     
-    private func setupLongPressGesture() {
+    public func setupLongPressGesture() {
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         buttonAudio.addGestureRecognizer(longPressGesture)
     }
@@ -294,7 +294,7 @@ extension ChatInputView : UITextFieldDelegate{
         textfieldMessage.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.endEditing(true)
         return false
     }
@@ -304,7 +304,7 @@ extension ChatInputView : UITextFieldDelegate{
         setupMode()
     }
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
+    public func textFieldDidBeginEditing(_ textField: UITextField) {
         
     }
 }

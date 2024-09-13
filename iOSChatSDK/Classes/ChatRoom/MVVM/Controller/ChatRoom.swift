@@ -15,15 +15,15 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
     public var topView: ChatTopBarView!
     public var viewSend: BottomView!
 
-    var viewModel: ChatRoomViewModel?
-    var selectedMessage: Messages?
-    var isScrolling             = false
-    var isReply                 = false
-    var imageFetched: UIImage?  = nil
-    var videoFetched: URL?
+    public var viewModel: ChatRoomViewModel?
+    public var selectedMessage: Messages?
+    public var isScrolling             = false
+    public var isReply                 = false
+    public var imageFetched: UIImage?  = nil
+    public var videoFetched: URL?
 
     // Reference to bottom view height constraint
-    private var viewSendHeightConstraint: NSLayoutConstraint!
+    public var viewSendHeightConstraint: NSLayoutConstraint!
 
     // MARK: - VIEW CYCLE
     open override func viewDidLoad() {
@@ -46,7 +46,7 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
     }
 
     // MARK: - Setup UI
-    private func setupUIVC() {
+    public func setupUIVC() {
         // Initialize and configure topView
         topView = ChatTopBarView()
         topView.translatesAutoresizingMaskIntoConstraints = false
@@ -82,7 +82,7 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
         setupConstraints()
     }
 
-    private func setupConstraints() {
+    public func setupConstraints() {
         // Constraints for viewOtherUser (CustomTopView)
         NSLayoutConstraint.activate([
             topView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),

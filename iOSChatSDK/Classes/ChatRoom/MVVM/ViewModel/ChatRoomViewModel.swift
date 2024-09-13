@@ -14,25 +14,30 @@ import Foundation
 open class ChatRoomViewModel : NSObject{
     
     //MARK: - PROPERTIES
-    var connection : Connection?
-    var messages: [Messages] = []
+    public var connection : Connection?
+    public var accessToken : String?
+    public var messages: [Messages] = []
     
     public var service : ChatService?
-    let apiClient = ChatViewModel()
+    public let apiClient = ChatViewModel()
     
-    var onUpdate: (() -> Void)?
+    public var onUpdate: (() -> Void)?
     
-    required public init(connection: Connection?) {
+    required public init(connection: Connection?, accessToken: String?, curreuntUser: String?) {
         super.init()
         self.service = ChatService()
         self.connection = connection
+        self.accessToken = accessToken
+        
+        UserDefaultsHelper.setCurrentUser("@\(/curreuntUser)=circle:chat.sqrcle.co")
+
         createRoomCall()
     }
 
     //MARK: - FUNCTIONS
     func createRoomCall(){
         
-        apiClient.createRoom(accessToken: /UserDefaultsHelper.getAccessToken(),
+        apiClient.createRoom(accessToken: /accessToken,
                              invitees: [/connection?.chatUserId],
                              defaultChat: true) { (success, result) in
             if success{
@@ -48,11 +53,10 @@ open class ChatRoomViewModel : NSObject{
     
     
     func getMessages() {
-        let access_Token = UserDefaultsHelper.getAccessToken()
 
-        guard let room_id = UserDefaultsHelper.getRoomId() else { return }
+//        guard let room_id = UserDefaultsHelper.getRoomId() else { return }
         service = ChatService(configuration: .default)
-        service?.getMessages(roomId: room_id, accessToken : /access_Token , completion: { (result, headers) in
+        service?.getMessages(roomId: /connection?.roomID, accessToken : /accessToken , completion: { (result, headers) in
             switch result {
             case .success(let value):
                 if let messages = value?.chunk {
@@ -95,7 +99,7 @@ open class ChatRoomViewModel : NSObject{
     func redactMessage(eventID: String, completion: @escaping (Result<String?, Error>) -> Void) {
         
         let request = MessageRedactRequest(
-            accessToken: /UserDefaultsHelper.getAccessToken(),
+            accessToken: /accessToken,
             roomID: /UserDefaultsHelper.getRoomId(),
             eventID: /eventID,
             body: "spam"
@@ -150,8 +154,8 @@ open class ChatRoomViewModel : NSObject{
     }
     
     func sendReply(body : String , eventID : String, completion: @escaping (Result<SendMediaResponse, Error>) -> Void) {
-        let replyRequests = SendMediaRequest(accessToken: /UserDefaultsHelper.getAccessToken(),
-                                             roomID: /UserDefaultsHelper.getRoomId(),
+        let replyRequests = SendMediaRequest(accessToken: /accessToken,
+                                             roomID: /connection?.roomID,
                                              body: body,
                                              msgType: /MessageType.text,
                                              eventID: eventID)

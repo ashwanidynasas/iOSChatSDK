@@ -9,25 +9,25 @@ import Foundation
 
 
 
-struct ChatMessageResponse: Codable {
+public struct ChatMessageResponse: Codable {
     let success: Bool
     let message: String
     let redirectUrl: String
     let details: ChatMessageDetails
 }
 
-struct ChatMessageDetails: Codable {
+public struct ChatMessageDetails: Codable {
     let response: String
     let chat_event_id: String
 }
 
-struct MessageResponse: Codable {
+public struct MessageResponse: Codable {
     let chunk: [Messages]?
     let start: String?
     let end: String?
 }
 
-struct Messages: Codable {
+public struct Messages: Codable {
     let type: String?
     let roomId: String?
     let sender: String?
@@ -91,7 +91,7 @@ struct Messages: Codable {
     }
 }
 
-struct MessageContent: Codable {
+public struct MessageContent: Codable {
     let msgtype: String?
     let body: String?
     let url: String?
@@ -117,7 +117,7 @@ struct MessageContent: Codable {
     
 }
 
-struct RelatesTo: Codable {
+public struct RelatesTo: Codable {
     let inReplyTo: InReplyTo?
 
     enum CodingKeys: String, CodingKey {
@@ -125,7 +125,7 @@ struct RelatesTo: Codable {
     }
 }
 
-struct InReplyTo: Codable {
+public struct InReplyTo: Codable {
     let eventId: String
     let sender: String
     let content: ReplyContent?
@@ -134,7 +134,7 @@ struct InReplyTo: Codable {
         case eventId = "event_id", sender, content
     }
 }
-struct ReplyContent: Codable {
+public struct ReplyContent: Codable {
     let msgtype: String?
     let body: String?
     let url: String?
@@ -147,14 +147,14 @@ struct ReplyContent: Codable {
     }
 }
 
-struct Info: Codable {
+public struct Info: Codable {
     let mimetype: String?
 }
-struct Unsigned: Codable {
+public struct Unsigned: Codable {
     let age: Int?
 }
 
-struct SendMediaResponse: Codable {
+public struct SendMediaResponse: Codable {
     let success: Bool
     let message: String
     let redirectUrl: String

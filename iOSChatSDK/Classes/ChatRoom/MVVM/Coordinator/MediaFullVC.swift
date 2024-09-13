@@ -20,7 +20,7 @@ class MediaFullVC: UIViewController {
     @IBOutlet weak var videoPlayerBackView: UIView!
     
     //MARK: - VIEWMODEL
-    public var viewModel = ChatRoomViewModel(connection: nil)
+    private var viewModel = ChatRoomViewModel(connection: nil, accessToken: "", curreuntUser: "")
     
     //MARK: - PROPERTIES
     var imageFetched: UIImage?
@@ -72,7 +72,7 @@ class MediaFullVC: UIViewController {
         ])
     }
     
-    public func redactMessage() {
+    private func redactMessage() {
         
         viewModel.redactMessage(eventID: /selectedMessage?.eventId) { result in
             switch result {
@@ -152,7 +152,7 @@ extension MediaFullVC : DelegateMore{
 
 
 //MARK: - VIDEO PLAYER VIEW
-open class CustomVideoPlayerContainerView: UIView {
+class CustomVideoPlayerContainerView: UIView {
     var playerViewController: AVPlayerViewController?
     
     override init(frame: CGRect) {
@@ -160,12 +160,12 @@ open class CustomVideoPlayerContainerView: UIView {
         setupPlayerViewController()
     }
     
-    required public init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupPlayerViewController()
     }
     
-    public func setupPlayerViewController() {
+    private func setupPlayerViewController() {
         playerViewController = AVPlayerViewController()
         guard let playerVC = playerViewController else {
             print("Error: PlayerViewController could not be initialized")

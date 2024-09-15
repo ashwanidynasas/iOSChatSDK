@@ -54,7 +54,7 @@ public struct Connection: Codable {
         self.coiHashAddr = (try? container.decode(String.self, forKey: .coiHashAddr)) ?? ""
         self.chatUserId = (try? container.decode(String.self, forKey: .chatUserId)) ?? ""
         self.imageInfo = (try? container.decode(ImageInfo.self, forKey: .imageInfo)) ?? ImageInfo(url: "")
-        self.userInfo = (try? container.decode(UserInfo.self, forKey: .userInfo)) ?? UserInfo()
+        self.userInfo = (try? container.decode(UserInfo.self, forKey: .userInfo)) ?? UserInfo(name: "")
         self.defaultParam = (try? container.decode(DefaultParam.self, forKey: .defaultParam)) ?? DefaultParam(color: "")
     }
     

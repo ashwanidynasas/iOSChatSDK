@@ -78,7 +78,7 @@ open class ChatTopBarView: UIView {
         // Initialize titleLabel
         titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.textAlignment = .center
+        titleLabel.textAlignment = .left
         titleLabel.textColor = .white
         titleLabel.font = UIFont.systemFont(ofSize: 16)
         loadView.addSubview(titleLabel)
@@ -162,4 +162,21 @@ open class ChatTopBarView: UIView {
             searchButton.setImage(newValue, for: .normal)
         }
     }
+    
+    func configure(with connection: Connection?) {
+        titleLabel.text = connection?.userInfo.name
+        guard let imageUrlString = connection?.imageInfo.url,
+              let url = URL(string: imageUrlString) else {
+            imageView.image = UIImage(systemName: "person.circle.fill")
+            return
+        }
+        imageView.sd_setImage(
+            with: url,
+            placeholderImage: UIImage(systemName: "person.circle.fill"),
+            options: [.transformAnimatedImage, .continueInBackground],
+            progress: nil,
+            completed: nil
+        )
+    }
+
 }

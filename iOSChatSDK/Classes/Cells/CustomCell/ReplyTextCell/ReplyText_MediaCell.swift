@@ -95,7 +95,7 @@ open class ReplyText_MediaCell: UITableViewCell {
 
     public func setupConstraints() {
         leadingConstraint = bubbleBackgroundView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: ChatConstants.Bubble.leadAnchor)
-        trailingConstraint = bubbleBackgroundView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -ChatConstants.Bubble.trailAnchor)
+        trailingConstraint = bubbleBackgroundView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: ChatConstants.Bubble.trailAnchor)
         minWidthConstraint = bubbleBackgroundView.widthAnchor.constraint(greaterThanOrEqualToConstant: ChatConstants.ReplyBubble.minBubbleWidth)
         maxWidthConstraint = bubbleBackgroundView.widthAnchor.constraint(lessThanOrEqualToConstant: UIScreen.main.bounds.width * ChatConstants.ReplyBubble.maxBubbleWidthRatio)
 

@@ -51,6 +51,7 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
         topView = ChatTopBarView()
         topView.translatesAutoresizingMaskIntoConstraints = false
         topView.searchButton.isHidden = true
+        topView.configure(with: viewModel?.connection)
         topView.delegate = self
         self.view.addSubview(topView)
 

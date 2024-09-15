@@ -83,7 +83,11 @@ public struct ImageInfo: Codable {
 }
 
 public struct UserInfo: Codable {
-    public init() {}
+    public var name:String
+    
+    public init(name:String) {
+        self.name = name
+    }
 }
 
 public struct DefaultParam: Codable {
@@ -106,7 +110,7 @@ public struct ConnectionManager {
                                  roomID: String) -> Connection {
         let defaultParam = DefaultParam(color: defaultParam)
         let imageInfo = ImageInfo(url: imageInfo)
-        let userInfo = UserInfo()
+        let userInfo = UserInfo(name: userInfo)
         
         let connection = Connection(roomID: roomID, circleHashAddr: circleHashAddr,
                                     coiHashAddr: coiHashAddr,

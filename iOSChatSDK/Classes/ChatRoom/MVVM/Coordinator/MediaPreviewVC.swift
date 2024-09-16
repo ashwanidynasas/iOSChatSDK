@@ -140,7 +140,7 @@ class MediaPreviewVC: UIViewController {
     }
 
     private func redactMessage() {
-        viewModel.redactMessage(eventID: /selectedMessage?.eventId) { result in
+        viewModel?.redactMessage(eventID: /selectedMessage?.eventId) { result in
             switch result {
             case .success(_):
                 DispatchQueue.main.async {

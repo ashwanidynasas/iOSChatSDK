@@ -148,6 +148,7 @@ extension ChatRoomVC{
             mediaPreviewVC.videoFetched = videoFetched
             mediaPreviewVC.imageFetched = imageFetched
             mediaPreviewVC.selectedMessage = message
+            mediaPreviewVC.viewModel = viewModel
             mediaPreviewVC.delegate = self
             self.navigationController?.pushViewController(mediaPreviewVC, animated: true)
         }

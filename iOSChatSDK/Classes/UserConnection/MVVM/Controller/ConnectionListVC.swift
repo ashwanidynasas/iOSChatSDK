@@ -84,9 +84,9 @@ extension ConnectionListVC: UITableViewDelegate,UITableViewDataSource {
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
 //        guard let vc = UIStoryboard(name: "MainChat", bundle: Bundle(for: ConnectionListVC.self)).instantiateViewController(withIdentifier: "ChatRoomVC") as? ChatRoomVC else { return }
-        let ChatRoom = ChatRoomVC()
-        ChatRoom.viewModel = ChatRoomViewModel(connection: viewModel?.connections[indexPath.row], accessToken: "", curreuntUser: "")
-        self.navigationController?.pushViewController(ChatRoom, animated: true)
+//        let ChatRoom = ChatRoomVC()
+//        ChatRoom.viewModel = ChatRoomViewModel(connection: viewModel?.connections[indexPath.row], accessToken: "", curreuntUser: "")
+//        self.navigationController?.pushViewController(ChatRoom, animated: true)
     }
     
 }

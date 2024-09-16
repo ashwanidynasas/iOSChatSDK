@@ -22,7 +22,8 @@ class MediaPreviewVC: UIViewController {
     private var videoPlayerContainerView: CustomVideoPlayerContainerView!
 
     //MARK: - VIEWMODEL
-    private var viewModel = ChatRoomViewModel(connection: nil, accessToken: "", curreuntUser: "")
+//    private var viewModel = ChatRoomViewModel(connection: nil, accessToken: "", curreuntUser: "")
+    public var viewModel: ChatRoomViewModel?
 
     //MARK: - PROPERTIES
     var imageFetched: UIImage?

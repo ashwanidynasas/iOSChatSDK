@@ -101,11 +101,11 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
         ])
 
         // Constraints for viewSend (BottomView)
-        viewSendHeightConstraint = viewSend.heightAnchor.constraint(equalToConstant: 65)
+        viewSendHeightConstraint = viewSend.heightAnchor.constraint(equalToConstant: inputHeight)
         NSLayoutConstraint.activate([
             viewSend.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             viewSend.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            viewSend.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            viewSend.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             viewSendHeightConstraint
         ])
     }

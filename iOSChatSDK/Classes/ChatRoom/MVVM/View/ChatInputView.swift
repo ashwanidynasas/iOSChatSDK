@@ -18,10 +18,10 @@ public class ChatButton : UIButton{
 }
 
 struct DefaultImage{
-    static let emoji   = UIImage(systemName: "face.smiling")
-    static let camera  = UIImage(systemName: "camera.fill")
-    static let more    = UIImage(systemName: "plus")
-    static let send    = UIImage(systemName: "play.fill")
+    static let emoji   =  UIImage(named: ChatConstants.Image.emoji, in: Bundle(for: ChatButton.self), compatibleWith: nil)//UIImage(systemName: "face.smiling")
+    static let camera  = UIImage(named: ChatConstants.Image.moreCamera, in: Bundle(for: ChatButton.self), compatibleWith: nil)//UIImage(systemName: "camera.fill")
+    static let more    = UIImage(named: ChatConstants.Image.plusIcon, in: Bundle(for: ChatButton.self), compatibleWith: nil)//UIImage(systemName: "plus")
+    static let send    = UIImage(named: ChatConstants.Image.sendIcon, in: Bundle(for: ChatButton.self), compatibleWith: nil)//UIImage(systemName: "play.fill")
     static let audio   = UIImage(systemName: "mic.fill")
 }
 
@@ -136,6 +136,7 @@ public class ChatInputView: UIView {
         let button = ChatButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(image, for: .normal)
+        button.tintColor  = Colors.Circles.violet
         if let action = action {
             button.addTarget(self, action: action, for: .touchUpInside)
         }
@@ -171,14 +172,14 @@ public class ChatInputView: UIView {
             viewEntry.leadingAnchor.constraint(equalTo: loadView.leadingAnchor),
             viewEntry.centerYAnchor.constraint(equalTo: loadView.centerYAnchor),
             viewEntry.trailingAnchor.constraint(equalTo : viewSend.leadingAnchor, constant: -8),
-            viewEntry.heightAnchor.constraint(equalTo : loadView.heightAnchor)
+            viewEntry.heightAnchor.constraint(equalToConstant: 38)
         ])
         
         NSLayoutConstraint.activate([
             viewSend.trailingAnchor.constraint(equalTo: loadView.trailingAnchor),
             viewSend.centerYAnchor.constraint(equalTo: loadView.centerYAnchor),
             viewSend.widthAnchor.constraint(equalToConstant: 40),
-            viewSend.heightAnchor.constraint(equalTo : loadView.heightAnchor)
+            viewSend.heightAnchor.constraint(equalToConstant: 38)
         ])
         
         // Constraints for buttonEmoji

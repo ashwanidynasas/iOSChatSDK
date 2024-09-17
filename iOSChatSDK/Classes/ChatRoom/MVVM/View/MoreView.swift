@@ -45,6 +45,7 @@ public class MoreView: UIView {
         customTabBar = CustomTabBar(items: type.items)
         if let customTabBar = customTabBar {
             customTabBar.translatesAutoresizingMaskIntoConstraints = false
+            
             self.addSubview(customTabBar)
             customTabBar.didSelectTab = { item in
                 self.delegate?.selectedOption(item)

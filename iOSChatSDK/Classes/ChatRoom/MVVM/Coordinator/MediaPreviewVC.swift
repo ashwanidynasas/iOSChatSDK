@@ -23,6 +23,7 @@ class MediaPreviewVC: UIViewController {
 
     //MARK: - VIEWMODEL
 //    private var viewModel = ChatRoomViewModel(connection: nil, accessToken: "", curreuntUser: "")
+
     public var viewModel: ChatRoomViewModel?
 
     //MARK: - PROPERTIES

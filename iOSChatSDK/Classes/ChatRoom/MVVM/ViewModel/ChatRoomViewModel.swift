@@ -31,7 +31,7 @@ open class ChatRoomViewModel : NSObject{
         
         UserDefaultsHelper.setCurrentUser("@\(/curreuntUser)=circle:chat.sqrcle.co")
 
-        createRoomCall()
+//        createRoomCall()
     }
 
     //MARK: - FUNCTIONS

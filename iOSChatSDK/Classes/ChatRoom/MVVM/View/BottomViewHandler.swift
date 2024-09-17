@@ -5,6 +5,10 @@
 //  Created by Ashwani on 29/07/24.
 //
 
+let replyHeight:CGFloat = 72
+let inputHeight:CGFloat = 72
+let moreHeight:CGFloat = 102
+
 import Foundation
 import UIKit
 
@@ -37,9 +41,9 @@ open class BottomView: UIView {
     }()
     
     // Constraints
-    public var redViewTopConstraint: NSLayoutConstraint!
-    public var greenViewTopConstraint: NSLayoutConstraint!
-    public var blueViewTopConstraint: NSLayoutConstraint!
+    public var replyViewTopConstraint: NSLayoutConstraint!
+    public var inputViewTopConstraint: NSLayoutConstraint!
+    public var moreViewTopConstraint: NSLayoutConstraint!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -58,31 +62,31 @@ open class BottomView: UIView {
         addSubview(viewMore)
         
         // Constraints for redView
-        redViewTopConstraint = viewReply.topAnchor.constraint(equalTo: topAnchor)
+        replyViewTopConstraint = viewReply.topAnchor.constraint(equalTo: topAnchor)
         NSLayoutConstraint.activate([
-            redViewTopConstraint,
+            replyViewTopConstraint,
             viewReply.leadingAnchor.constraint(equalTo: leadingAnchor),
             viewReply.trailingAnchor.constraint(equalTo: trailingAnchor),
-            viewReply.heightAnchor.constraint(equalToConstant: 50)
+            viewReply.heightAnchor.constraint(equalToConstant: replyHeight)
         ])
         
         // Constraints for greenView
-        greenViewTopConstraint = viewInput.topAnchor.constraint(equalTo: viewReply.bottomAnchor)
+        inputViewTopConstraint = viewInput.topAnchor.constraint(equalTo: viewReply.bottomAnchor)
         NSLayoutConstraint.activate([
-            greenViewTopConstraint,
+            inputViewTopConstraint,
             viewInput.leadingAnchor.constraint(equalTo: leadingAnchor),
             viewInput.trailingAnchor.constraint(equalTo: trailingAnchor),
-            viewInput.heightAnchor.constraint(equalToConstant: 40),
-            viewInput.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor)
+            viewInput.heightAnchor.constraint(equalToConstant: inputHeight),
+//            viewInput.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor)
         ])
         
         // Constraints for blueView
-        blueViewTopConstraint = viewMore.topAnchor.constraint(equalTo: viewInput.bottomAnchor)
+        moreViewTopConstraint = viewMore.topAnchor.constraint(equalTo: viewInput.bottomAnchor)
         NSLayoutConstraint.activate([
-            blueViewTopConstraint,
+            moreViewTopConstraint,
             viewMore.leadingAnchor.constraint(equalTo: leadingAnchor),
             viewMore.trailingAnchor.constraint(equalTo: trailingAnchor),
-            viewMore.heightAnchor.constraint(equalToConstant: 50),
+            viewMore.heightAnchor.constraint(equalToConstant: moreHeight),
             viewMore.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor)
         ])
         
@@ -100,21 +104,21 @@ open class BottomView: UIView {
     }
     
     public func updateConstraintsForVisibility() {
-        greenViewTopConstraint.isActive = false
+        inputViewTopConstraint.isActive = false
         if viewReply.isHidden {
-            greenViewTopConstraint = viewInput.topAnchor.constraint(equalTo: topAnchor)
+            inputViewTopConstraint = viewInput.topAnchor.constraint(equalTo: topAnchor)
         } else {
-            greenViewTopConstraint = viewInput.topAnchor.constraint(equalTo: viewReply.bottomAnchor)
+            inputViewTopConstraint = viewInput.topAnchor.constraint(equalTo: viewReply.bottomAnchor)
         }
-        greenViewTopConstraint.isActive = true
+        inputViewTopConstraint.isActive = true
         
-        blueViewTopConstraint.isActive = false
+        moreViewTopConstraint.isActive = false
         if viewInput.isHidden {
-            blueViewTopConstraint = viewMore.topAnchor.constraint(equalTo: viewReply.isHidden ? topAnchor : viewReply.bottomAnchor)
+            moreViewTopConstraint = viewMore.topAnchor.constraint(equalTo: viewReply.isHidden ? topAnchor : viewReply.bottomAnchor)
         } else {
-            blueViewTopConstraint = viewMore.topAnchor.constraint(equalTo: viewInput.bottomAnchor)
+            moreViewTopConstraint = viewMore.topAnchor.constraint(equalTo: viewInput.bottomAnchor)
         }
-        blueViewTopConstraint.isActive = true
+        moreViewTopConstraint.isActive = true
         
         layoutIfNeeded()
         if (viewInput.isHidden == true) && (viewReply.isHidden == true)&&(viewMore.isHidden == true) {

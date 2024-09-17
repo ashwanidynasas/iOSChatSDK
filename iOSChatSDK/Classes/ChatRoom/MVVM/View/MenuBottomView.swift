@@ -47,11 +47,14 @@ open class CustomTabBarButton: UIButton {
     init(image: UIImage?) {
         super.init(frame: .zero)
         
-        overlapButton.setImage(image, for: .normal)
+//        overlapButton.setImage(image, for: .normal)
+        buttonImageView.image = image
+
         addSubview(imageBackView)
         
         NSLayoutConstraint.activate([
-            imageBackView.topAnchor.constraint(equalTo: self.topAnchor),
+//            imageBackView.topAnchor.constraint(equalTo: self.topAnchor),
+            imageBackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             imageBackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             imageBackView.widthAnchor.constraint(equalToConstant: 40),
             imageBackView.heightAnchor.constraint(equalToConstant: 40)
@@ -60,10 +63,10 @@ open class CustomTabBarButton: UIButton {
         imageBackView.addSubview(buttonImageView)
         
         NSLayoutConstraint.activate([
-            buttonImageView.centerXAnchor.constraint(equalTo: imageBackView.centerXAnchor),
-            buttonImageView.centerYAnchor.constraint(equalTo: imageBackView.centerYAnchor),
-            buttonImageView.widthAnchor.constraint(equalToConstant: 20),
-            buttonImageView.heightAnchor.constraint(equalToConstant: 20)
+            buttonImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            buttonImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+//            buttonImageView.widthAnchor.constraint(equalToConstant: 40),
+//            buttonImageView.heightAnchor.constraint(equalToConstant: 40)
         ])
         
         addSubview(buttonTitleLabel)
@@ -79,8 +82,8 @@ open class CustomTabBarButton: UIButton {
         NSLayoutConstraint.activate([
             overlapButton.topAnchor.constraint(equalTo: self.topAnchor),
             overlapButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            overlapButton.widthAnchor.constraint(equalToConstant: 40),
-            overlapButton.heightAnchor.constraint(equalToConstant: 40)
+            overlapButton.widthAnchor.constraint(equalTo: self.widthAnchor),
+            overlapButton.heightAnchor.constraint(equalToConstant: moreHeight)
         ])
         overlapButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         

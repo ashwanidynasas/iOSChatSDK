@@ -201,7 +201,7 @@ open class ReplyMediaText_MediaCell: UITableViewCell {
         readIndicatorImageView.image = UIImage(named: ChatConstants.Image.readIndicator, in: Bundle(for: ReplyMediaText_MediaCell.self), compatibleWith: nil)
         
         
-        configureTextMessage(message.content?.body ?? "", replyText: message.content?.relatesTo?.inReplyTo?.sender ?? "", replyImage: message.content?.relatesTo?.inReplyTo?.content?.S3thumbnailUrl ?? "", replyDesc: message.content?.relatesTo?.inReplyTo?.content?.body ?? "")
+        configureTextMessage(message.content?.body ?? "", replyText: (/message.content?.relatesTo?.inReplyTo?.sender == /UserDefaultsHelper.getCurrentUser() ? "You" : /UserDefaultsHelper.getOtherUser()), replyImage: message.content?.relatesTo?.inReplyTo?.content?.S3thumbnailUrl ?? "", replyDesc: message.content?.relatesTo?.inReplyTo?.content?.body ?? "")
         
         // Handle different message types
         let msgType = /message.content?.relatesTo?.inReplyTo?.content?.msgtype

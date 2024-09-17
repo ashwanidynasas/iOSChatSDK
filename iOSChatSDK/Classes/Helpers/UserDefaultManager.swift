@@ -68,9 +68,18 @@ extension UserDefaultsHelper{
     class func getCurrentUser() -> String? {
         return UserDefaultsHelper.get(.currentUser) as? String
     }
+    
+    class func setOtherUser(_ value: String) {
+        self.set(value, forkey: .otherUser)
+    }
+    
+    class func getOtherUser() -> String? {
+        return UserDefaultsHelper.get(.otherUser) as? String
+    }
 }
 enum UserDefaultsKeys: String {
     case accessToken = "access_token"
     case roomId      = "room_id"
     case currentUser = "currentUser"
+    case otherUser = "otherUser"
 }

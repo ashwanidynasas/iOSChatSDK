@@ -28,7 +28,7 @@ open class ChatRoomViewModel : NSObject{
         self.service = ChatService()
         self.connection = connection
         self.accessToken = accessToken
-        
+        UserDefaultsHelper.setOtherUser(/connection?.userInfo.name)
         UserDefaultsHelper.setCurrentUser("@\(/curreuntUser)=circle:chat.sqrcle.co")
 
 //        createRoomCall()

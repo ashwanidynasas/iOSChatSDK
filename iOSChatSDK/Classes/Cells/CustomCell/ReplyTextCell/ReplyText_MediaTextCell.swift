@@ -209,7 +209,7 @@ open class ReplyText_MediaTextCell: UITableViewCell {
         
         messageMediaImage.image = UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ReplyText_MediaTextCell.self), compatibleWith: nil)
         
-        configureTextMessage(message.content?.body ?? "", replyText: message.content?.relatesTo?.inReplyTo?.sender ?? "", replyImage: message.content?.relatesTo?.inReplyTo?.content?.S3thumbnailUrl ?? "", replyDesc: message.content?.relatesTo?.inReplyTo?.content?.body ?? "")
+        configureTextMessage(message.content?.body ?? "", replyText: (/message.content?.relatesTo?.inReplyTo?.sender == /UserDefaultsHelper.getCurrentUser() ? "You" : /UserDefaultsHelper.getOtherUser()), replyImage: message.content?.relatesTo?.inReplyTo?.content?.S3thumbnailUrl ?? "", replyDesc: message.content?.relatesTo?.inReplyTo?.content?.body ?? "")
         
 
     }

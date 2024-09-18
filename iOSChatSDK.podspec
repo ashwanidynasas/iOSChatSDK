@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'iOSChatSDK'
   s.version          = '0.0.21'
-  s.summary          = 'iOSChatSDK >> Custom Chat Integration with Sqrcle with multiple features. Bug Fixed.'
+  s.summary          = 'iOSChatSDK >> Custom Chat Integration with Sqrcle with multiple features.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?

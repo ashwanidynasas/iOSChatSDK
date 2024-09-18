@@ -80,6 +80,8 @@ struct ChatConstants {
         static let emoji:String            = "emoji"
         static let moreCamera:String       = "MoreCamera"
         static let plusIcon:String         = "plusIcon"
+        static let backButton:String       = "BackButton"
+        static let searchImg:String           = "Search"
     }
     
     struct Bubble {

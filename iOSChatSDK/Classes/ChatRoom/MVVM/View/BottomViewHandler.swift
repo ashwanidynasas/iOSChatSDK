@@ -19,7 +19,17 @@ protocol BottomViewDelegate: AnyObject {
 open class BottomView: UIView {
     
     weak var delegate: BottomViewDelegate?
-    
+    // Shadow view
+    public lazy var shadowView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = Colors.Circles.violet
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOffset = CGSize(width: 0, height: -2)
+        view.layer.shadowRadius = 4
+        view.layer.shadowOpacity = 1.0
+        return view
+    }()
     public lazy var viewReply: ChatReplyView = {
         let view = ChatReplyView()
         view.isHidden = true
@@ -57,12 +67,20 @@ open class BottomView: UIView {
     }
     
     public func setupView() {
+        addSubview(shadowView)
         addSubview(viewReply)
         addSubview(viewInput)
         addSubview(viewMore)
         
+        // Constraints for shadow view
+        NSLayoutConstraint.activate([
+            shadowView.topAnchor.constraint(equalTo: topAnchor),
+            shadowView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            shadowView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            shadowView.heightAnchor.constraint(equalToConstant: 2)
+        ])
         // Constraints for redView
-        replyViewTopConstraint = viewReply.topAnchor.constraint(equalTo: topAnchor)
+        replyViewTopConstraint = viewReply.topAnchor.constraint(equalTo: shadowView.bottomAnchor)
         NSLayoutConstraint.activate([
             replyViewTopConstraint,
             viewReply.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -77,7 +95,7 @@ open class BottomView: UIView {
             viewInput.leadingAnchor.constraint(equalTo: leadingAnchor),
             viewInput.trailingAnchor.constraint(equalTo: trailingAnchor),
             viewInput.heightAnchor.constraint(equalToConstant: inputHeight),
-//            viewInput.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor)
+            //            viewInput.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor)
         ])
         
         // Constraints for blueView
@@ -148,5 +166,4 @@ open class BottomView: UIView {
             self.updateHeight()
         }
     }
-    
 }

@@ -24,8 +24,8 @@ open class ChatTopBarView: UIView {
     public var searchButton: UIButton!
 
     struct DefaultImage{
-        static let back   = UIImage(systemName: "arrow.left")
-        static let search = UIImage(systemName: "magnifyingglass")
+        static let back   = UIImage(named: ChatConstants.Image.backButton, in: Bundle(for: ChatTopBarView.self), compatibleWith: nil)//UIImage(systemName: "arrow.left")
+        static let search = UIImage(named: ChatConstants.Image.searchImg, in: Bundle(for: ChatTopBarView.self), compatibleWith: nil)//UIImage(systemName: "magnifyingglass")
     }
 
     weak var delegate: DelegateTopView?
@@ -78,9 +78,9 @@ open class ChatTopBarView: UIView {
         // Initialize titleLabel
         titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.textAlignment = .left
+        titleLabel.textAlignment = .center
         titleLabel.textColor = .white
-        titleLabel.font = UIFont.systemFont(ofSize: 16)
+        titleLabel.font = UIFont(name: "Roboto-Bold", size: 20)//UIFont.boldSystemFont(ofSize: 20)
         loadView.addSubview(titleLabel)
         
         // Initialize searchButton
@@ -102,14 +102,14 @@ open class ChatTopBarView: UIView {
         // Constraints for backButton
         NSLayoutConstraint.activate([
             backButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            backButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            backButton.centerYAnchor.constraint(equalTo: self.centerYAnchor,constant: 5),
             backButton.widthAnchor.constraint(equalToConstant: 40),
             backButton.heightAnchor.constraint(equalToConstant: 40)
         ])
         
         // Constraints for imageView
         NSLayoutConstraint.activate([
-            imageView.leadingAnchor.constraint(equalTo: backButton.trailingAnchor, constant: 16),
+            imageView.leadingAnchor.constraint(equalTo: backButton.trailingAnchor, constant: 8),
             imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             imageView.widthAnchor.constraint(equalToConstant: 40),
             imageView.heightAnchor.constraint(equalToConstant: 40)

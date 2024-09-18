@@ -14,7 +14,7 @@ open class MediaContentCell: UITableViewCell {
     public let timestampLabel = UILabel()
     public var messageImageView = UIImageView()
     public let readIndicatorImageView = UIImageView() // Added read indicator
-    let playButton = UIButton() // Added play button
+    let playButton = UIButton()
     weak var delegate: DelegatePlay?
 
     public var leadingConstraint: NSLayoutConstraint!
@@ -93,17 +93,7 @@ open class MediaContentCell: UITableViewCell {
             delegate?.didLongPressPlayButton(in: self)
         }
     }
-//    public struct Constants {
-//        static let bubbleDiameter: CGFloat = 170
-//        static let timestampFont: UIFont = .systemFont(ofSize: 8)
-//        static let timestampColor: UIColor = .lightGray
-//        static let readIndicatorSize: CGFloat = 7
-//        static let padding: CGFloat = 12
-//        static let timestampPadding: CGFloat = 4
-//        static let dateFormat: String = "hh:mm a"
-//        static let playButtonSize: CGFloat = 30
-//
-//    }
+
     public func setupConstraints() {
         
         leadingConstraint = bubbleBackgroundView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: ChatConstants.Bubble.leadAnchor)
@@ -127,8 +117,8 @@ open class MediaContentCell: UITableViewCell {
             
             playButton.centerXAnchor.constraint(equalTo: messageImageView.centerXAnchor),
             playButton.centerYAnchor.constraint(equalTo: messageImageView.centerYAnchor),
-            playButton.widthAnchor.constraint(equalToConstant: ChatConstants.Bubble.playButtonSize),
-            playButton.heightAnchor.constraint(equalToConstant: ChatConstants.Bubble.playButtonSize),
+            playButton.widthAnchor.constraint(equalTo: messageImageView.widthAnchor),
+            playButton.heightAnchor.constraint(equalTo: messageImageView.heightAnchor),
 
             timestampLabel.topAnchor.constraint(equalTo: messageImageView.bottomAnchor, constant: ChatConstants.Bubble.timeStampLblBAnchor),
             timestampLabel.centerXAnchor.constraint(equalTo: messageImageView.centerXAnchor),

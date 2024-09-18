@@ -19,29 +19,31 @@ open class ChatReplyView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        label.text = "label Name translatesAutoresizingMaskIntoConstraints translatesAutoresizingMaskIntoConstraints"
-        label.font = ChatConstants.Bubble.messageFont
+        label.font = UIFont(name: "Roboto-Bold", size: 12)
         label.textColor = .white
-
+        
         return label
     }()
     
     public let labelDesc: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "label desc translatesAutoresizingMaskIntoConstraints translatesAutoresizingMaskIntoConstraints translatesAutoresizingMaskIntoConstraints"
         label.font = ChatConstants.Bubble.messageFont
         label.textColor = .white
+        label.textAlignment = .left
         label.numberOfLines = 2
+        label.baselineAdjustment = .alignBaselines
+        label.lineBreakMode = .byWordWrapping
+        
         return label
     }()
     
     public let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.widthAnchor.constraint(equalToConstant: 25).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 25).isActive = true
-        imageView.layer.cornerRadius = 12.5
+        imageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        imageView.layer.cornerRadius = 20
         imageView.clipsToBounds = true
         imageView.image = UIImage(named: ChatConstants.Image.userPlaceholder)
         return imageView
@@ -50,12 +52,16 @@ open class ChatReplyView: UIView {
     public let crossButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.widthAnchor.constraint(equalToConstant: 25).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        button.widthAnchor.constraint(equalToConstant: 22).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 22).isActive = true
         button.setImage(UIImage(named: ChatConstants.Image.replyCancel, in: Bundle(for: ChatReplyView.self), compatibleWith: nil), for: .normal)
         button.tintColor = .white
         return button
     }()
+    
+    // Constraints
+    private var labelDescLeadingToImageViewConstraint: NSLayoutConstraint!
+    private var labelDescLeadingToSuperviewConstraint: NSLayoutConstraint!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -80,26 +86,26 @@ open class ChatReplyView: UIView {
     
     public func setupConstraints() {
         NSLayoutConstraint.activate([
-            labelName.topAnchor.constraint(equalTo: topAnchor, constant: 4),
-            labelName.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8)
+            labelName.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            labelName.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
         ])
-        
         NSLayoutConstraint.activate([
             imageView.leadingAnchor.constraint(equalTo: labelName.leadingAnchor),
-            imageView.topAnchor.constraint(equalTo: labelName.bottomAnchor, constant: 4),
-            imageView.widthAnchor.constraint(equalToConstant: 25),
-            imageView.heightAnchor.constraint(equalToConstant: 25)
+            imageView.topAnchor.constraint(equalTo: labelName.bottomAnchor, constant: 8),
+            imageView.widthAnchor.constraint(equalToConstant: 40),
+            imageView.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        
+        labelDescLeadingToImageViewConstraint = labelDesc.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 16)
+        labelDescLeadingToSuperviewConstraint = labelDesc.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)
+        
+        NSLayoutConstraint.activate([
+            labelDesc.topAnchor.constraint(equalTo: imageView.topAnchor),
+            labelDesc.trailingAnchor.constraint(lessThanOrEqualTo: crossButton.leadingAnchor, constant: -16)
         ])
         
         NSLayoutConstraint.activate([
-            labelDesc.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 8),
-            labelDesc.topAnchor.constraint(equalTo: imageView.topAnchor), // Align to top of imageView
-            labelDesc.heightAnchor.constraint(equalTo: imageView.heightAnchor), // Match height of imageView
-            labelDesc.trailingAnchor.constraint(lessThanOrEqualTo: crossButton.leadingAnchor, constant: -8)
-        ])
-        
-        NSLayoutConstraint.activate([
-            crossButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            crossButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             crossButton.topAnchor.constraint(equalTo: topAnchor, constant: 8)
         ])
     }
@@ -110,13 +116,21 @@ open class ChatReplyView: UIView {
     }
     
     func configure(with message: Messages?) {
-        labelName.text = /message?.sender
+        labelName.text = (/message?.sender == /UserDefaultsHelper.getCurrentUser() ? "You" : /UserDefaultsHelper.getOtherUser())//message?.sender
         labelDesc.text = /message?.content?.body
-        if let image = message?.content?.url {
+        if let image = message?.content?.url, !image.isEmpty {
+            imageView.isHidden = false
             if let url = image.modifiedString.mediaURL {
                 self.imageView.sd_setImage(with: url, placeholderImage: UIImage.init(systemName: "person.circle.fill"), options: .transformAnimatedImage, progress: nil, completed: nil)
             }
+            labelDescLeadingToSuperviewConstraint.isActive = false
+            labelDescLeadingToImageViewConstraint.isActive = true
+        } else {
+            imageView.isHidden = true
+            labelDescLeadingToImageViewConstraint.isActive = false
+            labelDescLeadingToSuperviewConstraint.isActive = true
         }
+        layoutIfNeeded()
     }
     
 }

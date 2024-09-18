@@ -16,7 +16,7 @@ enum MoreType{
     var items : [Item]{
         switch self{
         case .attach  : return [.media , .camera, .location , .document , .zc]
-        case .select  : return [.copy , .delete , .forward , .reply , .cancel]
+        case .select  : return [.copy , .deleteSelected , .forwardSelected , .reply , .cancel]
         case .preview : return [.save , .delete , .forward , .pin]
         }
     }

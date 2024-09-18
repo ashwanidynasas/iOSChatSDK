@@ -11,8 +11,43 @@ import AVKit
 import AVFoundation
 
 //MARK: - CLASS
-class PublishMediaVC: UIViewController {
+class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, DelegateInput {
+    func updateBottomViewHeight(to height: CGFloat) {
+        print("")
+    }
     
+    func hideAttach() {
+        print("")
+
+    }
+    
+    func sendTextMessage() {
+        print("")
+    }
+    
+    func sendAudio(audioFilename: URL) {
+        print("")
+
+    }
+    
+    func camera() {
+        print("")
+
+    }
+    
+    func attach() {
+        print("")
+
+    }
+    
+    func cancelReply() {
+        print("")
+
+    }
+    // Reference to bottom view height constraint
+    public var viewSendHeightConstraint: NSLayoutConstraint!
+    public var viewSend: BottomView!
+
     //MARK: - OUTLETS
     @IBOutlet weak var topView: CustomTopView!
     @IBOutlet weak var fullImgView:UIImageView!
@@ -28,6 +63,10 @@ class PublishMediaVC: UIViewController {
     @IBOutlet weak var replyUserImgViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var replyBottomView:UIView!
     @IBOutlet weak var replyBottomViewHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var replyLeading: NSLayoutConstraint!
+    
+    @IBOutlet weak var bottomViewheight: NSLayoutConstraint!
     
     //MARK: - PROPERTIES
     weak var delegate: DelegatePublishMedia?
@@ -55,14 +94,18 @@ class PublishMediaVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         replyBottomView.isHidden = !isReply
-        replyUserName.text = username
+//        print(UserDefaultsHelper.getCurrentUser())
+//        print(UserDefaultsHelper.getOtherUser())
+//        print(username)
+
+        replyUserName.text = (username == /UserDefaultsHelper.getCurrentUser() ? "You" : /UserDefaultsHelper.getOtherUser())
         replyUserDesc.text = userDesc
-        replyUserImgView.image = userImage
+
         setupUI()
         setupVideoPlayerContainerView()
         topView.searchButton.isHidden = true
+        topView.imageView.isHidden = true
         sendBtn.tintColor = Colors.Circles.violet
         fullImgView.image = imageFetched
         sendMsgTF.inputAccessoryView = UIView()
@@ -73,11 +116,11 @@ class PublishMediaVC: UIViewController {
             playVideo()
         }
     }
-    
     //MARK: - ACTIONS
     @IBAction func replyCancelView(_ sender: UIButton) {
         isReply = false
         replyBottomView.isHidden = true
+//        bottomViewheight.constant = -replyBottomView.frame.height
     }
     
     @IBAction func sendAction(_ sender: UIButton) {
@@ -91,7 +134,7 @@ class PublishMediaVC: UIViewController {
                 let msgType = MessageType.video
                 let mimeTypeAndFileName = ChatMediaUpload.shared.getMimeTypeAndFileName(for: /msgType)
                 
-                let replyRequests = SendMediaRequest(accessToken: /accessToken, 
+                let replyRequests = SendMediaRequest(accessToken: /accessToken,
                                                      roomID: /room_id,
                                                      body: /body,
                                                      msgType: /msgType,
@@ -139,7 +182,7 @@ class PublishMediaVC: UIViewController {
                 let msgType = MessageType.image
                 let mimeTypeAndFileName = ChatMediaUpload.shared.getMimeTypeAndFileName(for: /msgType)
                 
-                let replyRequests = SendMediaRequest(accessToken: /accessToken, 
+                let replyRequests = SendMediaRequest(accessToken: /accessToken,
                                                      roomID: /room_id,
                                                      body: /body,
                                                      msgType: /msgType,
@@ -186,7 +229,7 @@ class PublishMediaVC: UIViewController {
 //MARK: - SETUP UI
 extension PublishMediaVC{
     func setupUI(){
-        topView.titleLabel.text = UserDefaultsHelper.getCurrentUser()
+        topView.titleLabel.isHidden = true
         topView.delegate = self
         sendMsgTF.delegate = self
         backTFView.layer.cornerRadius = 18
@@ -206,6 +249,19 @@ extension PublishMediaVC{
             videoPlayerContainerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             videoPlayerContainerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
+        
+        DispatchQueue.main.async {
+            if self.userImage == nil {
+                self.replyUserImgView.isHidden = true
+                self.replyLeading.constant = -self.replyUserImgView.frame.width
+            }else{
+                self.replyUserImgView.isHidden = false
+                self.replyUserImgView.image = self.userImage
+                self.replyUserImgView.layer.cornerRadius = 21
+                self.replyUserImgView.clipsToBounds = true
+                self.replyLeading.constant = 8
+            }
+        }
     }
     
     func playVideo() {

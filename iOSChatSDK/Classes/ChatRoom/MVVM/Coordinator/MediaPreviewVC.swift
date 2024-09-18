@@ -54,12 +54,15 @@ class MediaPreviewVC: UIViewController {
         topView = ChatTopBarView()
         topView.translatesAutoresizingMaskIntoConstraints = false
         topView.searchButton.isHidden = true
+        topView.titleLabel.isHidden = true
+        topView.imageView.isHidden = true
         topView.delegate = self
         self.view.addSubview(topView)
         
         // Initialize and configure fullImgView
         fullImgView = UIImageView()
         fullImgView.translatesAutoresizingMaskIntoConstraints = false
+        fullImgView.contentMode = .scaleAspectFit
         self.view.addSubview(fullImgView)
         
         // Initialize and configure bottomView

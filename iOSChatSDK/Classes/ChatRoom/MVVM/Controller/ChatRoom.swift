@@ -50,7 +50,7 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
         // Initialize and configure topView
         topView = ChatTopBarView()
         topView.translatesAutoresizingMaskIntoConstraints = false
-        topView.searchButton.isHidden = true
+        topView.searchButton.isHidden = false
         topView.configure(with: viewModel?.connection)
         topView.delegate = self
         self.view.addSubview(topView)
@@ -128,7 +128,11 @@ extension ChatRoomVC{
         vc.isReply      = isReply
         vc.username     = /selectedMessage?.sender
         vc.userDesc     = /selectedMessage?.content?.body
-//        vc.userImage    = /viewReply?.imageView?.image
+        if viewSend.viewReply.imageView.isHidden == true {
+            vc.userImage    = nil
+        }else{
+            vc.userImage    = viewSend.viewReply.imageView.image
+        }
         vc.eventID      =  /selectedMessage?.eventId
         self.navigationController?.pushViewController(vc, animated: true)
     }

@@ -23,6 +23,7 @@ struct DefaultImage{
     static let more    = UIImage(named: ChatConstants.Image.plusIcon, in: Bundle(for: ChatButton.self), compatibleWith: nil)//UIImage(systemName: "plus")
     static let send    = UIImage(named: ChatConstants.Image.sendIcon, in: Bundle(for: ChatButton.self), compatibleWith: nil)//UIImage(systemName: "play.fill")
     static let audio   = UIImage(systemName: "mic.fill")
+    static let wave = UIImage(named: ChatConstants.Image.wave, in: Bundle(for: ChatButton.self), compatibleWith: nil)
 }
 
 enum InputViewMode{
@@ -87,7 +88,7 @@ public class ChatInputView: UIView {
     public let viewAudio: ChatAudioView = {
         let view = ChatAudioView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .lightGray
+        view.backgroundColor = Colors.Circles.violet
         view.isHidden = true
         return view
     }()
@@ -156,7 +157,7 @@ public class ChatInputView: UIView {
         viewSend.addSubview(buttonSend)
         viewSend.addSubview(buttonAudio)
         
-        addSubview(viewAudio)
+        loadView.addSubview(viewAudio)
     }
     
     public func setupConstraints() {
@@ -231,11 +232,11 @@ public class ChatInputView: UIView {
         
         // Constraints for viewAudio
         NSLayoutConstraint.activate([
-            viewAudio.trailingAnchor.constraint(equalTo: buttonSend.leadingAnchor, constant: -8),
-            viewAudio.topAnchor.constraint(equalTo: topAnchor),
-            viewAudio.leadingAnchor.constraint(equalTo: leadingAnchor),
-            viewAudio.bottomAnchor.constraint(equalTo: bottomAnchor)
-            
+            viewAudio.leadingAnchor.constraint(equalTo: loadView.leadingAnchor),
+            viewAudio.centerYAnchor.constraint(equalTo: loadView.centerYAnchor),
+            viewAudio.trailingAnchor.constraint(equalTo : viewSend.leadingAnchor, constant: -8),
+            viewAudio.heightAnchor.constraint(equalToConstant: 38)
+
         ])
         
     }

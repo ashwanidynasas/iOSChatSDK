@@ -19,7 +19,8 @@ public class ChatAudioView: UIView {
     public let labelAudioTime: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = ChatConstants.Bubble.messageFont
+        label.font = UIFont(name: "Roboto-Bold", size: 12)//ChatConstants.Bubble.messageFont
+        label.textColor = .white
         label.text = "00:00"
         return label
     }()
@@ -27,7 +28,8 @@ public class ChatAudioView: UIView {
     public let imageViewAudioIcon: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = DefaultImage.audio
+        imageView.image = DefaultImage.wave
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
@@ -64,17 +66,17 @@ public class ChatAudioView: UIView {
         
         // Constraints for labelAudioTime
         NSLayoutConstraint.activate([
-            labelAudioTime.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            labelAudioTime.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             labelAudioTime.centerYAnchor.constraint(equalTo: centerYAnchor),
             labelAudioTime.widthAnchor.constraint(equalToConstant: 100)
         ])
         
         // Constraints for imageViewAudioIcon
         NSLayoutConstraint.activate([
-            imageViewAudioIcon.leadingAnchor.constraint(equalTo: labelAudioTime.trailingAnchor, constant: 8),
+            imageViewAudioIcon.leadingAnchor.constraint(equalTo: labelAudioTime.trailingAnchor, constant: 16),
             imageViewAudioIcon.centerYAnchor.constraint(equalTo: centerYAnchor),
-            imageViewAudioIcon.widthAnchor.constraint(equalToConstant: 150),
-            imageViewAudioIcon.heightAnchor.constraint(equalToConstant: 20)
+            imageViewAudioIcon.widthAnchor.constraint(equalToConstant: 100),
+            imageViewAudioIcon.heightAnchor.constraint(equalToConstant: 10)
         ])
     }
     
@@ -98,9 +100,6 @@ extension ChatAudioView{
             audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
             audioRecorder?.delegate = self
             audioRecorder?.record()
-            //            sendBtn.setTitle("Stop", for: .normal)
-            //            sendBtn.removeTarget(self, action: #selector(micButtonTapped), for: .touchUpInside)
-            //            sendBtn.addTarget(self, action: #selector(stopRecording), for: .touchUpInside)
             
             // Start the timer
             recordingDuration = 0
@@ -186,7 +185,6 @@ extension ChatAudioView{
     func playRecording() {
         do {
             print("audioFilename ---->>> \(String(describing: audioFilename))")
-            print(audioFilename!)
             audioPlayer = try AVAudioPlayer(contentsOf: audioFilename!)
             audioPlayer?.delegate = self
             audioPlayer?.play()

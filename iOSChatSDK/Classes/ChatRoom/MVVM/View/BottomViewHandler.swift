@@ -157,9 +157,9 @@ open class BottomView: UIView {
     // MARK: - Reset Method
     func resetViews() {
         DispatchQueue.main.async {
-            self.viewReply.isHidden = true
-            self.viewInput.isHidden = true
-            self.viewMore.isHidden = true
+            [self.viewReply, self.viewInput, self.viewMore].forEach { $0.isHidden = true }
+            self.viewInput.textfieldMessage.text = ""
+            self.viewInput.mode = .audio
             self.viewInput.isAttachVisible = false
             self.updateConstraintsForVisibility()
             self.layoutIfNeeded()

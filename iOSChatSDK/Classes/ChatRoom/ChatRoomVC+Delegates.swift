@@ -28,6 +28,7 @@ extension ChatRoomVC : DelegatePublishMedia{
     func didReceiveData(data: String) {
         if data == ChatConstants.Common.update{
             viewModel?.getMessages()
+            isReply = false
         }else{
             print("return from detail screen")
         }
@@ -114,7 +115,6 @@ extension ChatRoomVC : DelegateInput,DelegateAudio{
                                    msgType: MessageType.text) { [weak self] response in
                 DispatchQueue.main.async {
                     if response != nil {
-                        self?.viewSend.viewInput.textfieldMessage.text = ""
                         self?.messageSent()
                     } else {
                         print("No response received")

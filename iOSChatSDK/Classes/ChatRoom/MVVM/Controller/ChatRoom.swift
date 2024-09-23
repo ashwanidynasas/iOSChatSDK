@@ -30,6 +30,7 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
         super.viewDidLoad()
         setupUIVC()
         setupTable()
+        viewModel?.getMessages()
         viewModel?.onUpdate = { [weak self] in
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
@@ -41,8 +42,9 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
 
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        isReply = false
-        viewModel?.getMessages()
+//        isReply = false
+//        viewModel?.getMessages()
+        setupKeyboardObservers()
     }
 
     // MARK: - Setup UI
@@ -116,6 +118,11 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
                self.view.layoutIfNeeded()
            }
        }
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeKeyboardObservers()
+    }
+
 }
 //MARK: - NAVIGATION
 extension ChatRoomVC{

@@ -90,15 +90,16 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        setupKeyboardObservers()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeKeyboardObservers()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         replyBottomView.isHidden = !isReply
-//        print(UserDefaultsHelper.getCurrentUser())
-//        print(UserDefaultsHelper.getOtherUser())
-//        print(username)
-
         replyUserName.text = (username == /UserDefaultsHelper.getCurrentUser() ? "You" : /UserDefaultsHelper.getOtherUser())
         replyUserDesc.text = userDesc
 

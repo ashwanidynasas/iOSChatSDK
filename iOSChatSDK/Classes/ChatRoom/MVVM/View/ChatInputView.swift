@@ -302,7 +302,11 @@ extension ChatInputView : UITextFieldDelegate{
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
-        mode = .send
+        if let text = textField.text, text.isEmpty {
+            mode = .audio
+        } else {
+            mode = .send
+        }
         setupMode()
     }
     

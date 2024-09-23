@@ -60,7 +60,7 @@ open class ChatService: GenericClient {
                      completion: @escaping (Result<MessageResponse?, APIError>, [AnyHashable : Any]?) -> ()) {
         self.showLoader = showloader
         let headers = [HTTPHeader.authorization(accessToken)]
-        guard let request = ChatServiceEndPoint.getMessages(roomId: roomId).getRequest(parameters: nil, headers: headers) else {
+        guard let request = ChatServiceEndPoint.getMessages(roomId: roomId, limit: "30").getRequest(parameters: nil, headers: headers) else {
             completion(.failure(.invalidRequestURL), nil)
             return
         }
@@ -76,6 +76,7 @@ open class ChatService: GenericClient {
                      completion: @escaping (Result<ChatMessageResponse?, APIError>, [AnyHashable : Any]?) -> ()) {
         
         self.showLoader = showloader
+        print("room id \(/UserDefaultsHelper.getRoomId())")
         let parameters = ChatMessageRequest(roomID: /UserDefaultsHelper.getRoomId(),
                                             body: body,
                                             msgType: msgType,

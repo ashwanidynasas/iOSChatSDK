@@ -111,7 +111,7 @@ public struct ConnectionManager {
         let defaultParam = DefaultParam(color: defaultParam)
         let imageInfo = ImageInfo(url: imageInfo)
         let userInfo = UserInfo(name: userInfo)
-        
+        UserDefaultsHelper.setRoomId(roomID)
         let connection = Connection(roomID: roomID, circleHashAddr: circleHashAddr,
                                     coiHashAddr: coiHashAddr,
                                     chatUserId: chatUserId,

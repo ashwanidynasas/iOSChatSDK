@@ -109,10 +109,14 @@ open class ReplyMedia_MediaCell: UITableViewCell {
             minWidthConstraint,
             maxWidthConstraint,
             // Constraints for playButton to fill the bubbleBackgroundView
-            playButton.leadingAnchor.constraint(equalTo: bubbleBackgroundView.leadingAnchor),
-            playButton.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor),
-            playButton.topAnchor.constraint(equalTo: bubbleBackgroundView.topAnchor),
-            playButton.bottomAnchor.constraint(equalTo: bubbleBackgroundView.bottomAnchor),
+//            playButton.leadingAnchor.constraint(equalTo: bubbleBackgroundView.leadingAnchor),
+//            playButton.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor),
+//            playButton.topAnchor.constraint(equalTo: bubbleBackgroundView.topAnchor),
+//            playButton.bottomAnchor.constraint(equalTo: bubbleBackgroundView.bottomAnchor),
+            playButton.topAnchor.constraint(equalTo: upperbubbleBackgroundView.bottomAnchor, constant: 8),
+            playButton.centerXAnchor.constraint(equalTo: bubbleBackgroundView.centerXAnchor),
+            playButton.widthAnchor.constraint(equalToConstant: 120),
+            playButton.heightAnchor.constraint(equalToConstant: 120),
 
             upperbubbleBackgroundView.topAnchor.constraint(equalTo: bubbleBackgroundView.topAnchor, constant: 8),
             upperbubbleBackgroundView.leadingAnchor.constraint(equalTo: bubbleBackgroundView.leadingAnchor, constant: ChatConstants.Bubble.padding),
@@ -150,11 +154,23 @@ open class ReplyMedia_MediaCell: UITableViewCell {
     }
 
     func configure(with message: Messages) {
-        if let image = message.content?.url {
-            if let url = image.modifiedString.mediaURL {
-                self.messageMediaImage.sd_setImage(with: url, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ChatMessageCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+        if message.content?.msgtype == MessageType.video {
+            playButton.setImage(UIImage(named: ChatConstants.Image.playIcon, in: Bundle(for: ReplyText_MediaCell.self), compatibleWith: nil), for: .normal)
+            if let thumbNailURL = message.content?.S3thumbnailUrl {
+                guard let videoImgURL = URL(string: "\(ChatConstants.S3Media.URL)\(thumbNailURL)") else {
+                    print("Error: Invalid video URL")
+                    return
+                }
+                self.messageMediaImage.sd_setImage(with: videoImgURL, placeholderImage:  UIImage(named: ChatConstants.Image.videoPlaceholder, in: Bundle(for: ChatMessageCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+            }
+        }else{
+            if let image = message.content?.url {
+                if let url = image.modifiedString.mediaURL {
+                    self.messageMediaImage.sd_setImage(with: url, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ChatMessageCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                }
             }
         }
+       
         
         let isCurrentUser = message.sender == UserDefaultsHelper.getCurrentUser()
         bubbleBackgroundView.backgroundColor = isCurrentUser ? UIColor.black.withAlphaComponent(0.5) : Colors.Circles.violet

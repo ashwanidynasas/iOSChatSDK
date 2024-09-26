@@ -140,10 +140,14 @@ open class ReplyText_MediaTextCell: UITableViewCell {
             messageLabel.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor, constant: -ChatConstants.Bubble.padding),
 
             // Constraints for playButton to fill the bubbleBackgroundView
-            playButton.leadingAnchor.constraint(equalTo: bubbleBackgroundView.leadingAnchor),
-            playButton.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor),
-            playButton.topAnchor.constraint(equalTo: bubbleBackgroundView.topAnchor),
-            playButton.bottomAnchor.constraint(equalTo: bubbleBackgroundView.bottomAnchor),
+//            playButton.leadingAnchor.constraint(equalTo: bubbleBackgroundView.leadingAnchor),
+//            playButton.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor),
+//            playButton.topAnchor.constraint(equalTo: bubbleBackgroundView.topAnchor),
+//            playButton.bottomAnchor.constraint(equalTo: bubbleBackgroundView.bottomAnchor),
+            playButton.topAnchor.constraint(equalTo: upperbubbleBackgroundView.bottomAnchor, constant: 8),
+            playButton.centerXAnchor.constraint(equalTo: bubbleBackgroundView.centerXAnchor),
+            playButton.widthAnchor.constraint(equalToConstant: 120),
+            playButton.heightAnchor.constraint(equalToConstant: 120),
 
             timestampLabel.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: ChatConstants.Bubble.timeStampPadding),
             timestampLabel.trailingAnchor.constraint(equalTo: bubbleBackgroundView.trailingAnchor, constant: -ChatConstants.Bubble.padding),
@@ -165,9 +169,21 @@ open class ReplyText_MediaTextCell: UITableViewCell {
         } else {
             messageLabel.isHidden = true
         }
-        if let image = message.content?.url {
-            if let url = image.modifiedString.mediaURL {
-                self.messageMediaImage.sd_setImage(with: url, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ChatMessageCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+        if message.content?.msgtype == MessageType.video {
+            if let thumbNailURL = message.content?.S3thumbnailUrl {
+                guard let videoImgURL = URL(string: "\(ChatConstants.S3Media.URL)\(thumbNailURL)") else {
+                    print("Error: Invalid video URL")
+                    return
+                }
+                self.messageMediaImage.sd_setImage(with: videoImgURL, placeholderImage:  UIImage(named: ChatConstants.Image.videoPlaceholder, in: Bundle(for: ReplyText_MediaTextCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+            }
+            playButton.setImage(UIImage(named: ChatConstants.Image.playIcon, in: Bundle(for: ReplyText_MediaCell.self), compatibleWith: nil), for: .normal)
+        }else{
+            playButton.setImage(nil, for: .normal)
+            if let image = message.content?.url {
+                if let url = image.modifiedString.mediaURL {
+                    self.messageMediaImage.sd_setImage(with: url, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ReplyText_MediaTextCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                }
             }
         }
         
@@ -207,7 +223,7 @@ open class ReplyText_MediaTextCell: UITableViewCell {
         // Configure read indicator
         readIndicatorImageView.image = UIImage(named: ChatConstants.Image.readIndicator, in: Bundle(for: ReplyText_MediaTextCell.self), compatibleWith: nil)
         
-        messageMediaImage.image = UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ReplyText_MediaTextCell.self), compatibleWith: nil)
+//        messageMediaImage.image = UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ReplyText_MediaTextCell.self), compatibleWith: nil)
         
         configureTextMessage(message.content?.body ?? "", replyText: (/message.content?.relatesTo?.inReplyTo?.sender == /UserDefaultsHelper.getCurrentUser() ? "You" : /UserDefaultsHelper.getOtherUser()), replyImage: message.content?.relatesTo?.inReplyTo?.content?.S3thumbnailUrl ?? "", replyDesc: message.content?.relatesTo?.inReplyTo?.content?.body ?? "")
         

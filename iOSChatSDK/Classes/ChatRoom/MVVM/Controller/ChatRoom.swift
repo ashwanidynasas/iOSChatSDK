@@ -21,6 +21,7 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
     public var isReply                 = false
     public var imageFetched: UIImage?  = nil
     public var videoFetched: URL?
+    public var fileFetched: URL?
 
     // Reference to bottom view height constraint
     public var viewSendHeightConstraint: NSLayoutConstraint!
@@ -45,6 +46,7 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
 //        isReply = false
 //        viewModel?.getMessages()
         setupKeyboardObservers()
+        self.hidesBottomBarWhenPushed = true
     }
 
     // MARK: - Setup UI
@@ -72,6 +74,8 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
         viewSend.viewReply.delegate = self
         viewSend.viewInput.delegateInput = self
         viewSend.viewMore.delegate = self
+        viewSend.viewInput.viewAudio.delegate = self
+        
 
         viewSend.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(viewSend)
@@ -131,6 +135,7 @@ extension ChatRoomVC{
         guard let vc = UIStoryboard(name: SB.main, bundle: Bundle(for: ChatRoomVC.self)).instantiateViewController(withIdentifier: String(describing: PublishMediaVC.self)) as? PublishMediaVC else { return  }
         vc.videoFetched = videoFetched
         vc.imageFetched = imageFetched
+        vc.fileFetched = fileFetched
         vc.delegate     = self
         vc.isReply      = isReply
         vc.username     = /selectedMessage?.sender
@@ -149,15 +154,15 @@ extension ChatRoomVC{
         guard let indexPath = tableView?.indexPath(for: cell),
               let message = viewModel?.messages[indexPath.row] else { return }
         if let msgType = viewModel?.messages[indexPath.row].content?.msgtype {
-            print(/msgType)
+            print("msgType ---> \(msgType)")
             if message.content?.url == nil  {
                 print("media nil...")
                 return
             }
-//            guard let vc = UIStoryboard(name: "MainChat", bundle: Bundle(for: ChatRoomVC.self)).instantiateViewController(withIdentifier: "MediaFullVC") as? MediaFullVC else { return }
             let mediaPreviewVC = MediaPreviewVC()
             mediaPreviewVC.videoFetched = videoFetched
             mediaPreviewVC.imageFetched = imageFetched
+            mediaPreviewVC.fileFetched = fileFetched
             mediaPreviewVC.selectedMessage = message
             mediaPreviewVC.viewModel = viewModel
             mediaPreviewVC.delegate = self
@@ -173,8 +178,6 @@ extension ChatRoomVC{
         guard let indexPath = tableView?.indexPath(for: cell),
               let message = viewModel?.messages[indexPath.row] else { return }
         selectedMessage = message
-        
-//        viewReply?.configureReply(message: viewModel?.messages[indexPath.row])
         viewSend.viewMore.setup(.select)
         DispatchQueue.main.async {
             self.viewSend.layout([.more])
@@ -190,7 +193,6 @@ extension ChatRoomVC{
                     DispatchQueue.main.async {
                         self.viewSend.layout([.input])
                     }
-                    
                 }
             case .failure(let error):
                 print("Failed to redact message: \(error.localizedDescription)")
@@ -201,7 +203,6 @@ extension ChatRoomVC{
     func messageSent(){
         self.isReply = false
         DispatchQueue.main.async {
-//            self.viewSend.layout([.input])
             self.viewSend.resetViews()
             self.viewSend.viewInput.mode = .audio
         }

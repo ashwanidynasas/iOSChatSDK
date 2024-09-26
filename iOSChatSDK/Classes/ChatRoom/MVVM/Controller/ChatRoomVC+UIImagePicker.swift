@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import MobileCoreServices
 
 
 //MARK: - IMAGE PICKER DELEGATES
-extension ChatRoomVC : UIImagePickerControllerDelegate{
+extension ChatRoomVC : UIImagePickerControllerDelegate, UIDocumentPickerDelegate{
     
     func camera() {
         guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
@@ -47,7 +48,7 @@ extension ChatRoomVC : UIImagePickerControllerDelegate{
         
         imageFetched = nil
         videoFetched = nil
-        
+        fileFetched = nil
         if let mediaType = info[UIImagePickerController.InfoKey.mediaType] as? String {
             
             if mediaType == ImagePickerMedia.image {
@@ -67,6 +68,38 @@ extension ChatRoomVC : UIImagePickerControllerDelegate{
     
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    public func presentDocumentPicker() {
+        
+        if #available(iOS 14.0, *) {
+               let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.item], asCopy: true)
+               documentPicker.delegate = self
+               documentPicker.allowsMultipleSelection = false
+               self.present(documentPicker, animated: true, completion: nil)
+           } else {
+               // Fallback for iOS versions earlier than 14.0
+               let documentPicker = UIDocumentPickerViewController(documentTypes: ["public.data"], in: .import)
+               documentPicker.delegate = self
+               documentPicker.allowsMultipleSelection = false
+               self.present(documentPicker, animated: true, completion: nil)
+           }
+    }
+    
+    // Delegate method when a document is picked
+    public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        fileFetched = nil
+        imageFetched = nil
+        videoFetched = nil
+        guard let pickedURL = urls.first else { return }
+        fileFetched = pickedURL
+        publish()
+    }
+    
+    // Delegate method when the user cancels the picker
+    public func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        print("Document picker was cancelled")
     }
 }
 

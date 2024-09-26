@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import AVKit
 import AVFoundation
+import PDFKit
 
 //MARK: - CLASS
 class MediaPreviewVC: UIViewController {
@@ -20,6 +21,7 @@ class MediaPreviewVC: UIViewController {
     private var bottomView: MoreView!
     private var videoPlayerBackView: UIView!
     private var videoPlayerContainerView: CustomVideoPlayerContainerView!
+    private var pdfView: PDFView! // Add PDFView for previewing PDF
 
     //MARK: - VIEWMODEL
 //    private var viewModel = ChatRoomViewModel(connection: nil, accessToken: "", curreuntUser: "")
@@ -29,6 +31,7 @@ class MediaPreviewVC: UIViewController {
     //MARK: - PROPERTIES
     var imageFetched: UIImage?
     var videoFetched: URL?
+    var fileFetched: URL?
     var selectedMessage: Messages?
     var player: AVPlayer?
 
@@ -78,6 +81,14 @@ class MediaPreviewVC: UIViewController {
         videoPlayerBackView.translatesAutoresizingMaskIntoConstraints = false
         videoPlayerBackView.isHidden = true
         self.view.addSubview(videoPlayerBackView)
+        
+        // Initialize PDFView (for displaying PDFs)
+        pdfView = PDFView()
+        pdfView.translatesAutoresizingMaskIntoConstraints = false
+        pdfView.isHidden = true // Hide initially, will be shown only for PDFs
+        pdfView.autoScales = true
+        self.view.addSubview(pdfView) // Add PDFView to the view hierarchy
+
     }
 
     private func setupVideoPlayerContainerView() {
@@ -127,20 +138,52 @@ class MediaPreviewVC: UIViewController {
             videoPlayerBackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             videoPlayerBackView.bottomAnchor.constraint(equalTo: bottomView.topAnchor) // Ends just above bottomView
         ])
+        // Constraints for pdfView
+        NSLayoutConstraint.activate([
+            pdfView.topAnchor.constraint(equalTo: topView.bottomAnchor), // Place just below topView
+            pdfView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            pdfView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            pdfView.bottomAnchor.constraint(equalTo: bottomView.topAnchor) // Ends just above bottomView
+        ])
     }
 
     private func configureUI() {
         topView.titleLabel.text = /UserDefaultsHelper.getCurrentUser()
         self.view.setGradientBackground(startColor: Colors.Circles.black, endColor: Colors.Circles.violet)
         
-        if let videoURL = selectedMessage?.content?.url?.modifiedString.mediaURL {
-            if /selectedMessage?.content?.msgtype == MessageType.image {
-                self.fullImgView.sd_setImage(with: videoURL, placeholderImage: UIImage(named: ChatMessageCellConstant.ImageView.placeholderImageName, in: Bundle(for: MediaPreviewVC.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
-            } else {
-                videoPlayerBackView.isHidden = false
-                playVideo()
+        switch /selectedMessage?.content?.msgtype {
+        case MessageType.audio, MessageType.video:
+            pdfView.isHidden = true
+            fullImgView.isHidden = true
+            videoPlayerBackView.isHidden = false
+            playVideo()
+            
+        case MessageType.image:
+            pdfView.isHidden = true
+            videoPlayerBackView.isHidden = true
+            if let videoURL = selectedMessage?.content?.url?.modifiedString.mediaURL {
+                if /selectedMessage?.content?.msgtype == MessageType.image {
+                    self.fullImgView.sd_setImage(with: videoURL, placeholderImage: UIImage(named: ChatMessageCellConstant.ImageView.placeholderImageName, in: Bundle(for: MediaPreviewVC.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                }
             }
+        case MessageType.file:
+            
+            guard let videoURL = URL(string: "\(ChatConstants.S3Media.URL)\(/(selectedMessage?.content?.S3MediaUrl ?? ""))") else {
+                print("Error: Invalid video URL")
+                return
+            }
+                // Handle PDF preview
+                if let pdfDocument = PDFDocument(url: videoURL) {
+                    pdfView.document = pdfDocument
+                    pdfView.isHidden = false
+                    videoPlayerBackView.isHidden = true
+                    fullImgView.isHidden = true
+                }
+            
+        default:
+            print("default")
         }
+        
     }
 
     private func redactMessage() {

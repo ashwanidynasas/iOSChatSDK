@@ -25,7 +25,7 @@ open class MediaContentCell: UITableViewCell {
     public var bubbleWidthConstraint: NSLayoutConstraint!
     public var messageImageViewHeightConstraint: NSLayoutConstraint!
     public var messageImageViewWidthConstraint: NSLayoutConstraint!
-
+    public let gradientLayer = CAGradientLayer()
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -52,8 +52,15 @@ open class MediaContentCell: UITableViewCell {
         messageImageView.clipsToBounds = true
         bubbleBackgroundView.addSubview(messageImageView)
         
-        timestampLabel.font = ChatConstants.Bubble.timeStampFont//Constants.timestampFont
-        timestampLabel.textColor = ChatConstants.Bubble.timeStampColor//Constants.timestampColor
+        // Add gradient layer to the image view
+        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.withAlphaComponent(0.3).cgColor]
+        gradientLayer.locations = [0.8, 1.0]
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+        messageImageView.layer.addSublayer(gradientLayer)
+
+        timestampLabel.font = ChatConstants.Bubble.timeStampFont
+        timestampLabel.textColor = ChatConstants.Bubble.timeStampColor
         timestampLabel.textAlignment = .center
         timestampLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(timestampLabel)
@@ -77,6 +84,11 @@ open class MediaContentCell: UITableViewCell {
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture(_:)))
         playButton.addGestureRecognizer(longPressGestureRecognizer)
 
+    }
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+        // Make sure the gradient layer's frame matches the image view
+        gradientLayer.frame = messageImageView.bounds
     }
     @objc private func buttonTapped(_ sender: UIButton) {
         delegate?.didTapPlayButton(in: self)
@@ -157,8 +169,6 @@ open class MediaContentCell: UITableViewCell {
         if message.content?.msgtype == MessageType.image {
             playButton.setImage(nil, for: .normal)
             if let imageUrlString = message.content?.url, let imageUrl = imageUrlString.modifiedString.mediaURL {
-                // Load the image from the URL
-//                self.messageImageView.sd_setImage(with: imageUrl, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
                 self.messageImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: ChatConstants.Image.userPlaceholder), options: [], completed: nil)
 
             }else{
@@ -175,13 +185,19 @@ open class MediaContentCell: UITableViewCell {
             self.playButton.setImage(UIImage(named: ChatConstants.Image.playIcon, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
 
         }else if message.content?.msgtype == MessageType.audio {
+            self.messageImageView.image = UIImage(named: ChatConstants.Image.audioPlaceholder)
+
+//            let imageView = UIImageView(image: UIImage(named: ChatConstants.Image.audioPlaceholder, in: Bundle(for: MediaContentCell.self), compatibleWith: nil))
+//            self.messageImageView = imageView
+            self.playButton.setImage(UIImage(named: ChatConstants.Image.audioPlaceholder, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
+            
+        }
+        else if message.content?.msgtype == MessageType.file {
             self.messageImageView.image = UIImage(named: ChatConstants.Image.placeholder)
 
-//            let imageView = UIImageView(image: UIImage(named: "userPlaceholder", in: Bundle(for: MediaContentCell.self), compatibleWith: nil))
-//            self.messageImageView = imageView
-            self.playButton.setImage(UIImage(named: ChatConstants.Image.playIcon, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
-            
-        }else{
+            self.playButton.setImage(UIImage(named: ChatConstants.Image.documentPlaceholder, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
+        }
+        else{
             self.messageImageView.image = UIImage(named: ChatConstants.Image.placeholder)
         }
         

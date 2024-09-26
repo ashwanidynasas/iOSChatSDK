@@ -55,7 +55,7 @@ struct ChatConstants {
     struct FileName {
         static let image    = "a1.jpg"
         static let video    = "upload.mp4"
-        static let document = "upload.py"
+        static let document = "upload.pdf"
         static let audio    = "Audio File"
     }
     
@@ -73,7 +73,7 @@ struct ChatConstants {
         static let readIndicator:String    = "read_indicator"
         static let playIcon:String         = "PlayIcon"
         static let placeholder:String      = "placeholder"
-        static let userPlaceholder:String  = "userPlaceholder"
+        static let userPlaceholder:String  = "placeholder"
         static let sendIcon:String         = "sendIcon"
         static let cancel:String           = "cancel"
         static let replyCancel:String      = "replyCancel"
@@ -81,13 +81,19 @@ struct ChatConstants {
         static let moreCamera:String       = "MoreCamera"
         static let plusIcon:String         = "plusIcon"
         static let backButton:String       = "BackButton"
-        static let searchImg:String           = "Search"
+        static let searchImg:String        = "Search"
         static let wave:String             = "wave"
+        
+        static let locationPlaceholder:String   = "chat_location_placeholder"
+        static let documentPlaceholder:String   = "chat_document_placeholder"
+        static let videoPlaceholder:String      = "chat_video_placeholder"
+        static let audioPlaceholder:String      = "chat_audio_placeholder"
+
     }
     
     struct Bubble {
         static let diameter: CGFloat            = 170
-        static let timeStampFont: UIFont        = .systemFont(ofSize: 8)
+        static let timeStampFont: UIFont        = .systemFont(ofSize: 10)
         static let messageFont: UIFont          = .systemFont(ofSize: 12)
         static let timeStampColor: UIColor      = .lightGray
         static let readIndicatorSize: CGFloat   = 7
@@ -196,7 +202,7 @@ struct ChatMessageCellConstant {
     struct ImageView {
         static let contentMode: UIView.ContentMode = .scaleAspectFit
         static let height: CGFloat = 150
-        static let placeholderImageName: String = "userPlaceholder"
+        static let placeholderImageName: String = "placeholder"
     }
     
     struct Gesture {

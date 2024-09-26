@@ -53,7 +53,7 @@ class ChatMediaUpload {
     func sendImageFromGalleryAPICall(image: UIImage? = nil,
                                      video: URL? = nil,
                                      audio: URL? = nil,
-                                     document: String? = nil,
+                                     document: URL? = nil,
                                      msgType: String,
                                      body: String? = nil,
                                      eventID: String? = nil,
@@ -63,6 +63,14 @@ class ChatMediaUpload {
         let accessToken = UserDefaultsHelper.getAccessToken() else {
             completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Missing roomID or accessToken"])))
             return
+        }
+        var fileURL: URL?
+        if let video = video {
+            fileURL = video
+        } else if let audio = audio {
+            fileURL = audio
+        } else if let document = document {
+            fileURL = document
         }
 
         let mimeTypeAndFileName = getMimeTypeAndFileName(for: msgType)
@@ -75,7 +83,7 @@ class ChatMediaUpload {
             fileName: mimeTypeAndFileName.fileName,
             mediaType: mimeTypeAndFileName.mediaType,
             imageFilePath: image,
-            videoFilePath: video ?? audio
+            videoFilePath: fileURL
         )
 
         uploadMediaRequest(urlString: "\(API.sendMedia)\(/sendMediaRequest.mediaType)", mediaRequest: sendMediaRequest, isImage: image != nil, includeEventID: false) { result in
@@ -105,7 +113,7 @@ class ChatMediaUpload {
         case MessageType.video:
             return ("video/mp4", "upload.mp4", "video")
         case MessageType.file:
-            return ("application/x-python-code", "upload.py", "file")
+            return ("application/pdf", "upload.pdf", "file")
         case MessageType.audio:
             return ("audio/mp3", "Audio File", "audio")
         default:

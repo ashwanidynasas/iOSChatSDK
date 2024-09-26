@@ -70,7 +70,7 @@ extension ChatRoomVC: DelegateMore{
         case .media    : gallery()
         case .camera   : camera()
         case .location : break
-        case .document : break
+        case .document : presentDocumentPicker()
         case .zc       : break
             
             

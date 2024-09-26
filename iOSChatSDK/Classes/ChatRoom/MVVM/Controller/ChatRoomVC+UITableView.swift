@@ -148,7 +148,7 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
         }
         
         let msgType = /message?.content?.msgtype
-        if (msgType == MessageType.image) || (msgType == MessageType.audio) || (msgType == MessageType.video) {
+        if (msgType == MessageType.image) || (msgType == MessageType.audio) || (msgType == MessageType.video) || (msgType == MessageType.file){
             if /message?.content?.body == "" {
                 return ChatConstants.BubbleHeight.cellHeight
             }

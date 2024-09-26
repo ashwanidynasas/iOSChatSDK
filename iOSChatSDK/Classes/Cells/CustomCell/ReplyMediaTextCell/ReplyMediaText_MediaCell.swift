@@ -161,7 +161,7 @@ open class ReplyMediaText_MediaCell: UITableViewCell {
     func configure(with message: Messages) {
         if let image = message.content?.url {
             if let url = image.modifiedString.mediaURL {
-                self.messageMediaImage.sd_setImage(with: url, placeholderImage:  UIImage(named: "userPlaceholder", in: Bundle(for: ChatMessageCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                self.messageMediaImage.sd_setImage(with: url, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ChatMessageCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
             }
         }
         

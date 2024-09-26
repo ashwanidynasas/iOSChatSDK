@@ -73,6 +73,8 @@ open class ChatTopBarView: UIView {
         imageView.layer.cornerRadius = 20
         imageView.clipsToBounds = true
         imageView.backgroundColor = .white
+        imageView.layer.borderWidth = 2.0
+        imageView.layer.borderColor = Colors.Circles.violet.cgColor
         loadView.addSubview(imageView)
         
         // Initialize titleLabel
@@ -165,9 +167,10 @@ open class ChatTopBarView: UIView {
     
     func configure(with connection: Connection?) {
         titleLabel.text = connection?.userInfo.name
+        print(/connection?.imageInfo.url)
         guard let imageUrlString = connection?.imageInfo.url,
               let url = URL(string: imageUrlString) else {
-            imageView.image = UIImage(systemName: "person.circle.fill")
+            imageView.image = UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ChatTopBarView.self), compatibleWith: nil)
             return
         }
         imageView.sd_setImage(
@@ -178,5 +181,5 @@ open class ChatTopBarView: UIView {
             completed: nil
         )
     }
-
+//placeholder
 }

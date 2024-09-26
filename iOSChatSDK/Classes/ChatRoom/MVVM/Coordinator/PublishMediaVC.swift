@@ -9,44 +9,17 @@
 import UIKit
 import AVKit
 import AVFoundation
+import PDFKit
+
 
 //MARK: - CLASS
 class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, DelegateInput {
-    func updateBottomViewHeight(to height: CGFloat) {
-        print("")
-    }
-    
-    func hideAttach() {
-        print("")
 
-    }
-    
-    func sendTextMessage() {
-        print("")
-    }
-    
-    func sendAudio(audioFilename: URL) {
-        print("")
-
-    }
-    
-    func camera() {
-        print("")
-
-    }
-    
-    func attach() {
-        print("")
-
-    }
-    
-    func cancelReply() {
-        print("")
-
-    }
     // Reference to bottom view height constraint
     public var viewSendHeightConstraint: NSLayoutConstraint!
     public var viewSend: BottomView!
+    var pdfView: PDFView!
+    var pdfCustomView: PDFCustomView!
 
     //MARK: - OUTLETS
     @IBOutlet weak var topView: CustomTopView!
@@ -55,6 +28,7 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
     @IBOutlet weak var backTFView: UIView!
     @IBOutlet weak var sendBtn: UIButton!
     @IBOutlet weak var videoPlayerBackView: UIView!
+    @IBOutlet weak var borderLine: UIView!
     
     //Reply View Outlet
     @IBOutlet weak var replyUserName:UILabel!
@@ -71,7 +45,8 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
     //MARK: - PROPERTIES
     weak var delegate: DelegatePublishMedia?
     var imageFetched:UIImage! = nil
-    var videoFetched:URL! =  nil
+    var fileFetched:URL! =      nil
+    var videoFetched:URL! =     nil
     var isReply:Bool!
     
     var username:String! = ""
@@ -112,9 +87,17 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
         sendMsgTF.inputAccessoryView = UIView()
         videoPlayerBackView.isHidden = true
         
-        if imageFetched == nil {
+        pdfCustomView = PDFCustomView(frame: videoPlayerBackView.bounds)
+        videoPlayerBackView.addSubview(pdfCustomView)
+        if videoFetched != nil {
             videoPlayerBackView.isHidden = false
             playVideo()
+            pdfCustomView.removeFromSuperview()
+        }else if fileFetched != nil {
+            videoPlayerBackView.isHidden = false
+            pdfCustomView.loadPDF(from: fileFetched)
+        }else{
+            pdfCustomView.removeFromSuperview()
         }
     }
     //MARK: - ACTIONS
@@ -127,109 +110,221 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
     @IBAction func sendAction(_ sender: UIButton) {
         let room_id = UserDefaultsHelper.getRoomId()
         let accessToken = UserDefaultsHelper.getAccessToken()
+        let body = self.sendMsgTF.text
+
+        var msgType: String?
+        var mediaURL: URL?
+        var isImage: Bool = false
         
-        if imageFetched == nil {
-            
-            if isReply {
-                let body = self.sendMsgTF.text
-                let msgType = MessageType.video
-                let mimeTypeAndFileName = ChatMediaUpload.shared.getMimeTypeAndFileName(for: /msgType)
-                
-                let replyRequests = SendMediaRequest(accessToken: /accessToken,
-                                                     roomID: /room_id,
-                                                     body: /body,
-                                                     msgType: /msgType,
-                                                     mediaType: mimeTypeAndFileName.mediaType,
-                                                     eventID: eventID,
-                                                     imageFilePath: imageFetched)
-                
-                ChatMediaUpload.shared.uploadFileChatReply(replyRequest: replyRequests,
-                                                           isImage: false ){ result in
-                    switch result {
-                    case .success(let response):
-                        print("Success: \(response.message)")
-                        DispatchQueue.global().async {
-                            DispatchQueue.main.async {
-                                self.delegate?.didReceiveData(data: ChatConstants.Common.update)//"update")
-                                self.navigationController?.popViewController(animated: true)
-                            }
-                        }
-                    case .failure(let error):
-                        DispatchQueue.main.async {
-                            print("Error: \(error.localizedDescription)")
-                        }
+        if let image = imageFetched {
+           msgType = MessageType.image
+           isImage = true
+        } else if let video = videoFetched {
+           msgType = MessageType.video
+           mediaURL = video
+           isImage = false
+        } else if let file = fileFetched {
+           msgType = MessageType.file
+           mediaURL = file
+           isImage = false
+        }
+        
+         guard let messageType = msgType else {
+             print("No media to send.")
+             return
+         }
+
+         let mimeTypeAndFileName = ChatMediaUpload.shared.getMimeTypeAndFileName(for: /messageType)
+
+        if isReply {
+            // Handle reply
+            let replyRequest = SendMediaRequest(
+                accessToken: /accessToken,
+                roomID: /room_id,
+                body: /body,
+                msgType: messageType,
+                mimetype: mimeTypeAndFileName.mimeType, fileName: mimeTypeAndFileName.fileName, mediaType: mimeTypeAndFileName.mediaType,
+                eventID: eventID,
+                imageFilePath: imageFetched,
+                videoFilePath: mediaURL
+            )
+            print(replyRequest)
+            // If it's an image
+            ChatMediaUpload.shared.uploadFileChatReply(replyRequest: replyRequest, isImage: isImage) { result in
+                switch result {
+                case .success(let response):
+                    print("Success: \(response.message)")
+                    DispatchQueue.main.async {
+                        self.delegate?.didReceiveData(data: ChatConstants.Common.update)
+                        self.navigationController?.popViewController(animated: true)
                     }
-                }
-            }
-            else{
-                ChatMediaUpload.shared.sendImageFromGalleryAPICall(video: videoFetched, msgType: MessageType.video, body:self.sendMsgTF.text) { result in
-                    switch result {
-                    case .success(let message):
-                        print("Success: \(message)")
-                        DispatchQueue.global().async {
-                            DispatchQueue.main.async {
-                                self.delegate?.didReceiveData(data: ChatConstants.Common.update)//"update")
-                                self.navigationController?.popViewController(animated: true)
-                            }
-                        }
-                    case .failure(let error):
+                case .failure(let error):
+                    DispatchQueue.main.async {
                         print("Error: \(error.localizedDescription)")
                     }
                 }
             }
-        }else{
-            if isReply {
-                let body = self.sendMsgTF.text
-                let msgType = MessageType.image
-                let mimeTypeAndFileName = ChatMediaUpload.shared.getMimeTypeAndFileName(for: /msgType)
-                
-                let replyRequests = SendMediaRequest(accessToken: /accessToken,
-                                                     roomID: /room_id,
-                                                     body: /body,
-                                                     msgType: /msgType,
-                                                     mediaType: mimeTypeAndFileName.mediaType,
-                                                     eventID: eventID,
-                                                     imageFilePath: imageFetched)
-                
-                ChatMediaUpload.shared.uploadFileChatReply(replyRequest:replyRequests,isImage: true){ result in
-                    switch result {
-                    case .success(let response):
-                        print("Success: \(response.message)")
-                        DispatchQueue.global().async {
-                            DispatchQueue.main.async {
-                                self.delegate?.didReceiveData(data: ChatConstants.Common.update)//"update")
-                                self.navigationController?.popViewController(animated: true)
-                            }
-                        }
-                    case .failure(let error):
-                        DispatchQueue.main.async {
-                            print("Error: \(error.localizedDescription)")
-                        }
+        } else {
+            // Handle non-reply
+            ChatMediaUpload.shared.sendImageFromGalleryAPICall(image: imageFetched, video: mediaURL, msgType: messageType, body: body) { result in
+                switch result {
+                case .success(let message):
+                    print("Success: \(message)")
+                    DispatchQueue.main.async {
+                        self.delegate?.didReceiveData(data: ChatConstants.Common.update)
+                        self.navigationController?.popViewController(animated: true)
                     }
-                }
-            }else{
-                ChatMediaUpload.shared.sendImageFromGalleryAPICall(image: imageFetched, msgType: MessageType.image, body:self.sendMsgTF.text) { result in
-                    switch result {
-                    case .success(let message):
-                        print("Success: \(message)")
-                        DispatchQueue.global().async {
-                            DispatchQueue.main.async {
-                                self.delegate?.didReceiveData(data: ChatConstants.Common.update)
-                                self.navigationController?.popViewController(animated: true)
-                            }
-                        }
-                    case .failure(let error):
-                        print("Error: \(error.localizedDescription)")
-                    }
+                case .failure(let error):
+                    print("Error: \(error.localizedDescription)")
                 }
             }
         }
+        
+//
+//        let room_id = UserDefaultsHelper.getRoomId()
+//        let accessToken = UserDefaultsHelper.getAccessToken()
+//
+//        if imageFetched == nil {
+//
+//            if isReply {
+//                let body = self.sendMsgTF.text
+//                let msgType = MessageType.video
+//                let mimeTypeAndFileName = ChatMediaUpload.shared.getMimeTypeAndFileName(for: /msgType)
+//
+//                let replyRequests = SendMediaRequest(accessToken: /accessToken,
+//                                                     roomID: /room_id,
+//                                                     body: /body,
+//                                                     msgType: /msgType,
+//                                                     mediaType: mimeTypeAndFileName.mediaType,
+//                                                     eventID: eventID,
+//                                                     imageFilePath: imageFetched)
+//
+//                ChatMediaUpload.shared.uploadFileChatReply(replyRequest: replyRequests,
+//                                                           isImage: false ){ result in
+//                    switch result {
+//                    case .success(let response):
+//                        print("Success: \(response.message)")
+//                        DispatchQueue.global().async {
+//                            DispatchQueue.main.async {
+//                                self.delegate?.didReceiveData(data: ChatConstants.Common.update)//"update")
+//                                self.navigationController?.popViewController(animated: true)
+//                            }
+//                        }
+//                    case .failure(let error):
+//                        DispatchQueue.main.async {
+//                            print("Error: \(error.localizedDescription)")
+//                        }
+//                    }
+//                }
+//            }
+//            else{
+//                ChatMediaUpload.shared.sendImageFromGalleryAPICall(video: videoFetched, msgType: MessageType.video, body:self.sendMsgTF.text) { result in
+//                    switch result {
+//                    case .success(let message):
+//                        print("Success: \(message)")
+//                        DispatchQueue.global().async {
+//                            DispatchQueue.main.async {
+//                                self.delegate?.didReceiveData(data: ChatConstants.Common.update)//"update")
+//                                self.navigationController?.popViewController(animated: true)
+//                            }
+//                        }
+//                    case .failure(let error):
+//                        print("Error: \(error.localizedDescription)")
+//                    }
+//                }
+//            }
+//        }else{
+//            if isReply {
+//                let body = self.sendMsgTF.text
+//                let msgType = MessageType.image
+//                let mimeTypeAndFileName = ChatMediaUpload.shared.getMimeTypeAndFileName(for: /msgType)
+//
+//                let replyRequests = SendMediaRequest(accessToken: /accessToken,
+//                                                     roomID: /room_id,
+//                                                     body: /body,
+//                                                     msgType: /msgType,
+//                                                     mediaType: mimeTypeAndFileName.mediaType,
+//                                                     eventID: eventID,
+//                                                     imageFilePath: imageFetched)
+//
+//                ChatMediaUpload.shared.uploadFileChatReply(replyRequest:replyRequests,isImage: true){ result in
+//                    switch result {
+//                    case .success(let response):
+//                        print("Success: \(response.message)")
+//                        DispatchQueue.global().async {
+//                            DispatchQueue.main.async {
+//                                self.delegate?.didReceiveData(data: ChatConstants.Common.update)//"update")
+//                                self.navigationController?.popViewController(animated: true)
+//                            }
+//                        }
+//                    case .failure(let error):
+//                        DispatchQueue.main.async {
+//                            print("Error: \(error.localizedDescription)")
+//                        }
+//                    }
+//                }
+//            }else{
+//                ChatMediaUpload.shared.sendImageFromGalleryAPICall(image: imageFetched, msgType: MessageType.image, body:self.sendMsgTF.text) { result in
+//                    switch result {
+//                    case .success(let message):
+//                        print("Success: \(message)")
+//                        DispatchQueue.global().async {
+//                            DispatchQueue.main.async {
+//                                self.delegate?.didReceiveData(data: ChatConstants.Common.update)
+//                                self.navigationController?.popViewController(animated: true)
+//                            }
+//                        }
+//                    case .failure(let error):
+//                        print("Error: \(error.localizedDescription)")
+//                    }
+//                }
+//            }
+//        }
+    }
+    func updateBottomViewHeight(to height: CGFloat) {
+        print("")
+    }
+    
+    func hideAttach() {
+        print("")
+
+    }
+    
+    func sendTextMessage() {
+        print("")
+    }
+    
+    func sendAudio(audioFilename: URL) {
+        print("")
+
+    }
+    
+    func camera() {
+        print("")
+
+    }
+    
+    func attach() {
+        print("")
+
+    }
+    
+    func cancelReply() {
+        print("")
+
     }
 }
 
 //MARK: - SETUP UI
 extension PublishMediaVC{
     func setupUI(){
+        borderLine.translatesAutoresizingMaskIntoConstraints = false
+        borderLine.backgroundColor = Colors.Circles.violet
+        borderLine.layer.shadowColor = UIColor.black.cgColor
+        borderLine.layer.shadowOffset = CGSize(width: 0, height: -2)
+        borderLine.layer.shadowRadius = 4
+        borderLine.layer.shadowOpacity = 1.0
+
         topView.titleLabel.isHidden = true
         topView.delegate = self
         sendMsgTF.delegate = self
@@ -322,6 +417,50 @@ class VideoPlayerContainerView: UIView {
         }
         set {
             playerViewController?.player = newValue
+        }
+    }
+}
+
+class PDFCustomView: UIView {
+
+    var pdfView: PDFView!
+
+    // Padding constants
+    let topPadding: CGFloat = 0.0
+    let bottomPadding: CGFloat = 0.0
+    let sidePadding: CGFloat = 0.0
+
+    // Initialize the custom view
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupPDFView()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupPDFView()
+    }
+
+    private func setupPDFView() {
+        pdfView = PDFView()
+        pdfView.translatesAutoresizingMaskIntoConstraints = false
+        pdfView.autoScales = true
+        pdfView.backgroundColor = .white
+        
+        self.addSubview(pdfView)
+        
+        NSLayoutConstraint.activate([
+            pdfView.topAnchor.constraint(equalTo: self.topAnchor, constant: topPadding),
+            pdfView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -bottomPadding),
+            pdfView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            pdfView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+        ])
+    }
+
+    // Load the PDF document from a file URL
+    func loadPDF(from url: URL) {
+        if let document = PDFDocument(url: url) {
+            pdfView.document = document
         }
     }
 }

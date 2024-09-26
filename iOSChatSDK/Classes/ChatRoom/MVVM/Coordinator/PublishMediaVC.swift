@@ -116,7 +116,7 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
         var mediaURL: URL?
         var isImage: Bool = false
         
-        if let image = imageFetched {
+        if imageFetched != nil {
            msgType = MessageType.image
            isImage = true
         } else if let video = videoFetched {

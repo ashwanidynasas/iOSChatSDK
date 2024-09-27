@@ -379,6 +379,7 @@
                     </view>
                     <connections>
                         <outlet property="backTFView" destination="a2Z-o9-Woh" id="8og-mw-fgE"/>
+                        <outlet property="borderLine" destination="ozc-tU-kba" id="scY-uw-Qz3"/>
                         <outlet property="bottomViewheight" destination="djK-YO-SMR" id="xPe-go-Fmq"/>
                         <outlet property="fullImgView" destination="5jt-eT-gHn" id="SLc-3e-wXx"/>
                         <outlet property="replyBottomView" destination="HFJ-n6-XTC" id="ilO-vY-Ozt"/>

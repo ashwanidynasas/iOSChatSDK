@@ -295,7 +295,7 @@
                                         <rect key="frame" x="28" y="82" width="286.33333333333331" height="35"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type your message here..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8QT-Wp-beb">
-                                                <rect key="frame" x="39" y="0.0" width="170.33333333333334" height="35"/>
+                                                <rect key="frame" x="39.000000000000014" y="0.0" width="231.33333333333337" height="35"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                                 <connections>
@@ -319,7 +319,7 @@
                                             <constraint firstItem="8QT-Wp-beb" firstAttribute="leading" secondItem="Efv-Qi-HuO" secondAttribute="trailing" id="7Nj-c4-IGM"/>
                                             <constraint firstItem="Efv-Qi-HuO" firstAttribute="top" secondItem="a2Z-o9-Woh" secondAttribute="top" id="YV1-OO-mDt"/>
                                             <constraint firstItem="Efv-Qi-HuO" firstAttribute="leading" secondItem="a2Z-o9-Woh" secondAttribute="leading" constant="4" id="dgg-1G-Gf5"/>
-                                            <constraint firstAttribute="trailing" secondItem="8QT-Wp-beb" secondAttribute="trailing" constant="77" id="gK5-Oe-Lna"/>
+                                            <constraint firstAttribute="trailing" secondItem="8QT-Wp-beb" secondAttribute="trailing" constant="16" id="gK5-Oe-Lna"/>
                                             <constraint firstItem="8QT-Wp-beb" firstAttribute="leading" secondItem="Efv-Qi-HuO" secondAttribute="trailing" id="qYT-PZ-Cba"/>
                                             <constraint firstAttribute="bottom" secondItem="Efv-Qi-HuO" secondAttribute="bottom" id="sHG-E5-WS4"/>
                                             <constraint firstAttribute="bottom" secondItem="8QT-Wp-beb" secondAttribute="bottom" id="yXr-kX-ARd"/>

@@ -43,8 +43,8 @@ open class ChatReplyView: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        imageView.layer.cornerRadius = 20
         imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
         imageView.image = UIImage(named: ChatConstants.Image.userPlaceholder)
         return imageView
     }()
@@ -68,7 +68,12 @@ open class ChatReplyView: UIView {
         setupView()
         setupConstraints()
     }
-    
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutIfNeeded()
+        imageView.layer.cornerRadius = imageView.frame.size.width / 2
+
+    }
     required public init?(coder: NSCoder) {
         super.init(coder: coder)
         setupView()

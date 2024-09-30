@@ -82,6 +82,11 @@ public class ChatInputView: UIView {
         textField.placeholder = "Type your message here..."
         textField.borderStyle = .none
         textField.font = ChatConstants.Bubble.messageFont
+        textField.textColor = .black
+        textField.attributedPlaceholder = NSAttributedString(
+            string: textField.placeholder ?? "",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray]
+        )
         return textField
     }()
     
@@ -130,6 +135,7 @@ public class ChatInputView: UIView {
         buttonMore = createChatButton(image: /DefaultImage.more, action: #selector(moreTapped(_:)))
         buttonSend = createChatButton(image: /DefaultImage.send, action: #selector(sendTapped(_:)))
         buttonAudio = createChatButton(image: /DefaultImage.audio, action: nil)
+        buttonEmoji.tintColor = .darkGray
     }
     
     // Helper method to create buttons

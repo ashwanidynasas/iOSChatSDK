@@ -85,6 +85,12 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
         sendBtn.tintColor = Colors.Circles.violet
         fullImgView.image = imageFetched
         sendMsgTF.inputAccessoryView = UIView()
+        sendMsgTF.textColor = .black
+        sendMsgTF.attributedPlaceholder = NSAttributedString(
+            string: sendMsgTF.placeholder ?? "",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray]
+        )
+
         videoPlayerBackView.isHidden = true
         
         pdfCustomView = PDFCustomView(frame: videoPlayerBackView.bounds)

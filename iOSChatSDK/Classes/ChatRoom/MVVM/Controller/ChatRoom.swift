@@ -124,6 +124,7 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
        }
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        self.view.endEditing(true)
         removeKeyboardObservers()
     }
 

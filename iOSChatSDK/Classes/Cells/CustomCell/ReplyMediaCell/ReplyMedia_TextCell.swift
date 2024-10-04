@@ -157,8 +157,8 @@ open class ReplyMedia_TextCell: UITableViewCell {
     func configure(with message: Messages) {
         
         let isCurrentUser = message.sender == UserDefaultsHelper.getCurrentUser()
-        bubbleBackgroundView.backgroundColor = isCurrentUser ? UIColor.black.withAlphaComponent(0.5) : Colors.Circles.violet
-        upperbubbleBackgroundView.backgroundColor = isCurrentUser ? Colors.Circles.violet :UIColor.black.withAlphaComponent(0.5)
+        bubbleBackgroundView.backgroundColor = isCurrentUser ? ChatConstants.Bubble.backgroundColor : UIColor(hex:ChatConstants.CircleColor.borderHexString)
+        upperbubbleBackgroundView.backgroundColor = ChatConstants.Bubble.backgroundColor
 
         titleLabel.textColor = .white
         messageLabel.textColor = .white

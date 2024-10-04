@@ -29,6 +29,7 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
     // MARK: - VIEW CYCLE
     open override func viewDidLoad() {
         super.viewDidLoad()
+        setupTapGesture()
         setupUIVC()
         setupTable()
         viewModel?.getMessages()
@@ -52,6 +53,12 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
     // MARK: - Setup UI
     public func setupUIVC() {
         // Initialize and configure topView
+        if let colorHex = viewModel?.connection?.defaultParam.color.toHex() {
+            ChatConstants.CircleColor.hexString = colorHex
+        }
+        if let borderColorHex = viewModel?.connection?.defaultParam.borderColor.toHex() {
+            ChatConstants.CircleColor.borderHexString = borderColorHex
+        }
         topView = ChatTopBarView()
         topView.translatesAutoresizingMaskIntoConstraints = false
         topView.searchButton.isHidden = false
@@ -75,6 +82,7 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
         viewSend.viewInput.delegateInput = self
         viewSend.viewMore.delegate = self
         viewSend.viewInput.viewAudio.delegate = self
+        viewSend.viewInput.buttonColor = viewModel?.connection?.defaultParam.color ?? Colors.Circles.violet
         
 
         viewSend.translatesAutoresizingMaskIntoConstraints = false
@@ -82,7 +90,7 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
 
         // Setup view properties
         viewSend.layout([.input])
-        view.setGradientBackground(startColor: Colors.Circles.black, endColor: Colors.Circles.violet)
+        addGradientView(color: viewModel?.connection?.defaultParam.color ?? Colors.Circles.violet)
         navigationController?.setNavigationBarHidden(true, animated: true)
 
         // Add constraints
@@ -127,7 +135,14 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
         self.view.endEditing(true)
         removeKeyboardObservers()
     }
-
+    private func setupTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = true
+        self.view.addGestureRecognizer(tapGesture)
+    }
+    @objc private func dismissKeyboard() {
+        self.view.endEditing(true)
+    }
 }
 //MARK: - NAVIGATION
 extension ChatRoomVC{
@@ -215,13 +230,14 @@ extension ChatRoomVC{
 //MARK: - SETUP UI
 extension ChatRoomVC{
     
-    func setupUI() {
-        
-        viewSend.layout([.input])
-        
-        self.view.setGradientBackground(startColor: Colors.Circles.black, endColor: Colors.Circles.violet)
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
-        tableView?.backgroundColor = .clear
-        
-    }
+//    func setupUI() {
+//
+//        viewSend.layout([.input])
+//
+//        self.view.setGradientBackground(startColor: Colors.Circles.black, endColor: Colors.Circles.violet)
+//        self.navigationController?.setNavigationBarHidden(true, animated: true)
+//        tableView?.backgroundColor = .clear
+//
+//    }
+
 }

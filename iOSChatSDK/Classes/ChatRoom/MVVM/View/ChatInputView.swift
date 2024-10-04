@@ -19,7 +19,7 @@ public class ChatButton : UIButton{
 
 struct DefaultImage{
     static let emoji   =  UIImage(named: ChatConstants.Image.emoji, in: Bundle(for: ChatButton.self), compatibleWith: nil)//UIImage(systemName: "face.smiling")
-    static let camera  = UIImage(named: ChatConstants.Image.moreCamera, in: Bundle(for: ChatButton.self), compatibleWith: nil)//UIImage(systemName: "camera.fill")
+    static let camera  = UIImage(named: ChatConstants.Image.cameraIcon, in: Bundle(for: ChatButton.self), compatibleWith: nil)//UIImage(systemName: "camera.fill")
     static let more    = UIImage(named: ChatConstants.Image.plusIcon, in: Bundle(for: ChatButton.self), compatibleWith: nil)//UIImage(systemName: "plus")
     static let send    = UIImage(named: ChatConstants.Image.sendIcon, in: Bundle(for: ChatButton.self), compatibleWith: nil)//UIImage(systemName: "play.fill")
     static let audio   = UIImage(systemName: "mic.fill")
@@ -93,7 +93,7 @@ public class ChatInputView: UIView {
     public let viewAudio: ChatAudioView = {
         let view = ChatAudioView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = Colors.Circles.violet
+        view.backgroundColor = UIColor(hex:ChatConstants.CircleColor.hexString)
         view.isHidden = true
         return view
     }()

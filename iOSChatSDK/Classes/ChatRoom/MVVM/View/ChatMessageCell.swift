@@ -167,7 +167,7 @@ extension ChatMessageCell{
         
         let isCurrentUser = message.sender == UserDefaultsHelper.getCurrentUser()
         
-        bubbleBackgroundView.backgroundColor = isCurrentUser ? UIColor.black.withAlphaComponent(0.5) : Colors.Circles.violet
+        bubbleBackgroundView.backgroundColor = isCurrentUser ? ChatConstants.Bubble.backgroundColor : UIColor(hex:ChatConstants.CircleColor.borderHexString)
         messageLabel.textColor = .white
         timestampLabel.textColor = .white
         applyBubbleShape(isCurrentUser: isCurrentUser)

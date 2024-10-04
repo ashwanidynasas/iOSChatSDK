@@ -23,7 +23,7 @@ open class BottomView: UIView {
     public lazy var shadowView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = Colors.Circles.violet
+        view.backgroundColor = UIColor(hex:ChatConstants.CircleColor.hexString)
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOffset = CGSize(width: 0, height: -2)
         view.layer.shadowRadius = 4
@@ -77,7 +77,7 @@ open class BottomView: UIView {
             shadowView.topAnchor.constraint(equalTo: topAnchor),
             shadowView.leadingAnchor.constraint(equalTo: leadingAnchor),
             shadowView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            shadowView.heightAnchor.constraint(equalToConstant: 2)
+            shadowView.heightAnchor.constraint(equalToConstant: 1)
         ])
         // Constraints for redView
         replyViewTopConstraint = viewReply.topAnchor.constraint(equalTo: shadowView.bottomAnchor)

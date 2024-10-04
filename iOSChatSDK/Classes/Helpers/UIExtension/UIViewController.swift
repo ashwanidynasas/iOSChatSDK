@@ -37,4 +37,17 @@ extension UIViewController {
             self.view.window?.frame.origin.y = 0
         }
     }
+    // Background Color
+    func addGradientView(color : UIColor) {
+        let gradientView: MultipleColorGradientView! = MultipleColorGradientView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        gradientView.topColor = .black
+        gradientView.bottomColor = color
+        gradientView.backgroundColor = color
+        self.view.insertSubview(gradientView, at: 0)
+        Threads.performTaskAfterDelay(0.1) {
+            gradientView.animate(duration: 0.1,
+                                 newTopColor: .black,
+                                 newBottomColor: color )
+        }
+    }
 }

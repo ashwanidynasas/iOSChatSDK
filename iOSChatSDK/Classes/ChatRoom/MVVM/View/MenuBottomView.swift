@@ -218,15 +218,20 @@ enum Item : CaseIterable{
         case .reply      : return "reply"
         case .cancel     : return "cancel"
         case .save       : return "Save"
-        case .delete     : return "Delete"
-        case .forward    : return "Forward"
+        case .delete     : return "deleteB"
+        case .forward    : return "forwardB"
         case .pin        : return "Pin"
         }
     }
     
     var color : UIColor{
         switch self{
-        case .save , .delete , .forward , .pin : return Colors.Circles.violet
+        case .save , .delete , .forward , .pin : return UIColor(hex:ChatConstants.CircleColor.hexString)
+            
+        case .copy , .deleteSelected , .forwardSelected , .reply, .cancel : return UIColor(hex:ChatConstants.CircleColor.hexString)
+            
+        case .media , .camera , .location , .document, .zc : return UIColor(hex:ChatConstants.CircleColor.hexString)
+
         default         : return .white
         }
     }

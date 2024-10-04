@@ -79,6 +79,7 @@ struct ChatConstants {
         static let replyCancel:String      = "replyCancel"
         static let emoji:String            = "emoji"
         static let moreCamera:String       = "MoreCamera"
+        static let cameraIcon:String       = "cameraIcon"
         static let plusIcon:String         = "plusIcon"
         static let backButton:String       = "BackButton"
         static let searchImg:String        = "Search"
@@ -114,6 +115,7 @@ struct ChatConstants {
         static let shadowOffset                 = CGSize(width: 0, height: 2)
         static let shadowOpacity: Float         = 0.3
         static let shadowRadius: CGFloat        = 4
+        static let backgroundColor = UIColor.black.withAlphaComponent(0.4)
 
     }
     struct ReplyBubble {
@@ -132,6 +134,10 @@ struct ChatConstants {
     
     struct S3Media {
         static let URL: String = "https://d3qie74tq3tm9f.cloudfront.net/"
+    }
+    struct CircleColor {
+        static var hexString: String = "#520093"
+        static var borderHexString: String = "#8D30D6"
     }
 }
 

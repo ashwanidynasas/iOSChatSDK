@@ -55,7 +55,7 @@ public struct Connection: Codable {
         self.chatUserId = (try? container.decode(String.self, forKey: .chatUserId)) ?? ""
         self.imageInfo = (try? container.decode(ImageInfo.self, forKey: .imageInfo)) ?? ImageInfo(url: "")
         self.userInfo = (try? container.decode(UserInfo.self, forKey: .userInfo)) ?? UserInfo(name: "")
-        self.defaultParam = (try? container.decode(DefaultParam.self, forKey: .defaultParam)) ?? DefaultParam(color: "")
+        self.defaultParam = (try? container.decode(DefaultParam.self, forKey: .defaultParam)) ?? DefaultParam(color: Colors.Circles.violet, borderColor: Colors.borders.violet)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -90,11 +90,54 @@ public struct UserInfo: Codable {
     }
 }
 
+//public struct DefaultParam: Codable {
+//    public var color: UIColor
+//    public init(color: UIColor) {
+//        self.color = color
+//    }
+//    public init(from decoder: Decoder) throws {
+//        let container = try decoder.container(keyedBy: CodingKeys.self)
+//        let colorHex = try container.decode(String.self, forKey: .color)
+//        self.color = UIColor(hex: colorHex)
+//    }
+//    public func encode(to encoder: Encoder) throws {
+//        var container = encoder.container(keyedBy: CodingKeys.self)
+//        let colorHex = color.toHex()
+//        try container.encode(colorHex, forKey: .color)
+//    }
+//    enum CodingKeys: String, CodingKey {
+//        case color
+//    }
+//}
 public struct DefaultParam: Codable {
-    public var color: String
-
-    public init(color: String) {
+    public var color: UIColor       // Current color
+    public var borderColor: UIColor // Border color
+    
+    public init(color: UIColor, borderColor: UIColor) {
         self.color = color
+        self.borderColor = borderColor
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        let colorHex = try container.decode(String.self, forKey: .color)
+        self.color = UIColor(hex: colorHex) // Fallback to clear if conversion fails
+        
+        let borderColorHex = try container.decode(String.self, forKey: .borderColor)
+        self.borderColor = UIColor(hex: borderColorHex)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        let colorHex = color.toHex()
+        try container.encode(colorHex, forKey: .color)
+        let borderColorHex = borderColor.toHex()
+        try container.encode(borderColorHex, forKey: .borderColor)
+    }
+    enum CodingKeys: String, CodingKey {
+        case color
+        case borderColor
     }
 }
 
@@ -106,9 +149,10 @@ public struct ConnectionManager {
                                  chatUserId: String,
                                  imageInfo: String,
                                  userInfo: String,
-                                 defaultParam: String,
+                                 defaultColor: UIColor,
+                                 borderColor:UIColor,
                                  roomID: String) -> Connection {
-        let defaultParam = DefaultParam(color: defaultParam)
+        let defaultParam = DefaultParam(color: defaultColor, borderColor: borderColor)
         let imageInfo = ImageInfo(url: imageInfo)
         let userInfo = UserInfo(name: userInfo)
         UserDefaultsHelper.setRoomId(roomID)

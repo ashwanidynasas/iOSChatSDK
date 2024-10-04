@@ -93,6 +93,7 @@
 		4D10B6AD2C8F0E7A0006563B /* ServiceEndPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D10B6A42C8F0E7A0006563B /* ServiceEndPoints.swift */; };
 		4D10B6AE2C8F0E7A0006563B /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D10B6A62C8F0E7A0006563B /* ChatService.swift */; };
 		4D20C5772C9C374200D54D98 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D20C5762C9C374200D54D98 /* UIViewController.swift */; };
+		4D55444A2CB006E400E5B6A4 /* ChatGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5544492CB006E400E5B6A4 /* ChatGradientView.swift */; };
 		4DFCB3D9623FCA43D3E1BFDA528EB587 /* UIView+WebCacheOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = ED125922FB25702F3C26C4BD2DED8061 /* UIView+WebCacheOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EC633971567BFD6384859B76E1276F1 /* SDWebImageCacheKeyFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5250EA4D49A59FFB24E0F6459FDE328D /* SDWebImageCacheKeyFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		50856AC35DAB64C96C34BC588BB0F7FE /* SDAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1ABFC2E4E3A15C496D6C322D08AD46 /* SDAnimatedImage.m */; };
@@ -370,6 +371,7 @@
 		4D10B6A42C8F0E7A0006563B /* ServiceEndPoints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceEndPoints.swift; sourceTree = "<group>"; };
 		4D10B6A62C8F0E7A0006563B /* ChatService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
 		4D20C5762C9C374200D54D98 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		4D5544492CB006E400E5B6A4 /* ChatGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGradientView.swift; sourceTree = "<group>"; };
 		4E9A608DCF04FD972479EBF6958081EB /* SDImageTransformer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDImageTransformer.h; path = SDWebImage/Core/SDImageTransformer.h; sourceTree = "<group>"; };
 		5179E88A14EC962F816D6D8D96449BE4 /* ResourceBundle-iOSChatSDK-iOSChatSDK-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-iOSChatSDK-iOSChatSDK-Info.plist"; sourceTree = "<group>"; };
 		51D5927713DBC36F4129799E7303B5F4 /* MoreOptionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MoreOptionView.swift; sourceTree = "<group>"; };
@@ -898,6 +900,7 @@
 				B440150E6893FFB79D55E96D1AF7BBFA /* Protocols.swift */,
 				A9BFCECB6A5CB927A5FF23AA4F937817 /* Threads.swift */,
 				8580081F4BB9022F365DE3AA852A7358 /* Unwrapping.swift */,
+				4D5544492CB006E400E5B6A4 /* ChatGradientView.swift */,
 				555D839C742A7A9529FF93F260E79035 /* UserDefaultManager.swift */,
 				F0F70EB7DB6736B2C96A3BB7EAEB6064 /* UIExtension */,
 			);
@@ -1739,6 +1742,7 @@
 				EAED95A5053EEECD32E993838B2F422C /* MoreOptionView.swift in Sources */,
 				E81840528BB5940391897707A5607BAC /* MoreView.swift in Sources */,
 				61CC45C26A8933909F4FA1B2937B2AD9 /* Protocols.swift in Sources */,
+				4D55444A2CB006E400E5B6A4 /* ChatGradientView.swift in Sources */,
 				44A583ECB05274181A788551DD0CAC4F /* PublishMediaVC.swift in Sources */,
 				4D10B6AB2C8F0E7A0006563B /* Endpoint.swift in Sources */,
 				3E019BC0EC4B98288C97858C5BCB7B92 /* ReplyMedia_MediaCell.swift in Sources */,

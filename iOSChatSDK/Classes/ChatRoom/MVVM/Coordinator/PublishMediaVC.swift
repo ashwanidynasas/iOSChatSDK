@@ -29,7 +29,8 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
     @IBOutlet weak var sendBtn: UIButton!
     @IBOutlet weak var videoPlayerBackView: UIView!
     @IBOutlet weak var borderLine: UIView!
-    
+    @IBOutlet weak var borderLine2: UIView!
+
     //Reply View Outlet
     @IBOutlet weak var replyUserName:UILabel!
     @IBOutlet weak var replyUserDesc:UILabel!
@@ -110,7 +111,8 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
     @IBAction func replyCancelView(_ sender: UIButton) {
         isReply = false
         replyBottomView.isHidden = true
-//        bottomViewheight.constant = -replyBottomView.frame.height
+        borderLine2.isHidden = true
+        borderLine.isHidden = false
     }
     
     @IBAction func sendAction(_ sender: UIButton) {
@@ -186,106 +188,6 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
             }
         }
         
-//
-//        let room_id = UserDefaultsHelper.getRoomId()
-//        let accessToken = UserDefaultsHelper.getAccessToken()
-//
-//        if imageFetched == nil {
-//
-//            if isReply {
-//                let body = self.sendMsgTF.text
-//                let msgType = MessageType.video
-//                let mimeTypeAndFileName = ChatMediaUpload.shared.getMimeTypeAndFileName(for: /msgType)
-//
-//                let replyRequests = SendMediaRequest(accessToken: /accessToken,
-//                                                     roomID: /room_id,
-//                                                     body: /body,
-//                                                     msgType: /msgType,
-//                                                     mediaType: mimeTypeAndFileName.mediaType,
-//                                                     eventID: eventID,
-//                                                     imageFilePath: imageFetched)
-//
-//                ChatMediaUpload.shared.uploadFileChatReply(replyRequest: replyRequests,
-//                                                           isImage: false ){ result in
-//                    switch result {
-//                    case .success(let response):
-//                        print("Success: \(response.message)")
-//                        DispatchQueue.global().async {
-//                            DispatchQueue.main.async {
-//                                self.delegate?.didReceiveData(data: ChatConstants.Common.update)//"update")
-//                                self.navigationController?.popViewController(animated: true)
-//                            }
-//                        }
-//                    case .failure(let error):
-//                        DispatchQueue.main.async {
-//                            print("Error: \(error.localizedDescription)")
-//                        }
-//                    }
-//                }
-//            }
-//            else{
-//                ChatMediaUpload.shared.sendImageFromGalleryAPICall(video: videoFetched, msgType: MessageType.video, body:self.sendMsgTF.text) { result in
-//                    switch result {
-//                    case .success(let message):
-//                        print("Success: \(message)")
-//                        DispatchQueue.global().async {
-//                            DispatchQueue.main.async {
-//                                self.delegate?.didReceiveData(data: ChatConstants.Common.update)//"update")
-//                                self.navigationController?.popViewController(animated: true)
-//                            }
-//                        }
-//                    case .failure(let error):
-//                        print("Error: \(error.localizedDescription)")
-//                    }
-//                }
-//            }
-//        }else{
-//            if isReply {
-//                let body = self.sendMsgTF.text
-//                let msgType = MessageType.image
-//                let mimeTypeAndFileName = ChatMediaUpload.shared.getMimeTypeAndFileName(for: /msgType)
-//
-//                let replyRequests = SendMediaRequest(accessToken: /accessToken,
-//                                                     roomID: /room_id,
-//                                                     body: /body,
-//                                                     msgType: /msgType,
-//                                                     mediaType: mimeTypeAndFileName.mediaType,
-//                                                     eventID: eventID,
-//                                                     imageFilePath: imageFetched)
-//
-//                ChatMediaUpload.shared.uploadFileChatReply(replyRequest:replyRequests,isImage: true){ result in
-//                    switch result {
-//                    case .success(let response):
-//                        print("Success: \(response.message)")
-//                        DispatchQueue.global().async {
-//                            DispatchQueue.main.async {
-//                                self.delegate?.didReceiveData(data: ChatConstants.Common.update)//"update")
-//                                self.navigationController?.popViewController(animated: true)
-//                            }
-//                        }
-//                    case .failure(let error):
-//                        DispatchQueue.main.async {
-//                            print("Error: \(error.localizedDescription)")
-//                        }
-//                    }
-//                }
-//            }else{
-//                ChatMediaUpload.shared.sendImageFromGalleryAPICall(image: imageFetched, msgType: MessageType.image, body:self.sendMsgTF.text) { result in
-//                    switch result {
-//                    case .success(let message):
-//                        print("Success: \(message)")
-//                        DispatchQueue.global().async {
-//                            DispatchQueue.main.async {
-//                                self.delegate?.didReceiveData(data: ChatConstants.Common.update)
-//                                self.navigationController?.popViewController(animated: true)
-//                            }
-//                        }
-//                    case .failure(let error):
-//                        print("Error: \(error.localizedDescription)")
-//                    }
-//                }
-//            }
-//        }
     }
     func updateBottomViewHeight(to height: CGFloat) {
         print("")
@@ -325,11 +227,26 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
 extension PublishMediaVC{
     func setupUI(){
         borderLine.translatesAutoresizingMaskIntoConstraints = false
-        borderLine.backgroundColor = Colors.Circles.violet
+        borderLine.backgroundColor = UIColor(hex:ChatConstants.CircleColor.hexString)
         borderLine.layer.shadowColor = UIColor.black.cgColor
         borderLine.layer.shadowOffset = CGSize(width: 0, height: -2)
         borderLine.layer.shadowRadius = 4
         borderLine.layer.shadowOpacity = 1.0
+        borderLine2.translatesAutoresizingMaskIntoConstraints = false
+        borderLine2.backgroundColor = UIColor(hex:ChatConstants.CircleColor.hexString)
+        borderLine2.layer.shadowColor = UIColor.black.cgColor
+        borderLine2.layer.shadowOffset = CGSize(width: 0, height: -2)
+        borderLine2.layer.shadowRadius = 4
+        borderLine2.layer.shadowOpacity = 1.0
+        
+        if isReply {
+            borderLine2.isHidden = false
+            borderLine.isHidden = true
+
+        }else{
+            borderLine2.isHidden = true
+            borderLine.isHidden = false
+        }
 
         topView.titleLabel.isHidden = true
         topView.delegate = self
@@ -337,7 +254,8 @@ extension PublishMediaVC{
         backTFView.layer.cornerRadius = 18
         backTFView.clipsToBounds = true
         sendBtn.makeCircular()
-        self.view.setGradientBackground(startColor: Colors.Circles.black, endColor: Colors.Circles.violet)
+//        self.view.setGradientBackground(startColor: Colors.Circles.black, endColor: Colors.Circles.violet)
+        addGradientView(color: UIColor(hex:ChatConstants.CircleColor.hexString))
     }
     
     func setupVideoPlayerContainerView() {

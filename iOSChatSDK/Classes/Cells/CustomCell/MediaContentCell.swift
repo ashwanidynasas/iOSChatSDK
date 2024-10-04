@@ -151,7 +151,7 @@ open class MediaContentCell: UITableViewCell {
     func mediaConfigure(with message: Messages) {
         
         let isCurrentUser = message.sender == UserDefaultsHelper.getCurrentUser()
-        bubbleBackgroundView.backgroundColor = isCurrentUser ? UIColor.black.withAlphaComponent(0.5) : Colors.Circles.violet
+        bubbleBackgroundView.backgroundColor = isCurrentUser ? ChatConstants.Bubble.backgroundColor : UIColor(hex:ChatConstants.CircleColor.borderHexString)
         timestampLabel.textColor = .white
         
         let timestamp = Date(timeIntervalSince1970: Double(message.originServerTs ?? 0) / 1000)

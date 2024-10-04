@@ -149,7 +149,9 @@ class MediaPreviewVC: UIViewController {
 
     private func configureUI() {
         topView.titleLabel.text = /UserDefaultsHelper.getCurrentUser()
-        self.view.setGradientBackground(startColor: Colors.Circles.black, endColor: Colors.Circles.violet)
+//        self.view.setGradientBackg/*round(startColor: Colors.Circles.black, endColor: Colors.Circles.violet)*/
+        addGradientView(color: viewModel?.connection?.defaultParam.color ?? Colors.Circles.violet)
+
         
         switch /selectedMessage?.content?.msgtype {
         case MessageType.audio, MessageType.video:

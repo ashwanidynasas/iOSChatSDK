@@ -225,15 +225,15 @@ enum Item : CaseIterable{
     }
     
     var color : UIColor{
-        switch self{
-        case .save , .delete , .forward , .pin : return UIColor(hex:ChatConstants.CircleColor.hexString)
+        switch self {
+        case .save, .delete, .forward, .pin:
+            return UIColor(hex: ChatConstants.CircleColor.hexString)
             
-        case .copy , .deleteSelected , .forwardSelected , .reply, .cancel : return UIColor(hex:ChatConstants.CircleColor.hexString)
+        case .copy, .deleteSelected, .forwardSelected, .reply, .cancel:
+            return UIColor(hex: ChatConstants.CircleColor.hexString)
             
-        case .media , .camera , .location , .document, .zc : return UIColor(hex:ChatConstants.CircleColor.hexString)
-
-        default         : return .white
+        case .media, .camera, .location, .document, .zc:
+            return UIColor(hex: ChatConstants.CircleColor.hexString)
         }
     }
- 
 }

@@ -45,7 +45,7 @@ public class ChatInputView: UIView {
     
     open var buttonColor = UIColor.systemBlue {
         didSet {
-            buttonEmoji.tintColor = buttonColor
+//            buttonEmoji.tintColor = buttonColor
             buttonCamera.tintColor = buttonColor
             buttonMore.tintColor = buttonColor
             buttonSend.tintColor = buttonColor

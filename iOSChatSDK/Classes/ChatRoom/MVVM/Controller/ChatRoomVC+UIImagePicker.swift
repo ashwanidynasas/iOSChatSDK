@@ -13,35 +13,62 @@ import MobileCoreServices
 extension ChatRoomVC : UIImagePickerControllerDelegate, UIDocumentPickerDelegate{
     
     func camera() {
-        guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
-            return
-        }
+//        guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+//            return
+//        }
+//        let imagePicker = UIImagePickerController()
+//        imagePicker.sourceType = .camera
+//        imagePicker.delegate = self
+//        self.present(imagePicker, animated: true)
         
-        let imagePicker = UIImagePickerController()
-        imagePicker.sourceType = .camera
-        imagePicker.delegate = self
-        present(imagePicker, animated: true)
+        self.imageFetched = nil
+        self.videoFetched = nil
+        self.fileFetched = nil
+        ChatImagePicker.sharedHandler.getMedia(controller: self, type: .camera, allowEditing: false) { (originalImage, videoURL) in
+                    if let originalImage = originalImage {
+                        print("Original Image Captured: \(originalImage)")
+                        self.imageFetched = originalImage
+                        self.publish()
+                    } else if let videoURL = videoURL {
+                        print("Video Captured at URL: \(videoURL)")
+                    }
+                }
     }
     
     func gallery() {
-        // Check if the photo library is available
-        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-            let imagePickerController = UIImagePickerController()
-            imagePickerController.delegate = self
-            imagePickerController.sourceType = .photoLibrary
-            imagePickerController.allowsEditing = false
-            imagePickerController.mediaTypes = ["public.image", "public.movie"] // Support both images and videos
-            DispatchQueue.main.async {
-                self.present(imagePickerController, animated: true, completion: nil)
-            }
-        } else {
-            // Handle the case where the photo library is not available
-            let alert = UIAlertController(title: "Error", message: "Photo Library not available.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            DispatchQueue.main.async {
-                self.present(alert, animated: true, completion: nil)
+        self.imageFetched = nil
+        self.videoFetched = nil
+        self.fileFetched = nil
+        ChatImagePicker.sharedHandler.getMedia(controller: self, type: .gallery, allowEditing: false) { (originalImage, videoURL) in
+            if let originalImage = originalImage {
+                print("Image Selected: \(originalImage)")
+                self.imageFetched = originalImage
+                self.publish()
+            } else if let videoURL = videoURL {
+                print("Video Selected: \(videoURL)")
+                self.videoFetched = videoURL
+                self.publish()
             }
         }
+
+        // Check if the photo library is available
+//        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+//            let imagePickerController = UIImagePickerController()
+//            imagePickerController.delegate = self
+//            imagePickerController.sourceType = .photoLibrary
+//            imagePickerController.allowsEditing = false
+//            imagePickerController.mediaTypes = ["public.image", "public.movie"] // Support both images and videos
+//            DispatchQueue.main.async {
+//                self.present(imagePickerController, animated: true, completion: nil)
+//            }
+//        } else {
+//            // Handle the case where the photo library is not available
+//            let alert = UIAlertController(title: "Error", message: "Photo Library not available.", preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//            DispatchQueue.main.async {
+//                self.present(alert, animated: true, completion: nil)
+//            }
+//        }
     }
     
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

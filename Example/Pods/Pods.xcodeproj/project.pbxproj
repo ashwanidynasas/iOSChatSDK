@@ -94,6 +94,7 @@
 		4D10B6AE2C8F0E7A0006563B /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D10B6A62C8F0E7A0006563B /* ChatService.swift */; };
 		4D20C5772C9C374200D54D98 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D20C5762C9C374200D54D98 /* UIViewController.swift */; };
 		4D55444A2CB006E400E5B6A4 /* ChatGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5544492CB006E400E5B6A4 /* ChatGradientView.swift */; };
+		4D65A5092CB5580F00A16BA7 /* ChatImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65A5082CB5580F00A16BA7 /* ChatImagePicker.swift */; };
 		4DFCB3D9623FCA43D3E1BFDA528EB587 /* UIView+WebCacheOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = ED125922FB25702F3C26C4BD2DED8061 /* UIView+WebCacheOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EC633971567BFD6384859B76E1276F1 /* SDWebImageCacheKeyFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5250EA4D49A59FFB24E0F6459FDE328D /* SDWebImageCacheKeyFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		50856AC35DAB64C96C34BC588BB0F7FE /* SDAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1ABFC2E4E3A15C496D6C322D08AD46 /* SDAnimatedImage.m */; };
@@ -372,6 +373,7 @@
 		4D10B6A62C8F0E7A0006563B /* ChatService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
 		4D20C5762C9C374200D54D98 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		4D5544492CB006E400E5B6A4 /* ChatGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGradientView.swift; sourceTree = "<group>"; };
+		4D65A5082CB5580F00A16BA7 /* ChatImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatImagePicker.swift; sourceTree = "<group>"; };
 		4E9A608DCF04FD972479EBF6958081EB /* SDImageTransformer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDImageTransformer.h; path = SDWebImage/Core/SDImageTransformer.h; sourceTree = "<group>"; };
 		5179E88A14EC962F816D6D8D96449BE4 /* ResourceBundle-iOSChatSDK-iOSChatSDK-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-iOSChatSDK-iOSChatSDK-Info.plist"; sourceTree = "<group>"; };
 		51D5927713DBC36F4129799E7303B5F4 /* MoreOptionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MoreOptionView.swift; sourceTree = "<group>"; };
@@ -901,6 +903,7 @@
 				A9BFCECB6A5CB927A5FF23AA4F937817 /* Threads.swift */,
 				8580081F4BB9022F365DE3AA852A7358 /* Unwrapping.swift */,
 				4D5544492CB006E400E5B6A4 /* ChatGradientView.swift */,
+				4D65A5082CB5580F00A16BA7 /* ChatImagePicker.swift */,
 				555D839C742A7A9529FF93F260E79035 /* UserDefaultManager.swift */,
 				F0F70EB7DB6736B2C96A3BB7EAEB6064 /* UIExtension */,
 			);
@@ -1750,6 +1753,7 @@
 				4D10B6AE2C8F0E7A0006563B /* ChatService.swift in Sources */,
 				93D72323455BC05D347D332FC1C4F63B /* ReplyMedia_TextCell.swift in Sources */,
 				4D20C5772C9C374200D54D98 /* UIViewController.swift in Sources */,
+				4D65A5092CB5580F00A16BA7 /* ChatImagePicker.swift in Sources */,
 				B80639F13EADBC6AF7DEE1E46DE17F5D /* ReplyMediaText_MediaCell.swift in Sources */,
 				CAA9B453DDD716A94B29972A1A84D4D6 /* ReplyMediaText_MediaTextCell.swift in Sources */,
 				4D10B6A92C8F0E7A0006563B /* API + Extensions.swift in Sources */,

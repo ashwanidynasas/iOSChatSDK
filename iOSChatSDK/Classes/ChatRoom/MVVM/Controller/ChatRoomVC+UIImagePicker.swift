@@ -31,6 +31,8 @@ extension ChatRoomVC : UIImagePickerControllerDelegate, UIDocumentPickerDelegate
                         self.publish()
                     } else if let videoURL = videoURL {
                         print("Video Captured at URL: \(videoURL)")
+                        self.videoFetched = videoURL
+                        self.publish()
                     }
                 }
     }

@@ -22,6 +22,7 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
     public var imageFetched: UIImage?  = nil
     public var videoFetched: URL?
     public var fileFetched: URL?
+    private var fetchTimer: Timer?
 
     // Reference to bottom view height constraint
     public var viewSendHeightConstraint: NSLayoutConstraint!
@@ -37,15 +38,27 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
                 self?.scrollToBottom()
-                self?.viewSend.resetViews()
+//                self?.viewSend.resetViews()
             }
         }
     }
-
+    
+    private func startFetchTimer() {
+        fetchTimer?.invalidate()
+        fetchTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { [weak self] _ in
+            self?.viewModel?.getMessages()
+        }
+    }
+    private func stopFetchTimer() {
+        fetchTimer?.invalidate()
+        fetchTimer = nil
+    }
+    
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 //        isReply = false
 //        viewModel?.getMessages()
+        startFetchTimer()
         setupKeyboardObservers()
         self.hidesBottomBarWhenPushed = true
     }
@@ -134,6 +147,7 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
         super.viewWillDisappear(animated)
         self.view.endEditing(true)
         removeKeyboardObservers()
+        stopFetchTimer()
     }
     private func setupTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
@@ -225,7 +239,6 @@ extension ChatRoomVC{
         viewModel?.getMessages()
         scrollToBottom()
     }
-
 }
 //MARK: - SETUP UI
 extension ChatRoomVC{

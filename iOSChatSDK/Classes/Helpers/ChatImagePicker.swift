@@ -132,7 +132,7 @@ extension ChatImagePicker {
                         picker.sourceType = .camera
                         picker.edgesForExtendedLayout = UIRectEdge.all
                         picker.showsCameraControls = true
-                        picker.mediaTypes = [(kUTTypeImage as String)] // Only image from camera
+                        picker.mediaTypes = [(kUTTypeImage as String), (kUTTypeMovie as String)]
                         self.vc?.present(picker, animated: true, completion: nil)
                     } else {
                         print(self.CAMERA_NOT_AVAILABLE)
@@ -148,7 +148,7 @@ extension ChatImagePicker {
                 Threads.performTaskInMainQueue {
                     if UIImagePickerController.isSourceTypeAvailable(.camera) {
                         picker.sourceType = .camera
-                        picker.mediaTypes = [(kUTTypeMovie as String)] // Only video from camera
+                        picker.mediaTypes = [(kUTTypeMovie as String), (kUTTypeMovie as String)]
                         picker.videoQuality = .typeHigh
                         self.vc?.present(picker, animated: true, completion: nil)
                     } else {

@@ -163,7 +163,9 @@ extension ChatRoomVC: UITableViewDelegate, UITableViewDataSource {
 //MARK: - SCROLL VIEW
 extension ChatRoomVC{
     func scrollToBottom() {
-        guard !isScrolling else { return }
+//        guard !isScrolling else { return }
+        guard isAtBottom else { return } // Only scroll if the user is at the bottom
+
         DispatchQueue.main.async {
             if /self.viewModel?.messages.isEmpty {
                 return
@@ -175,15 +177,29 @@ extension ChatRoomVC{
     
     public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         isScrolling = true
+        isAtBottom = false // User has started scrolling, assume they’re not at the bottom
+
     }
 
     public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
-            isScrolling = false
-        }
+                   isScrolling = false
+                   updateIsAtBottom(for: scrollView)
+               }
     }
 
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         isScrolling = false
+        updateIsAtBottom(for: scrollView)
+
     }
+    private func updateIsAtBottom(for scrollView: UIScrollView) {
+            // Check if the user is at the bottom of the chat
+            let contentOffset = scrollView.contentOffset.y
+            let contentHeight = scrollView.contentSize.height
+            let scrollViewHeight = scrollView.bounds.height
+
+            // Allow a small threshold to account for minor scrolling
+            isAtBottom = contentOffset >= (contentHeight - scrollViewHeight - 20)
+        }
 }

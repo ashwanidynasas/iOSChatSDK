@@ -116,6 +116,9 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
     }
     
     @IBAction func sendAction(_ sender: UIButton) {
+        sender.isEnabled = false
+        showLoader() //
+
         let room_id = UserDefaultsHelper.getRoomId()
         let accessToken = UserDefaultsHelper.getAccessToken()
         let body = self.sendMsgTF.text
@@ -139,6 +142,8 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
         
          guard let messageType = msgType else {
              print("No media to send.")
+             hideLoader() //
+             sender.isEnabled = true //
              return
          }
 
@@ -163,6 +168,9 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
                 case .success(let response):
                     print("Success: \(response.message)")
                     DispatchQueue.main.async {
+                        self.hideLoader() //
+                        sender.isEnabled = true //
+
                         self.delegate?.didReceiveData(data: ChatConstants.Common.update)
                         self.navigationController?.popViewController(animated: true)
                     }
@@ -179,6 +187,8 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
                 case .success(let message):
                     print("Success: \(message)")
                     DispatchQueue.main.async {
+                        self.hideLoader() //
+                        sender.isEnabled = true //
                         self.delegate?.didReceiveData(data: ChatConstants.Common.update)
                         self.navigationController?.popViewController(animated: true)
                     }
@@ -188,6 +198,23 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
             }
         }
         
+    }
+    func showLoader() {
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self.view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurEffectView.tag = 342
+        let loader = UIActivityIndicatorView(style: .large)
+        loader.center = blurEffectView.contentView.center
+        loader.startAnimating()
+        blurEffectView.contentView.addSubview(loader)
+        self.view.addSubview(blurEffectView)
+    }
+    func hideLoader() {
+        if let blurEffectView = self.view.viewWithTag(342) as? UIVisualEffectView {
+            blurEffectView.removeFromSuperview()
+        }
     }
     func updateBottomViewHeight(to height: CGFloat) {
         print("")

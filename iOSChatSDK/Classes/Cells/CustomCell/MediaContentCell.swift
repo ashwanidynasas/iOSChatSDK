@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 
 
@@ -26,6 +27,9 @@ open class MediaContentCell: UITableViewCell {
     public var messageImageViewHeightConstraint: NSLayoutConstraint!
     public var messageImageViewWidthConstraint: NSLayoutConstraint!
     public let gradientLayer = CAGradientLayer()
+
+    var playerLayer: AVPlayerLayer?
+    var player: AVPlayer?
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -77,8 +81,8 @@ open class MediaContentCell: UITableViewCell {
         playButton.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
         
         // Setup tap gesture recognizer
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
-        playButton.addGestureRecognizer(tapGestureRecognizer)
+//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
+//        playButton.addGestureRecognizer(tapGestureRecognizer)
         
         // Setup long press gesture recognizer
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture(_:)))
@@ -91,13 +95,27 @@ open class MediaContentCell: UITableViewCell {
         gradientLayer.frame = messageImageView.bounds
     }
     @objc private func buttonTapped(_ sender: UIButton) {
-        delegate?.didTapPlayButton(in: self)
-        
+//                delegate?.didTapPlayButton(in: self)
+        if let player = player {
+            // Toggle play/pause
+            if player.timeControlStatus == .playing {
+                player.pause()
+                sender.setImage(UIImage(named: ChatConstants.Image.playIcon, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
+            } else {
+                player.play()
+                sender.setImage(UIImage(named: ChatConstants.Image.pauseIcon, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
+            }
+        } else {
+            let audioURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/local_content/Gx/ss/yDewLRgUTZmckblkqsgSOR")!
+            configureWith(url: audioURL)
+            sender.setImage(UIImage(named: ChatConstants.Image.pauseIcon, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
+        }
     }
-
-    @objc private func handleTapGesture(_ gesture: UITapGestureRecognizer) {
-        delegate?.didTapPlayButton(in: self)
-        
+    
+    func configureWith(url: URL) {
+        player = AVPlayer(url: url)
+        playerLayer = nil
+        player?.play()
     }
 
     @objc private func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer) {
@@ -144,10 +162,17 @@ open class MediaContentCell: UITableViewCell {
     }
     open override func prepareForReuse() {
         super.prepareForReuse()
+        playerLayer?.removeFromSuperlayer()
+        player = nil
+        playerLayer = nil
+        player?.pause() // Stop any ongoing playback
+        player = nil
+        playButton.setImage(UIImage(systemName: "play.fill"), for: .normal) // Reset to play icon
+
+
         messageImageView.image = nil
         playButton.tag = 0
     }
-    
     func mediaConfigure(with message: Messages) {
         
         let isCurrentUser = message.sender == UserDefaultsHelper.getCurrentUser()
@@ -185,11 +210,11 @@ open class MediaContentCell: UITableViewCell {
             self.playButton.setImage(UIImage(named: ChatConstants.Image.playIcon, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
 
         }else if message.content?.msgtype == MessageType.audio {
-            self.messageImageView.image = UIImage(named: ChatConstants.Image.audioPlaceholder)
+            self.messageImageView.image = UIImage(named: ChatConstants.Image.playIcon)
 
 //            let imageView = UIImageView(image: UIImage(named: ChatConstants.Image.audioPlaceholder, in: Bundle(for: MediaContentCell.self), compatibleWith: nil))
 //            self.messageImageView = imageView
-            self.playButton.setImage(UIImage(named: ChatConstants.Image.audioPlaceholder, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
+            self.playButton.setImage(UIImage(named: ChatConstants.Image.playIcon, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
             
         }
         else if message.content?.msgtype == MessageType.file {

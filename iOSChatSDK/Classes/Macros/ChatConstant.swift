@@ -72,6 +72,8 @@ struct ChatConstants {
     struct Image {
         static let readIndicator:String    = "read_indicator"
         static let playIcon:String         = "PlayIcon"
+        static let pauseIcon:String         = "PauseIcon"
+
         static let placeholder:String      = "placeholder"
         static let userPlaceholder:String  = "placeholder"
         static let sendIcon:String         = "sendIcon"

@@ -23,7 +23,7 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
     public var videoFetched: URL?
     public var fileFetched: URL?
     private var fetchTimer: Timer?
-
+    public var isAtBottom: Bool = true
     // Reference to bottom view height constraint
     public var viewSendHeightConstraint: NSLayoutConstraint!
 
@@ -46,8 +46,10 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
     private func startFetchTimer() {
         fetchTimer?.invalidate()
         fetchTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { [weak self] _ in
-            self?.viewModel?.getMessages()
+            guard let self = self, !self.isScrolling else { return }
+            self.viewModel?.getMessages()
         }
+
     }
     private func stopFetchTimer() {
         fetchTimer?.invalidate()
@@ -242,15 +244,4 @@ extension ChatRoomVC{
 }
 //MARK: - SETUP UI
 extension ChatRoomVC{
-    
-//    func setupUI() {
-//
-//        viewSend.layout([.input])
-//
-//        self.view.setGradientBackground(startColor: Colors.Circles.black, endColor: Colors.Circles.violet)
-//        self.navigationController?.setNavigationBarHidden(true, animated: true)
-//        tableView?.backgroundColor = .clear
-//
-//    }
-
 }

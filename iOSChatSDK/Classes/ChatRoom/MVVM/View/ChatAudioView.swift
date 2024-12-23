@@ -136,7 +136,6 @@ extension ChatAudioView{
     func finishRecording(success: Bool) {
         audioRecorder?.stop()
         audioRecorder = nil
-        print("audioFilename ---->>> \(audioFilename)")
         if success {
             print("Recording succeeded")
             delegate?.sendAudio(audioFilename: audioFilename)

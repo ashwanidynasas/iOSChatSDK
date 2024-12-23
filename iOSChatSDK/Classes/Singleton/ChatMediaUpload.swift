@@ -115,7 +115,7 @@ class ChatMediaUpload {
         case MessageType.file:
             return ("application/pdf", "upload.pdf", "file")
         case MessageType.audio:
-            return ("audio/mp3", "Audio File", "audio")
+            return ("audio/mpeg", "Audio File", "audio")
         default:
             return ("", "", "")
         }

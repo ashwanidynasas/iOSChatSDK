@@ -43,15 +43,15 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
         }
     }
     
-    private func startFetchTimer() {
+    public func startFetchTimer() {
         fetchTimer?.invalidate()
         fetchTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { [weak self] _ in
             guard let self = self, !self.isScrolling else { return }
-            self.viewModel?.getMessages()
+            // self.viewModel?.getMessages()
         }
 
     }
-    private func stopFetchTimer() {
+    public func stopFetchTimer() {
         fetchTimer?.invalidate()
         fetchTimer = nil
     }

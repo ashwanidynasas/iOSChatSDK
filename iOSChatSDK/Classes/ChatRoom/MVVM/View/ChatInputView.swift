@@ -24,6 +24,8 @@ struct DefaultImage{
     static let send    = UIImage(named: ChatConstants.Image.sendIcon, in: Bundle(for: ChatButton.self), compatibleWith: nil)//UIImage(systemName: "play.fill")
     static let audio   = UIImage(systemName: "mic.fill")
     static let wave = UIImage(named: ChatConstants.Image.wave, in: Bundle(for: ChatButton.self), compatibleWith: nil)
+    static let playIcon = UIImage(named: ChatConstants.Image.playIcon, in: Bundle(for: ChatButton.self), compatibleWith: nil)
+
 }
 
 enum InputViewMode{
@@ -89,7 +91,27 @@ public class ChatInputView: UIView {
         )
         return textField
     }()
-    
+    public let deleteIconView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor.clear
+        view.layer.cornerRadius = 20.0
+        view.isHidden = true
+        
+        let imageView = UIImageView(image: UIImage(systemName: "trash"))
+        imageView.tintColor = .white
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(imageView)
+        
+        NSLayoutConstraint.activate([
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            imageView.widthAnchor.constraint(equalToConstant: 24),
+            imageView.heightAnchor.constraint(equalToConstant: 24)
+        ])
+        
+        return view
+    }()
     public let viewAudio: ChatAudioView = {
         let view = ChatAudioView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -164,6 +186,7 @@ public class ChatInputView: UIView {
         viewSend.addSubview(buttonAudio)
         
         loadView.addSubview(viewAudio)
+        loadView.addSubview(deleteIconView)
     }
     
     public func setupConstraints() {
@@ -245,6 +268,13 @@ public class ChatInputView: UIView {
 
         ])
         
+        NSLayoutConstraint.activate([
+            deleteIconView.trailingAnchor.constraint(equalTo : buttonAudio.trailingAnchor),
+            deleteIconView.bottomAnchor.constraint(equalTo: buttonAudio.topAnchor, constant: -20),
+            deleteIconView.widthAnchor.constraint(equalToConstant: 40),
+            deleteIconView.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        
     }
     
     public func setupLongPressGesture() {
@@ -254,15 +284,85 @@ public class ChatInputView: UIView {
     
     // MARK: - Actions
     @objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
-        if gesture.state == .began {
+        switch gesture.state {
+        case .began:
+            // Show recording UI
             viewAudio.isHidden = false
+            deleteIconView.isHidden = false
             viewAudio.startRecording()
-        } else if gesture.state == .ended || gesture.state == .cancelled {
+            
+            // Add pan gesture recognizer
+            let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+            buttonAudio.addGestureRecognizer(panGesture)
+            
+        case .ended, .cancelled:
+            // Hide recording UI
+            deleteIconView.isHidden = true
+            if deleteIconView.frame.contains(gesture.location(in: loadView)) {
+                // User swiped to delete
+                viewAudio.cancelRecording()
+                print("Recording deleted")
+            } else {
+                // Stop recording normally
+                viewAudio.stopRecording()
+                print("Recording saved")
+            }
             viewAudio.isHidden = true
-            viewAudio.stopRecording()
+
+        default:
+            break
         }
     }
-    
+//    @objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+//        if gesture.state == .began {
+//            viewAudio.isHidden = false
+//            viewAudio.startRecording()
+//            deleteIconView.isHidden = false
+//
+//            // Add pan gesture recognizer
+//            let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+//            buttonAudio.addGestureRecognizer(panGesture)
+//
+//        } else if gesture.state == .ended || gesture.state == .cancelled {
+//            deleteIconView.isHidden = true
+//            if deleteIconView.frame.contains(gesture.location(in: loadView)) {
+//                // User swiped to delete
+//                viewAudio.stopRecording()
+//                print("Recording deleted")
+//            } else {
+//                // Stop recording normally
+//                viewAudio.stopRecording()
+//                print("Recording saved")
+//            }
+//            viewAudio.isHidden = true
+//
+////            viewAudio.isHidden = true
+////            viewAudio.stopRecording()
+//        }
+//    }
+    @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
+        let location = gesture.location(in: loadView)
+        if deleteIconView.frame.contains(location) {
+            // Highlight deleteIconView to indicate deletion
+            deleteIconView.backgroundColor = UIColor.darkGray
+        } else {
+            // Reset deleteIconView appearance
+            deleteIconView.backgroundColor = UIColor.red
+        }
+        
+        if gesture.state == .ended {
+            if deleteIconView.frame.contains(location) {
+                // User released on delete icon
+                viewAudio.cancelRecording()
+                print("Recording deleted")
+            } else {
+                viewAudio.stopRecording()
+                print("Recording saved")
+            }
+            deleteIconView.isHidden = true
+            viewAudio.isHidden = true
+        }
+    }
     @objc func emojiTapped(_ sender: UIButton?){
         
     }

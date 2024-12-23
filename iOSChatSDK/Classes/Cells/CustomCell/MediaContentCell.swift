@@ -30,6 +30,9 @@ open class MediaContentCell: UITableViewCell {
 
     var playerLayer: AVPlayerLayer?
     var player: AVPlayer?
+    var audioURL:URL?
+    var mediaType:String?
+    
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -95,28 +98,141 @@ open class MediaContentCell: UITableViewCell {
         gradientLayer.frame = messageImageView.bounds
     }
     @objc private func buttonTapped(_ sender: UIButton) {
-//                delegate?.didTapPlayButton(in: self)
-        if let player = player {
-            // Toggle play/pause
-            if player.timeControlStatus == .playing {
-                player.pause()
-                sender.setImage(UIImage(named: ChatConstants.Image.playIcon, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
+        if self.mediaType == MessageType.audio{
+            if let player = player {
+                if player.timeControlStatus == .playing {
+                    player.pause()
+                    sender.setImage(UIImage(named: ChatConstants.Image.playIcon, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
+                    delegate?.didStopPlayingAudio(in: self)
+                } else {
+                    player.play()
+                    sender.setImage(UIImage(named: ChatConstants.Image.pauseIcon, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
+                    delegate?.didStartPlayingAudio(in: self)
+                }
             } else {
-                player.play()
-                sender.setImage(UIImage(named: ChatConstants.Image.pauseIcon, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
+                //                if let url = self.audioURL {
+                //                    print("Selected Audio ---> \(url)")
+                //                    configureWith(url: url)
+                //                }
+                //                sender.setImage(UIImage(named: ChatConstants.Image.pauseIcon, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
+                //                delegate?.didStartPlayingAudio(in: self)
+                
+                if let url = self.audioURL {
+                    print("Selected Audio ---> \(url)")
+                    configureWith(url: url)
+                } else {
+                    resetPlayPauseButton()
+                    showToast(message: "Audio URL is invalid.")
+                }
+                sender.setImage(
+                    UIImage(named: ChatConstants.Image.pauseIcon, in: Bundle(for: MediaContentCell.self), compatibleWith: nil),
+                    for: .normal
+                )
+                delegate?.didStartPlayingAudio(in: self)
             }
-        } else {
-            let audioURL = URL(string: "https://d3qie74tq3tm9f.cloudfront.net/local_content/Gx/ss/yDewLRgUTZmckblkqsgSOR")!
-            configureWith(url: audioURL)
-            sender.setImage(UIImage(named: ChatConstants.Image.pauseIcon, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
+        }else{
+            delegate?.didTapPlayButton(in: self)
         }
     }
     
-    func configureWith(url: URL) {
-        player = AVPlayer(url: url)
-        playerLayer = nil
+    func configureAudioSessionss() {
+        do {
+            let audioSession = AVAudioSession.sharedInstance()
+            try audioSession.setCategory(.playback, mode: .default, options: [])
+            try audioSession.setActive(true)
+        } catch {
+            print("Audio session setup failed: \(error.localizedDescription)")
+        }
+    }
+
+    func playAudio(from urlString: URL) {
+        configureAudioSessionss()
+        player = AVPlayer(url: urlString)
         player?.play()
     }
+
+    func configureWith(url: URL) {
+        configureAudioSessionss()
+        
+        let playerItem = AVPlayerItem(url: url)
+        player = AVPlayer(playerItem: playerItem)
+        
+        // Observe when the player finishes playing
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(playerDidFinishPlaying),
+            name: .AVPlayerItemDidPlayToEndTime,
+            object: playerItem
+        )
+        
+        // Observe errors during playback
+        playerItem.addObserver(self, forKeyPath: "status", options: [.new, .initial], context: nil)
+        
+        player?.play()
+    }
+    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "status", let playerItem = object as? AVPlayerItem {
+            switch playerItem.status {
+            case .readyToPlay:
+                print("Audio is ready to play.")
+            case .failed:
+                print("Failed to play audio: \(playerItem.error?.localizedDescription ?? "Unknown error")")
+                resetPlayPauseButton() // Reset the button state
+                showToast(message: "Audio failed to play.")
+            default:
+                break
+            }
+        }
+    }
+    private func resetPlayPauseButton() {
+        playButton.setImage(
+            UIImage(named: ChatConstants.Image.playIcon, in: Bundle(for: MediaContentCell.self), compatibleWith: nil),
+            for: .normal
+        )
+        player = nil
+    }
+    private func showToast(message: String) {
+        let toastLabel = UILabel(frame: CGRect(x: self.contentView.center.x - 75, y: self.contentView.frame.size.height - 50, width: 150, height: 35))
+        toastLabel.backgroundColor = UIColor.red.withAlphaComponent(0.6)
+        toastLabel.textColor = UIColor.white
+        toastLabel.textAlignment = .center
+        toastLabel.font = UIFont.systemFont(ofSize: 14.0)
+        toastLabel.text = message
+        toastLabel.alpha = 1.0
+        toastLabel.layer.cornerRadius = 10
+        toastLabel.clipsToBounds = true
+        self.contentView.addSubview(toastLabel)
+        
+        UIView.animate(withDuration: 3.0, delay: 0.1, options: .curveEaseOut, animations: {
+            toastLabel.alpha = 0.0
+        }, completion: { _ in
+            toastLabel.removeFromSuperview()
+        })
+    }
+//    func configureWith(url: URL) {
+//        configureAudioSessionss()
+//
+//        let playerItem = AVPlayerItem(url: url)
+//        player = AVPlayer(playerItem: playerItem)
+//
+//        // Observe when the player finishes playing
+//        NotificationCenter.default.addObserver(
+//            self,
+//            selector: #selector(playerDidFinishPlaying),
+//            name: .AVPlayerItemDidPlayToEndTime,
+//            object: playerItem
+//        )
+//
+//        player?.play()
+//    }
+    @objc private func playerDidFinishPlaying() {
+        // Reset the play button icon to play
+        playButton.setImage(
+            UIImage(named: ChatConstants.Image.playIcon, in: Bundle(for: MediaContentCell.self), compatibleWith: nil),
+            for: .normal
+        )
+        player = nil
+    }// if audio url is not working or not play or incruptted, so play pause toggle will reset. afte click on play button. and toast will show.
 
     @objc private func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
@@ -166,16 +282,27 @@ open class MediaContentCell: UITableViewCell {
         player = nil
         playerLayer = nil
         player?.pause() // Stop any ongoing playback
+        delegate?.didStopPlayingAudio(in: self)
         player = nil
-        playButton.setImage(UIImage(systemName: "play.fill"), for: .normal) // Reset to play icon
-
-
+        
         messageImageView.image = nil
         playButton.tag = 0
+        
+        
+        // Remove notification observer
+        NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
+        
+        // Reset the play button icon
+        playButton.setImage(
+            UIImage(named: ChatConstants.Image.playIcon, in: Bundle(for: MediaContentCell.self), compatibleWith: nil),
+            for: .normal
+        )
+        
     }
     func mediaConfigure(with message: Messages) {
         
         let isCurrentUser = message.sender == UserDefaultsHelper.getCurrentUser()
+        self.mediaType = ""
         bubbleBackgroundView.backgroundColor = isCurrentUser ? ChatConstants.Bubble.backgroundColor : UIColor(hex:ChatConstants.CircleColor.borderHexString)
         timestampLabel.textColor = .white
         
@@ -211,9 +338,12 @@ open class MediaContentCell: UITableViewCell {
 
         }else if message.content?.msgtype == MessageType.audio {
             self.messageImageView.image = UIImage(named: ChatConstants.Image.playIcon)
-
-//            let imageView = UIImageView(image: UIImage(named: ChatConstants.Image.audioPlaceholder, in: Bundle(for: MediaContentCell.self), compatibleWith: nil))
-//            self.messageImageView = imageView
+            self.mediaType = message.content?.msgtype
+            guard let audiourl = URL(string: "\(ChatConstants.S3Media.URL)\(/message.content?.S3MediaUrl)") else {
+                print("Error: Invalid video URL")
+                return
+            }
+            self.audioURL = audiourl
             self.playButton.setImage(UIImage(named: ChatConstants.Image.playIcon, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
             
         }

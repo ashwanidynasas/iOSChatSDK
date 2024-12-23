@@ -119,11 +119,24 @@ extension ChatAudioView{
         timer?.invalidate()
         timer = nil
     }
+    func cancelRecording() {
+        audioRecorder?.stop()
+        audioRecorder = nil
+        
+        // Stop the timer
+        timer?.invalidate()
+        timer = nil
+        
+        print("Recording canceled")
+        // You can delete the temporary file if needed
+        try? FileManager.default.removeItem(at: audioFilename)
+    }
+
     
     func finishRecording(success: Bool) {
         audioRecorder?.stop()
         audioRecorder = nil
-        
+        print("audioFilename ---->>> \(audioFilename)")
         if success {
             print("Recording succeeded")
             delegate?.sendAudio(audioFilename: audioFilename)

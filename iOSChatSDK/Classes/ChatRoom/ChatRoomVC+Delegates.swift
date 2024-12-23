@@ -44,6 +44,14 @@ extension ChatRoomVC : DelegateMediaFullVC{
 
 //MARK: - PRESS
 extension ChatRoomVC: DelegatePlay{
+    func didStartPlayingAudio(in cell: MediaContentCell) {
+        stopFetchTimer()
+    }
+    
+    func didStopPlayingAudio(in cell: MediaContentCell) {
+        startFetchTimer()
+    }
+    
     func didTapPlayButton(in cell: UITableViewCell) {
         if cell is ReplyText_TextCell || cell is ReplyMedia_TextCell || cell is ReplyMediaText_TextCell{
             print("Text only - no preview")

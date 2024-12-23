@@ -22,6 +22,9 @@ protocol DelegateMediaFullVC: AnyObject {
 protocol DelegatePlay : AnyObject{
     func didTapPlayButton(in cell: UITableViewCell)
     func didLongPressPlayButton(in cell: UITableViewCell)
+    func didStartPlayingAudio(in cell: MediaContentCell)
+    func didStopPlayingAudio(in cell: MediaContentCell)
+
 }
 
 protocol DelegateReply : AnyObject{

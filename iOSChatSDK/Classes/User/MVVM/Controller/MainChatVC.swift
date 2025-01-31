@@ -83,7 +83,6 @@ public class MainChatVC: UIViewController {
                 }
                 
             } else {
-                print("Failed to retrieve access token")
             }
         }
     }

@@ -109,7 +109,5 @@ class MoreOptionView: UIView {
 
   @objc func imageButtonTapped(_ sender: UIButton) {
     let buttonTag = sender.tag
-    print("Image view \(buttonTag + 1) tapped!")
-    // Add your button action logic here based on the button tag
   }
 }

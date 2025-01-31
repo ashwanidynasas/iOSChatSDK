@@ -66,7 +66,6 @@ extension ConnectionListVC: UITableViewDelegate,UITableViewDataSource {
                         currentCell.setNeedsLayout() // Request layout update
                     }
                 } catch {
-                    print("Error fetching image data for \(imageUrl): \(error)")
                     DispatchQueue.main.async {
                         cell.imageView?.image = UIImage(named: "placeholder")
                         cell.setNeedsLayout()

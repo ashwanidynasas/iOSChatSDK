@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SDWebImage
+//import SDWebImage
 
 
 open class ReplyText_TextCell: UITableViewCell {
@@ -183,12 +183,10 @@ open class ReplyText_TextCell: UITableViewCell {
     }
     @objc private func handleTapGesture(_ gesture: UITapGestureRecognizer) {
         delegate?.didTapPlayButton(in: self)
-        print("touch only")
     }
 
     @objc private func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
-            print("long pressed")
             delegate?.didLongPressPlayButton(in: self)
         }
     }

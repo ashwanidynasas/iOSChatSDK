@@ -40,7 +40,6 @@ class CustomTopView: UIView {
             viewFromXib.frame = self.bounds
             addSubview(viewFromXib)
         } else {
-            print("Failed to load XIB file 'CustomTopView'")
         }
     }
 }

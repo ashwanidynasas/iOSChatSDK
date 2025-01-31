@@ -15,6 +15,9 @@ import UIKit
 protocol BottomViewDelegate: AnyObject {
     func updateBottomViewHeight(to height: CGFloat)
 }
+extension BottomViewDelegate {
+    func updateBottomViewHeight(to height: CGFloat){}
+}
 
 open class BottomView: UIView {
     

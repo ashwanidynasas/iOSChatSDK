@@ -42,11 +42,8 @@ open class ChatRoomViewModel : NSObject{
                              defaultChat: true) { (success, result) in
             if success{
                 let roomId = result
-                print("Room created successfully with ID: \(roomId)")
                 let room_id = UserDefaults.standard.string(forKey: "room_id")
-                print("room_id: \(room_id ?? "")")
             }else{
-                print("Failed to create room: \(result)")
             }
         }
     }
@@ -66,7 +63,6 @@ open class ChatRoomViewModel : NSObject{
                     self.messages = filteredMessages.sorted { $0.originServerTs ?? 0 < $1.originServerTs ?? 0 }
                     self.onUpdate?()
                 } else {
-                    print("No messages found in response")
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -87,7 +83,6 @@ open class ChatRoomViewModel : NSObject{
                 if let success = value?.success, success {
                     completion(value)
                 } else {
-                    print(/value?.message)
                 }
                 
             case .failure(let error):
@@ -113,7 +108,6 @@ open class ChatRoomViewModel : NSObject{
                 if let success = value?.success, success {
                     completion(.success("Message deleted successfully"))
                 } else {
-                    print(/value?.message)
                 }
                 
             case .failure(let error):
@@ -126,8 +120,6 @@ open class ChatRoomViewModel : NSObject{
         ChatMediaUpload.shared.sendImageFromGalleryAPICall(audio: audioFilename, msgType: "m.audio", body:"") { result in
             switch result {
             case .success(let message):
-                print("Success: \(message)")
-                // Update UI or perform other actions on success
                 DispatchQueue.global().async {
                     DispatchQueue.main.async {
                         completion(.success("Message sent successfully"))

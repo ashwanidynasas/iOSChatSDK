@@ -141,7 +141,6 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
         }
         
          guard let messageType = msgType else {
-             print("No media to send.")
              hideLoader() //
              sender.isEnabled = true //
              return
@@ -161,12 +160,10 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
                 imageFilePath: imageFetched,
                 videoFilePath: mediaURL
             )
-            print(replyRequest)
             // If it's an image
             ChatMediaUpload.shared.uploadFileChatReply(replyRequest: replyRequest, isImage: isImage) { result in
                 switch result {
                 case .success(let response):
-                    print("Success: \(response.message)")
                     DispatchQueue.main.async {
                         self.hideLoader() //
                         sender.isEnabled = true //
@@ -185,7 +182,6 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
             ChatMediaUpload.shared.sendImageFromGalleryAPICall(image: imageFetched, video: mediaURL, msgType: messageType, body: body) { result in
                 switch result {
                 case .success(let message):
-                    print("Success: \(message)")
                     DispatchQueue.main.async {
                         self.hideLoader() //
                         sender.isEnabled = true //
@@ -216,38 +212,7 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
             blurEffectView.removeFromSuperview()
         }
     }
-    func updateBottomViewHeight(to height: CGFloat) {
-        print("")
-    }
     
-    func hideAttach() {
-        print("")
-
-    }
-    
-    func sendTextMessage() {
-        print("")
-    }
-    
-    func sendAudio(audioFilename: URL) {
-        print("")
-
-    }
-    
-    func camera() {
-        print("")
-
-    }
-    
-    func attach() {
-        print("")
-
-    }
-    
-    func cancelReply() {
-        print("")
-
-    }
 }
 
 //MARK: - SETUP UI

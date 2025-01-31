@@ -54,7 +54,11 @@ class MediaTextTVCell: UITableViewCell {
             playButton.setImage(nil, for: .normal)
             if let imageUrlString = message.content?.url, let imageUrl = imageUrlString.modifiedString.mediaURL {
                 // Load the image from the URL
-                self.messageImageView.sd_setImage(with: imageUrl, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                
+                let imageUrlString = imageUrlString.modifiedString
+                self.messageImageView.setImage(placeholder: ChatConstants.Image.userPlaceholder, url: imageUrlString)
+                
+//                self.messageImageView.sd_setImage(with: imageUrl, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
                 
             }
         }else if message.content?.msgtype == MessageType.video {
@@ -79,11 +83,14 @@ class MediaTextTVCell: UITableViewCell {
     
     func fetchThumbnail(_ s3MediaUrl:String) {
         guard let videoURL = URL(string: "\(ChatConstants.S3Media.URL)\(s3MediaUrl)") else {
-            print("Error: Invalid video URL")
             return
         }
         DispatchQueue.main.async {
-            self.messageImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+            
+            let videoURLString = "\(ChatConstants.S3Media.URL)\(s3MediaUrl)"
+            self.messageImageView.setImage(placeholder: ChatConstants.Image.userPlaceholder, url: videoURLString)
+            
+//            self.messageImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
 
         }
 

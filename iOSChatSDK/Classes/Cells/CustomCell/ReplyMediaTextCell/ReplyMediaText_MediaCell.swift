@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SDWebImage
+//import SDWebImage
 
 
 
@@ -160,9 +160,10 @@ open class ReplyMediaText_MediaCell: UITableViewCell {
 
     func configure(with message: Messages) {
         if let image = message.content?.url {
-            if let url = image.modifiedString.mediaURL {
-                self.messageMediaImage.sd_setImage(with: url, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ChatMessageCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
-            }
+            let url = image.modifiedString
+            self.messageMediaImage.setImage(placeholder: ChatConstants.Image.userPlaceholder, url: url)
+            
+            //                self.messageMediaImage.sd_setImage(with: url, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ChatMessageCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
         }
         
 //        updateConstraintsForVisibility()
@@ -208,19 +209,25 @@ open class ReplyMediaText_MediaCell: UITableViewCell {
             
             if (msgType == MessageType.image) {
                 guard let videoURL = URL(string: "\(ChatConstants.S3Media.URL)\(message.content?.relatesTo?.inReplyTo?.content?.S3MediaUrl ?? "")") else {
-                    print("Error: Invalid video URL")
                     return
                 }
+                let videoURLString = "\(ChatConstants.S3Media.URL)\(message.content?.relatesTo?.inReplyTo?.content?.S3MediaUrl ?? "")"
                 DispatchQueue.main.async {
-                    self.replyImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ReplyMediaText_MediaCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                    self.replyImageView.setImage(placeholder: ChatConstants.Image.userPlaceholder, url: videoURLString)
+                    
+//                    self.replyImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ReplyMediaText_MediaCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
                 }
             }else if (msgType == MessageType.audio) || (msgType == MessageType.video) {
                 guard let videoURL = URL(string: "\(ChatConstants.S3Media.URL)\(message.content?.relatesTo?.inReplyTo?.content?.S3thumbnailUrl ?? "")") else {
-                    print("Error: Invalid video URL")
                     return
                 }
+                
+                let videoURLString = "\(ChatConstants.S3Media.URL)\(message.content?.relatesTo?.inReplyTo?.content?.S3thumbnailUrl ?? "")"
+                
                 DispatchQueue.main.async {
-                    self.replyImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ReplyMediaText_MediaCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                    self.replyImageView.setImage(placeholder: ChatConstants.Image.userPlaceholder, url: videoURLString)
+                    
+//                    self.replyImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ReplyMediaText_MediaCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
                 }
             }
         
@@ -234,12 +241,10 @@ open class ReplyMediaText_MediaCell: UITableViewCell {
     }
     @objc private func handleTapGesture(_ gesture: UITapGestureRecognizer) {
         delegate?.didTapPlayButton(in: self)
-        print("touch only")
     }
 
     @objc private func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
-            print("long pressed")
             delegate?.didLongPressPlayButton(in: self)
         }
     }

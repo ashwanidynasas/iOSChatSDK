@@ -95,6 +95,7 @@
 		4D20C5772C9C374200D54D98 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D20C5762C9C374200D54D98 /* UIViewController.swift */; };
 		4D55444A2CB006E400E5B6A4 /* ChatGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5544492CB006E400E5B6A4 /* ChatGradientView.swift */; };
 		4D65A5092CB5580F00A16BA7 /* ChatImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65A5082CB5580F00A16BA7 /* ChatImagePicker.swift */; };
+		4DC6100A2D4CEA5E00CBD9FB /* ChatRoomVC+ImageDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC610092D4CEA5E00CBD9FB /* ChatRoomVC+ImageDownload.swift */; };
 		4DFCB3D9623FCA43D3E1BFDA528EB587 /* UIView+WebCacheOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = ED125922FB25702F3C26C4BD2DED8061 /* UIView+WebCacheOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EC633971567BFD6384859B76E1276F1 /* SDWebImageCacheKeyFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5250EA4D49A59FFB24E0F6459FDE328D /* SDWebImageCacheKeyFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		50856AC35DAB64C96C34BC588BB0F7FE /* SDAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1ABFC2E4E3A15C496D6C322D08AD46 /* SDAnimatedImage.m */; };
@@ -374,6 +375,7 @@
 		4D20C5762C9C374200D54D98 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		4D5544492CB006E400E5B6A4 /* ChatGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGradientView.swift; sourceTree = "<group>"; };
 		4D65A5082CB5580F00A16BA7 /* ChatImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatImagePicker.swift; sourceTree = "<group>"; };
+		4DC610092D4CEA5E00CBD9FB /* ChatRoomVC+ImageDownload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomVC+ImageDownload.swift"; sourceTree = "<group>"; };
 		4E9A608DCF04FD972479EBF6958081EB /* SDImageTransformer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDImageTransformer.h; path = SDWebImage/Core/SDImageTransformer.h; sourceTree = "<group>"; };
 		5179E88A14EC962F816D6D8D96449BE4 /* ResourceBundle-iOSChatSDK-iOSChatSDK-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-iOSChatSDK-iOSChatSDK-Info.plist"; sourceTree = "<group>"; };
 		51D5927713DBC36F4129799E7303B5F4 /* MoreOptionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MoreOptionView.swift; sourceTree = "<group>"; };
@@ -790,6 +792,7 @@
 			isa = PBXGroup;
 			children = (
 				9454BD7BCC02C9D0A65C052CA46923AF /* ChatRoomVC+Delegates.swift */,
+				4DC610092D4CEA5E00CBD9FB /* ChatRoomVC+ImageDownload.swift */,
 				6B01425A5E338D45A13081C1ADEB81A8 /* MVVM */,
 			);
 			name = ChatRoom;
@@ -1712,6 +1715,7 @@
 				9F20FF2BE294D4C03B3261191692010E /* BottomViewHandler.swift in Sources */,
 				338568B36C3B2C4C6169E8850822227C /* CacheManager.swift in Sources */,
 				C6B118D4EB0A5BA0271ADA54406C38FB /* ChatConstant.swift in Sources */,
+				4DC6100A2D4CEA5E00CBD9FB /* ChatRoomVC+ImageDownload.swift in Sources */,
 				DE9862EB192C6EFB2C3307BCB2E22D38 /* ChatMediaUpload.swift in Sources */,
 				0D64DA55FA88F7D833D629D51A098D6F /* ChatMessageCell.swift in Sources */,
 				3AEF39B2888585CB1A6715EB938185BD /* ChatMessageModel.swift in Sources */,

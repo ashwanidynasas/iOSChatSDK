@@ -45,7 +45,12 @@ class MediaFullVC: UIViewController {
         videoPlayerBackView.isHidden = true
         if let videoURL = selectedMessage?.content?.url?.modifiedString.mediaURL {
             if /selectedMessage?.content?.msgtype == MessageType.image {
-                self.fullImgView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: ChatMessageCellConstant.ImageView.placeholderImageName, in: Bundle(for: MediaFullVC.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                
+                if let videoURLString = selectedMessage?.content?.url?.modifiedString{
+                    self.fullImgView.setImage(placeholder: ChatMessageCellConstant.ImageView.placeholderImageName, url: videoURLString)
+                }
+                
+//                self.fullImgView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: ChatMessageCellConstant.ImageView.placeholderImageName, in: Bundle(for: MediaFullVC.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
             }else{
                 videoPlayerBackView.isHidden = false
                 playVideo()
@@ -89,7 +94,6 @@ class MediaFullVC: UIViewController {
     
     func playVideo() {
         guard let videoURL = URL(string: "\(ChatConstants.S3Media.URL)\(/(selectedMessage?.content?.S3MediaUrl ?? ""))") else {
-            print("Error: Invalid video URL")
             return
         }
         let player = AVPlayer(url: videoURL)
@@ -168,7 +172,6 @@ class CustomVideoPlayerContainerView: UIView {
     private func setupPlayerViewController() {
         playerViewController = AVPlayerViewController()
         guard let playerVC = playerViewController else {
-            print("Error: PlayerViewController could not be initialized")
             return
         }
         playerVC.view.frame = self.bounds

@@ -135,7 +135,7 @@ extension ChatImagePicker {
                         picker.mediaTypes = [(kUTTypeImage as String), (kUTTypeMovie as String)]
                         self.vc?.present(picker, animated: true, completion: nil)
                     } else {
-                        print(self.CAMERA_NOT_AVAILABLE)
+//                        print(self.CAMERA_NOT_AVAILABLE)
                     }
                 }
             }
@@ -152,7 +152,7 @@ extension ChatImagePicker {
                         picker.videoQuality = .typeHigh
                         self.vc?.present(picker, animated: true, completion: nil)
                     } else {
-                        print(self.CAMERA_NOT_AVAILABLE)
+//                        print(self.CAMERA_NOT_AVAILABLE)
                     }
                 }
             }
@@ -163,11 +163,11 @@ extension ChatImagePicker {
         checkGalleryStatus { isGranted in
             if isGranted {
                 Threads.performTaskInMainQueue {
-                    picker.sourceType = .photoLibrary // Allow both images and videos from gallery
+                    picker.sourceType = .photoLibrary
                     self.vc?.present(picker, animated: true, completion: nil)
                 }
             } else {
-                print(self.GALLERY_NOT_AVAILABLE)
+//                print(self.GALLERY_NOT_AVAILABLE)
             }
         }
     }
@@ -196,7 +196,6 @@ extension ChatImagePicker: UINavigationControllerDelegate, UIImagePickerControll
         
         picker.dismiss(animated: true) {
             if self.originalImage == nil, self.videoURL == nil {
-                print("Something went wrong")
             } else {
                 self.mediaClosure?(self.originalImage, self.videoURL)
             }

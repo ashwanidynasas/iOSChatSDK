@@ -30,7 +30,6 @@ extension ChatRoomVC : DelegatePublishMedia{
             viewModel?.getMessages()
             isReply = false
         }else{
-            print("return from detail screen")
         }
     }
 }
@@ -54,7 +53,6 @@ extension ChatRoomVC: DelegatePlay{
     
     func didTapPlayButton(in cell: UITableViewCell) {
         if cell is ReplyText_TextCell || cell is ReplyMedia_TextCell || cell is ReplyMediaText_TextCell{
-            print("Text only - no preview")
         }else{
             preview(cell: cell)
         }
@@ -125,7 +123,6 @@ extension ChatRoomVC : DelegateInput,DelegateAudio{
                     if response != nil {
                         self?.messageSent()
                     } else {
-                        print("No response received")
                     }
                 }
             }

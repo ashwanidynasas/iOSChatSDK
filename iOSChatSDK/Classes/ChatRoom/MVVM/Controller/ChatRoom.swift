@@ -45,7 +45,7 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
     
     public func startFetchTimer() {
         fetchTimer?.invalidate()
-        fetchTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { [weak self] _ in
+        fetchTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { [weak self] _ in
             guard let self = self, !self.isScrolling else { return }
              self.viewModel?.getMessages()
         }
@@ -186,9 +186,7 @@ extension ChatRoomVC{
         guard let indexPath = tableView?.indexPath(for: cell),
               let message = viewModel?.messages[indexPath.row] else { return }
         if let msgType = viewModel?.messages[indexPath.row].content?.msgtype {
-            print("msgType ---> \(msgType)")
             if message.content?.url == nil  {
-                print("media nil...")
                 return
             }
             let mediaPreviewVC = MediaPreviewVC()

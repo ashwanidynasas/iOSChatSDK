@@ -5,7 +5,7 @@
 //  Created by Ashwani on 08/08/24.
 //
 import Foundation
-import SDWebImage
+//import SDWebImage
 
 
 
@@ -197,19 +197,22 @@ open class ReplyMedia_TextCell: UITableViewCell {
             
             if (msgType == MessageType.image) {
                 guard let videoURL = URL(string: "\(ChatConstants.S3Media.URL)\(message.content?.relatesTo?.inReplyTo?.content?.S3MediaUrl ?? "")") else {
-                    print("Error: Invalid video URL")
                     return
                 }
                 DispatchQueue.main.async {
-                    self.replyImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ReplyMedia_TextCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                    let videoURLString = "\(ChatConstants.S3Media.URL)\(message.content?.relatesTo?.inReplyTo?.content?.S3MediaUrl ?? "")"
+                    self.replyImageView.setImage(placeholder: ChatConstants.Image.userPlaceholder, url: videoURLString)
+//                    self.replyImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ReplyMedia_TextCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
                 }
             }else if (msgType == MessageType.audio) || (msgType == MessageType.video) {
                 guard let videoURL = URL(string: "\(ChatConstants.S3Media.URL)\(message.content?.relatesTo?.inReplyTo?.content?.S3thumbnailUrl ?? "")") else {
-                    print("Error: Invalid video URL")
                     return
                 }
                 DispatchQueue.main.async {
-                    self.replyImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ReplyMedia_TextCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+                    let videoURLString = "\(ChatConstants.S3Media.URL)\(message.content?.relatesTo?.inReplyTo?.content?.S3thumbnailUrl ?? "")"
+                    self.replyImageView.setImage(placeholder: ChatConstants.Image.userPlaceholder, url: videoURLString)
+                    
+//                    self.replyImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ReplyMedia_TextCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
                 }
             }
         
@@ -233,12 +236,10 @@ open class ReplyMedia_TextCell: UITableViewCell {
     }
     @objc private func handleTapGesture(_ gesture: UITapGestureRecognizer) {
         delegate?.didTapPlayButton(in: self)
-        print("touch only")
     }
 
     @objc private func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {
-            print("long pressed")
             delegate?.didLongPressPlayButton(in: self)
         }
     }

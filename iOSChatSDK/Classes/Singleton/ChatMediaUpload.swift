@@ -90,12 +90,10 @@ class ChatMediaUpload {
             switch result {
             case .success(let response):
                 DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) {
-                    print("Success: \(response.message)")
                     completion(.success("Data sent successfully"))
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    print("Error: \(error.localizedDescription)")
                     completion(.failure(error))
                 }
             }

@@ -43,7 +43,6 @@ public class ConnectionViewModel : NSObject{
                 if let success = value?.success, success {
                     self.connections = value?.details.connections ?? []
                 } else {
-                    print(/value?.message)
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -93,7 +92,6 @@ open class ChatViewModel {
                     self.loginResponse = value
                     completion(value?.details.accessToken)
                 } else {
-                    print(/value?.message)
                     completion(nil)
                 }
             case .failure(let error):

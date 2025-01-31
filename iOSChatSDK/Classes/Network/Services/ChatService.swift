@@ -76,7 +76,6 @@ open class ChatService: GenericClient {
                      completion: @escaping (Result<ChatMessageResponse?, APIError>, [AnyHashable : Any]?) -> ()) {
         
         self.showLoader = showloader
-        print("room id \(/UserDefaultsHelper.getRoomId())")
         let parameters = ChatMessageRequest(roomID: /UserDefaultsHelper.getRoomId(),
                                             body: body,
                                             msgType: msgType,

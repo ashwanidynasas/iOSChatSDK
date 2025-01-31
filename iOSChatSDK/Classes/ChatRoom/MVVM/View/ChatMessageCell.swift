@@ -1,6 +1,6 @@
 //MARK: - MODULES
 import UIKit
-import SDWebImage
+//import SDWebImage
 import AVFoundation
 
 //MARK: - CLASS
@@ -240,7 +240,10 @@ extension ChatMessageCell{
         
         if let url = mediaUrl.modifiedString.mediaURL {
             
-            self.messageImageView.sd_setImage(with: url, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ChatMessageCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+            let urlString = mediaUrl.modifiedString
+            self.messageImageView.setImage(placeholder: ChatConstants.Image.userPlaceholder, url: urlString)
+            
+//            self.messageImageView.sd_setImage(with: url, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ChatMessageCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
             
             messageImageViewHeightConstraint.constant = 150 // Set desired height for the image view
         } else {

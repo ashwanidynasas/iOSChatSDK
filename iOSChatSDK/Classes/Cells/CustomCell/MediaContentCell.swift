@@ -32,7 +32,8 @@ open class MediaContentCell: UITableViewCell {
     var player: AVPlayer?
     var audioURL:URL?
     var mediaType:String?
-    
+    var audioPlayer: AVAudioPlayer?
+
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -110,16 +111,15 @@ open class MediaContentCell: UITableViewCell {
                     delegate?.didStartPlayingAudio(in: self)
                 }
             } else {
-                //                if let url = self.audioURL {
-                //                    print("Selected Audio ---> \(url)")
-                //                    configureWith(url: url)
-                //                }
-                //                sender.setImage(UIImage(named: ChatConstants.Image.pauseIcon, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), for: .normal)
-                //                delegate?.didStartPlayingAudio(in: self)
-                
                 if let url = self.audioURL {
-                    print("Selected Audio ---> \(url)")
-                    configureWith(url: url)
+//                    configureWith(url: url)
+                    DispatchQueue.global(qos: .background).async {
+                        if let url = self.audioURL {
+                            DispatchQueue.main.async {
+                                self.playWithAVAudioPlayer(url: url)
+                            }
+                        }
+                    }
                 } else {
                     resetPlayPauseButton()
                     showToast(message: "Audio URL is invalid.")
@@ -151,6 +151,30 @@ open class MediaContentCell: UITableViewCell {
         player?.play()
     }
 
+    func playWithAVAudioPlayer(url: URL) {
+        let session = URLSession.shared
+        let task = session.dataTask(with: url) { data, response, error in
+            if let error = error {
+                return
+            }
+
+            guard let data = data else {
+                return
+            }
+
+            DispatchQueue.main.async {
+                do {
+                    self.audioPlayer = try AVAudioPlayer(data: data)
+                    self.audioPlayer?.prepareToPlay()
+                    self.audioPlayer?.play()
+                } catch {
+                    print("Failed to play audio: \(error.localizedDescription)")
+                }
+            }
+        }
+        task.resume()
+    }
+   
     func configureWith(url: URL) {
         configureAudioSessionss()
         
@@ -173,10 +197,7 @@ open class MediaContentCell: UITableViewCell {
     open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "status", let playerItem = object as? AVPlayerItem {
             switch playerItem.status {
-            case .readyToPlay:
-                print("Audio is ready to play.")
             case .failed:
-                print("Failed to play audio: \(playerItem.error?.localizedDescription ?? "Unknown error")")
                 resetPlayPauseButton() // Reset the button state
                 showToast(message: "Audio failed to play.")
             default:
@@ -321,7 +342,10 @@ open class MediaContentCell: UITableViewCell {
         if message.content?.msgtype == MessageType.image {
             playButton.setImage(nil, for: .normal)
             if let imageUrlString = message.content?.url, let imageUrl = imageUrlString.modifiedString.mediaURL {
-                self.messageImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: ChatConstants.Image.userPlaceholder), options: [], completed: nil)
+                
+                let imageUrlString = imageUrlString.modifiedString
+                self.messageImageView.setImage(placeholder: ChatConstants.Image.userPlaceholder, url: imageUrlString)
+//                self.messageImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: ChatConstants.Image.userPlaceholder), options: [], completed: nil)
 
             }else{
                 let imageView = UIImageView(image: UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: MediaContentCell.self), compatibleWith: nil))
@@ -340,7 +364,6 @@ open class MediaContentCell: UITableViewCell {
             self.messageImageView.image = UIImage(named: ChatConstants.Image.playIcon)
             self.mediaType = message.content?.msgtype
             guard let audiourl = URL(string: "\(ChatConstants.S3Media.URL)\(/message.content?.S3MediaUrl)") else {
-                print("Error: Invalid video URL")
                 return
             }
             self.audioURL = audiourl
@@ -361,11 +384,13 @@ open class MediaContentCell: UITableViewCell {
     
     func fetchThumbnail(_ s3MediaUrl:String) {
         guard let videoURL = URL(string: "\(ChatConstants.S3Media.URL)\(s3MediaUrl)") else {
-            print("Error: Invalid video URL")
             return
         }
         DispatchQueue.main.async {
-            self.messageImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+            
+            let videoURLString = "\(ChatConstants.S3Media.URL)\(s3MediaUrl)"
+            self.messageImageView.setImage(placeholder: ChatConstants.Image.userPlaceholder, url: videoURLString)
+//            self.messageImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: MediaContentCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
 
         }
 

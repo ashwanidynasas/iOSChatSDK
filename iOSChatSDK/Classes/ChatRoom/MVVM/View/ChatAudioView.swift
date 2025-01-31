@@ -127,8 +127,6 @@ extension ChatAudioView{
         timer?.invalidate()
         timer = nil
         
-        print("Recording canceled")
-        // You can delete the temporary file if needed
         try? FileManager.default.removeItem(at: audioFilename)
     }
 
@@ -137,10 +135,8 @@ extension ChatAudioView{
         audioRecorder?.stop()
         audioRecorder = nil
         if success {
-            print("Recording succeeded")
             delegate?.sendAudio(audioFilename: audioFilename)
         } else {
-            print("Recording failed")
         }
         // Stop the timer
         timer?.invalidate()
@@ -161,9 +157,7 @@ extension ChatAudioView : AVAudioRecorderDelegate, AVAudioPlayerDelegate{
             recordingSession.requestRecordPermission() { allowed in
                 DispatchQueue.main.async {
                     if allowed {
-                        print("Microphone access granted")
                     } else {
-                        print("Failed to gain microphone access")
                     }
                 }
             }
@@ -196,7 +190,6 @@ extension ChatAudioView{
     
     func playRecording() {
         do {
-            print("audioFilename ---->>> \(String(describing: audioFilename))")
             audioPlayer = try AVAudioPlayer(contentsOf: audioFilename!)
             audioPlayer?.delegate = self
             audioPlayer?.play()

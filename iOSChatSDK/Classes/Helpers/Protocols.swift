@@ -30,9 +30,15 @@ protocol DelegatePlay : AnyObject{
 protocol DelegateReply : AnyObject{
     func cancelReply()
 }
+extension DelegateReply {
+    func cancelReply(){}
+}
 
 protocol DelegateMore : AnyObject{
     func selectedOption(_ item : Item)
+}
+extension DelegateMore {
+    func selectedOption(_ item : Item){}
 }
 
 protocol DelegateInput : AnyObject{
@@ -42,8 +48,17 @@ protocol DelegateInput : AnyObject{
     func attach()
     func hideAttach()
 }
-
+extension DelegateInput {
+    func sendTextMessage() {}
+    func sendAudio(audioFilename: URL) {}
+    func camera() {}
+    func attach() {}
+    func hideAttach() {}
+}
 protocol DelegateAudio : AnyObject{
     func sendAudio(audioFilename : URL)
+}
+extension DelegateAudio {
+    func sendAudio(audioFilename : URL){}
 }
 

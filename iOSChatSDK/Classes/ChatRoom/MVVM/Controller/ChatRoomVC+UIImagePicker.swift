@@ -26,11 +26,9 @@ extension ChatRoomVC : UIImagePickerControllerDelegate, UIDocumentPickerDelegate
         self.fileFetched = nil
         ChatImagePicker.sharedHandler.getMedia(controller: self, type: .camera, allowEditing: false) { (originalImage, videoURL) in
                     if let originalImage = originalImage {
-                        print("Original Image Captured: \(originalImage)")
                         self.imageFetched = originalImage
                         self.publish()
                     } else if let videoURL = videoURL {
-                        print("Video Captured at URL: \(videoURL)")
                         self.videoFetched = videoURL
                         self.publish()
                     }
@@ -43,11 +41,9 @@ extension ChatRoomVC : UIImagePickerControllerDelegate, UIDocumentPickerDelegate
         self.fileFetched = nil
         ChatImagePicker.sharedHandler.getMedia(controller: self, type: .gallery, allowEditing: false) { (originalImage, videoURL) in
             if let originalImage = originalImage {
-                print("Image Selected: \(originalImage)")
                 self.imageFetched = originalImage
                 self.publish()
             } else if let videoURL = videoURL {
-                print("Video Selected: \(videoURL)")
                 self.videoFetched = videoURL
                 self.publish()
             }
@@ -128,7 +124,6 @@ extension ChatRoomVC : UIImagePickerControllerDelegate, UIDocumentPickerDelegate
     
     // Delegate method when the user cancels the picker
     public func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-        print("Document picker was cancelled")
     }
 }
 

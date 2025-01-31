@@ -301,11 +301,9 @@ public class ChatInputView: UIView {
             if deleteIconView.frame.contains(gesture.location(in: loadView)) {
                 // User swiped to delete
                 viewAudio.cancelRecording()
-                print("Recording deleted")
             } else {
                 // Stop recording normally
                 viewAudio.stopRecording()
-                print("Recording saved")
             }
             viewAudio.isHidden = true
 
@@ -313,33 +311,7 @@ public class ChatInputView: UIView {
             break
         }
     }
-//    @objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
-//        if gesture.state == .began {
-//            viewAudio.isHidden = false
-//            viewAudio.startRecording()
-//            deleteIconView.isHidden = false
-//
-//            // Add pan gesture recognizer
-//            let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
-//            buttonAudio.addGestureRecognizer(panGesture)
-//
-//        } else if gesture.state == .ended || gesture.state == .cancelled {
-//            deleteIconView.isHidden = true
-//            if deleteIconView.frame.contains(gesture.location(in: loadView)) {
-//                // User swiped to delete
-//                viewAudio.stopRecording()
-//                print("Recording deleted")
-//            } else {
-//                // Stop recording normally
-//                viewAudio.stopRecording()
-//                print("Recording saved")
-//            }
-//            viewAudio.isHidden = true
-//
-////            viewAudio.isHidden = true
-////            viewAudio.stopRecording()
-//        }
-//    }
+
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
         let location = gesture.location(in: loadView)
         if deleteIconView.frame.contains(location) {
@@ -354,10 +326,8 @@ public class ChatInputView: UIView {
             if deleteIconView.frame.contains(location) {
                 // User released on delete icon
                 viewAudio.cancelRecording()
-                print("Recording deleted")
             } else {
                 viewAudio.stopRecording()
-                print("Recording saved")
             }
             deleteIconView.isHidden = true
             viewAudio.isHidden = true

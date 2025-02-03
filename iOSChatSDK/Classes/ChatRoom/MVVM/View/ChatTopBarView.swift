@@ -169,7 +169,7 @@ open class ChatTopBarView: UIView {
         titleLabel.text = connection?.userInfo.name
         imageView.layer.borderColor = connection?.defaultParam.color.cgColor
         guard let imageUrlString = connection?.imageInfo.url,
-              let url = URL(string: imageUrlString) else {
+              let _ = URL(string: imageUrlString) else {
             imageView.image = UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ChatTopBarView.self), compatibleWith: nil)
             return
         }

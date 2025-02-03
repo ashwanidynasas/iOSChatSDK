@@ -208,7 +208,7 @@ open class ReplyMediaText_MediaCell: UITableViewCell {
         let msgType = /message.content?.relatesTo?.inReplyTo?.content?.msgtype
             
             if (msgType == MessageType.image) {
-                guard let videoURL = URL(string: "\(ChatConstants.S3Media.URL)\(message.content?.relatesTo?.inReplyTo?.content?.S3MediaUrl ?? "")") else {
+                guard URL(string: "\(ChatConstants.S3Media.URL)\(message.content?.relatesTo?.inReplyTo?.content?.S3MediaUrl ?? "")") != nil else {
                     return
                 }
                 let videoURLString = "\(ChatConstants.S3Media.URL)\(message.content?.relatesTo?.inReplyTo?.content?.S3MediaUrl ?? "")"
@@ -218,7 +218,7 @@ open class ReplyMediaText_MediaCell: UITableViewCell {
 //                    self.replyImageView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ReplyMediaText_MediaCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
                 }
             }else if (msgType == MessageType.audio) || (msgType == MessageType.video) {
-                guard let videoURL = URL(string: "\(ChatConstants.S3Media.URL)\(message.content?.relatesTo?.inReplyTo?.content?.S3thumbnailUrl ?? "")") else {
+                guard URL(string: "\(ChatConstants.S3Media.URL)\(message.content?.relatesTo?.inReplyTo?.content?.S3thumbnailUrl ?? "")") != nil else {
                     return
                 }
                 

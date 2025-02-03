@@ -52,14 +52,15 @@ class MediaTextTVCell: UITableViewCell {
         }
         if message.content?.msgtype == MessageType.image {
             playButton.setImage(nil, for: .normal)
-            if let imageUrlString = message.content?.url, let imageUrl = imageUrlString.modifiedString.mediaURL {
-                // Load the image from the URL
-                
-                let imageUrlString = imageUrlString.modifiedString
-                self.messageImageView.setImage(placeholder: ChatConstants.Image.userPlaceholder, url: imageUrlString)
-                
-//                self.messageImageView.sd_setImage(with: imageUrl, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
-                
+//            if let imageUrlString = message.content?.url, let imageUrl = imageUrlString.modifiedString.mediaURL {
+//                let imageUrlString = imageUrlString.modifiedString
+//                self.messageImageView.setImage(placeholder: ChatConstants.Image.userPlaceholder, url: imageUrlString)
+//                
+////                self.messageImageView.sd_setImage(with: imageUrl, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: MediaTextTVCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+//                
+//            }
+            if let imageUrlString = message.content?.url, !imageUrlString.modifiedString.isEmpty {
+                self.messageImageView.setImage(placeholder: ChatConstants.Image.userPlaceholder, url: imageUrlString.modifiedString)
             }
         }else if message.content?.msgtype == MessageType.video {
             if let videoURL = message.content?.S3thumbnailUrl {
@@ -82,7 +83,7 @@ class MediaTextTVCell: UITableViewCell {
     }
     
     func fetchThumbnail(_ s3MediaUrl:String) {
-        guard let videoURL = URL(string: "\(ChatConstants.S3Media.URL)\(s3MediaUrl)") else {
+        guard URL(string: "\(ChatConstants.S3Media.URL)\(s3MediaUrl)") != nil else {
             return
         }
         DispatchQueue.main.async {

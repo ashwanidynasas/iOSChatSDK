@@ -125,12 +125,16 @@ open class ChatReplyView: UIView {
         labelDesc.text = /message?.content?.body
         if let image = message?.content?.url, !image.isEmpty {
             imageView.isHidden = false
-            if let url = image.modifiedString.mediaURL {
+            if image.modifiedString.mediaURL != nil {
                 let urlString = image.modifiedString
-                
                 self.imageView.setImage(placeholder: ChatConstants.Image.placeholder, url: urlString)
-//                self.imageView.sd_setImage(with: url, placeholderImage: UIImage.init(systemName: "person.circle.fill"), options: .transformAnimatedImage, progress: nil, completed: nil)
             }
+//            if let url = image.modifiedString.mediaURL {
+//                let urlString = image.modifiedString
+//                
+//                self.imageView.setImage(placeholder: ChatConstants.Image.placeholder, url: urlString)
+////                self.imageView.sd_setImage(with: url, placeholderImage: UIImage.init(systemName: "person.circle.fill"), options: .transformAnimatedImage, progress: nil, completed: nil)
+//            }
             labelDescLeadingToSuperviewConstraint.isActive = false
             labelDescLeadingToImageViewConstraint.isActive = true
         } else {

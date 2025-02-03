@@ -108,6 +108,6 @@ class MoreOptionView: UIView {
   }
 
   @objc func imageButtonTapped(_ sender: UIButton) {
-    let buttonTag = sender.tag
+//    let buttonTag = sender.tag
   }
 }

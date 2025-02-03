@@ -163,7 +163,7 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
             // If it's an image
             ChatMediaUpload.shared.uploadFileChatReply(replyRequest: replyRequest, isImage: isImage) { result in
                 switch result {
-                case .success(let response):
+                case .success( _):
                     DispatchQueue.main.async {
                         self.hideLoader() //
                         sender.isEnabled = true //
@@ -181,7 +181,7 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
             // Handle non-reply
             ChatMediaUpload.shared.sendImageFromGalleryAPICall(image: imageFetched, video: mediaURL, msgType: messageType, body: body) { result in
                 switch result {
-                case .success(let message):
+                case .success( _):
                     DispatchQueue.main.async {
                         self.hideLoader() //
                         sender.isEnabled = true //

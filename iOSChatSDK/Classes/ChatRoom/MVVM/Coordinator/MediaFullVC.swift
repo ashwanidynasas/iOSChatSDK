@@ -43,7 +43,7 @@ class MediaFullVC: UIViewController {
         setupUI()
         topView.searchButton.isHidden = true
         videoPlayerBackView.isHidden = true
-        if let videoURL = selectedMessage?.content?.url?.modifiedString.mediaURL {
+        if (selectedMessage?.content?.url?.modifiedString.mediaURL) != nil {
             if /selectedMessage?.content?.msgtype == MessageType.image {
                 
                 if let videoURLString = selectedMessage?.content?.url?.modifiedString{
@@ -51,7 +51,8 @@ class MediaFullVC: UIViewController {
                 }
                 
 //                self.fullImgView.sd_setImage(with: videoURL, placeholderImage:  UIImage(named: ChatMessageCellConstant.ImageView.placeholderImageName, in: Bundle(for: MediaFullVC.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
-            }else{
+            }
+            else{
                 videoPlayerBackView.isHidden = false
                 playVideo()
             }

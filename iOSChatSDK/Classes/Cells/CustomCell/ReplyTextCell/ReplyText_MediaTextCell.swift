@@ -171,7 +171,7 @@ open class ReplyText_MediaTextCell: UITableViewCell {
         }
         if message.content?.msgtype == MessageType.video {
             if let thumbNailURL = message.content?.S3thumbnailUrl {
-                guard let videoImgURL = URL(string: "\(ChatConstants.S3Media.URL)\(thumbNailURL)") else {
+                guard URL(string: "\(ChatConstants.S3Media.URL)\(thumbNailURL)") != nil else {
                     return
                 }
                 let videoImgURLString = "\(ChatConstants.S3Media.URL)\(thumbNailURL)"
@@ -181,13 +181,16 @@ open class ReplyText_MediaTextCell: UITableViewCell {
             playButton.setImage(UIImage(named: ChatConstants.Image.playIcon, in: Bundle(for: ReplyText_MediaCell.self), compatibleWith: nil), for: .normal)
         }else{
             playButton.setImage(nil, for: .normal)
-            if let image = message.content?.url {
-                if let url = image.modifiedString.mediaURL {
-                    let urlString = image.modifiedString
-                    self.messageMediaImage.setImage(placeholder: ChatConstants.Image.userPlaceholder, url: urlString)
-//                    self.messageMediaImage.sd_setImage(with: url, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ReplyText_MediaTextCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
-                }
+            if let imageUrlString = message.content?.url, !imageUrlString.modifiedString.isEmpty {
+                self.messageMediaImage.setImage(placeholder: ChatConstants.Image.userPlaceholder, url: imageUrlString.modifiedString)
             }
+//            if let image = message.content?.url {
+//                if let url = image.modifiedString.mediaURL {
+//                    let urlString = image.modifiedString
+//                    self.messageMediaImage.setImage(placeholder: ChatConstants.Image.userPlaceholder, url: urlString)
+////                    self.messageMediaImage.sd_setImage(with: url, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ReplyText_MediaTextCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+//                }
+//            }
         }
         
         updateConstraintsForVisibility()

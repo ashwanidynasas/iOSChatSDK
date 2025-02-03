@@ -163,7 +163,7 @@ class MediaPreviewVC: UIViewController {
         case MessageType.image:
             pdfView.isHidden = true
             videoPlayerBackView.isHidden = true
-            if let videoURL = selectedMessage?.content?.url?.modifiedString.mediaURL {
+            if (selectedMessage?.content?.url?.modifiedString.mediaURL) != nil {
                 if /selectedMessage?.content?.msgtype == MessageType.image {
                     if let videoURLString = selectedMessage?.content?.url?.modifiedString {
                         self.fullImgView.setImage(placeholder: ChatMessageCellConstant.ImageView.placeholderImageName, url: videoURLString)

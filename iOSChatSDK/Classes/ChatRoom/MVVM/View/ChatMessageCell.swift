@@ -238,16 +238,23 @@ extension ChatMessageCell{
         messageLabel.isHidden = false
         messageImageView.isHidden = false
         
-        if let url = mediaUrl.modifiedString.mediaURL {
-            
+        if mediaUrl.modifiedString.mediaURL != nil {
             let urlString = mediaUrl.modifiedString
             self.messageImageView.setImage(placeholder: ChatConstants.Image.userPlaceholder, url: urlString)
-            
-//            self.messageImageView.sd_setImage(with: url, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ChatMessageCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
-            
-            messageImageViewHeightConstraint.constant = 150 // Set desired height for the image view
+            messageImageViewHeightConstraint.constant = 150
         } else {
             messageImageViewHeightConstraint.constant = 0
         }
+//        if let url = mediaUrl.modifiedString.mediaURL {
+//            
+//            let urlString = mediaUrl.modifiedString
+//            self.messageImageView.setImage(placeholder: ChatConstants.Image.userPlaceholder, url: urlString)
+//            
+////            self.messageImageView.sd_setImage(with: url, placeholderImage:  UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: ChatMessageCell.self), compatibleWith: nil), options: .transformAnimatedImage, progress: nil, completed: nil)
+//            
+//            messageImageViewHeightConstraint.constant = 150 // Set desired height for the image view
+//        } else {
+//            messageImageViewHeightConstraint.constant = 0
+//        }
     }
 }

@@ -88,7 +88,7 @@ class ChatMediaUpload {
 
         uploadMediaRequest(urlString: "\(API.sendMedia)\(/sendMediaRequest.mediaType)", mediaRequest: sendMediaRequest, isImage: image != nil, includeEventID: false) { result in
             switch result {
-            case .success(let response):
+            case .success( _):
                 DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) {
                     completion(.success("Data sent successfully"))
                 }

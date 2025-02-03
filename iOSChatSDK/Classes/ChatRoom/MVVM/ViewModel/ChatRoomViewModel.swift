@@ -41,8 +41,8 @@ open class ChatRoomViewModel : NSObject{
                              invitees: [/connection?.chatUserId],
                              defaultChat: true) { (success, result) in
             if success{
-                let roomId = result
-                let room_id = UserDefaults.standard.string(forKey: "room_id")
+//                let roomId = result
+//                let room_id = UserDefaults.standard.string(forKey: "room_id")
             }else{
             }
         }
@@ -119,7 +119,7 @@ open class ChatRoomViewModel : NSObject{
     func sendAudioMedia(audioFilename : URL, completion: @escaping (Result<String?, Error>) -> Void) {
         ChatMediaUpload.shared.sendImageFromGalleryAPICall(audio: audioFilename, msgType: "m.audio", body:"") { result in
             switch result {
-            case .success(let message):
+            case .success(_):
                 DispatchQueue.global().async {
                     DispatchQueue.main.async {
                         completion(.success("Message sent successfully"))

@@ -111,7 +111,7 @@ open class MediaContentCell: UITableViewCell {
                     delegate?.didStartPlayingAudio(in: self)
                 }
             } else {
-                if let url = self.audioURL {
+                if self.audioURL != nil {
 //                    configureWith(url: url)
                     DispatchQueue.global(qos: .background).async {
                         if let url = self.audioURL {
@@ -154,7 +154,7 @@ open class MediaContentCell: UITableViewCell {
     func playWithAVAudioPlayer(url: URL) {
         let session = URLSession.shared
         let task = session.dataTask(with: url) { data, response, error in
-            if let error = error {
+            if error != nil {
                 return
             }
 
@@ -341,13 +341,17 @@ open class MediaContentCell: UITableViewCell {
         }
         if message.content?.msgtype == MessageType.image {
             playButton.setImage(nil, for: .normal)
-            if let imageUrlString = message.content?.url, let imageUrl = imageUrlString.modifiedString.mediaURL {
-                
-                let imageUrlString = imageUrlString.modifiedString
-                self.messageImageView.setImage(placeholder: ChatConstants.Image.userPlaceholder, url: imageUrlString)
-//                self.messageImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: ChatConstants.Image.userPlaceholder), options: [], completed: nil)
-
-            }else{
+//            if let imageUrlString = message.content?.url, let imageUrl = imageUrlString.modifiedString.mediaURL {
+//                
+//                let imageUrlString = imageUrlString.modifiedString
+//                self.messageImageView.setImage(placeholder: ChatConstants.Image.userPlaceholder, url: imageUrlString)
+////                self.messageImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: ChatConstants.Image.userPlaceholder), options: [], completed: nil)
+//
+//            }
+            if let imageUrlString = message.content?.url, !imageUrlString.modifiedString.isEmpty {
+                self.messageImageView.setImage(placeholder: ChatConstants.Image.userPlaceholder, url: imageUrlString.modifiedString)
+            }
+            else{
                 let imageView = UIImageView(image: UIImage(named: ChatConstants.Image.userPlaceholder, in: Bundle(for: MediaContentCell.self), compatibleWith: nil))
                 self.messageImageView = imageView
             }
@@ -383,7 +387,7 @@ open class MediaContentCell: UITableViewCell {
     }
     
     func fetchThumbnail(_ s3MediaUrl:String) {
-        guard let videoURL = URL(string: "\(ChatConstants.S3Media.URL)\(s3MediaUrl)") else {
+        guard URL(string: "\(ChatConstants.S3Media.URL)\(s3MediaUrl)") != nil else {
             return
         }
         DispatchQueue.main.async {

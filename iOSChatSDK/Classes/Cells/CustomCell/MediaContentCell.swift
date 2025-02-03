@@ -122,7 +122,7 @@ open class MediaContentCell: UITableViewCell {
                     }
                 } else {
                     resetPlayPauseButton()
-                    showToast(message: "Audio URL is invalid.")
+                    self.showToast(message: "Audio URL is invalid.")
                 }
                 sender.setImage(
                     UIImage(named: ChatConstants.Image.pauseIcon, in: Bundle(for: MediaContentCell.self), compatibleWith: nil),
@@ -141,7 +141,7 @@ open class MediaContentCell: UITableViewCell {
             try audioSession.setCategory(.playback, mode: .default, options: [])
             try audioSession.setActive(true)
         } catch {
-            print("Audio session setup failed: \(error.localizedDescription)")
+            self.showToast(message: "Audio session setup failed: \(error.localizedDescription)")
         }
     }
 
@@ -168,7 +168,8 @@ open class MediaContentCell: UITableViewCell {
                     self.audioPlayer?.prepareToPlay()
                     self.audioPlayer?.play()
                 } catch {
-                    print("Failed to play audio: \(error.localizedDescription)")
+                    self.showToast(message: "Failed to play audio: \(error.localizedDescription)")
+
                 }
             }
         }
@@ -199,7 +200,7 @@ open class MediaContentCell: UITableViewCell {
             switch playerItem.status {
             case .failed:
                 resetPlayPauseButton() // Reset the button state
-                showToast(message: "Audio failed to play.")
+                self.showToast(message: "Audio failed to play.")
             default:
                 break
             }
@@ -211,24 +212,6 @@ open class MediaContentCell: UITableViewCell {
             for: .normal
         )
         player = nil
-    }
-    private func showToast(message: String) {
-        let toastLabel = UILabel(frame: CGRect(x: self.contentView.center.x - 75, y: self.contentView.frame.size.height - 50, width: 150, height: 35))
-        toastLabel.backgroundColor = UIColor.red.withAlphaComponent(0.6)
-        toastLabel.textColor = UIColor.white
-        toastLabel.textAlignment = .center
-        toastLabel.font = UIFont.systemFont(ofSize: 14.0)
-        toastLabel.text = message
-        toastLabel.alpha = 1.0
-        toastLabel.layer.cornerRadius = 10
-        toastLabel.clipsToBounds = true
-        self.contentView.addSubview(toastLabel)
-        
-        UIView.animate(withDuration: 3.0, delay: 0.1, options: .curveEaseOut, animations: {
-            toastLabel.alpha = 0.0
-        }, completion: { _ in
-            toastLabel.removeFromSuperview()
-        })
     }
 //    func configureWith(url: URL) {
 //        configureAudioSessionss()
@@ -253,7 +236,7 @@ open class MediaContentCell: UITableViewCell {
             for: .normal
         )
         player = nil
-    }// if audio url is not working or not play or incruptted, so play pause toggle will reset. afte click on play button. and toast will show.
+    }
 
     @objc private func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer) {
         if gesture.state == .began {

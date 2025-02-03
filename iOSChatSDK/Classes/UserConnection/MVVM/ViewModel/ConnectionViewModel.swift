@@ -45,7 +45,7 @@ public class ConnectionViewModel : NSObject{
                 } else {
                 }
             case .failure(let error):
-                print(error.localizedDescription)
+                fatalError(error.localizedDescription)
             }
         })
     }
@@ -95,7 +95,7 @@ open class ChatViewModel {
                     completion(nil)
                 }
             case .failure(let error):
-                print(error.localizedDescription)
+                completion(error.localizedDescription)
             }
         })
     }

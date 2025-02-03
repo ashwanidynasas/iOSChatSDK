@@ -34,7 +34,7 @@ public class CacheManager {
                 }
             }
         } catch {
-            print("Failed to get cache size: \(error)")
+            fatalError("Failed to get cache size: \(error)")
         }
         return cacheSize
     }
@@ -61,7 +61,7 @@ public class CacheManager {
                     }
                 }
             } catch {
-                print("Failed to shrink cache: \(error)")
+                fatalError("Failed to shrink cache: \(error)")
             }
         }
     }
@@ -74,7 +74,7 @@ public class CacheManager {
                 try fileManager.removeItem(atPath: filePath)
             }
         } catch {
-            print("Failed to purge cache: \(error)")
+            fatalError("Failed to purge cache: \(error)")
         }
     }
 }

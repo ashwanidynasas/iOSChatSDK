@@ -25,17 +25,17 @@ enum LogEvent: String {
 }
 
 
-/// Wrapping Swift.print() within DEBUG flag
+/// Wrapping Swift.//print() within DEBUG flag
 ///
 ///
 /// - Parameter object: The object which is to be logged
 ///
-func print(_ object: Any) {
-    // Only allowing in DEBUG mode
-    #if DEBUG
-    Swift.print(object)
-    #endif
-}
+//func print(_ object: Any) {
+//    // Only allowing in DEBUG mode
+//    #if DEBUG
+//    Swift.print(object)
+//    #endif
+//}
 
 class Log {
 
@@ -69,7 +69,7 @@ class Log {
     ///   - funcName: Name of the function from where the logging is done
     class func e( _ object: Any?, filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         if isLoggingEnabled {
-            print("\(Date().toString()) \(LogEvent.e.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(String(describing: object))")
+            //print("\(Date().toString()) \(LogEvent.e.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(String(describing: object))")
         }
     }
 
@@ -83,7 +83,7 @@ class Log {
     ///   - funcName: Name of the function from where the logging is done
     class func i ( _ object: Any?, filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         if isLoggingEnabled {
-            print("\(Date().toString()) \(LogEvent.i.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(String(describing: object))")
+            //print("\(Date().toString()) \(LogEvent.i.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(String(describing: object))")
         }
     }
 
@@ -97,7 +97,7 @@ class Log {
     ///   - funcName: Name of the function from where the logging is done
     class func d( _ object: Any?, filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         if isLoggingEnabled {
-            print("\(Date().toString()) \(LogEvent.d.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(String(describing: object))")
+            //print("\(Date().toString()) \(LogEvent.d.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(String(describing: object))")
         }
     }
 
@@ -111,7 +111,7 @@ class Log {
     ///   - funcName: Name of the function from where the logging is done
     class func v( _ object: Any?, filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         if isLoggingEnabled {
-            print("\(Date().toString()) \(LogEvent.v.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(String(describing: object))")
+            //print("\(Date().toString()) \(LogEvent.v.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(String(describing: object))")
         }
     }
 
@@ -125,7 +125,7 @@ class Log {
     ///   - funcName: Name of the function from where the logging is done
     class func w( _ object: Any, filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         if isLoggingEnabled {
-            print("\(Date().toString()) \(LogEvent.w.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
+            //print("\(Date().toString()) \(LogEvent.w.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
         }
     }
 
@@ -139,7 +139,7 @@ class Log {
     ///   - funcName: Name of the function from where the logging is done
     class func s( _ object: Any, filename: String = #file, line: Int = #line, column: Int = #column, funcName: String = #function) {
         if isLoggingEnabled {
-            print("\(Date().toString()) \(LogEvent.s.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
+            //print("\(Date().toString()) \(LogEvent.s.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
         }
     }
 

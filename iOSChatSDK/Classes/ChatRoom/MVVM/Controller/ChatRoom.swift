@@ -33,7 +33,11 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
         setupTapGesture()
         setupUIVC()
         setupTable()
-        viewModel?.getMessages()
+        viewModel?.getMessages { error in
+            if let error = error {
+                self.view.showToast(message: "Failed to load messages: \(error.localizedDescription)")
+            }
+        }
         viewModel?.onUpdate = { [weak self] in
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
@@ -47,7 +51,11 @@ open class ChatRoomVC: UIViewController, UINavigationControllerDelegate, BottomV
         fetchTimer?.invalidate()
         fetchTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { [weak self] _ in
             guard let self = self, !self.isScrolling else { return }
-             self.viewModel?.getMessages()
+            self.viewModel?.getMessages { error in
+                if let error = error {
+                    self.view.showToast(message: "Failed to load messages: \(error.localizedDescription)")
+                }
+            }
         }
 
     }
@@ -219,13 +227,17 @@ extension ChatRoomVC{
             switch result {
             case .success( _):
                 DispatchQueue.main.async {
-                    self.viewModel?.getMessages()
+                    self.viewModel?.getMessages { error in
+                        if let error = error {
+                            self.view.showToast(message: "Failed to load messages: \(error.localizedDescription)")
+                        }
+                    }
                     DispatchQueue.main.async {
                         self.viewSend.layout([.input])
                     }
                 }
             case .failure(let error):
-                print("Failed to redact message: \(error.localizedDescription)")
+                self.view.showToast(message: "Failed to redact message: \(error.localizedDescription)")
             }
         }
     }
@@ -236,7 +248,11 @@ extension ChatRoomVC{
             self.viewSend.resetViews()
             self.viewSend.viewInput.mode = .audio
         }
-        viewModel?.getMessages()
+        viewModel?.getMessages { error in
+            if let error = error {
+                self.view.showToast(message: "Failed to load messages: \(error.localizedDescription)")
+            }
+        }
         scrollToBottom()
     }
 }

@@ -32,7 +32,8 @@ protocol Endpoint {
 extension Endpoint {
     
     var base: String {
-        return "http://157.241.58.41"
+//        return "http://157.241.58.41"
+        return Bundle.main.object(forInfoDictionaryKey: "BASE_URL") as? String ?? ""
     }
     
     var urlComponents: URLComponents? {

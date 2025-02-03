@@ -173,7 +173,7 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {
-                        print("Error: \(error.localizedDescription)")
+                        self.view.showToast(message: "Error: \(error.localizedDescription)")
                     }
                 }
             }
@@ -189,7 +189,8 @@ class PublishMediaVC: UIViewController,BottomViewDelegate, DelegateReply, Delega
                         self.navigationController?.popViewController(animated: true)
                     }
                 case .failure(let error):
-                    print("Error: \(error.localizedDescription)")
+                    self.view.showToast(message: "Error: \(error.localizedDescription)")
+
                 }
             }
         }

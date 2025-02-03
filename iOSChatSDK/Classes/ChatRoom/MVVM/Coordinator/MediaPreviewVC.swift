@@ -186,7 +186,7 @@ class MediaPreviewVC: UIViewController {
                 }
             
         default:
-            print("default")
+            self.view.showToast(message: "default type")
         }
         
     }
@@ -200,7 +200,8 @@ class MediaPreviewVC: UIViewController {
                     self.navigationController?.popViewController(animated: true)
                 }
             case .failure(let error):
-                print("Failed to redact message: \(error.localizedDescription)")
+                self.view.showToast(message: "Failed to redact message: \(error.localizedDescription)")
+
             }
         }
     }

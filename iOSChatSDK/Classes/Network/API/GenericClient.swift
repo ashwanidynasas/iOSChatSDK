@@ -37,11 +37,11 @@ extension GenericClient {
                 }
                 
 #if DEBUG
-                Log.d(":: cURL Request :: \(request.cURL())")
-                Log.d(":: HttpResponse :: \(requestURL) :: \(httpResponse)")
+                //Log.d(":: cURL Request :: \(request.cURL())")
+                //Log.d(":: HttpResponse :: \(requestURL) :: \(httpResponse)")
 #endif
                 guard let data = data else {
-                    Log.e(error)
+                    //Log.e(error)
                     completion(httpResponse, nil, .invalidData)
                     return
                 }
@@ -49,7 +49,7 @@ extension GenericClient {
                 do {
 #if DEBUG
                     let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String : Any]
-                    Log.d(":: cURL JSON :: \(json ?? [:])")
+                    //Log.d(":: cURL JSON :: \(json ?? [:])")
 #endif
                 } catch _ {
                     
@@ -58,25 +58,25 @@ extension GenericClient {
                 do {
                     _ = try JSONDecoder().decode(decodingType, from: data)
                 } catch DecodingError.keyNotFound(let key, let context) {
-                    print("SQRCLEEEEE could not find key \(key) in JSON: \(context.debugDescription) \(request.cURL())")
+                    //print("SQRCLEEEEE could not find key \(key) in JSON: \(context.debugDescription) \(request.cURL())")
                 } catch DecodingError.valueNotFound(let type, let context) {
-                    print("SQRCLEEEEE could not find type \(type) in JSON: \(context.debugDescription) \(request.cURL())")
+                    //print("SQRCLEEEEE could not find type \(type) in JSON: \(context.debugDescription) \(request.cURL())")
                 } catch DecodingError.typeMismatch(let type, let context) {
-                    print("SQRCLEEEEE type mismatch for type \(type) in JSON: \(context.debugDescription) \(request.cURL())")
+                    //print("SQRCLEEEEE type mismatch for type \(type) in JSON: \(context.debugDescription) \(request.cURL())")
                 } catch DecodingError.dataCorrupted(let context) {
-                    print("SQRCLEEEEE data found to be corrupted in JSON: \(context.debugDescription) \(request.cURL())")
+                    //print("SQRCLEEEEE data found to be corrupted in JSON: \(context.debugDescription) \(request.cURL())")
                 } catch let error as NSError {
-                    print("SQRCLEEEEE Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription) \(request.cURL())")
+                    //print("SQRCLEEEEE Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription) \(request.cURL())")
                 }
                 
                 if let JSONString = String(data: data, encoding: String.Encoding.utf8) {
-                    Log.d(":: Response :: \(requestURL) :: \(JSONString)")
+//                    Log.d(":: Response :: \(requestURL) :: \(JSONString)")
                 }
                 do {
                     let genericModel = try JSONDecoder().decode(decodingType, from: data)
                     completion(httpResponse, genericModel, nil)
                 } catch {
-                    print("_____________got the error")
+                    //print("_____________got the error")
                 }
                 
                 
@@ -106,7 +106,7 @@ extension GenericClient {
     func fetch<T: Decodable>(with request: URLRequest, refreshHeaders: Bool = false, showloader: Bool = true, decode: @escaping (Decodable) -> T?, completion: @escaping (Result<T, APIError>, [AnyHashable : Any]?) -> Void) {
         
         let newRequest = request
-        Log.i(self)
+        //Log.i(self)
         let task = decodingTask(with: newRequest, decodingType: T.self, showloader: showloader) { (http, json , error) in
             Threads.performTaskInMainQueue {
                 guard let json = json else {
@@ -124,7 +124,7 @@ extension GenericClient {
     /// Always create service property to maintain the scope of refresh token
     func fetchWithRefreshToken<T: Decodable>(with request: URLRequest, showloader: Bool = true, decode: @escaping (Decodable) -> T?, completion: @escaping (Result<T, APIError>) -> Void) {
         
-        Log.i(self)
+        //Log.i(self)
         let task = decodingTask(with: request, decodingType: T.self, showloader: showloader) { (http, json , error) in
             guard let httpRes = http
             else {
@@ -162,20 +162,20 @@ extension GenericClient {
                 if let object = json as? [String: Any] {
                     // json is a dictionary
                     #if DEBUG
-                    Log.d("Response:")
-                    Log.d(object)
+                    //Log.d("Response:")
+                    //Log.d(object)
                     #endif
                     completion(.success(object))
                 } else {
                     #if DEBUG
-                    Log.e(String(data: data, encoding: .utf8))
+                    //Log.e(String(data: data, encoding: .utf8))
                     #endif
                     completion(.failure(.invalidData))
                 }
             } catch let err {
                 #if DEBUG
-                Log.e(err)
-                Log.e(String(data: data, encoding: .utf8))
+                //Log.e(err)
+                //Log.e(String(data: data, encoding: .utf8))
                 #endif
                 completion(.failure(.invalidData))
             }

@@ -22,7 +22,7 @@ struct ChatConstants {
         static let failedAccessToken = "Failed to retrieve access token"
         static let AccessToken      = "Access Token"
         
-        static let baseURL      = "http://157.241.58.41/chat_api/"
+        static let baseURL      = "https://chats.sqrcle.co/chat_api/"
         static let createRoom   = "\(baseURL)room/create"
         static let fetchUserlist = "\(baseURL)list-user-apple"
         static let sendMedia    = "\(baseURL)message/send/"
@@ -146,7 +146,7 @@ struct ChatConstants {
 struct ChatMediaConstant_Chat {
     
     struct API {
-        static let baseURL = "http://157.241.58.41/chat_api/message/send/"
+        static let baseURL = "https://chats.sqrcle.co/chat_api/message/send/"
         static let httpMethodPost = "POST"
         static let contentType = "Content-Type"
         static let multipartFormData = "multipart/form-data; boundary="

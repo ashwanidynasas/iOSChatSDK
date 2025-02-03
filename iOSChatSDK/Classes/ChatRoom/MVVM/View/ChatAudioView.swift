@@ -162,7 +162,7 @@ extension ChatAudioView : AVAudioRecorderDelegate, AVAudioPlayerDelegate{
                 }
             }
         } catch {
-            print("Failed to set up audio session")
+            self.showToast(message: "Failed to set up audio session")
         }
     }
     
@@ -180,7 +180,8 @@ extension ChatAudioView : AVAudioRecorderDelegate, AVAudioPlayerDelegate{
     
     public func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
         // Handle playback error
-        print("Audio playback error: \(String(describing: error?.localizedDescription))")
+        self.showToast(message: "Audio playback error: \(String(describing: error?.localizedDescription))")
+
     }
 }
 

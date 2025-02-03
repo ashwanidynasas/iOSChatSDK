@@ -49,7 +49,7 @@ open class ChatRoomViewModel : NSObject{
     }
     
     
-    func getMessages() {
+    func getMessages(completion: @escaping (Error?) -> Void) {
 
 //        guard let room_id = UserDefaultsHelper.getRoomId() else { return }
         service = ChatService(configuration: .default)
@@ -62,10 +62,12 @@ open class ChatRoomViewModel : NSObject{
                         }
                     self.messages = filteredMessages.sorted { $0.originServerTs ?? 0 < $1.originServerTs ?? 0 }
                     self.onUpdate?()
+                    completion(nil) // No error
+
                 } else {
                 }
             case .failure(let error):
-                print(error.localizedDescription)
+                completion(error) // Pass error to caller
             }
         })
     }
@@ -86,7 +88,7 @@ open class ChatRoomViewModel : NSObject{
                 }
                 
             case .failure(let error):
-                print(error.localizedDescription)
+                completion(nil)
             }
         })
     }
@@ -111,7 +113,7 @@ open class ChatRoomViewModel : NSObject{
                 }
                 
             case .failure(let error):
-                print(error.localizedDescription)
+                completion(.failure(error))
             }
         })
     }
@@ -126,8 +128,7 @@ open class ChatRoomViewModel : NSObject{
                     }
                 }
             case .failure(let error):
-                print("Error: \(error.localizedDescription)")
-                // Handle error or show an alert
+                completion(.failure(error))
             }
         }
     }
@@ -139,7 +140,7 @@ open class ChatRoomViewModel : NSObject{
                 completion(.success("Message sent successfully"))
             case .failure(let error):
                 DispatchQueue.main.async {
-                    print("Error: \(error.localizedDescription)")
+                    completion(.success("Error: \(error.localizedDescription)"))
                 }
             }
         }
@@ -157,7 +158,7 @@ open class ChatRoomViewModel : NSObject{
             case .success(_):
                 completion(result)
             case .failure(let error):
-                print("Error: \(error.localizedDescription)")
+                completion(.failure(error))
             }
         }
     }

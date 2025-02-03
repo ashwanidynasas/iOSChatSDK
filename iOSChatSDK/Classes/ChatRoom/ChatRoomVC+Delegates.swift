@@ -27,7 +27,11 @@ extension ChatRoomVC : DelegatePublishMedia{
     
     func didReceiveData(data: String) {
         if data == ChatConstants.Common.update{
-            viewModel?.getMessages()
+            viewModel?.getMessages { error in
+                if let error = error {
+                    self.view.showToast(message: "Failed to load messages: \(error.localizedDescription)")
+                }
+            }
             isReply = false
         }else{
         }
@@ -37,7 +41,11 @@ extension ChatRoomVC : DelegatePublishMedia{
 
 extension ChatRoomVC : DelegateMediaFullVC{
     func messageDeleted() {
-        viewModel?.getMessages()
+        viewModel?.getMessages { error in
+            if let error = error {
+                self.view.showToast(message: "Failed to load messages: \(error.localizedDescription)")
+            }
+        }
     }
 }
 
@@ -113,7 +121,8 @@ extension ChatRoomVC : DelegateInput,DelegateAudio{
                 case .success(_):
                     self.messageSent()
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    self.view.showToast(message: "\(error.localizedDescription)")
+
                 }
             })
         }else{
@@ -136,7 +145,7 @@ extension ChatRoomVC : DelegateInput,DelegateAudio{
             case .success(_) :
                 self.messageSent()
             case .failure(let error) :
-                print("Error: \(error.localizedDescription)")
+                self.view.showToast(message: "Error: \(error.localizedDescription)")
             }
         })
     }

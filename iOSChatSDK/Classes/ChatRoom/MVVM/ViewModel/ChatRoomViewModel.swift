@@ -87,7 +87,7 @@ open class ChatRoomViewModel : NSObject{
                 } else {
                 }
                 
-            case .failure(let error):
+            case .failure(_):
                 completion(nil)
             }
         })

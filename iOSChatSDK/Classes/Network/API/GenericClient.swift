@@ -29,7 +29,7 @@ extension GenericClient {
     private func decodingTask<T: Decodable>(with request: URLRequest, decodingType: T.Type, showloader: Bool = true, completionHandler completion: @escaping JSONTaskCompletionHandler) -> URLSessionDataTask {
         let task = session.dataTask(with: request) { data, response, error in
             Threads.performTaskInMainQueue {
-                let requestURL = request.url?.absoluteString ?? ""
+//                let requestURL = request.url?.absoluteString ?? ""
                 guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 403 else {
                     logoutUser()
                     completion(nil, nil, .requestFailed(description: error?.localizedDescription ?? "No description"))
@@ -57,19 +57,19 @@ extension GenericClient {
                 
                 do {
                     _ = try JSONDecoder().decode(decodingType, from: data)
-                } catch DecodingError.keyNotFound(let key, let context) {
+                } catch DecodingError.keyNotFound( _, _) {
                     //print("SQRCLEEEEE could not find key \(key) in JSON: \(context.debugDescription) \(request.cURL())")
-                } catch DecodingError.valueNotFound(let type, let context) {
+                } catch DecodingError.valueNotFound( _, _) {
                     //print("SQRCLEEEEE could not find type \(type) in JSON: \(context.debugDescription) \(request.cURL())")
-                } catch DecodingError.typeMismatch(let type, let context) {
+                } catch DecodingError.typeMismatch( _, _) {
                     //print("SQRCLEEEEE type mismatch for type \(type) in JSON: \(context.debugDescription) \(request.cURL())")
-                } catch DecodingError.dataCorrupted(let context) {
+                } catch DecodingError.dataCorrupted( _) {
                     //print("SQRCLEEEEE data found to be corrupted in JSON: \(context.debugDescription) \(request.cURL())")
-                } catch let error as NSError {
+                } catch _ as NSError {
                     //print("SQRCLEEEEE Error in read(from:ofType:) domain= \(error.domain), description= \(error.localizedDescription) \(request.cURL())")
                 }
                 
-                if let JSONString = String(data: data, encoding: String.Encoding.utf8) {
+                if String(data: data, encoding: String.Encoding.utf8) != nil {
 //                    Log.d(":: Response :: \(requestURL) :: \(JSONString)")
                 }
                 do {
@@ -172,7 +172,7 @@ extension GenericClient {
                     #endif
                     completion(.failure(.invalidData))
                 }
-            } catch let err {
+            } catch _ {
                 #if DEBUG
                 //Log.e(err)
                 //Log.e(String(data: data, encoding: .utf8))

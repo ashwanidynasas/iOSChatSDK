@@ -12,8 +12,9 @@ public class UserService {
     public init() {}
     
     func fetchUsers(completion: @escaping (Result<[User], Error>) -> Void) {
-        let url = URL(string: API.fetchUserlist)!
-        
+//        let url = URL(string: API.fetchUserlist)!
+        let url = URL(string: ChatServiceEndPoint.fetchUserlist.sdkURL)!
+
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")

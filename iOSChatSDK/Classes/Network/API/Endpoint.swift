@@ -32,10 +32,11 @@ protocol Endpoint {
 extension Endpoint {
     
     var base: String {
-//        return "http://157.241.58.41"
-        return Bundle.main.object(forInfoDictionaryKey: "BASE_URL") as? String ?? ""
+        return "https://devchat.sqrcle.co"
     }
-    
+    var sdkURL: String {
+        return base + path
+    }
     var urlComponents: URLComponents? {
         guard var components = URLComponents(string: base.removingWhitespaces()) else { return nil }
         components.path = path.removingWhitespaces()

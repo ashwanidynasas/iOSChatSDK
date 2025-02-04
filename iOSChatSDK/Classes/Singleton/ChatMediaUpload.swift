@@ -86,7 +86,7 @@ class ChatMediaUpload {
             videoFilePath: fileURL
         )
 
-        uploadMediaRequest(urlString: "\(API.sendMedia)\(/sendMediaRequest.mediaType)", mediaRequest: sendMediaRequest, isImage: image != nil, includeEventID: false) { result in
+        uploadMediaRequest(urlString: "\(ChatServiceEndPoint.sendMedia.sdkURL)\(/sendMediaRequest.mediaType)", mediaRequest: sendMediaRequest, isImage: image != nil, includeEventID: false) { result in
             switch result {
             case .success( _):
                 DispatchQueue.global().asyncAfter(deadline: .now() + 2.0) {
@@ -101,7 +101,7 @@ class ChatMediaUpload {
     }
 
     func uploadFileChatReply(replyRequest: SendMediaRequest, isImage: Bool = false, completion: @escaping (Result<SendMediaResponse, Error>) -> Void) {
-        uploadMediaRequest(urlString: API.reply, mediaRequest: replyRequest, isImage: isImage, includeEventID: true, completion: completion)
+        uploadMediaRequest(urlString: ChatServiceEndPoint.reply.sdkURL, mediaRequest: replyRequest, isImage: isImage, includeEventID: true, completion: completion)
     }
 
     public func getMimeTypeAndFileName(for msgType: String) -> (mimeType: String, fileName: String, mediaType: String) {

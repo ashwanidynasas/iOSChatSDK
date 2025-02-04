@@ -36,12 +36,12 @@ extension ChatServiceEndPoint: Endpoint {
         case .getMessages(let roomId, let limit) : return "http://chat.sqrcle.co/_matrix/client/r0/rooms/\(roomId)/messages?dir=b&limit=\(limit)"
         }
     }
-}
+}// i tried to handle creatroom inside the chatservice endpoitn extension but unable to call. 
 
-public struct API{
-    
-    static let createRoom = "https://chats.sqrcle.co/chat_api/room/create"
-    static let fetchUserlist = "https://chats.sqrcle.co/chat_api/list-user-apple"
-    static let sendMedia = "https://chats.sqrcle.co/chat_api/message/send/"
-    static let reply = "https://chats.sqrcle.co/chat_api/message/reply"
-}
+//public struct API{
+//    
+//    static let createRoom = "https://devchat.sqrcle.co/chat_api/room/create"
+//    static let fetchUserlist = "https://devchat.sqrcle.co/chat_api/list-user-apple"
+//    static let sendMedia = "https://devchat.sqrcle.co/chat_api/message/send/"
+//    static let reply = "https://devchat.sqrcle.co/chat_api/message/reply"
+//}

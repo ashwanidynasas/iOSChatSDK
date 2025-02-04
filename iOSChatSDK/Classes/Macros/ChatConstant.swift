@@ -22,11 +22,11 @@ struct ChatConstants {
         static let failedAccessToken = "Failed to retrieve access token"
         static let AccessToken      = "Access Token"
         
-        static let baseURL      = "https://chats.sqrcle.co/chat_api/"
-        static let createRoom   = "\(baseURL)room/create"
-        static let fetchUserlist = "\(baseURL)list-user-apple"
-        static let sendMedia    = "\(baseURL)message/send/"
-        static let reply        = "\(baseURL)message/reply"
+//        static let baseURL      = "https://devchat.sqrcle.co/chat_api/"
+//        static let createRoom   = "\(baseURL)room/create"
+//        static let fetchUserlist = "\(baseURL)list-user-apple"
+//        static let sendMedia    = "\(baseURL)message/send/"
+//        static let reply        = "\(baseURL)message/reply"
     }
     
     struct Storyboard {
@@ -146,7 +146,7 @@ struct ChatConstants {
 struct ChatMediaConstant_Chat {
     
     struct API {
-        static let baseURL = "https://chats.sqrcle.co/chat_api/message/send/"
+//        static let baseURL = "https://devchat.sqrcle.co/chat_api/message/send/"
         static let httpMethodPost = "POST"
         static let contentType = "Content-Type"
         static let multipartFormData = "multipart/form-data; boundary="
@@ -275,20 +275,6 @@ struct URLs_Chat {
     static let placeholderImageName = "placeholder"
     static let defaultCircleId = "591cd8b1-2288-4e6c-ad7d-c2bdc7d786fe"
 }
-
-
-//MediaContentCell
-//struct MsgView {
-//    static let bubbleDiameter: CGFloat = 170
-//    static let timestampFont: UIFont = .systemFont(ofSize: 8)
-//    static let timestampColor: UIColor = .lightGray
-//    static let readIndicatorSize: CGFloat = 7
-//    static let padding: CGFloat = 12
-//    static let timestampPadding: CGFloat = 4
-//    static let dateFormat: String = "hh:mm a"
-//    static let playButtonSize: CGFloat = 30
-//    static let defaultBackgroundColor: UIColor = .clear
-//}
     
 struct ReplyCell_Chat {
     static let bubbleCornerRadius: CGFloat = 20

@@ -105,7 +105,9 @@ open class ChatViewModel {
                          defaultChat: Bool,
                          completion: @escaping (Bool, String) -> Void) {
         
-        guard let url = URL(string: API.createRoom) else { return }
+//        guard let url = URL(string: API.createRoom) else { return }
+        guard let url = URL(string: ChatServiceEndPoint.createRoom.sdkURL) else { return }
+        
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
